@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="jquery.fileupload.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- The fileinput-button span is used to style the file input field as button -->
+        <span class="btn btn-success fileinput-button">
+        <i class="glyphicon glyphicon-plus"></i>
+        <span>选择sadasd文件...</span>
+        <!-- The file input field used as target for the file upload widget -->
+        <input id="fileupload" type="file" name="files[]">
+        </span>
+        <br>
+        <br>
+        <!-- The global progress bar -->
+        <div id="progress" class="progress">
+            <div class="progress-bar progress-bar-success"></div>
+        </div>
+        <!-- The container for the uploaded files -->
+        <div id="files" class="files"></div>
+        <br>
+    </div>
+    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/x/intrustqlc/static/fileupload/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="/x/intrustqlc/static/fileupload/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/x/intrustqlc/static/fileupload/jquery.iframe-transport.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        $('#fileupload').fileupload({
+                url: '/node/upload',
+                dataType: 'json',
+                done: function(e, data) {
+                    $('#files').html($('<p/>').text(data.result.file));
+                    $('#progress .progress-bar').css(
+                        'width',
+                        '0%'
+                    );
+                },
+                progressall: function(e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                }
+            }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    });
+    </script>
+</body>
+
+</html>

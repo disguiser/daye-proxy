@@ -1,0 +1,35 @@
+<div class="row-fluid">
+    <div class="span12">
+        <div class="control-group">
+            <label class="control-label">附件</label>
+            <div class="controls">
+                <ul id="node_ul_uploads">
+                    {% for a in attachments %}
+                    <li>
+                        <a href="/node/download/{{ a.id }}">{{ a.file_name }}</a>
+                        <i class="icon-trash" id="{{ a.id }}" onclick="javascript:delAttachment(this);"></i>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div>
+                    <input id="new_or_edit" type="hidden" />
+                    <form id="fileuploadForm" action="'/node/upload'" method="POST" enctype="multipart/form-data" class="" novalidate="novalidate">
+                        <input type="hidden" name="flow_list_id" id="flow_list_id" />
+                        <input type="hidden" name="another_temp_id" id="another_temp_id" />
+                        <span class="btn fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>选择文件...</span>
+                        <input id="file" type="file" name="files[]" multiple>
+                        </span>
+                        <br>
+                        <br>
+                        <!-- The global progress bar -->
+                        <span id="upload_progress"></span>
+                        <!-- The container for the uploaded files -->
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    

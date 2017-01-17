@@ -37,6 +37,18 @@ var find_by_fli = async (flow_list_id, next) => {
     // console.log(`find attachment: ${attachments.file_name}`);
     return attachments;
 }
+// 多个 flow_list_id
+var find_by_flis = async (flow_list_ids, next) => {
+    var attachments = await Attachment.findAll({
+        where: {
+            flow_list_id: {
+                $in: flow_list_ids
+            }
+        }
+    });
+    // console.log(`find attachment: ${attachments.file_name}`);
+    return attachments;
+}
 
 var delete_by_id  = async (id, next) => {
     var attachment = await find_by_id(id, next);
@@ -69,6 +81,7 @@ var delete_by_ti = async (temp_id, next) => {
 module.exports = {
     find_by_id: find_by_id,
     find_by_fli: find_by_fli,
+    find_by_flis: find_by_flis,
     insert: insert,
     delete_by_ti: delete_by_ti,
     delete_by_id: delete_by_id,

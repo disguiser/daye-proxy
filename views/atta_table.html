@@ -1,0 +1,36 @@
+<table id="node_table">
+    <thead>
+        <th>文件名称</th>
+        <th>合同编号</th>
+        <th>文件类型</th>
+        <th>盖章份数</th>
+        <th>合同备注</th>
+        <th>附件</th>
+    </thead>
+    <tbody>
+        {% for a in intrust_attachments %}
+        <tr>
+            <td>{{ a.FILE_NAME }}</td>
+            <td>{{ a.HTBH }}</td>
+            <td>{{ dict_file_type[a.FILE_TYPE] }}</td>
+            <td>{{ a.SEAL_NUMBER }}</td>
+            <td>{{ a.HTBZ }}</td>
+            <td>
+            {% for i in attachments[a.LIST_UUID] %}
+            <a href="/node/download/{{ i.id }}">{{ i.file_name }}</a><br>
+            {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<style type="text/css">
+    #node_table {
+        width: 700px;
+        border: 1px solid black;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+</style>

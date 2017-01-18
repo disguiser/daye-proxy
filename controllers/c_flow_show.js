@@ -51,9 +51,13 @@ module.exports = function (router) {
         } else if(affair.flow_id == 'b395b7615f9811e6b480b888e3e688de'){
             let json_data = await d_flow.find_tasks(affa_id, next);
             // console.log(json_data);
-            console.log(json_data.R29FFCA438734A42AE6409144A1D78A3.qc2f64ae5f9811e690e4b888e3e688de);
+            // 产品ID
+            // console.log(json_data.R29FFCA438734A42AE6409144A1D78A3.qc2f64ae5f9811e690e4b888e3e688de);
+            let product_id = JSON.parse(affair.json_data)['a81a38d15f9711e6aaebb888e3e688de'];
+            let project_info = await d_flow.find_project_info(product_id, next);
             res = {
                 success: temple.render('fx_table.html' ,{
+                    project_info: project_info,
                     json_data: json_data,
                     dict_yes_or_no: dict_yes_or_no
                 })

@@ -23,8 +23,20 @@ let find_tasks = async (affa_id, next) => {
     });
     return json_data;
 }
+let find_project_info = async (product_id, next) => {
+    let product_info = {};
+    await sequelize.query(`select REGITEM_NO,REGITEM_NAME from INTRUSTQLC..QLC_TITEMREGINFO where REGITEM_ID = 
+        (select REGITEM_ID from INTRUSTQLC..qlc_tproduct where PRODUCT_ID=${product_id})`,{
+        type: sequelize.QueryTypes.SELECT
+    }).then(function(data){
+        product_info['REGITEM_NO'] = data[0] ? data[0].REGITEM_NO : '';
+        product_info['REGITEM_NAME'] = data[0] ? data[0].REGITEM_NAME : '';
+    });
+    return product_info;
+}
 
 module.exports = {
     find_affar: find_affar,
-    find_tasks: find_tasks
+    find_tasks: find_tasks,
+    find_project_info: find_project_info
 }

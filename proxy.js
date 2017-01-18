@@ -45,8 +45,8 @@ proxy.use('/node', function (req, res){
 
 proxy.use('/', function (req, res){
     httpProxy.createProxyServer({
-      // target: 'http://192.168.1.118:8080/'
-      target: 'http://127.0.0.1:8071/'
+      target: 'http://192.168.1.118:8080/'
+      // target: 'http://127.0.0.1:8071/'
     }).web(req, res);
   }
 );

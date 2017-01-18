@@ -7,6 +7,7 @@ const proxy_flow_new = require('./proxy/proxy_flow_new.js');
 const proxy_flow_show = require('./proxy/proxy_flow_show.js');
 const harmon = require('./utils/harmon');
 const proxy = connect();
+const config = require('./config').proxy;
 
 // proxy.use('/x/workflow/rtnew', harmon([], [selects[0]], true));
 proxy.use('/x/workflow/rtnew', function (req, res, next) {
@@ -45,11 +46,11 @@ proxy.use('/node', function (req, res){
 
 proxy.use('/', function (req, res){
     httpProxy.createProxyServer({
-      target: 'http://192.168.1.118:8080/'
+      target: config.target
       // target: 'http://127.0.0.1:8071/'
     }).web(req, res);
   }
 );
 
-proxy.listen(8000);
+proxy.listen(config.proxy_port);
 console.log('代理服务器启动,监听端口 8000');

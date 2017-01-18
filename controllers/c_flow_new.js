@@ -4,6 +4,7 @@ const d_attachment = require('../dao/d_attachment.js');
 const temple = require('../utils/temple.js');
 const urlencode = require('urlencode');
 const parse = require('async-busboy');
+const disk_path = require('../config').fileupload.path;
 
 module.exports = function (router) {
     // handle uploads
@@ -22,7 +23,7 @@ module.exports = function (router) {
         flow_list_id!=undefined && flow_list_id!=''){
             for (var i=0; i<files.length; i++){
                 let file_name = files[i].filename;
-                let file_path = "E:/audio/"+ Date.now() +file_name;
+                let file_path = disk_path + Date.now() +file_name;
                 stream = fs.createWriteStream(file_path);
                 files[i].pipe(stream);
                 console.log('uploading %s -> %s', file_name, file_path);

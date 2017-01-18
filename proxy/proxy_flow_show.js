@@ -6,7 +6,7 @@ bodyselect.query = 'body';
 bodyselect.func = function (node) {
 	
     var out = `
-		<script type="text/javascript" src="http://localhost:3000/workflow_show.js"></script>
+		<script type="text/javascript" src="/node/workflow_show.js"></script>
 	`;
 	
 	var rs = node.createReadStream();
@@ -18,7 +18,7 @@ bodyselect.func = function (node) {
 	
 	// When the read stream has ended, attach our style to the end
 	rs.on('end', function(){
-		console.log('proxy_flow_show!!!!');
+		// console.log('proxy_flow_show!!!!');
 		ws.end(out);
 	});
 }

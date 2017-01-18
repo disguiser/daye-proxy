@@ -14,7 +14,7 @@ let find_affar = async (affa_id, next) => {
 let find_tasks = async (affa_id, next) => {
     let json_data = {};
     await sequelize.query(`select node_id,jsondata from WF_TASK where affa_id = '${affa_id}' and 
-        node_id in ('T16D12D1A5D3406D9CC65A76AD7691B1','PBB558EE7E914339B01828AC11437874','D6887042FAD54274857C6A48018A820F')`, {
+        node_id in ('R29FFCA438734A42AE6409144A1D78A3','PBB558EE7E914339B01828AC11437874','D6887042FAD54274857C6A48018A820F')`, {
         type: sequelize.QueryTypes.SELECT
     }).then(function(data){
         data.forEach(function(element){

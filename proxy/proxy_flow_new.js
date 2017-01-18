@@ -7,11 +7,11 @@ bodyselect.func = function (node) {
 	
     var out = `
 		<script type="text/javascript" src="https://cdn.staticfile.org/nunjucks/3.0.0/nunjucks.min.js"></script>
-		<script type="text/javascript" src="http://localhost:3000/workflow_new.js"></script>
-		<script type="text/javascript" src="http://localhost:3000/jquery.fileupload.js"></script>
-		<link rel="stylesheet" href="/x/intrustqlc/static/fileupload/jquery.fileupload.css">
-		<script type="text/javascript" src="/x/intrustqlc/static/fileupload/jquery.ui.widget.js"></script>
-    <script type="text/javascript" src="/x/intrustqlc/static/fileupload/jquery.iframe-transport.js"></script>
+		<script type="text/javascript" src="/node/workflow_new.js"></script>
+		<script type="text/javascript" src="/node/jquery.fileupload.js"></script>
+		<link rel="stylesheet" href="/node/fileupload/jquery.fileupload.css">
+		<script type="text/javascript" src="/node/fileupload/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/node/fileupload/jquery.iframe-transport.js"></script>
 	`;
 	
 	var rs = node.createReadStream();
@@ -23,7 +23,7 @@ bodyselect.func = function (node) {
 	
 	// When the read stream has ended, attach our style to the end
 	rs.on('end', function(){
-		console.log('sbsbsb1111!!!!');
+		// console.log('sbsbsb1111!!!!');
 		ws.end(out);
 	});
 }

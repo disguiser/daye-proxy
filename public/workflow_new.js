@@ -33,7 +33,7 @@ function bindingUpload(data){
             var attachments = data.result;
             if(attachments instanceof Array){
                 for (let attachment of attachments) {
-                    $('#node_ul_uploads').append('<li id="'+attachment.id+'"><a href="/node/download/'+attachment.id+'">'+attachment.file_name+'</a> <i class="icon-trash" onclick="javascript:delAttachment(this);"></i></li>');
+                    $('#node_ul_uploads').append('<li><a id="'+attachment.id+'" href="/node/download/'+attachment.id+'">'+attachment.file_name+'</a> <i class="icon-trash" onclick="javascript:delAttachment(this);"></i></li>');
                 }
                 $('#upload_progress').html('');
             } else {
@@ -48,6 +48,17 @@ function bindingUpload(data){
     .parent().addClass($.support.fileInput ? undefined : 'disabled');
 }
 $(function(){
+    console.log('nmbnmb!!!!');
+    App.init(); // initlayout and core plugins
+    if (jQuery.isFunction(window.PageInit)) {PageInit()}
+    if(jQuery('.brandp').length>0){
+        var brandp = jQuery('.brandp');
+        if(brandp.height()>20){
+            brandp.css('margin-top','-7px');
+        }else{
+            brandp.css('margin-top','3px');
+        }
+    }
     $('.btn.blue.mini').attr('href','javascript:modelShowAfter();');
     $('#theform .row-fluid:last').html('<input type="hidden" id="temp_id" />');
     $('#temp_id').val(UUID.prototype.createUUID());
@@ -63,6 +74,18 @@ $(function(){
             changeJSFunc(this, 'listDelete');
         });
     });
+
+    // 如果是编辑页面,可能预先存在数据
+    if($('#x7857b1e3ebc11e68228184f32ca6bca').val()!=""){
+        // 修改编辑按钮的点击函数
+        $('.btn.btn-purple.btn-xs.mini.purple').each(function(){
+            changeJSFunc(this, 'listEdit');
+        });
+        // 以及删除函数的点击函数
+        $('.btn.btn-grey.btn-xs.mini.black').each(function(){
+            changeJSFunc(this, 'listDelete');
+        });
+    }
 });
 // 改变dom的事件函数
 function changeJSFunc(obj, func_name){
@@ -97,10 +120,10 @@ window.onbeforeunload=function(){
 
 function delAttachment(obj){
     if(confirm('确认删除?')){
-        $.getJSON('/node/delete_by_id/'+obj.parentElement.id, function(data){
+        $.getJSON('/node/delete_by_id/'+obj.id, function(data){
             if(data.result == 'successed') {
                 alert('删除成功!');
-                $('#'+obj.parentElement.id).remove();
+                $('#'+obj.id).parent().remove();
             } else {
                 alert('删除失败!');
             }

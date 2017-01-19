@@ -62,6 +62,9 @@ module.exports = function (router) {
                     dict_yes_or_no: dict_yes_or_no
                 })
             };
+        // 项目签报审批流程
+        } else if(affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca'){
+            
         } else {
             res = {fail: '非指定流程'};
         }

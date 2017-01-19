@@ -10,21 +10,31 @@ const proxy = connect();
 const config = require('./config').proxy;
 
 // proxy.use('/x/workflow/rtnew', harmon([], [selects[0]], true));
-proxy.use('/x/workflow/rtnew', function (req, res, next) {
-  let parsed = queryString.parse(req._parsedUrl.query);
-  if(parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca'){
-    let harmonBinary = harmon([], [proxy_flow_new[0]], true);
-    harmonBinary(req, res);
-  }
-  next();
-});
+// proxy.use('/x/workflow/rtnew', function (req, res, next) {
+//   let parsed = queryString.parse(req._parsedUrl.query);
+//   if(parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca'){
+//     let harmonBinary = harmon([], [proxy_flow_new[0]], true);
+//     harmonBinary(req, res);
+//   }
+//   next();
+// });
 
 // 1跟2 共存会报错,遂只好分开写
 // proxy.use('/x/workflow/rtnew', harmon([], [selects[1]], true));
 proxy.use('/x/workflow/rtnew', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
   if(parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca'){
-    let harmonBinary = harmon([], [proxy_flow_new[1]], true);
+    console.log(proxy_flow_new[1]);
+    let harmonBinary = harmon([], proxy_flow_new, true);
+    harmonBinary(req, res);
+  }
+  next();
+});
+
+proxy.use('/x/workflow/dealwith', function (req, res, next) {
+  let parsed = queryString.parse(req._parsedUrl.query);
+  if(parsed.nextnode=='X72D77CA26F1489F92A305DDED6BE002'){
+    let harmonBinary = harmon([], proxy_flow_new, true);
     harmonBinary(req, res);
   }
   next();
@@ -36,7 +46,6 @@ proxy.use('/x/workflow/rtview', function (req, res, next) {
   harmonBinary(req, res);
   next();
 });
-
 proxy.use('/node', function (req, res){
     httpProxy.createProxyServer({
       target: 'http://localhost:3000/'

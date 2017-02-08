@@ -23,7 +23,21 @@ let find_tasks = async (affa_id, next) => {
     });
     return json_data;
 }
-let find_project_info = async (product_id, next) => {
+let find_task = async (task_id, next) => {
+    let flow_id,
+        affa_id;
+    await sequelize.query(`select affa_id,flow_id from WF_TASK where task_id='${task_id}'`, {
+        type: sequelize.QueryTypes.SELECT
+    }).then(function(data) {
+        flow_id = data[0] ? data[0].flow_id : '';
+        affa_id = data[0] ? data[0].affa_id : '';
+    });
+    return {
+        flow_id: flow_id,
+        affa_id: affa_id
+    };
+}
+let find_project_info_by_product_id = async (product_id, next) => {
     let product_info = {};
     await sequelize.query(`select REGITEM_NO,REGITEM_NAME from INTRUSTQLC..QLC_TITEMREGINFO where REGITEM_ID = 
         (select REGITEM_ID from INTRUSTQLC..qlc_tproduct where PRODUCT_ID=${product_id})`,{
@@ -34,9 +48,21 @@ let find_project_info = async (product_id, next) => {
     });
     return product_info;
 }
+let find_project_info_by_problem_id = async (problem_id, next) => {
+    let product_info = {};
+    await sequelize.query(`select REGITEM_NO from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=(select REGITEM_ID 
+                        from INTRUSTQLC..QLC_TITEMPBINFO where problemid='${problem_id}')`,{
+        type: sequelize.QueryTypes.SELECT
+    }).then(function(data){
+        product_info['REGITEM_NO'] = data[0] ? data[0].REGITEM_NO : '';
+    });
+    return product_info;
+}
 
 module.exports = {
     find_affar: find_affar,
+    find_task: find_task,
     find_tasks: find_tasks,
-    find_project_info: find_project_info
+    find_project_info_by_product_id: find_project_info_by_product_id,
+    find_project_info_by_problem_id: find_project_info_by_problem_id
 }

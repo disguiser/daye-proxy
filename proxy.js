@@ -23,6 +23,7 @@ const config = require('./config').proxy;
 // proxy.use('/x/workflow/rtnew', harmon([], [selects[1]], true));
 proxy.use('/x/workflow/rtnew', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
+  // 合同审批
   if(parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca'){
     console.log(proxy_flow_new[1]);
     let harmonBinary = harmon([], proxy_flow_new, true);
@@ -42,6 +43,12 @@ proxy.use('/x/workflow/dealwith', function (req, res, next) {
 
 // proxy.use('/x/workflow/rtview', harmon([], [selects[2]], true));
 proxy.use('/x/workflow/rtview', function (req, res, next) {
+  let harmonBinary = harmon([], proxy_flow_show, true);
+  harmonBinary(req, res);
+  next();
+});
+// 项目签报审批流程
+proxy.use('/x/workflow/rtflow', function (req, res, next) {
   let harmonBinary = harmon([], proxy_flow_show, true);
   harmonBinary(req, res);
   next();

@@ -54,7 +54,7 @@ module.exports = function (router) {
             // 产品ID
             // console.log(json_data.R29FFCA438734A42AE6409144A1D78A3.qc2f64ae5f9811e690e4b888e3e688de);
             let product_id = JSON.parse(affair.json_data)['a81a38d15f9711e6aaebb888e3e688de'];
-            let project_info = await d_flow.find_project_info(product_id, next);
+            let project_info = await d_flow.find_project_info_by_product_id(product_id, next);
             res = {
                 success: temple.render('fx_table.html' ,{
                     project_info: project_info,
@@ -62,9 +62,21 @@ module.exports = function (router) {
                     dict_yes_or_no: dict_yes_or_no
                 })
             };
+        } else {
+            res = {fail: '非指定流程'};
+        }
+        ctx.response.body = res;
+    });
+    router.get('/get_no/:task_id', async (ctx, next) => {
+        let task_id = ctx.params.task_id;
+        let affair = await d_flow.find_task(task_id, next);
+        let res;
         // 项目签报审批流程
-        } else if(affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca'){
-            
+        if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca') {
+            let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id, next);;
+            res = {
+                success: '项目编号为: ' + project_info['REGITEM_NO']
+            };
         } else {
             res = {fail: '非指定流程'};
         }

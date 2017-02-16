@@ -40,6 +40,23 @@ let find_task = async (task_id, next) => {
         json_data: json_data
     };
 }
+let find_affar_by_taskid = async (task_id, next) => {
+    let flow_id,
+        affa_id,
+        json_data;
+    await sequelize.query(`select affa_id,flow_id,jsondata from WF_AFFAIR where affa_id=(select affa_id from WF_TASK where task_id='${task_id}')`, {
+        type: sequelize.QueryTypes.SELECT
+    }).then(function(data) {
+        flow_id = data[0] ? data[0].flow_id : '';
+        affa_id = data[0] ? data[0].affa_id : '';
+        json_data = data[0] ? data[0].jsondata : '';
+    });
+    return {
+        flow_id: flow_id,
+        affa_id: affa_id,
+        json_data: json_data
+    };
+}
 let find_project_info_by_product_id = async (product_id, next) => {
     let product_info = {};
     await sequelize.query(`select REGITEM_NO,REGITEM_NAME from INTRUSTQLC..QLC_TITEMREGINFO where REGITEM_ID = 
@@ -64,6 +81,7 @@ let find_project_info_by_problem_id = async (problem_id, next) => {
 
 module.exports = {
     find_affar: find_affar,
+    find_affar_by_taskid: find_affar_by_taskid,
     find_task: find_task,
     find_tasks: find_tasks,
     find_project_info_by_product_id: find_project_info_by_product_id,

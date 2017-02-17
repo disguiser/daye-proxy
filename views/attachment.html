@@ -7,7 +7,7 @@
                 <ul id="node_ul_uploads">
                     {% for a in attachments %}
                     <li>
-                        <a href="/node/download/{{ a.id }}">{{ a.file_name }}</a>
+                        <a href="/node/download/{{ a.id }}">{{ a.file_name }}({{ a.file_size }} {{ a.upload_time }})</a>
                         <i class="icon-trash" id="{{ a.id }}" onclick="javascript:delAttachment(this);"></i>
                     </li>
                     {% endfor %}

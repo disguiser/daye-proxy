@@ -33,7 +33,7 @@ function bindingUpload(data){
             var attachments = data.result;
             if(attachments instanceof Array){
                 for (let attachment of attachments) {
-                    $('#node_ul_uploads').append('<li><a id="'+attachment.id+'" href="/node/download/'+attachment.id+'">'+attachment.file_name+'</a> <i class="icon-trash" onclick="javascript:delAttachment(this);"></i></li>');
+                    $('#node_ul_uploads').append('<li><a id="'+attachment.id+'" href="/node/download/'+attachment.id+'">' + attachment.file_name + '(' + attachment.file_size + ' ' + attachment.upload_time + ')' +'</a> <i class="icon-trash" onclick="javascript:delAttachment(this);"></i></li>');
                 }
                 $('#upload_progress').html('');
             } else {

@@ -1,14 +1,15 @@
 'use strict';
 const Attachment = require('../models/Attachment');
 
-var insert = async (flow_list_id, file_name, file_path, temp_id, next) => {
+var insert = async (flow_list_id, file_name, file_size, upload_time, file_path, temp_id, next) => {
     let id;
     await Attachment.create({
-        id: 'g-' + Date.now(),
         flow_list_id: flow_list_id,
         temp_id: temp_id,
         file_name: file_name,
+        file_size: file_size,
         file_path: file_path,
+        upload_time: Date.now()
     }).then(function (p) {
         console.log('created.' + p.id);
         id = p.id;
@@ -52,7 +53,7 @@ var find_by_flis = async (flow_list_ids, next) => {
 
 var delete_by_id  = async (id, next) => {
     var attachment = await find_by_id(id, next);
-    console.log(attachment);
+    // console.log(attachment);
     await attachment.destroy();
     console.log(`${attachment.name} was destroyed.`);
     return {success: attachment.file_path};

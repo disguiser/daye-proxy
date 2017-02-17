@@ -4,14 +4,30 @@ const d_attachment = require('../dao/d_attachment.js');
 const temple = require('../utils/temple.js');
 const urlencode = require('urlencode');
 const parse = require('async-busboy');
+const filesize = require('filesize');
 const disk_path = require('../config').fileupload.path;
 
+let pipeSync = (rs, file_path) => {
+    let ws = fs.createWriteStream(file_path);
+    rs.pipe(ws);
+    return new Promise((resolve, reject) => {
+        rs.on('end', () => resolve(fs.statSync(file_path).size));
+        rs.on('error', reject);
+    });
+}
 module.exports = function (router) {
+    // router.post('/testUpload', async (ctx, next) => {
+    //     // fs.stat("C:\\Users\\zhoum\\AppData\\Local\\Temp\\1487296499890Content-Type安道全.jpg", (err, stat) => {
+    //     //     console.log(stat.size);
+    //     // });
+    //     console.log(fs.statSync("E:/audio/1487301058674鲍旭.jpg").size);
+    //     console.log("100");
+    // });
     // handle uploads
     router.post('/upload', async (ctx, next) => {
         const {files, fields} = await parse(ctx.req);
-        var stream;
-        console.log('caocaocao!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        let stream;
+        // console.log('caocaocao!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         let result = [];
         for (let key in fields) {
             console.log("key:"+key);
@@ -22,17 +38,19 @@ module.exports = function (router) {
         if(temp_id!=undefined && temp_id!='' &&
         flow_list_id!=undefined && flow_list_id!=''){
             for (var i=0; i<files.length; i++){
-                let file_name = files[i].filename;
-                let file_path = disk_path + Date.now() +file_name;
-                stream = fs.createWriteStream(file_path);
-                files[i].pipe(stream);
-                console.log('uploading %s -> %s', file_name, file_path);
-                let id = await d_attachment.insert(flow_list_id, file_name, file_path, fields['another_temp_id'], next);
-                console.log('=========');
-                console.log(id);
+                let file_name = files[i].filename,
+                    file_path = disk_path + Date.now() + file_name,
+                    upload_time = new Date(Date.now()).toLocaleString(),
+                    file_size;
+                file_size = await pipeSync(files[i], file_path);
+                file_size = filesize(file_size);
+                console.log('uploading %s %s -> %s', file_name, file_size, file_path);
+                let id = await d_attachment.insert(flow_list_id, file_name, file_size, upload_time, file_path, fields['another_temp_id'], next);
                 result.push({
                     id: id,
-                    file_name: file_name
+                    file_name: file_name,
+                    file_size: file_size,
+                    upload_time: upload_time
                 });
             }
             ctx.response.body = result;

@@ -5,10 +5,10 @@ module.exports = {
         dialect: 'mssql',
         database: 'PJMAIN',
         username: 'sa',
-        password: '1qa@WS',
-        // password: '000000',
-        host: '192.168.1.32',
-        // host: 'localhost',
+        // password: '1qa@WS',
+        password: '000000',
+        // host: '192.168.1.32',
+        host: 'localhost',
         port: 1433
     },
     proxy: {

@@ -91,6 +91,8 @@ module.exports = function (router) {
             ctx.response.body = await contractApproval(affair, next);
         } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
             ctx.response.body = await productDistribution(affair, next);
+        } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca') { // 项目签报审批流程
+            ctx.response.body = await projectReport(affair, next);
         } else {
             res = {fail: '非指定流程'};
         }

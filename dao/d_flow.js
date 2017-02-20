@@ -53,10 +53,22 @@ let find_project_info_by_problem_id = async (problem_id, next) => {
     });
     return product_info;
 }
-
+let find_tasks = async (affa_id, next) => {
+    let json_data = {};
+    await sequelize.query(`select node_id,jsondata from WF_TASK where affa_id = '${affa_id}' and 
+        node_id in ('R29FFCA438734A42AE6409144A1D78A3','PBB558EE7E914339B01828AC11437874','D6887042FAD54274857C6A48018A820F')`, {
+        type: sequelize.QueryTypes.SELECT
+    }).then(function(data){
+        data.forEach(function(element){
+            json_data[element.node_id] = JSON.parse(element.jsondata);
+        });
+    });
+    return json_data;
+}
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
+    find_tasks: find_tasks,
     find_project_info_by_product_id: find_project_info_by_product_id,
     find_project_info_by_problem_id: find_project_info_by_problem_id
 }

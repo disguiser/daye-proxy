@@ -51,10 +51,11 @@ let productDistribution  = async(affair, next) => {
     // console.log(affair.json_data);
     let product_id = JSON.parse(affair.json_data)['a81a38d15f9711e6aaebb888e3e688de'];
     let project_info = await d_flow.find_project_info_by_product_id(product_id, next);
+    let json_data = await d_flow.find_tasks(affair.affa_id, next);
     return {
         success: temple.render('fx_table.html' ,{
             project_info: project_info,
-            json_data: affair.json_data,
+            json_data: json_data,
             dict_yes_or_no: dict_yes_or_no
         })
     };

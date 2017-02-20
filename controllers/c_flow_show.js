@@ -80,7 +80,7 @@ module.exports = function (router) {
         } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
             ctx.response.body = await projectReport(affair, next);
         } else {
-            res = {fail: '非指定流程'};
+            ctx.response.body = {fail: '非指定流程'};
         }
     });
     // 合同审批流程 + 产品发行流程
@@ -94,7 +94,7 @@ module.exports = function (router) {
         } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
             ctx.response.body = await projectReport(affair, next);
         } else {
-            res = {fail: '非指定流程'};
+            ctx.response.body = {fail: '非指定流程'};
         }
     });
 }

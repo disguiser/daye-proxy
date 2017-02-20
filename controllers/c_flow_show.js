@@ -59,7 +59,7 @@ let productDistribution  = async(affair, next) => {
         })
     };
 }
-// 项目签报审批流程
+// 项目签报审批流程 与 项目立项审批流程(合并)
 let projectReport  = async(affair, next) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id, next);;
     return {
@@ -77,7 +77,7 @@ module.exports = function (router) {
             ctx.response.body == await contractApproval(affair, next);
         } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
             ctx.response.body = await productDistribution(affair, next);
-        } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca') { // 项目签报审批流程
+        } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
             ctx.response.body = await projectReport(affair, next);
         } else {
             res = {fail: '非指定流程'};
@@ -91,7 +91,7 @@ module.exports = function (router) {
             ctx.response.body = await contractApproval(affair, next);
         } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
             ctx.response.body = await productDistribution(affair, next);
-        } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca') { // 项目签报审批流程
+        } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
             ctx.response.body = await projectReport(affair, next);
         } else {
             res = {fail: '非指定流程'};

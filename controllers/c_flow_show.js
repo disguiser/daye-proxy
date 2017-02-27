@@ -61,8 +61,8 @@ let productDistribution  = async(affair, next) => {
     };
 }
 // 项目签报审批流程 与 项目立项审批流程(合并)
-let projectReport  = async(affair, next) => {
-    let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id, next);;
+let projectReport = async(affair, next) => {
+    let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id, next);
     return {
         success: '项目编号为: ' + project_info['REGITEM_NO']
     };

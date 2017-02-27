@@ -2,7 +2,7 @@
 $(function(){
     var affaid = parseUrlParams().affaid,
         taskid = parseUrlParams().taskid,
-        flowid = $('#auth_flow_id').val();
+        // flowid = $('#auth_flow_id').val();
     var url;
     if(affaid != undefined){
         url = '/node/flow_show_affa/'+affaid;

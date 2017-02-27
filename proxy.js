@@ -42,16 +42,23 @@ proxy.use('/x/workflow/dealwith', function (req, res, next) {
 });
 
 // proxy.use('/x/workflow/rtview', harmon([], [selects[2]], true));
-
+// 项目签报审批流程 项目立项审批流程(合并)
 proxy.use('/x/workflow/rtview', function (req, res, next) {
   let harmonBinary = harmon([], proxy_flow_show, true);
   harmonBinary(req, res);
   next();
 });
-// 项目签报审批流程
+// 项目签报审批流程 项目立项审批流程(合并)
 proxy.use('/x/workflow/rtflow', function (req, res, next) {
   let harmonBinary = harmon([], proxy_flow_show, true);
   harmonBinary(req, res);
+  next();
+});
+
+// 下载pdf
+proxy.use('/x/intrustqlc/static/pdf', function (req, res, next) {
+  res.type = 'mimetype';
+  res.setHeader('Content-disposition', 'attachment; filename=1.pdf');
   next();
 });
 proxy.use('/node', function (req, res){

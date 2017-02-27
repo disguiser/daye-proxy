@@ -23,6 +23,7 @@
 * 安装依赖库
     > npm install
 * 右键项目目录,选择open with code
+
 ## 项目目录解释
 ### controller
 前端控制器,接收处理请求,以及某些业务逻辑

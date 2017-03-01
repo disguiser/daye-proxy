@@ -7,7 +7,7 @@ function createEnv(path, opts) {
         watch = opts.watch || false,
         throwOnUndefined = opts.throwOnUndefined || false,
         env = new nunjucks.Environment(
-            new nunjucks.FileSystemLoader('views', {
+            new nunjucks.FileSystemLoader('templates', {
                 noCache: noCache,
                 watch: watch,
             }), {
@@ -22,7 +22,7 @@ function createEnv(path, opts) {
     return env;
 }
 
-module.exports = createEnv('views', {
+module.exports = createEnv('templates', {
     watch: true,
     filters: {
         hex: function (n) {

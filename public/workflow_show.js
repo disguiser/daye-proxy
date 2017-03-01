@@ -1,7 +1,7 @@
 // 流程展示界面
 $(function(){
     var affaid = parseUrlParams().affaid,
-        taskid = parseUrlParams().taskid,
+        taskid = parseUrlParams().taskid;
         // flowid = $('#auth_flow_id').val();
     var url;
     if(affaid != undefined){

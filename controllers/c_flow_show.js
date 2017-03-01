@@ -11,7 +11,7 @@ let contractApproval = async (affair, next) => {
     let json_data = affair.json_data;
     if(json_data!=''){
         json_data = JSON.parse(json_data);
-        console.log(json_data.x7857b1e3ebc11e68228184f32ca6bca);
+        // console.log(json_data.x7857b1e3ebc11e68228184f32ca6bca);
         // 信托文件
         let intrust_attachments = JSON.parse(json_data.x7857b1e3ebc11e68228184f32ca6bca);
         let flow_list_ids = [];
@@ -75,7 +75,7 @@ module.exports = function (router) {
         let affair = await d_flow.find_affar_by_taskid(task_id, next);
         console.log(affair);
         if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca') { // 合同审批流程
-            ctx.response.body == await contractApproval(affair, next);
+            ctx.response.body = await contractApproval(affair, next);
         } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
             ctx.response.body = await productDistribution(affair, next);
         } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)

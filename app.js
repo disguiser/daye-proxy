@@ -24,7 +24,7 @@ app.use(async (ctx, next) => {
 app.use(bodyParser());
 
 // serve files from ./public
-app.use(serve(path.join(__dirname, '/template')));
+// app.use(serve(path.join(__dirname, '/templates')));
 
 require('./controllers/c_flow_new.js')(router);
 

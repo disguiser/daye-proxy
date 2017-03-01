@@ -37,7 +37,7 @@
 代理选择器,对代理的页面进行具体的操作在此编写
 ### public
 前端文件
-### template
+### templates
 模版目录
 ### utils
 工具目录

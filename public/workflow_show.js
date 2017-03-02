@@ -13,7 +13,7 @@ $(function(){
     }
     $.getJSON(url, function(data){
         if(data.success != undefined){
-            $('.detailinfo_ul_title').next().html('<p>'+ data.success +'</p>');
+            $('.detailinfo_ul li:nth-child(2) div:nth-child(2) p').html(data.success);
             // $('.detailinfo_ul_cont').html(data.success);
         }
     });

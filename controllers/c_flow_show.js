@@ -81,7 +81,7 @@ let receivables = async(affair, next) => {
         }
     } else if(affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642'){ // 放款审批流程
         return {
-            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="500px" src="/x/intrustqlc/views/dy/printOutNotice?pay_uuid=E7E96B30-FEEC-11E6-A59D-415645000030"></iframe>`
+            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="600px" src="/x/intrustqlc/views/dy/printOutNotice?pay_uuid=E7E96B30-FEEC-11E6-A59D-415645000030"></iframe>`
         }
     }
 }

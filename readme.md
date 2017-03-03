@@ -113,15 +113,18 @@ select REGITEM_NO from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=
 ```
 
 ## 附录
-### 程序里用到的uuid对应涵义
+## 程序里用到的uuid对应涵义
 * R29FFCA438734A42AE6409144A1D78A3-信托经理
 * PBB558EE7E914339B01828AC11437874-业务部负责人
 * D6887042FAD54274857C6A48018A820F-合规风控负责人
-
+## 流程
 * qba4418052fc11e68f55184f32ca6bca-项目签报审批流程(正文中显示项目编号)
 * b395b7615f9811e6b480b888e3e688de-产品发行(信托产品发行确认单)
 * afad680f3ec711e6ae92184f32ca6bca-合同审批(附件上传)
-
+* v11a7d403e8611e6b07e184f32ca6bca-付款流程
+* v7608f2e3e8811e688c2184f32ca6bca-收款流程
+* fdf2ed804a6411e6905fd85de21f6642-放款审批流程
+## 
 * be3910515f9711e68e53b888e3e688de-信托项目是否已上会
 * dabb57b05f9711e69f08b888e3e688de-是否向银监局报备
 * f7d376705f9711e6afb0b888e3e688de-承诺函是否办理完全
@@ -131,5 +134,6 @@ select REGITEM_NO from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=
 * r6cdbf1e5f9811e696b6b888e3e688de-交易合同及有关法律文件是否面签
 * s57ebb9e5f9811e69ea9b888e3e688de-终审过会通知单是否签批
 * f7d376705f9711e6afb0b888e3e688de-承诺函是否办理完全
-
 * ofbb75305f9811e6b61cb888e3e688de-法律意见书
+* c7d2586153c611e6858ab888e335e00a-pay_uuid
+* u948ea80f5b911e68893415645000030-in_uuid

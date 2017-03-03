@@ -67,35 +67,53 @@ let projectReport = async(affair, next) => {
         success: '项目编号为: ' + project_info['REGITEM_NO']
     };
 }
+// 收款流程 + 付款流程
+let receivables = async(affair, next) => {
+    console.log(affair.json_data);
+    let json_data = JSON.parse(affair.json_data);
+    if(affair.flow_id=='v7608f2e3e8811e688c2184f32ca6bca'){ // 收款
+        return {
+            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="700px" src="/x/intrustqlc/views/dy/printInNotice?in_uuid=${json_data.u948ea80f5b911e68893415645000030}"></iframe>`
+        }
+    } else if (affair.flow_id=='v11a7d403e8611e6b07e184f32ca6bca'){ // 付款
+        return {
+            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="600px" src="/x/intrustqlc/views/dy/printPayNotice?pay_uuid=${json_data.c7d2586153c611e6858ab888e335e00a}"></iframe>`
+        }
+    } else if(affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642'){ // 放款审批流程
+        return {
+            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="500px" src="/x/intrustqlc/views/dy/printOutNotice?pay_uuid=E7E96B30-FEEC-11E6-A59D-415645000030"></iframe>`
+        }
+    }
+}
+
+let flowRouter = async(affair, next) => {
+    let res;
+    console.log(affair);
+    if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca') { // 合同审批流程
+        res = await contractApproval(affair, next);
+    } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
+        res = await productDistribution(affair, next);
+    } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
+        res = await projectReport(affair, next);
+    } else if (affair.flow_id == 'v7608f2e3e8811e688c2184f32ca6bca' || affair.flow_id == 'v11a7d403e8611e6b07e184f32ca6bca' || affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642') { // 收款流程 + 付款流程 + 放款审批流程
+        res = await receivables(affair, next);
+    } else {
+        res = {fail: '非指定流程'};
+    }
+    return res;
+}
 // 流程展示
 module.exports = function (router) {
-    // 合同审批流程 + 产品发行流程 + 项目签报审批流程
+    // 合同审批流程 + 产品发行流程 + 项目签报审批流程 + 收款流程
     router.get('/flow_show_task/:task_id', async (ctx, next) => {
         let task_id = ctx.params.task_id;
         let affair = await d_flow.find_affar_by_taskid(task_id, next);
-        console.log(affair);
-        if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca') { // 合同审批流程
-            ctx.response.body = await contractApproval(affair, next);
-        } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
-            ctx.response.body = await productDistribution(affair, next);
-        } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
-            ctx.response.body = await projectReport(affair, next);
-        } else {
-            ctx.response.body = {fail: '非指定流程'};
-        }
+        ctx.response.body = await flowRouter(affair, next);
     });
-    // 合同审批流程 + 产品发行流程
+    // 合同审批流程 + 产品发行流程 + 项目签报审批流程 + 收款流程
     router.get('/flow_show_affa/:affa_id', async (ctx, next) => {
         let affa_id = ctx.params.affa_id;
         let affair = await d_flow.find_affar(affa_id, next);
-        if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca') { // 合同审批流程
-            ctx.response.body = await contractApproval(affair, next);
-        } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
-            ctx.response.body = await productDistribution(affair, next);
-        } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
-            ctx.response.body = await projectReport(affair, next);
-        } else {
-            ctx.response.body = {fail: '非指定流程'};
-        }
+        ctx.response.body = await flowRouter(affair, next);
     });
 }

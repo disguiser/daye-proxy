@@ -67,14 +67,26 @@ proxy.use('/node', function (req, res){
     }).web(req, res);
   }
 );
-
+// 获取ip
+function getClientIp(req) {
+    return req.headers['x-forwarded-for'] ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress;
+};
+let ipHash = {},
+    ip;
 proxy.use('/', function (req, res){
-    httpProxy.createProxyServer({
-      target: config.target
-      // target: 'http://127.0.0.1:8071/'
-    }).web(req, res);
+  ip = getClientIp(req);
+  if(ipHash[ip]==undefined){
+    ipHash[ip] = config.target.shift();
+    config.target.push(ipHash[ip]);
   }
-);
+  httpProxy.createProxyServer({
+    target: ipHash[ip]
+    // target: 'http://127.0.0.1:8071/'
+  }).web(req, res);
+});
 
 proxy.listen(config.proxy_port);
 console.log('代理服务器启动,监听端口 ' + config.proxy_port);

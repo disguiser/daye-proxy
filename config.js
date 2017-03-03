@@ -13,8 +13,13 @@ module.exports = {
     },
     proxy: {
         proxy_port: '8000',
-        target: 'http://192.168.1.32:8071/'
-        // target: 'http://127.0.0.1:8071/'
+        target: [
+            'http://192.168.1.32:8071/'
+        ]
+        // target: [
+        //     'http://127.0.0.1:8071/',
+        //     'http://127.0.0.1:8072/'
+        // ]
     },
     fileupload: {
         path: 'E:/audio/'

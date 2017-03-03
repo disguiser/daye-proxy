@@ -77,7 +77,7 @@ let receivables = async(affair, next) => {
         }
     } else if (affair.flow_id=='v11a7d403e8611e6b07e184f32ca6bca'){ // 付款
         return {
-            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="600px" src="/x/intrustqlc/views/dy/printPayNotice?pay_uuid=${json_data.c7d2586153c611e6858ab888e335e00a}"></iframe>`
+            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="700px" src="/x/intrustqlc/views/dy/printPayNotice?pay_uuid=${json_data.c7d2586153c611e6858ab888e335e00a}"></iframe>`
         }
     } else if(affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642'){ // 放款审批流程
         return {

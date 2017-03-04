@@ -1,7 +1,7 @@
 var selects = [];
 var bodyselect = {};
 
-bodyselect.query = 'body';
+bodyselect.query = '.detailinfo_ul_title';
 
 bodyselect.func = function (node) {
 	
@@ -18,7 +18,7 @@ bodyselect.func = function (node) {
 	
 	// When the read stream has ended, attach our style to the end
 	rs.on('end', function(){
-		// console.log('proxy_flow_show!!!!');
+		console.log('proxy_flow_show!!!!');
 		ws.end(out);
 	});
 }

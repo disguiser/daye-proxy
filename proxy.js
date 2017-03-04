@@ -3,6 +3,7 @@ const http = require('http');
 const connect = require('connect');
 const httpProxy = require('http-proxy');
 const queryString = require('query-string');
+const proxy_fileupload = require('./proxy/proxy_fileupload.js');
 const proxy_flow_new = require('./proxy/proxy_flow_new.js');
 const proxy_flow_show = require('./proxy/proxy_flow_show.js');
 const harmon = require('./utils/harmon');
@@ -18,24 +19,25 @@ const config = require('./config').proxy;
 //   }
 //   next();
 // });
-
-// 1跟2 共存会报错,遂只好分开写
-// proxy.use('/x/workflow/rtnew', harmon([], [selects[1]], true));
 proxy.use('/x/workflow/rtnew', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
-  // 合同审批 信托经理发起
+  // 合同审批流程 附件上传
   if(parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca'){
-    console.log(proxy_flow_new[1]);
-    let harmonBinary = harmon([], proxy_flow_new, true);
+    let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
+  // 贷款投资合同录入流程
+  // if(parsed.flowid=='faca20a152f311e6892e184f32ca6bca'){
+  //   let harmonBinary = harmon([], proxy_flow_new, true);
+  //   harmonBinary(req, res);
+  // }
   next();
 });
 
 proxy.use('/x/workflow/dealwith', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
   if(parsed.nextnode=='X72D77CA26F1489F92A305DDED6BE002'){
-    let harmonBinary = harmon([], proxy_flow_new, true);
+    let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
   next();

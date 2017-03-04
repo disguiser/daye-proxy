@@ -26,7 +26,9 @@ app.use(bodyParser());
 // serve files from ./public
 // app.use(serve(path.join(__dirname, '/templates')));
 
-require('./controllers/c_flow_new.js')(router);
+require('./controllers/c_flow_upload.js')(router);
+
+// require('./controllers/c_flow_new.js')(router);
 
 require('./controllers/c_flow_show.js')(router);
 

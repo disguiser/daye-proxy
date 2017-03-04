@@ -1,33 +1,28 @@
 var selects = [];
+var bodyselect = {};
 
-var jqueryselect = {};
-jqueryselect.query = 'script';
-jqueryselect.func = function (node) {
-    
-    var stm = node.createStream({ "outer" : true });
+bodyselect.query = 'body';
 
-    var tag = '';
-
-    stm.on('data', function(data) {
-       tag += data;
-    });
-
-    stm.on('end', function() {
-      if(tag.match(/^<script>[\s\S]*jQuery\(document\).ready[\s\S]*<\/script>$/)){
-				// console.log('初始化运行!!!');
-        stm.end(`
-					<script type="text/javascript" src="/node/workflow_new.js"></script>
-					<script type="text/javascript" src="/node/fileupload/jquery.fileupload.js"></script>
-					<link rel="stylesheet" href="/node/fileupload/jquery.fileupload.css">
-					<script type="text/javascript" src="/node/fileupload/jquery.ui.widget.js"></script>
-					<script type="text/javascript" src="/node/fileupload/jquery.iframe-transport.js"></script>
-				`);
-			} else {
-        stm.end(tag);
-      }
-    });
+bodyselect.func = function (node) {
+	
+    var out = `
+		<script type="text/javascript" src="/node/workflow_new.js"></script>
+        <script type="text/javascript" src="/node/change_js_func.js"></script>
+	`;
+	
+	var rs = node.createReadStream();
+	var ws = node.createWriteStream({outer: false});
+	
+	// Read the node and put it back into our write stream, 
+	// but don't end the write stream when the readStream is closed.
+	rs.pipe(ws, {end: false});
+	
+	// When the read stream has ended, attach our style to the end
+	rs.on('end', function(){
+		// console.log('proxy_flow_show!!!!');
+		ws.end(out);
+	});
 }
-
-selects.push(jqueryselect);
+selects.push(bodyselect);
 
 module.exports = selects;

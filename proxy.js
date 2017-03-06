@@ -27,10 +27,20 @@ proxy.use('/x/workflow/rtnew', function (req, res, next) {
     harmonBinary(req, res);
   }
   // 贷款投资合同录入流程
-  // if(parsed.flowid=='faca20a152f311e6892e184f32ca6bca'){
-  //   let harmonBinary = harmon([], proxy_flow_new, true);
-  //   harmonBinary(req, res);
-  // }
+  if(parsed.flowid=='faca20a152f311e6892e184f32ca6bca'){
+    let harmonBinary = harmon([], proxy_flow_new, true);
+    harmonBinary(req, res);
+  }
+  // 项目签报变更流程
+  if(parsed.flowid=='o53659213e5c11e6a7bd184f32ca6bca'){
+    let harmonBinary = harmon([], proxy_flow_new, true);
+    harmonBinary(req, res);
+  }
+  // 抵质押物录入流程
+  if(parsed.flowid=='tc539970ff0911e694b4005056a60fd8'){
+    let harmonBinary = harmon([], proxy_flow_new, true);
+    harmonBinary(req, res);
+  }
   next();
 });
 

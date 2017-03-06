@@ -8,4 +8,10 @@ module.exports = function (router) {
         let dict_id = ctx.params.dict_id;
         ctx.response.body = await d_dict.find_guarantor_dict(dict_id, next);
     });
+    // 担保合同编号
+    router.get('/getContractId/:regitem_id', async (ctx, next) => {
+        let regitem_id = ctx.params.regitem_id;
+        let contract_ids = await d_dict.get_contract_id(regitem_id, next);
+        ctx.response.body = contract_ids.join(',');
+    });
 }

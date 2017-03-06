@@ -10,6 +10,17 @@ let find_guarantor_dict = async (dict_id, next) => {
     });
     return cust_name;
 }
+let get_contract_id = async (regitem_id, next) => {
+    let contract_id = [];
+    await sequelize.query(`select DB_CONTRACT_ID from INTRUSTQLC..QLC_TASSURE_CONTRACT where REGITEM_ID =1986 and isnull(ASSURE_BH,'')<>''`, {
+        type: sequelize.QueryTypes.SELECT
+    }).then(function(data){
+        data.forEach(function(element){
+            contract_id.push(element.DB_CONTRACT_ID);
+        });
+    });
+    return contract_id;
+}
 module.exports = {
-    find_guarantor_dict: find_guarantor_dict
+    get_contract_id: get_contract_id
 }

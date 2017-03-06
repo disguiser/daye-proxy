@@ -1,5 +1,5 @@
 // 流程新建界面
-function modelShowAfter(){
+function listAdd(){
     // 对话框是点击后渲染,要篡改内容需渲染后执行
     if($('#new_or_edit').val()=='edit' || $('#div_mdform_x7857b1e3ebc11e68228184f32ca6bca').html()==""){
         $.when(modi_x7857b1e3ebc11e68228184f32ca6bca('')).done(function(){
@@ -59,7 +59,7 @@ $(function(){
             brandp.css('margin-top','3px');
         }
     }
-    $('.btn.blue.mini').attr('href','javascript:modelShowAfter();');
+    $('.btn.blue.mini').attr('href','javascript:listAdd();');
     $('#theform .row-fluid:last').html('<input type="hidden" id="temp_id" />');
     $('#temp_id').val(UUID.prototype.createUUID());
     // 附件list内容发生变化则清空对话框

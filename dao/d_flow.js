@@ -8,8 +8,8 @@ let find_affar = async (affa_id) => {
     return affair[0];
 }
 let find_affar_by_taskid = async (task_id) => {
-    let data = await sequelize.query(`select affa_id,flow_id,jsondata from WF_AFFAIR where 
-        affa_id=(select affa_id from WF_TASK where task_id='${task_id}')`, {
+    let data = await sequelize.query(`select a.affa_id,a.flow_id,a.jsondata,b.node_id from WF_AFFAIR a,WF_TASK b 
+        where a.affa_id=b.affa_id and b.task_id='${task_id}'`, {
         type: sequelize.QueryTypes.SELECT
     });
     return data[0];

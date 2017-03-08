@@ -17,7 +17,7 @@ jqueryselect.func = function (node) {
 				// console.log('初始化运行!!!');
         stm.end(`
 					<script type="text/javascript" src="/node/workflow_fileupload.js"></script>
-					<script type="text/javascript" src="/node/change_js_func.js"></script>
+					<script type="text/javascript" src="/node/func.js"></script>
 					<script type="text/javascript" src="/node/fileupload/jquery.fileupload.js"></script>
 					<link rel="stylesheet" href="/node/fileupload/jquery.fileupload.css">
 					<script type="text/javascript" src="/node/fileupload/jquery.ui.widget.js"></script>

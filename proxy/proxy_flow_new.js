@@ -7,7 +7,7 @@ bodyselect.func = function (node) {
 	
     var out = `
 		<script type="text/javascript" src="/node/workflow_new.js"></script>
-        <script type="text/javascript" src="/node/change_js_func.js"></script>
+        <script type="text/javascript" src="/node/func.js"></script>
 	`;
 	
 	var rs = node.createReadStream();

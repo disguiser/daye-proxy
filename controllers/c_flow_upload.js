@@ -45,7 +45,7 @@ module.exports = function (router) {
                 file_size = await pipeSync(files[i], file_path);
                 file_size = filesize(file_size);
                 console.log('uploading %s %s -> %s', file_name, file_size, file_path);
-                let id = await d_attachment.insert(flow_list_id, file_name, file_size, upload_time, file_path, fields['another_temp_id'], next);
+                let id = await d_attachment.insert(flow_list_id, file_name, file_size, upload_time, file_path, fields['another_temp_id']);
                 result.push({
                     id: id,
                     file_name: file_name,
@@ -70,7 +70,7 @@ module.exports = function (router) {
         if( flow_list_id == 0 ) {
             res = temple.render('attachment.html' ,{ attachments: ''});
         } else {
-            var attachments = await d_attachment.find_by_fli(flow_list_id, next);
+            var attachments = await d_attachment.find_by_fli(flow_list_id);
             res = temple.render('attachment.html' ,{ attachments: attachments});
         }
         ctx.response.body = res;
@@ -79,7 +79,7 @@ module.exports = function (router) {
 
     router.get('/delete_by_id/:id', async (ctx, next) => {
         var id = ctx.params.id;
-        let attachment = await d_attachment.delete_by_id(id, next);
+        let attachment = await d_attachment.delete_by_id(id);
         if ( attachment.success != undefined ) {
             fs.unlinkSync(attachment.success);
             ctx.response.body = {result: 'successed'};
@@ -89,7 +89,7 @@ module.exports = function (router) {
     });
     router.get('/delete_by_fli/:flow_list_id', async (ctx, next) => {
         var flow_list_id = ctx.params.flow_list_id;
-        let attachments = await d_attachment.delete_by_fli(flow_list_id, next);
+        let attachments = await d_attachment.delete_by_fli(flow_list_id);
         if ( attachments.success != undefined ) {
             for(let attachment of attachments.success){
                 fs.unlinkSync(attachment.file_path);
@@ -102,7 +102,7 @@ module.exports = function (router) {
     // 如果用户没有提交就关闭了页面,需删除该页面上传的附件
     router.get('/delete_by_ti/:temp_id', async (ctx, next) => {
         let temp_id = ctx.params.temp_id;
-        let attachments = await d_attachment.delete_by_ti(temp_id, next);
+        let attachments = await d_attachment.delete_by_ti(temp_id);
         if ( attachments.success != undefined ) {
             for(let attachment of attachments.success){
                 fs.unlinkSync(attachment.file_path);
@@ -115,7 +115,7 @@ module.exports = function (router) {
     router.get('/download/:id', async (ctx, next) => {
         let id = ctx.params.id;
         console.log(id);
-        let attachment = await d_attachment.find_by_id(id, next);
+        let attachment = await d_attachment.find_by_id(id);
         var scream = fs.createReadStream(attachment.file_path);
         ctx.response.body = scream;
         ctx.response.type = 'mimetype';

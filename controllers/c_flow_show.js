@@ -5,10 +5,10 @@ const d_attachment = require('../dao/d_attachment.js');
 const dict_file_type = require('../models/dict_file_type');
 const dict_yes_or_no = require('../models/dict_yes_or_no');
 
-let contractApproval = async (affair, next) => {
+let contractApproval = async (affair) => {
     // 合同审批流程
     let res;
-    let json_data = affair.json_data;
+    let json_data = affair.jsondata;
     if(json_data!=''){
         json_data = JSON.parse(json_data);
         // console.log(json_data.x7857b1e3ebc11e68228184f32ca6bca);
@@ -19,7 +19,7 @@ let contractApproval = async (affair, next) => {
             // console.log(element.LIST_UUID);
             flow_list_ids.push(element.LIST_UUID);
         });
-        let attachments = await d_attachment.find_by_flis(flow_list_ids, next);
+        let attachments = await d_attachment.find_by_flis(flow_list_ids);
         // console.log(attachments);
         let attach_rebuild = {};
         attachments.forEach(function(element){
@@ -45,13 +45,13 @@ let contractApproval = async (affair, next) => {
     return res;
 }
 // 产品发行流程
-let productDistribution  = async(affair, next) => {
+let productDistribution  = async(affair) => {
     // 产品ID
     // console.log(json_data.R29FFCA438734A42AE6409144A1D78A3.qc2f64ae5f9811e690e4b888e3e688de);
-    // console.log(affair.json_data);
-    let product_id = JSON.parse(affair.json_data)['a81a38d15f9711e6aaebb888e3e688de'];
-    let project_info = await d_flow.find_project_info_by_product_id(product_id, next);
-    let json_data = await d_flow.find_tasks(affair.affa_id, next);
+    // console.log(affair.jsondata);
+    let product_id = JSON.parse(affair.jsondata)['a81a38d15f9711e6aaebb888e3e688de'];
+    let project_info = await d_flow.find_project_info_by_product_id(product_id);
+    let json_data = await d_flow.find_tasks(affair.affa_id);
     return {
         success: temple.render('fx_table.html' ,{
             project_info: project_info,
@@ -61,16 +61,16 @@ let productDistribution  = async(affair, next) => {
     };
 }
 // 项目签报审批流程 与 项目立项审批流程(合并)
-let projectReport = async(affair, next) => {
-    let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id, next);
+let projectReport = async(affair) => {
+    let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
     return {
         success: '项目编号为: ' + project_info['REGITEM_NO']
     };
 }
 // 收款流程 + 付款流程
-let receivables = async(affair, next) => {
-    console.log(affair.json_data);
-    let json_data = JSON.parse(affair.json_data);
+let receivables = async(affair) => {
+    console.log(affair.jsondata);
+    let json_data = JSON.parse(affair.jsondata);
     if(affair.flow_id=='v7608f2e3e8811e688c2184f32ca6bca'){ // 收款
         return {
             success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printInNotice?in_uuid=${json_data.u948ea80f5b911e68893415645000030}"></iframe>`
@@ -81,22 +81,22 @@ let receivables = async(affair, next) => {
         }
     } else if(affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642'){ // 放款审批流程
         return {
-            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printOutNotice?pay_uuid=E7E96B30-FEEC-11E6-A59D-415645000030"></iframe>`
+            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printOutNotice?loan_uuid=${json_data.q6d38600020811e7b242415645000030}"></iframe>`
         }
     }
 }
 
-let flowRouter = async(affair, next) => {
+let flowRouter = async(affair) => {
     let res;
     console.log(affair);
     if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca') { // 合同审批流程
-        res = await contractApproval(affair, next);
+        res = await contractApproval(affair);
     } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
-        res = await productDistribution(affair, next);
+        res = await productDistribution(affair);
     } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
-        res = await projectReport(affair, next);
+        res = await projectReport(affair);
     } else if (affair.flow_id == 'v7608f2e3e8811e688c2184f32ca6bca' || affair.flow_id == 'v11a7d403e8611e6b07e184f32ca6bca' || affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642') { // 收款流程 + 付款流程 + 放款审批流程
-        res = await receivables(affair, next);
+        res = await receivables(affair);
     } else {
         res = {fail: '非指定流程'};
     }
@@ -107,13 +107,13 @@ module.exports = function (router) {
     // 合同审批流程 + 产品发行流程 + 项目签报审批流程 + 收款流程
     router.get('/flow_show_task/:task_id', async (ctx, next) => {
         let task_id = ctx.params.task_id;
-        let affair = await d_flow.find_affar_by_taskid(task_id, next);
-        ctx.response.body = await flowRouter(affair, next);
+        let affair = await d_flow.find_affar_by_taskid(task_id);
+        ctx.response.body = await flowRouter(affair);
     });
     // 合同审批流程 + 产品发行流程 + 项目签报审批流程 + 收款流程
     router.get('/flow_show_affa/:affa_id', async (ctx, next) => {
         let affa_id = ctx.params.affa_id;
-        let affair = await d_flow.find_affar(affa_id, next);
-        ctx.response.body = await flowRouter(affair, next);
+        let affair = await d_flow.find_affar(affa_id);
+        ctx.response.body = await flowRouter(affair);
     });
 }

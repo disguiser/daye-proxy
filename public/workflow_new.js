@@ -9,8 +9,6 @@ $(function(){
         });
     } else if (flowid == 'o53659213e5c11e6a7bd184f32ca6bca') { // 项目签报变更流程
         $('.btn.blue.mini').attr('href','javascript:listAdd_o53659213e5c11e6a7bd184f32ca6bca();');
-        $('#c832fa5170e311e68db8184f32ca6bca').change(function(){
-        });
     } else if (flowid == 'tc539970ff0911e694b4005056a60fd8') { // 抵质押物录入流程
         $('.btn.blue.mini').attr('href','javascript:listAdd_tc539970ff0911e694b4005056a60fd8();');
     }
@@ -43,46 +41,49 @@ var allSelectedDict = {};
 function save_o53659213e5c11e6a7bd184f32ca6bca(){
     var selectedDict = {};
     // 修改要素
-    selectedDict = saveDict(selectedDict, 'r2d78b9e70e411e6921c184f32ca6bca');
+    selectedDict = saveDict(selectedDict, 'field_name');
     // 修改前
-    selectedDict = saveDict(selectedDict, 's0123bd170e411e6b54f184f32ca6bca');
+    selectedDict = saveDict(selectedDict, 'val_before');
     // 修改后 
-    selectedDict = saveDict(selectedDict ,'sc0fd81e70e411e68b2a184f32ca6bca');
+    selectedDict = saveDict(selectedDict ,'val_after');
 
-    allSelectedDict[$('#CHGDETAIL_ID').val()] = selectedDict;
+    var chgdetail_id = $('#CHGDETAIL_ID').val();
+
+    allSelectedDict[chgdetail_id] = selectedDict;
+
     $.when(mdl_save_c832fa5170e311e68db8184f32ca6bca()).done(function(){
         new_or_edit = 'new';
-        var key;
-        $('#childObjTable_c832fa5170e311e68db8184f32ca6bca tbody tr').each(function(){
-            if($(this).attr('processed')!=true){
-                // 代理编辑按钮
-                changeJSFunc($(this).find('.btn.btn-purple.btn-xs.mini.purple'), 'listEdit_o53659213e5c11e6a7bd184f32ca6bca');
-                key = $(this).find('td:eq(1)').text();
-                if(typeof selectedDict['r2d78b9e70e411e6921c184f32ca6bca']=='object'){
-                    $(this).find('td:eq(1)').html(selectedDict['r2d78b9e70e411e6921c184f32ca6bca'][key]);
-                }
-                key = $(this).find('td:eq(2)').text();
-                if(typeof selectedDict['s0123bd170e411e6b54f184f32ca6bca']=='object'){
-                    $(this).find('td:eq(2)').html(selectedDict['s0123bd170e411e6b54f184f32ca6bca'][key]);
-                }
-                key = $(this).find('td:eq(3)').text();
-                if(typeof selectedDict['sc0fd81e70e411e68b2a184f32ca6bca']=='object'){
-                    $(this).find('td:eq(3)').html(selectedDict['sc0fd81e70e411e68b2a184f32ca6bca'][key]);
-                }
-                $(this).attr('processed', 'true');
+        // 写到标签 用于提交时保存
+        var json_data = JSON.parse($('#c832fa5170e311e68db8184f32ca6bca').val());
+        json_data.forEach(function(data, index){
+            if(data['CHGDETAIL_ID'] == chgdetail_id){
+                data[chgdetail_id] = selectedDict;
             }
+        });
+        $('#c832fa5170e311e68db8184f32ca6bca').val(JSON.stringify(json_data));
+
+        $('body').append('<input type="hidden" id="'+ chgdetail_id +'"/>');
+        // 显示
+        var key;
+        $('#childObjTable_c832fa5170e311e68db8184f32ca6bca tbody tr').each(function(index){
+            selectedDict = Object.values(allSelectedDict)[index];
+            // 代理编辑按钮
+            changeJSFunc($(this).find('.btn.btn-purple.btn-xs.mini.purple'), 'listEdit_o53659213e5c11e6a7bd184f32ca6bca');
+            doCoverWrongText($(this).find('td:eq(1)'), selectedDict['field_name']);
+            doCoverWrongText($(this).find('td:eq(2)'), selectedDict['val_before']);
+            doCoverWrongText($(this).find('td:eq(3)'), selectedDict['val_after']);
         });
     });
 }
 // 将选中的下拉选内的key,value保存下来
-function saveDict(selectedDict,uuid){
-    if($('#' + uuid).is('select')){
-        var key = $('#'+ uuid +' option:selected').val();
-        var value = $('#'+ uuid +' option:selected').text();
-        selectedDict[uuid] = {};
-        selectedDict[uuid][key] = value;
+function saveDict(selectedDict,key){
+    if($('#' + key_uuid[key]).is('select')){
+        var selectkey = $('#'+ key_uuid[key] +' option:selected').val();
+        var value = $('#'+ key_uuid[key] +' option:selected').text();
+        selectedDict[key] = {};
+        selectedDict[key][selectkey] = value;
     } else {
-        selectedDict[uuid] = $('#' + uuid).val();
+        selectedDict[key] = $('#' + key_uuid[key]).val();
     }
     return selectedDict;
 }
@@ -108,17 +109,18 @@ function listEdit_o53659213e5c11e6a7bd184f32ca6bca(flow_list_id, obj){
     $.when(modi_c832fa5170e311e68db8184f32ca6bca(flow_list_id)).done(function(){
         $('#div_modal_c832fa5170e311e68db8184f32ca6bca .btn.blue').attr('onclick', 'save_o53659213e5c11e6a7bd184f32ca6bca();');
         // 回写
-        writeBack(allSelectedDict[flow_list_id], 'r2d78b9e70e411e6921c184f32ca6bca');
+        writeBack(allSelectedDict[flow_list_id], 'field_name');
         $('#r2d78b9e70e411e6921c184f32ca6bca').trigger('change');
-        writeBack(allSelectedDict[flow_list_id], 's0123bd170e411e6b54f184f32ca6bca');
-        writeBack(allSelectedDict[flow_list_id], 'sc0fd81e70e411e68b2a184f32ca6bca');
+        writeBack(allSelectedDict[flow_list_id], 'val_before');
+        writeBack(allSelectedDict[flow_list_id], 'val_after');
     });
 }
-function writeBack(selectedDict, uuid){
-    if(typeof selectedDict[uuid]=='object'){
-        $('#' + uuid).val(Object.keys(selectedDict[uuid])[0]);
-        $('#s2id_' + uuid).find('.select2-chosen').text(Object.values(selectedDict[uuid])[0]);
+// 编辑时回写内容到对话框内
+function writeBack(selectedDict, key){
+    if(typeof selectedDict[key]=='object'){
+        $('#' + key_uuid[key]).val(Object.keys(selectedDict[key])[0]);
+        $('#s2id_' + key_uuid[key]).find('.select2-chosen').text(Object.values(selectedDict[key])[0]);
     }else{
-        $('#' + uuid).val(selectedDict[uuid]);
+        $('#' + key_uuid[key]).val(selectedDict[key]);
     }
 }

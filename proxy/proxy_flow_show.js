@@ -6,6 +6,8 @@ bodyselect.query = '.detailinfo_ul_title';
 bodyselect.func = function (node) {
 	
     var out = `
+		<script type="text/javascript" src="/node/func.js"></script>
+		<script type="text/javascript" src="/node/key_uuid.js"></script>
 		<script type="text/javascript" src="/node/workflow_show.js"></script>
 	`;
 	
@@ -18,7 +20,7 @@ bodyselect.func = function (node) {
 	
 	// When the read stream has ended, attach our style to the end
 	rs.on('end', function(){
-		console.log('proxy_flow_show!!!!');
+		// console.log('proxy_flow_show!!!!');
 		ws.end(out);
 	});
 }

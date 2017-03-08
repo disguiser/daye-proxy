@@ -8,3 +8,9 @@ function changeJSFunc(obj, func_name){
         $(obj).attr('processed','true');
     }
 }
+// 覆盖错误内容
+function doCoverWrongText(jqobj, json){
+    if (typeof json == 'object' ) {
+        jqobj.text(json[jqobj.text()]);
+    }
+}

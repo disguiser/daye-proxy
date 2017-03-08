@@ -10,6 +10,8 @@ const harmon = require('./utils/harmon');
 const proxy = connect();
 const config = require('./config').proxy;
 
+const d_flow = require('./dao/d_flow');
+
 // proxy.use('/x/workflow/rtnew', harmon([], [selects[0]], true));
 // proxy.use('/x/workflow/rtnew', function (req, res, next) {
 //   let parsed = queryString.parse(req._parsedUrl.query);
@@ -46,8 +48,12 @@ proxy.use('/x/workflow/rtnew', function (req, res, next) {
 
 proxy.use('/x/workflow/dealwith', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
-  if(parsed.nextnode=='X72D77CA26F1489F92A305DDED6BE002'){
+  // d_flow.find_affar_by_taskid(parsed.taskid);
+  if(parsed.nextnode=='X72D77CA26F1489F92A305DDED6BE002'){ // 合同审批流程 业务部负责人
     let harmonBinary = harmon([], proxy_fileupload, true);
+    harmonBinary(req, res);
+  }else if(parsed.nextnode=='UDBD3001B5E3494C9B39BD9A4D20571D'){
+    let harmonBinary = harmon([], proxy_flow_new, true);
     harmonBinary(req, res);
   }
   next();

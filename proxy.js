@@ -75,6 +75,12 @@ proxy.use('/x/workflow/rtview', async (req, res, next) => {
   }
   next();
 });
+// 项目签报审批流程 项目立项审批流程(合并) 收款流程
+proxy.use('/x/workflow/rtflow', function (req, res, next) {
+  let harmonBinary = harmon([], proxy_flow_show, true);
+  harmonBinary(req, res);
+  next();
+});
 // 下载pdf
 proxy.use('/x/intrustqlc/static/pdf', function (req, res, next) {
   res.type = 'mimetype';

@@ -6,6 +6,7 @@ const queryString = require('query-string');
 const proxy_fileupload = require('./proxy/proxy_fileupload.js');
 const proxy_flow_new = require('./proxy/proxy_flow_new.js');
 const proxy_flow_show = require('./proxy/proxy_flow_show.js');
+const proxy_flow_select = require('./proxy/proxy_flow_select.js');
 const harmon = require('./utils/harmon');
 const proxy = connect();
 const config = require('./config').proxy;
@@ -21,58 +22,59 @@ const d_flow = require('./dao/d_flow');
 //   }
 //   next();
 // });
+// 贷款投资合同录入流程 + 项目签报变更流程 + 抵质押物录入流程 + 收款流程
+let proxy_flow_new_dict = [
+  'faca20a152f311e6892e184f32ca6bca',
+  'o53659213e5c11e6a7bd184f32ca6bca',
+  'tc539970ff0911e694b4005056a60fd8',
+  'v7608f2e3e8811e688c2184f32ca6bca'
+];
 proxy.use('/x/workflow/rtnew', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
   // 合同审批流程 附件上传
-  if(parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca'){
+  if ( parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca' ) {
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
-  // 贷款投资合同录入流程
-  if(parsed.flowid=='faca20a152f311e6892e184f32ca6bca'){
-    let harmonBinary = harmon([], proxy_flow_new, true);
-    harmonBinary(req, res);
-  }
-  // 项目签报变更流程
-  if(parsed.flowid=='o53659213e5c11e6a7bd184f32ca6bca'){
-    let harmonBinary = harmon([], proxy_flow_new, true);
-    harmonBinary(req, res);
-  }
-  // 抵质押物录入流程
-  if(parsed.flowid=='tc539970ff0911e694b4005056a60fd8'){
+  // 贷款投资合同录入流程 + 项目签报变更流程 + 抵质押物录入流程 + 收款流程
+  if ( proxy_flow_new_dict.indexOf(parsed.flowid)>=0 ) {
     let harmonBinary = harmon([], proxy_flow_new, true);
     harmonBinary(req, res);
   }
   next();
 });
 
-proxy.use('/x/workflow/dealwith', function (req, res, next) {
+proxy.use('/x/workflow/dealwith', async (req, res, next) => {
   let parsed = queryString.parse(req._parsedUrl.query);
-  // d_flow.find_affar_by_taskid(parsed.taskid);
+  let affair = await d_flow.find_affar_by_taskid(parsed.taskid);
   if(parsed.nextnode=='X72D77CA26F1489F92A305DDED6BE002'){ // 合同审批流程 业务部负责人
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
-  }else if(parsed.nextnode=='UDBD3001B5E3494C9B39BD9A4D20571D'){
-    let harmonBinary = harmon([], proxy_flow_new, true);
+  }else if(affair!=undefined && affair.flow_id=='o53659213e5c11e6a7bd184f32ca6bca'){ // 项目签报变更流程
+    let harmonBinary = harmon([], proxy_flow_select, true);
     harmonBinary(req, res);
   }
   next();
 });
 
 // proxy.use('/x/workflow/rtview', harmon([], [selects[2]], true));
-// 项目签报审批流程 项目立项审批流程(合并)
-proxy.use('/x/workflow/rtview', function (req, res, next) {
-  let harmonBinary = harmon([], proxy_flow_show, true);
-  harmonBinary(req, res);
+proxy.use('/x/workflow/rtview', async (req, res, next) => {
+  let parsed = queryString.parse(req._parsedUrl.query);
+  let affair;
+  if(parsed.taskid!=undefined){
+    affair = await d_flow.find_affar_by_taskid(parsed.taskid);
+  }else if(parsed.affaid!=undefined){
+    affair = await d_flow.find_affar(parsed.affaid);
+  }
+  if(affair.flow_id=='o53659213e5c11e6a7bd184f32ca6bca'){ // 项目签报变更流程
+    let harmonBinary = harmon([], proxy_flow_select, true);
+    harmonBinary(req, res);
+  }else{ // 项目签报审批流程 项目立项审批流程(合并)
+    let harmonBinary = harmon([], proxy_flow_show, true);
+    harmonBinary(req, res);
+  }
   next();
 });
-// 项目签报审批流程 项目立项审批流程(合并)
-proxy.use('/x/workflow/rtflow', function (req, res, next) {
-  let harmonBinary = harmon([], proxy_flow_show, true);
-  harmonBinary(req, res);
-  next();
-});
-
 // 下载pdf
 proxy.use('/x/intrustqlc/static/pdf', function (req, res, next) {
   res.type = 'mimetype';

@@ -6,7 +6,8 @@ let c_find_affar_by_taskid = async () => {
 }
 
 (async () => {
-    let affair = await c_find_affar_by_taskid();
-    console.log(affair.flow_id);
+    // let affair = await c_find_affar_by_taskid();
+    let affair = await d_flow.find_affar_by_taskid('v5cb6d6202e211e7b389005056a60fd8');
+    console.log(affair!=undefined && true);
     process.exit(0);
 })();

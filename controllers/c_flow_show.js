@@ -72,7 +72,7 @@ let receivables = async(affair) => {
     console.log(affair.jsondata);
     let json_data = JSON.parse(affair.jsondata);
     let node_id = affair.node_id ? affair.node_id : '';
-    if(affair.flow_id=='v7608f2e3e8811e688c2184f32ca6bca'){ // 收款
+    if (affair.flow_id=='v7608f2e3e8811e688c2184f32ca6bca') { // 收款
         return {
             success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printInNotice?in_uuid=${json_data.u948ea80f5b911e68893415645000030}&node_id=${node_id}"></iframe>`
         }
@@ -89,7 +89,7 @@ let receivables = async(affair) => {
 
 let flowRouter = async(affair) => {
     let res;
-    console.log(affair);
+    // console.log(affair);
     if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca') { // 合同审批流程
         res = await contractApproval(affair);
     } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程

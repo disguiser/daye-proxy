@@ -20,7 +20,7 @@ jqueryselect.func = function (node) {
   });
 
   stm.on('end', function () {
-    if (tag.match(/^<script src=[\s\S]*\/jquery-1.10.2.min.js"[\s\S]*<\/script>$/)) {
+    if (tag.match(/^<script[\s\S]*\/jquery-1.10.2.min.js"[\s\S]*<\/script>$/)) {
       stm.end(out);
     } else {
       stm.end(tag);

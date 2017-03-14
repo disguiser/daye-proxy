@@ -3,7 +3,16 @@ var allSelectedDict = [];
 var select_flownames = [
     '项目签报变更流程','抵质押物录入流程'
 ];
+var rules;
 $(function(){
+    rules = {
+        rules: {}
+    };
+    rules['rules'][key_uuid['val_after']] = 'required';
+    // 点击提交后会清除对话框内容
+    // $('#btnSubmit').click(function(){
+    //     new_or_edit = 'new';
+    // });
     // 项目签报变更流程
     // 编辑页面一开始就得显示 可能执行的时候dom还没渲染完成,这里加个轮询
     var count = 0;
@@ -23,6 +32,7 @@ $(function(){
             if ($('#divVal_c832fa5170e311e68db8184f32ca6bca input:eq(0)').val() != undefined && $('#divVal_c832fa5170e311e68db8184f32ca6bca input:eq(0)').val() != '') {
                 allSelectedDict = JSON.parse($('#divVal_c832fa5170e311e68db8184f32ca6bca input:eq(0)').val());
                 if (Object.values(allSelectedDict[0]).length < 5) {
+                    clearInterval(loop);
                     return;
                 }
                 // 更改现有table里的错误内容
@@ -46,21 +56,26 @@ $(function(){
     },1000);
 });
 // 全局变量 用于记录当前蓝色加号按钮是新增还是编辑 防止每次都渲染对话框
-var new_or_edit = 'new';
+// var new_or_edit = 'new';
 // 代理新增函数 项目签报变更流程
 function listAdd_o53659213e5c11e6a7bd184f32ca6bca(){
-    if (new_or_edit == 'new') {
-        $.when(modi_c832fa5170e311e68db8184f32ca6bca('')).done(function(){
-            new_or_edit = 'edit';
-            // 替换保存按钮的点击事件 
-            $('#div_modal_c832fa5170e311e68db8184f32ca6bca .btn.blue').attr('onclick', 'save_o53659213e5c11e6a7bd184f32ca6bca();');
-        });
-    } else {
-        $('#div_modal_c832fa5170e311e68db8184f32ca6bca').modal('show');
-    }
+    $.when(modi_c832fa5170e311e68db8184f32ca6bca('')).done(function(){
+        // new_or_edit = 'edit';
+        // 替换保存按钮的点击事件 
+        $('#div_modal_c832fa5170e311e68db8184f32ca6bca .btn.blue').attr('onclick', 'save_o53659213e5c11e6a7bd184f32ca6bca();');
+    });
+    // if (new_or_edit == 'new') {
+    // } else {
+    //     $('#div_modal_c832fa5170e311e68db8184f32ca6bca').modal('show');
+    // }
 }
 // 代理保存函数 项目签报变更流程
 function save_o53659213e5c11e6a7bd184f32ca6bca(){
+    $('#' + key_uuid['val_after']).attr('required', '');
+    if (!$('#form_c832fa5170e311e68db8184f32ca6bca').validate().form()) {
+        return;
+    }
+
     var selectedDict = {};
     // 修改要素
     selectedDict = saveDict(selectedDict, 'field_name');
@@ -69,10 +84,16 @@ function save_o53659213e5c11e6a7bd184f32ca6bca(){
     // 修改后 
     selectedDict = saveDict(selectedDict ,'val_after');
 
+    if (selectedDict['val_after'] == selectedDict['val_before'] || 
+        selectedDict['val_after']['key'] == selectedDict['val_before']['key']) {
+        alert('修改前与修改后不能相同');
+        return;
+    }
+
     var chgdetail_id = $('#CHGDETAIL_ID').val();
 
     $.when(mdl_save_c832fa5170e311e68db8184f32ca6bca()).done(function(){
-        new_or_edit = 'new';
+        // new_or_edit = 'new';
         // 写到标签 用于提交时保存
         var json_data = JSON.parse($('#c832fa5170e311e68db8184f32ca6bca').val());
         json_data.forEach(function(data, index){
@@ -172,24 +193,32 @@ function writeBackInEdit(selectedDict, flow_row_id, key){
     }
 }
 // 将选中的下拉选内的key,value保存下来
-function saveDict(selectedDict,key){
+function saveDict(selectedDict, key){
     if ($('#' + key_uuid[key]).is('select')) {
         var selectkey = $('#'+ key_uuid[key] +' option:selected').val();
         var value = $('#'+ key_uuid[key] +' option:selected').text();
         selectedDict[key] = {};
         selectedDict[key][selectkey] = value;
+        selectedDict[key]['key'] = selectkey;
+        selectedDict[key]['value'] = value;
         selectedDict[key]['type'] = 'select';
     } else if ($('#' + key_uuid[key]).is('input[type="checkbox"]')) {
         selectedDict[key] = {};
         var checkboxIds = [],
-            checkboxNames = [];
+            checkboxNames = [],
+            selectkey,
+            value;
         $('#divVal_' + key_uuid[key] + ' label').each(function(index, element){
             if ($(element).find('input')[0].checked) {
                 checkboxIds.push($(element).find('input').val());
                 checkboxNames.push($(element).text());
             }
         });
-        selectedDict[key][checkboxIds.join('|')] = checkboxNames.join('|');
+        selectkey = checkboxIds.join('|');
+        value = checkboxNames.join('|')
+        selectedDict[key][selectkey] = value;
+        selectedDict[key]['key'] = selectkey;
+        selectedDict[key]['value'] = value;
         selectedDict[key]['type'] = 'checkbox';
     } else {
         selectedDict[key] = $('#' + key_uuid[key]).val();

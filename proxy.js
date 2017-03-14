@@ -26,7 +26,8 @@ const d_flow = require('./dao/d_flow');
 let proxy_flow_new_dict = [
   'faca20a152f311e6892e184f32ca6bca',
   'tc539970ff0911e694b4005056a60fd8',
-  'v7608f2e3e8811e688c2184f32ca6bca'
+  'v7608f2e3e8811e688c2184f32ca6bca',
+  'v11a7d403e8611e6b07e184f32ca6bca'
 ];
 let proxy_flow_select_dict = [
   'o53659213e5c11e6a7bd184f32ca6bca'
@@ -38,7 +39,7 @@ proxy.use('/x/workflow/rtnew', function (req, res, next) {
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
-  // 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程
+  // 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 付款流程
   if ( proxy_flow_new_dict.indexOf(parsed.flowid)>=0 ) {
     let harmonBinary = harmon([], proxy_flow_new, true);
     harmonBinary(req, res);

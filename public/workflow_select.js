@@ -226,8 +226,7 @@ function saveDict(selectedDict, key){
     return selectedDict;
 }
 function listView_o53659213e5c11e6a7bd184f32ca6bca(flow_row_id, obj, flow_list_id){
-    var fn = eval('view_' + flow_list_id);
-    fn.call(flow_row_id);
+    var fn = eval('view_' + flow_list_id + '("' + flow_row_id + '")');
     allSelectedDict[flow_list_id].forEach(function(data, index){
         if(data['CHGDETAIL_ID']==flow_row_id){
             writeBackInView(data, flow_row_id, 'field_name');

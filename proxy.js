@@ -7,6 +7,7 @@ const proxy_fileupload = require('./proxy/proxy_fileupload.js');
 const proxy_flow_new = require('./proxy/proxy_flow_new.js');
 const proxy_flow_show = require('./proxy/proxy_flow_show.js');
 const proxy_flow_select = require('./proxy/proxy_flow_select.js');
+const proxy_obj_new = require('./proxy/proxy_obj_new.js');
 const harmon = require('./utils/harmon');
 const proxy = connect();
 const config = require('./config').proxy;
@@ -97,6 +98,19 @@ proxy.use('/x/workflow/rtflow', async (req, res, next) => {
       let harmonBinary = harmon([], proxy_flow_show, true);
       harmonBinary(req, res);
     }
+  }
+  next();
+});
+// 交易对手维护
+let proxy_obj_new_dict = [
+  'v747d92ec81311e68aa0005056a687a8',
+  'c588f5c0c81311e68438005056a687a8'
+];
+proxy.use('/f/v/objedit', function (req, res, next) {
+  let parsed = queryString.parse(req._parsedUrl.query);
+  if (proxy_obj_new_dict.indexOf(parsed.clsid) >= 0) {
+    let harmonBinary = harmon([], proxy_obj_new, true);
+    harmonBinary(req, res);
   }
   next();
 });

@@ -127,6 +127,9 @@ select REGITEM_NO from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=
 * fdf2ed804a6411e6905fd85de21f6642-放款审批流程
 * o53659213e5c11e6a7bd184f32ca6bca-项目签报变更流程
 * tc539970ff0911e694b4005056a60fd8-抵质押物录入流程
+#### 对象
+* v747d92ec81311e68aa0005056a687a8-资产端个人客户
+* c588f5c0c81311e68438005056a687a8-资产端机构客户
 #### 对象属性
 ##### 产品发行确认单
 * be3910515f9711e68e53b888e3e688de-信托项目是否已上会

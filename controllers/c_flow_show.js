@@ -98,6 +98,10 @@ let flowRouter = async(affair) => {
         res = await projectReport(affair);
     } else if (affair.flow_id == 'v7608f2e3e8811e688c2184f32ca6bca' || affair.flow_id == 'v11a7d403e8611e6b07e184f32ca6bca' || affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642') { // 收款流程 + 付款流程 + 放款审批流程
         res = await receivables(affair);
+    } else if (affair.flow_id == 'o53659213e5c11e6a7bd184f32ca6bca' || affair.flow_id == 'rdf83711470311e68bb0184f32ca6bca') {
+        res = {
+            success : affair.flow_id
+        }
     } else {
         res = {fail: '非指定流程'};
     }

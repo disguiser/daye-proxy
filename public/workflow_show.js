@@ -1,7 +1,8 @@
 // 流程展示界面
 $(function(){
-    var affaid = parseUrlParams().affaid,
-        taskid = parseUrlParams().taskid,
+    var urlParams = parseUrlParams();
+    var affaid = urlParams.affaid,
+        taskid = urlParams.taskid,
         flowname = $('.detailinfo_title').text();
         // flowid = $('#auth_flow_id').val();
     var url;

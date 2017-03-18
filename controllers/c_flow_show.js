@@ -53,12 +53,30 @@ let productDistribution  = async(affair) => {
     let project_info = await d_flow.find_project_info_by_product_id(product_id);
     let json_data = await d_flow.find_tasks(affair.affa_id);
     return {
-        success: temple.render('fx_table.html' ,{
+        success: temple.render('fx_table.html', {
             project_info: project_info,
             json_data: json_data,
             dict_yes_or_no: dict_yes_or_no
         })
     };
+}
+// 项目签报变更流程 + 中后期变更签报流程
+let signChange = async(affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson['d7fbd530789311e6a510184f32ca6bca'];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    let json_data = parsedJson['c832fa5170e311e68db8184f32ca6bca'];
+    console.log(JSON.parse(json_data));
+    return {
+        success: {
+            flow_id: affair.flow_id,
+            html: temple.render('change_table.html', {
+                project_info: project_info,
+                json_data: JSON.parse(json_data),
+                risk_assessment: parsedJson['v9d0af4070e511e6935b184f32ca6bca']
+            })
+        }
+    }
 }
 // 项目签报审批流程 与 项目立项审批流程(合并)
 let projectReport = async(affair) => {
@@ -98,10 +116,8 @@ let flowRouter = async(affair) => {
         res = await projectReport(affair);
     } else if (affair.flow_id == 'v7608f2e3e8811e688c2184f32ca6bca' || affair.flow_id == 'v11a7d403e8611e6b07e184f32ca6bca' || affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642') { // 收款流程 + 付款流程 + 放款审批流程
         res = await receivables(affair);
-    } else if (affair.flow_id == 'o53659213e5c11e6a7bd184f32ca6bca' || affair.flow_id == 'rdf83711470311e68bb0184f32ca6bca') {
-        res = {
-            success : affair.flow_id
-        }
+    } else if (affair.flow_id == 'o53659213e5c11e6a7bd184f32ca6bca' || affair.flow_id == 'rdf83711470311e68bb0184f32ca6bca') { // 项目签报变更流程 + 中后期变更签报流程
+        res = await signChange(affair);
     } else {
         res = {fail: '非指定流程'};
     }

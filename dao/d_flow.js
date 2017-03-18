@@ -14,6 +14,13 @@ let find_affar_by_taskid = async (task_id) => {
     });
     return data[0];
 }
+let find_project_info = async (regitem_id) => {
+    let product_info = await sequelize.query(`select REGITEM_NO,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE from INTRUSTQLC..QLC_TITEMREGINFO 
+        where REGITEM_ID = ${regitem_id}`,{
+        type: sequelize.QueryTypes.SELECT
+    });
+    return product_info[0];
+}
 let find_project_info_by_product_id = async (product_id) => {
     let product_info = await sequelize.query(`select REGITEM_NO,REGITEM_NAME from INTRUSTQLC..QLC_TITEMREGINFO where REGITEM_ID = 
         (select REGITEM_ID from INTRUSTQLC..qlc_tproduct where PRODUCT_ID=${product_id})`,{
@@ -43,6 +50,7 @@ module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
     find_tasks: find_tasks,
+    find_project_info: find_project_info,
     find_project_info_by_product_id: find_project_info_by_product_id,
     find_project_info_by_problem_id: find_project_info_by_problem_id
 }

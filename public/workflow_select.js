@@ -1,4 +1,5 @@
 var allSelectedDict = [];
+// 项目签报变更流程 + 中后期签报变更流程
 var key_uuid = {
     o53659213e5c11e6a7bd184f32ca6bca: {
         listid: 'c832fa5170e311e68db8184f32ca6bca'
@@ -31,11 +32,16 @@ $(function(){
     if (url != undefined) {
         $.getJSON(url, function(data) {
             if (data.success != undefined) {
-                flowid = data.success;
+                flowid = data.success.flow_id;
+                $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').html(data.success.html);
+                startDeal(flowid);
             }
         });
+    } else {
+        startDeal(flowid);
     }
-    // 项目签报变更流程
+});
+function startDeal(flowid) {
     // 编辑页面一开始就得显示 可能执行的时候dom还没渲染完成,这里加个轮询
     var count = 0;
     var loop = setInterval(function(){
@@ -79,7 +85,7 @@ $(function(){
         }
         count ++ ;
     },1000);
-});
+}
 // 全局变量 用于记录当前蓝色加号按钮是新增还是编辑 防止每次都渲染对话框 校验都会导致对话框重新渲染,只能接受对话框的重复渲染
 // var new_or_edit = 'new';
 // 代理新增函数 项目签报变更流程

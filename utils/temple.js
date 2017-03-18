@@ -27,6 +27,9 @@ module.exports = createEnv('templates', {
     filters: {
         hex: function (n) {
             return '0x' + n.toString(16);
+        },
+        is_string: function(obj) {
+            return typeof obj == 'string'
         }
     }
 });

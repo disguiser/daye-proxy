@@ -1,0 +1,63 @@
+<h1></h1>
+<table class="change-table">
+    <tbody>
+        <tr>
+            <td><b>项目名称</b></td>
+            <td>{{ project_info.REGITEM_NAME }}</td>
+            <td><b>成立日期</b></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>申报部门</b></td>
+            <td>{{ project_info.REGITEM_DP_NAME }}</td>
+            <td><b>信托经理</b></td>
+            <td>{{ project_info.REGITEM_OP_NAME }}</td>
+        </tr>
+        <tr>
+            <td><b>签报日期</b></td>
+            <td>{{ project_info.APPLY_DATE }}</td>
+            <td><b>项目编号</b></td>
+            <td>{{ project_info.REGITEM_NO }}</td>
+        </tr>
+        <tr>
+            <td><b>重大事项风险评估</b></td>
+            <td colspan="3">{{ risk_assessment }}</td>
+        </tr>
+        <tr>
+            <td rowspan="{{ json_data.length + 1 }}"><b>申报事项</b></td>
+            <td><b>要素名称</b></td>
+            <td><b>变更前值</b></td>
+            <td><b>变更后值</b></td>
+        </tr>
+        {% for a in json_data %}
+        <tr>
+            <td>{{ a[a['CHGDETAIL_ID']]['field_name'][a['field_name']] }}</td>
+            <td>
+                {% if a[a['CHGDETAIL_ID']]['val_before'] | is_string %}
+                {{ a[a['CHGDETAIL_ID']]['val_before'] }}
+                {% else %}
+                {{ a[a['CHGDETAIL_ID']]['val_before'][a['val_before']] }}
+                {% endif %}
+            </td>
+            <td>
+                {% if a[a['CHGDETAIL_ID']]['val_after'] | is_string %}
+                {{ a[a['CHGDETAIL_ID']]['val_after'] }}
+                {% else %}
+                {{ a[a['CHGDETAIL_ID']]['val_after'][a['val_after']] }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<style type="text/css">
+    .change-table {
+        text-align: center;
+        width: 700px;
+        border: 1px solid black;
+    }
+    .change-table td {
+        padding: 5px;
+        border: 1px solid black;
+    }
+</style>

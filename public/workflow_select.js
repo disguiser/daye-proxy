@@ -1,5 +1,5 @@
-var allSelectedDict = [];
 // 项目签报变更流程 + 中后期签报变更流程
+var allSelectedDict = [];
 var key_uuid = {
     o53659213e5c11e6a7bd184f32ca6bca: {
         listid: 'c832fa5170e311e68db8184f32ca6bca'

@@ -60,12 +60,22 @@ let productDistribution  = async(affair) => {
         })
     };
 }
+let flow_regitem = {
+    rdf83711470311e68bb0184f32ca6bca: {
+        regitem_id: 'wb14720059e311e6adbef0def1c335c3',
+        json_data: 's085a85e4f0911e69112184f32ca6bca'
+    },
+    o53659213e5c11e6a7bd184f32ca6bca: {
+        regitem_id: 'd7fbd530789311e6a510184f32ca6bca',
+        json_data: 'c832fa5170e311e68db8184f32ca6bca'
+    }
+}
 // 项目签报变更流程 + 中后期变更签报流程
 let signChange = async(affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
-    let regitem_id = parsedJson['d7fbd530789311e6a510184f32ca6bca'];
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    let json_data = parsedJson['c832fa5170e311e68db8184f32ca6bca'];
+    let json_data = parsedJson[flow_regitem[affair.flow_id]['json_data']];
     console.log(JSON.parse(json_data));
     return {
         success: {

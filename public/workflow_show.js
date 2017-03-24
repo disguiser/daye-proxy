@@ -8,7 +8,7 @@ $(function(){
     var url;
     // 需要往正文插入内容的流程
     var zw_flownames = [
-        '合同审批流程','产品发行流程','项目签报审批流程','项目立项审批流程(合并)','收款流程','付款流程','放款审批流程'
+        '合同审批流程','产品发行流程','项目签报审批流程','项目立项审批流程(合并)','收款流程','付款流程','放款审批流程', '销户流程', '账户开户流程'
     ];
     if (zw_flownames.indexOf(flowname) >= 0) {
         if(affaid != undefined){
@@ -20,6 +20,7 @@ $(function(){
         }
         $.getJSON(url, function(data){
             if(data.success != undefined){
+                $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').css('text-align', 'center');
                 $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').html(data.success);
                 // $('.detailinfo_ul_cont').html(data.success);
                 // 如果是iframe,隐藏内部按钮

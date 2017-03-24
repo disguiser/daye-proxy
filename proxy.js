@@ -80,7 +80,7 @@ proxy.use('/x/workflow/rtview', async (req, res, next) => {
   if (proxy_flow_select_dict.indexOf(affair.flow_id) >= 0) { // 项目签报变更流程 + 中后期签报变更流程
     let harmonBinary = harmon([], proxy_flow_select, true);
     harmonBinary(req, res);
-  } else { // 项目签报审批流程 项目立项审批流程(合并)
+  } else { // 项目签报审批流程 项目立项审批流程(合并) + 账户开户流程 + 销户流程
     let harmonBinary = harmon([], proxy_flow_show, true);
     harmonBinary(req, res);
   }

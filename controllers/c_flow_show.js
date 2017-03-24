@@ -2,8 +2,9 @@
 const temple = require('../utils/temple.js');
 const d_flow = require('../dao/d_flow.js');
 const d_attachment = require('../dao/d_attachment.js');
-const dict_file_type = require('../models/dict_file_type');
-const dict_yes_or_no = require('../models/dict_yes_or_no');
+const dict_file_type = require('../dicts/dict_file_type');
+const dict_yes_or_no = require('../dicts/dict_yes_or_no');
+const dict_bank_type = require('../dicts/dict_bank_type');
 
 let contractApproval = async (affair) => {
     // 合同审批流程
@@ -51,7 +52,7 @@ let productDistribution  = async(affair) => {
     // console.log(affair.jsondata);
     let product_id = JSON.parse(affair.jsondata)['a81a38d15f9711e6aaebb888e3e688de'];
     let project_info = await d_flow.find_project_info_by_product_id(product_id);
-    let json_data = await d_flow.find_tasks(affair.affa_id);
+    let json_data = await d_flow.find_tasks(affair.affa_id, "'R29FFCA438734A42AE6409144A1D78A3','PBB558EE7E914339B01828AC11437874','D6887042FAD54274857C6A48018A820F'");
     return {
         success: temple.render('fx_table.html', {
             project_info: project_info,
@@ -68,6 +69,12 @@ let flow_regitem = {
     o53659213e5c11e6a7bd184f32ca6bca: {
         regitem_id: 'd7fbd530789311e6a510184f32ca6bca',
         json_data: 'c832fa5170e311e68db8184f32ca6bca'
+    },
+    eebf606e3e6411e68f15184f32ca6bca: {
+        regitem_id: 'v78cb1a16f4311e6a83340f02f0658fc'
+    },
+    p0cf06613e8e11e680a2184f32ca6bca: {
+        regitem_id: 'o6587480546111e6ac90b888e335e00a'
     }
 }
 // 项目签报变更流程 + 中后期变更签报流程
@@ -114,7 +121,35 @@ let receivables = async(affair) => {
         }
     }
 }
-
+let accountOpen = async(affair) => {
+    let affair_json = JSON.parse(affair.jsondata);
+    let regitem_id = affair_json[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    let product_info = await d_flow.find_product_info(regitem_id);
+    // let task_jsons = await d_flow.find_tasks(affair, "'O91D097B848A4CFD934EB2A1848D5D04','UEBA868CD26E4027A05B3D6CB91B4201'");
+    return {
+        success: temple.render('account_open.html', {
+            project_info: project_info,
+            product_info: product_info,
+            affair_json: affair_json,
+            dict_yes_or_no: dict_yes_or_no,
+            dict_bank_type: dict_bank_type
+        })
+    };
+}
+let accountCancel = async(affair) => {
+    let affair_json = JSON.parse(affair.jsondata);
+    let regitem_id = affair_json[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    let product_info = await d_flow.find_product_info(regitem_id);
+    return {
+        success: temple.render('account_cancel.html', {
+            project_info: project_info,
+            product_info: product_info,
+            affair_json: affair_json
+        })
+    };
+}
 let flowRouter = async(affair) => {
     let res;
     // console.log(affair);
@@ -128,6 +163,10 @@ let flowRouter = async(affair) => {
         res = await receivables(affair);
     } else if (affair.flow_id == 'o53659213e5c11e6a7bd184f32ca6bca' || affair.flow_id == 'rdf83711470311e68bb0184f32ca6bca') { // 项目签报变更流程 + 中后期变更签报流程
         res = await signChange(affair);
+    } else if (affair.flow_id == 'eebf606e3e6411e68f15184f32ca6bca') { // 账户开户流程
+        res = await accountOpen(affair);
+    } else if (affair.flow_id == 'p0cf06613e8e11e680a2184f32ca6bca') { // 销户流程
+        res = await accountCancel(affair); 
     } else {
         res = {fail: '非指定流程'};
     }

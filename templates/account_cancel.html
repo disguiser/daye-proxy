@@ -1,0 +1,92 @@
+<h1>信托账户销户申请及审批表</h1>
+<table id="node_table">
+    <tr>
+        <td width="16%"><b>申请部门:</b>{{ project_info.REGITEM_DP_NAME }}</td>
+        <td width="14%"><b>申请人</b></td>
+        <td width="14%">{{ project_info.REGITEM_OP_NAME }}</td>
+        <td width="14%"><b>申请日期</b></td>
+        <td width="14%">{{ project_info.APPLY_DATE }}</td>
+    </tr>
+    <tr>
+        <td><b>产品编号</b></td>
+        <td colspan="4">{{ product_info.PRODUCT_CODE }}</td>
+    </tr>
+    <tr>
+        <td><b>项目名称</b></td>
+        <td colspan="4">{{ project_info.REGITEM_NAME }}</td>
+    </tr>
+    <tr>
+        <td rowspan="3"><b>拟销账户信息</b></td>
+        <td><b>银行账户名称</b></td>
+        <td colspan="3"></td>
+    </tr>
+    <tr>
+        <td><b>开户银行名称</b></td>
+        <td colspan="3">{{ affair_json['s64420403ea311e6aebb184f32ca6bca'] }}</td>
+    </tr>
+    <tr>
+        <td><b>银行账号</b></td>
+        <td colspan="3"></td>
+    </tr>
+    <tr>
+        <td><b>销户原因</b></td>
+        <td colspan="4">{{ affair_json['wf311a113ea311e6b2a2184f32ca6bca'] }}</td>
+    </tr>
+    <tr>
+        <td rowspan="3"><b>销户余额收款账户信息</b></td>
+        <td><b>账户名称</b></td>
+        <td colspan="3">{{ affair_json['se2a7240cccf11e6be9a005056a687a8'] }}</td>
+    </tr>
+    <tr>
+        <td><b>银行名称</b></td>
+        <td colspan="3">{{ affair_json['v2d691a1cccf11e6b838005056a687a8'] }}</td>
+    </tr>
+    <tr>
+        <td><b>收款账号</b></td>
+        <td colspan="3">{{ affair_json['w83e270fcccf11e6a211005056a687a8'] }}</td>
+    </tr>
+    <tr>
+        <td><b>申请人签字</b></td>
+        <td></td>
+        <td><b>申请部门负责人审核</b></td>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td><b>经办会计审核</b></td>
+        <td></td>
+        <td><b>财务负责人审核</b></td>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td colspan="5">销户情况（信托财务部填写）</td>
+    </tr>
+    <tr>
+        <td><b>注销时间</b></td>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td><b>销户余额</b></td>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td><b>备注信息</b></td>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td><b>销户经办人</b></td>
+        <td></td>
+        <td><b>出纳经办确认</b></td>
+        <td colspan="2"></td>
+    </tr>
+</table>
+<style type="text/css">
+    #node_table {
+        margin: auto;
+        width: 770px;
+        border: 1px solid black;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+</style>

@@ -1,5 +1,5 @@
 'use strict';
-const fs = require('fs');
+const fs = require('mz/fs');
 const d_attachment = require('../dao/d_attachment.js');
 const temple = require('../utils/temple.js');
 const urlencode = require('urlencode');
@@ -11,7 +11,7 @@ let pipeSync = (rs, file_path) => {
     let ws = fs.createWriteStream(file_path);
     rs.pipe(ws);
     return new Promise((resolve, reject) => {
-        rs.on('end', () => resolve(fs.statSync(file_path).size));
+        rs.on('end', () => resolve(fs.stat(file_path)));
         rs.on('error', reject);
     });
 }
@@ -42,8 +42,10 @@ module.exports = function (router) {
                     file_path = disk_path + Date.now() + file_name,
                     upload_time = new Date(Date.now()).toLocaleString(),
                     file_size;
-                file_size = await pipeSync(files[i], file_path);
-                file_size = filesize(file_size);
+                // file_size = await pipeSync(files[i], file_path);
+                let stat = await pipeSync(files[i], file_path);
+                // console.log(stat.size);
+                file_size = filesize(stat.size);
                 console.log('uploading %s %s -> %s', file_name, file_size, file_path);
                 let id = await d_attachment.insert(flow_list_id, file_name, file_size, upload_time, file_path, fields['another_temp_id']);
                 result.push({

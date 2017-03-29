@@ -8,6 +8,7 @@ const proxy_flow_new = require('./proxy/proxy_flow_new.js');
 const proxy_flow_show = require('./proxy/proxy_flow_show.js');
 const proxy_flow_select = require('./proxy/proxy_flow_select.js');
 const proxy_obj_new = require('./proxy/proxy_obj_new.js');
+const proxy_flow_url = require('./proxy/proxy_flow_url.js');
 const harmon = require('./utils/harmon');
 const proxy = connect();
 const config = require('./config').proxy;
@@ -56,6 +57,10 @@ proxy.use('/x/workflow/rtnew', function (req, res, next) {
 });
 
 proxy.use('/x/workflow/dealwith', async (req, res, next) => {
+
+  let harmonBinary = harmon([], proxy_flow_url, true);
+  harmonBinary(req, res);
+
   let parsed = queryString.parse(req._parsedUrl.query);
   let affair = await d_flow.find_affar_by_taskid(parsed.taskid);
   if(parsed.nextnode=='X72D77CA26F1489F92A305DDED6BE002'){ // 合同审批流程 业务部负责人

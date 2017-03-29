@@ -1,13 +1,38 @@
-const sequelize = require('../utils/sequelize_init');
-const d_flow = require('../dao/d_flow');
+const assert = require('assert');
+const sum = require('../hello');
 
-let c_find_affar_by_taskid = async () => {
-    return await d_flow.find_affar_by_taskid('v5cb6d6202e211e7b389005056a60fd8');
-}
+describe('#hello.js', () => {
+    describe('#sum()', () => {
+        before(function () {
+            console.log('before:');
+        });
 
-(async () => {
-    // let affair = await c_find_affar_by_taskid();
-    let affair = await d_flow.find_affar_by_taskid('v5cb6d6202e211e7b389005056a60fd8');
-    console.log(affair!=undefined && true);
-    process.exit(0);
-})();
+        after(function () {
+            console.log('after.');
+        });
+
+        beforeEach(function () {
+            console.log('  beforeEach:');
+        });
+
+        afterEach(function () {
+            console.log('  afterEach.');
+        });
+
+        it('sum() should return 0', () => {
+            assert.strictEqual(sum(), 0);
+        });
+
+        it('sum(1) should return 1', () => {
+            assert.strictEqual(sum(1), 1);
+        });
+
+        it('sum(1, 2) should return 3', () => {
+            assert.strictEqual(sum(1, 2), 3);
+        });
+
+        it('sum(1, 2, 3) should return 6', () => {
+            assert.strictEqual(sum(1, 2, 3), 6);
+        });
+    });
+});

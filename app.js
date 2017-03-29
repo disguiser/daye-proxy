@@ -34,5 +34,4 @@ require('./controllers/c_flow_show.js')(router);
 
 app.use(router.routes());
 // listen
-app.listen(3000);
-console.log('应用服务器启动,监听端口3000');
+module.exports = app;

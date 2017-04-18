@@ -99,7 +99,7 @@ let signChange = async(affair) => {
 let projectReport = async(affair) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
     return {
-        success: '项目编号为: ' + project_info['REGITEM_NO']
+        success: '项目编号为: ' + project_info['REGITEM_CODE']
     };
 }
 // 收款流程 + 付款流程

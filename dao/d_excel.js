@@ -1,5 +1,4 @@
 'use strict';
-const sequelize = require('../utils/sequelize_init');
 const ExcelTemp = require('../models/ExcelTemp');
 const GridColumns = require('../models/GridColumns');
 

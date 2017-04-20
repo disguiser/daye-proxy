@@ -1,5 +1,5 @@
 'use strict';
-const sequelize = require('../utils/sequelize_init');
+const sequelize = require('../utils/sequelize_init').pjmain;
 
 let find_guarantor_dict = async (dict_id, next) => {
     let cust_name;

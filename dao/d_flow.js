@@ -1,5 +1,5 @@
 'use strict';
-const sequelize = require('../utils/sequelize_init');
+const sequelize = require('../utils/sequelize_init').pjmain;
 
 let find_affar = async (affa_id) => {
     let affair = await sequelize.query(`select affa_id,flow_id,jsondata from WF_AFFAIR where affa_id='${affa_id}'`, {

@@ -10,6 +10,7 @@ $(function(){
         });
     } else if (flowid == 'tc539970ff0911e694b4005056a60fd8') { // 抵质押物录入流程
         $('.btn.blue.mini').attr('href','javascript:listAdd_tc539970ff0911e694b4005056a60fd8();');
+        excelImport(flowid);// func.js
     } else if (flowid == 'v7608f2e3e8811e688c2184f32ca6bca') { // 收款流程
         $('#controlContainer').append('<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="1000px" src="/x/intrustqlc/views/dy/printInNotice?itemid=' + urlParams.itemid + '&itemName=' + urlParams.itemName + '&flowname=' + urlParams.flowname + '&uuid=' + urlParams.uuid + '"></iframe>');
     } else if (flowid == 'v11a7d403e8611e6b07e184f32ca6bca') { // 付款流程
@@ -27,6 +28,8 @@ function listEdit_faca20a152f311e6892e184f32ca6bca(flow_list_id,obj){
 }
 // 抵质押物录入流程 过滤担保合同编号为当前项目编号下的
 function listAdd_tc539970ff0911e694b4005056a60fd8(){
+    $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c .modal-footer').show();
+    $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c .modal-body').html('');
     $.when(modi_tc6b9900ff2f11e6bcbd1c3e84e5807c('')).done(function(){
         $.get('/node/getContractId/' + parseUrlParams().itemid, function(data){
             // console.log(data);

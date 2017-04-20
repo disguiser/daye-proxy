@@ -53,6 +53,18 @@ let find_tasks = async (affa_id, node_ids) => {
     });
     return json_data;
 }
+let flowid_task = async (task_id) => {
+     let data = await sequelize.query(`select flow_id from WF_TASK where task_id='${task_id}'`, {
+        type: sequelize.QueryTypes.SELECT
+    });
+    return data[0];
+}
+let flowid_affa = async (affa_id) => {
+    let data = await sequelize.query(`select flow_id from WF_AFFAIR where affa_id='${affa_id}'`, {
+        type: sequelize.QueryTypes.SELECT
+    });
+    return data[0];
+}
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
@@ -60,5 +72,7 @@ module.exports = {
     find_project_info: find_project_info,
     find_project_info_by_product_id: find_project_info_by_product_id,
     find_project_info_by_problem_id: find_project_info_by_problem_id,
-    find_product_info: find_product_info
+    find_product_info: find_product_info,
+    flowid_task: flowid_task,
+    flowid_affa: flowid_affa
 }

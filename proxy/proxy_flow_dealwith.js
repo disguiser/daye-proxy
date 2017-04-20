@@ -6,7 +6,8 @@ jqueryselect.func = function (node) {
 
   var out = `
       <script src="/static/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-      <script type="text/javascript" src="/node/workflow_url.js"></script>
+      <script type="text/javascript" src="/node/workflow_dealwith.js"></script>
+      <script type="text/javascript" src="/node/func.js"></script>
     `;
 
   var stm = node.createStream({ "outer": true });

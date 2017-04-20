@@ -8,7 +8,7 @@ const proxy_flow_new = require('./proxy/proxy_flow_new.js');
 const proxy_flow_show = require('./proxy/proxy_flow_show.js');
 const proxy_flow_select = require('./proxy/proxy_flow_select.js');
 const proxy_obj_new = require('./proxy/proxy_obj_new.js');
-const proxy_flow_url = require('./proxy/proxy_flow_url.js');
+const proxy_flow_dealwith = require('./proxy/proxy_flow_dealwith.js');
 const harmon = require('./utils/harmon');
 const proxy = connect();
 const config = require('./config').proxy;
@@ -58,7 +58,7 @@ proxy.use('/x/workflow/rtnew', function (req, res, next) {
 
 proxy.use('/x/workflow/dealwith', async (req, res, next) => {
 
-  let harmonBinary = harmon([], proxy_flow_url, true);
+  let harmonBinary = harmon([], proxy_flow_dealwith, true);
   harmonBinary(req, res);
 
   let parsed = queryString.parse(req._parsedUrl.query);
@@ -66,7 +66,7 @@ proxy.use('/x/workflow/dealwith', async (req, res, next) => {
   if(parsed.nextnode=='X72D77CA26F1489F92A305DDED6BE002'){ // 合同审批流程 业务部负责人
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
-  }else if(affair!=undefined && proxy_flow_select_dict.indexOf(affair.flow_id) >= 0){ // 项目签报变更流程 + 中后期签报变更流程
+  }else if(affair != undefined && proxy_flow_select_dict.indexOf(affair.flow_id) >= 0){ // 项目签报变更流程 + 中后期签报变更流程
     let harmonBinary = harmon([], proxy_flow_select, true);
     harmonBinary(req, res);
   }

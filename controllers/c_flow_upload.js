@@ -1,5 +1,5 @@
 'use strict';
-const fs = require('mz/fs');
+const pipeSync = require('../utils/tools').pipeSync;
 const d_attachment = require('../dao/d_attachment.js');
 const temple = require('../utils/temple.js');
 const urlencode = require('urlencode');
@@ -7,14 +7,6 @@ const parse = require('async-busboy');
 const filesize = require('filesize');
 const disk_path = require('../config').fileupload.path;
 
-let pipeSync = (rs, file_path) => {
-    let ws = fs.createWriteStream(file_path);
-    rs.pipe(ws);
-    return new Promise((resolve, reject) => {
-        rs.on('end', () => resolve(fs.stat(file_path)));
-        rs.on('error', reject);
-    });
-}
 module.exports = function (router) {
     // router.post('/testUpload', async (ctx, next) => {
     //     // fs.stat("C:\\Users\\zhoum\\AppData\\Local\\Temp\\1487296499890Content-Type安道全.jpg", (err, stat) => {
@@ -37,13 +29,13 @@ module.exports = function (router) {
             flow_list_id = fields['flow_list_id'];
         if(temp_id!=undefined && temp_id!='' &&
         flow_list_id!=undefined && flow_list_id!=''){
-            for (var i=0; i<files.length; i++){
-                let file_name = files[i].filename,
+            for (let file of files) {
+                let file_name = file.filename,
                     file_path = disk_path + Date.now() + file_name,
                     upload_time = new Date(Date.now()).toLocaleString(),
                     file_size;
-                // file_size = await pipeSync(files[i], file_path);
-                let stat = await pipeSync(files[i], file_path);
+                // file_size = await pipeSync(file, file_path);
+                let stat = await pipeSync(file, file_path);
                 // console.log(stat.size);
                 file_size = filesize(stat.size);
                 console.log('uploading %s %s -> %s', file_name, file_size, file_path);

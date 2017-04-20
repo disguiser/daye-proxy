@@ -28,9 +28,9 @@ app.use(bodyParser());
 
 require('./controllers/c_flow_upload.js')(router);
 
-require('./controllers/c_flow_new.js')(router);
+require('./controllers/c_flow.js')(router);
 
-require('./controllers/c_flow_show.js')(router);
+require('./controllers/c_excel.js')(router);
 
 app.use(router.routes());
 // listen

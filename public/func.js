@@ -14,3 +14,13 @@ function doCoverWrongText(jqobj, json){
         jqobj.text(json[jqobj.text()]);
     }
 }
+// excel导入
+function excelImport(flowid){
+    $('#formContainer_d10b83b022552f1f1333eac162be2bb1f6f16c31').append('<div class="row-fluid"><div class="span6"><button type="button" id="excelImport" class="btn bule">excel导入</button></div></div>');
+    $('#excelImport').click(function(){
+        $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c .modal-header h1').text('excel导入');
+        $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c .modal-footer').hide();
+        $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c .modal-body').html('<iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?flow_id=' + flowid + '&type=import"></iframe>');
+        $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c').modal('show');
+    });    
+}

@@ -5,6 +5,7 @@ const d_attachment = require('../dao/d_attachment.js');
 const dict_file_type = require('../dicts/dict_file_type');
 const dict_yes_or_no = require('../dicts/dict_yes_or_no');
 const dict_bank_type = require('../dicts/dict_bank_type');
+const d_dict = require('../dao/d_dict.js');
 
 let contractApproval = async (affair) => {
     // 合同审批流程
@@ -185,5 +186,25 @@ module.exports = function (router) {
         let affa_id = ctx.params.affa_id;
         let affair = await d_flow.find_affar(affa_id);
         ctx.response.body = await flowRouter(affair);
+    });
+    // 通过字典id找字典名称 涉及流程: 贷款投资合同录入流程
+    router.get('/getDictName/:dict_id', async (ctx, next) => {
+        let dict_id = ctx.params.dict_id;
+        ctx.response.body = await d_dict.find_guarantor_dict(dict_id, next);
+    });
+    // 担保合同编号
+    router.get('/getContractId/:regitem_id', async (ctx, next) => {
+        let regitem_id = ctx.params.regitem_id;
+        let contract_ids = await d_dict.get_contract_id(regitem_id, next);
+        ctx.response.body = contract_ids.join(',');
+    });
+    // 获取流程id
+    router.get('/flowid_task/:task_id', async (ctx, next) => {
+        let task_id = ctx.params.task_id;
+        ctx.response.body = await d_flow.flowid_task(task_id);
+    });
+    router.get('/flowid_affa/:affa_id', async (ctx, next) => {
+        let affa_id = ctx.params.affa_id;
+        ctx.response.body = await d_flow.flowid_affa(affa_id);
     });
 }

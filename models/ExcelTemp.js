@@ -1,0 +1,68 @@
+const Sequelize = require('sequelize');
+
+const sequelize = require('../utils/sequelize_init');
+
+module.exports = sequelize.define('excel_temp', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    flow_id: Sequelize.STRING(50),
+    col010: Sequelize.STRING(200),
+    col020: Sequelize.STRING(200),
+    col030: Sequelize.STRING(200),
+    col040: Sequelize.STRING(200),
+    col050: Sequelize.STRING(200),
+    col060: Sequelize.STRING(200),
+    col070: Sequelize.STRING(200),
+    col080: Sequelize.STRING(200),
+    col090: Sequelize.STRING(200),
+    col100: Sequelize.STRING(200),
+    col110: Sequelize.STRING(200),
+    col120: Sequelize.STRING(200),
+    col130: Sequelize.STRING(200),
+    col140: Sequelize.STRING(200),
+    col150: Sequelize.STRING(200),
+    col160: Sequelize.STRING(200),
+    col170: Sequelize.STRING(200),
+    col180: Sequelize.STRING(200),
+    col190: Sequelize.STRING(200),
+    col200: Sequelize.STRING(200),
+    col210: Sequelize.STRING(200),
+    col220: Sequelize.STRING(200),
+    col230: Sequelize.STRING(200),
+    col240: Sequelize.STRING(200),
+    col250: Sequelize.STRING(200),
+    col260: Sequelize.STRING(200),
+    col270: Sequelize.STRING(200),
+    col280: Sequelize.STRING(200),
+    col290: Sequelize.STRING(200),
+    col300: Sequelize.STRING(200),
+    col310: Sequelize.STRING(200),
+    col320: Sequelize.STRING(200),
+    col330: Sequelize.STRING(200),
+    col340: Sequelize.STRING(200),
+    col350: Sequelize.STRING(200),
+    col360: Sequelize.STRING(200),
+    col370: Sequelize.STRING(200),
+    col380: Sequelize.STRING(200),
+    col390: Sequelize.STRING(200),
+    col400: Sequelize.STRING(200),
+    col410: Sequelize.STRING(200),
+    col420: Sequelize.STRING(200),
+    col430: Sequelize.STRING(200),
+    col440: Sequelize.STRING(200),
+    col450: Sequelize.STRING(200),
+    col460: Sequelize.STRING(200),
+    col470: Sequelize.STRING(200),
+    col480: Sequelize.STRING(200),
+    col490: Sequelize.STRING(200),
+    col500: Sequelize.STRING(200),
+    upload_time: Sequelize.STRING(20)
+}, {
+        freezeTableName: true,
+        tableName: 'excel_temp',
+        timestamps: false
+    }
+);

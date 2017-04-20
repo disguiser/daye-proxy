@@ -1,8 +1,8 @@
 const assert = require('assert');
-const sum = require('../hello');
+const d_excel = require('../dao/d_excel');
 
-describe('#hello.js', () => {
-    describe('#sum()', () => {
+describe('#d_excel.js', () => {
+    describe('#excelImport()', () => {
         before(function () {
             console.log('before:');
         });
@@ -19,20 +19,15 @@ describe('#hello.js', () => {
             console.log('  afterEach.');
         });
 
-        it('sum() should return 0', () => {
-            assert.strictEqual(sum(), 0);
+        it('#excelImport should return id', async () => {
+            let excelImport = await d_excel.excelImport('121', [
+                {col010:1},
+                {col010:2}
+            ]);
+            console.log(excelImport[0].id);
+            console.log(excelImport[0].col010);
+            // assert.strictEqual(excelImport.id, 1);
         });
 
-        it('sum(1) should return 1', () => {
-            assert.strictEqual(sum(1), 1);
-        });
-
-        it('sum(1, 2) should return 3', () => {
-            assert.strictEqual(sum(1, 2), 3);
-        });
-
-        it('sum(1, 2, 3) should return 6', () => {
-            assert.strictEqual(sum(1, 2, 3), 6);
-        });
     });
 });

@@ -14,4 +14,21 @@ $(function(){
         }
         count ++;
     }, 1000);
+    // excel导入
+    var urlParams = parseUrlParams();
+    var affaid = urlParams.affaid,
+        taskid = urlParams.taskid;
+    if(affaid != undefined){
+        url = '/node/flowid_affa/'+affaid;
+    } else if(taskid != undefined){
+        url = '/node/flowid_task/'+taskid
+    } else {
+        return;
+    }
+    $.getJSON(url, function(data){
+        // 抵质押物录入
+        if (data.flow_id === 'tc539970ff0911e694b4005056a60fd8') {
+            excelImport(data.flow_id);
+        }
+    });
 });

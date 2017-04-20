@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="/node/grid/dependents/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/node/grid/dlshouwen.grid.js"></script>
+    <script type="text/javascript" src="/node/grid/i18n/zh-cn.js"></script>
+    <script type="text/javascript" src="/node/fileupload/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/node/fileupload/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="/node/fileupload/jquery.fileupload.js"></script>
+
+    <!-- bootstrap -->
+    <script type="text/javascript" src="/node/grid/dependents/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/node/grid/dependents/bootstrap/css/bootstrap.min.css"/>
+
+    <!-- font-awesome -->
+    <link rel="stylesheet" type="text/css" href="/node/grid/dependents/fontAwesome/css/font-awesome.min.css" media="all"/>
+
+    <link rel="stylesheet" href="/node/fileupload/jquery.fileupload.css">
+    <link rel="stylesheet" type="text/css" href="/node/grid/dlshouwen.grid.min.css"/>
+</head>
+<body>
+    <div id="div_operate" style="text-align:right">
+        <form id="fileuploadForm" action="'/node/excelImport'" method="POST" enctype="multipart/form-data" class="" novalidate="novalidate">
+            <input type="hidden" name="flow_id" id="flow_id" />
+            <span class="btn fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>选择文件...</span>
+                <input id="file" type="file" multiple>
+            </span>
+            <button id="btnDelete" type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash-o"></i>  删除</button>
+            <br>
+            <!-- The global progress bar -->
+            <span id="upload_progress"></span>
+            <!-- The container for the uploaded files -->
+        </form>
+    </div>
+    <div id="main">
+        <div id="gridContainer" class="dlshouwen-grid-container"></div>
+        <div id="gridToolBarContainer" class="dlshouwen-grid-toolbar-container"></div>
+    </div>
+</body>
+<script type="text/javascript">
+    //获取url中的参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+
+    var grid;
+    $(function(){
+        // 获取url内flow_id
+        var flow_id = getUrlParam('flow_id');
+        $('#flow_id').val(flow_id);
+        // 获取列设置
+        var gridColumns;
+        $.getJSON('/node/excel/gridColumns', {flow_id: flow_id}, function(data){
+            if (data.result === 'succeed' && data.data.length > 0) {
+                gridColumns = data.data;
+                var gridOption = {
+                    lang : 'zh-cn',
+                    ajaxLoad : false,
+                    check : true,
+                    datas : [],
+                    checkWidth : 40,
+                    columns : gridColumns,
+                    gridContainer : 'gridContainer',
+                    toolbarContainer : 'gridToolBarContainer',
+                    tools : '',
+                    pageSize : 10,
+                    pageSizeLimit : [10, 20, 50]
+                };
+                loadData(flow_id, function(data){
+                    gridOption.datas = data;
+                    grid = $.fn.dlshouwen.grid.init(gridOption);
+                    grid.load();
+                });
+            } else {
+                alert('未查询到列数据!');
+                return false
+            }
+        });
+        var type = getUrlParam('type');
+        if (type === 'edit') {
+            $('#div_operate').hide();
+            return;
+        }
+        // 绑定上传功能
+        $('#fileuploadForm').fileupload({
+            url: '/node/excel/excelImport',
+            dataType: 'json',
+            done: function(e, data) {
+                var result = data.result.result;
+                if(result === 'succeed'){
+                    $('#upload_progress').html('');
+                    loadData(flow_id, function(data){
+                        grid.originalDatas = data;
+                        grid.reload(true);
+                    });
+                } else {
+                    $('#upload_progress').html('上传失败');
+                }
+            },
+            progressall: function(e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#upload_progress').html(progress + '%');
+            }
+        }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+        // 绑定删除按钮点击事件
+        $('#btnDelete').click(function(){
+            var ids = grid.getCheckedRecords().map(function(element){
+                return element.id;
+            });
+            $.getJSON('/node/excel/remove', {ids: ids.join(',')}, function(data){
+                if (data.result === 'succeed') {
+                    grid.originalDatas = grid.originalDatas.filter(function(element){
+                        return ids.indexOf(element.id) < 0;
+                    });
+                    grid.reload(true);
+                }
+            });
+        });
+    });
+    // 加载数据    
+    function loadData(flow_id, callback){
+        $.getJSON('/node/excel/loadAll', {flow_id: flow_id}, function(data){
+            if (data.result === 'succeed') {
+                callback(data.data);
+            }
+        });
+    }
+</script>
+</html>

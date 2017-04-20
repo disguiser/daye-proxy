@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = require('../utils/sequelize_init');
+const sequelize = require('../utils/sequelize_init').intrustqlc;
 
 module.exports = sequelize.define('grid_columns', {
     primary_id: {

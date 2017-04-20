@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = require('../utils/sequelize_init');
+const sequelize = require('../utils/sequelize_init').pjmain;
 
 module.exports = sequelize.define('attachment', {
     id: {

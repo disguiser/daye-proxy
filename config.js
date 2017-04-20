@@ -3,7 +3,8 @@
 module.exports = {
     DB: {
         dialect: 'mssql',
-        database: 'PJMAIN',
+        PJMAIN: 'PJMAIN',
+        INTRUSTQLC: 'INTRUSTQLC',
         username: 'sa',
         // password: '1qa@WS',
         password: '000000',

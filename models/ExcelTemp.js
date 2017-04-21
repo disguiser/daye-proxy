@@ -8,7 +8,11 @@ module.exports = sequelize.define('excel_temp', {
         autoIncrement: true,
         primaryKey: true
     },
+    affa_id: Sequelize.STRING(50),
     flow_id: Sequelize.STRING(50),
+    user_code: Sequelize.STRING(50),
+    user_name: Sequelize.STRING(10),
+    regitem_no: Sequelize.STRING(10),
     col010: Sequelize.STRING(200),
     col020: Sequelize.STRING(200),
     col030: Sequelize.STRING(200),

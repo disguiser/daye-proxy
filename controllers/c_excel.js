@@ -9,7 +9,12 @@ const dict_excel_temp_col = require('../dicts/dict_excel_temp_col');
 module.exports = function (router) {
     router.post('/excel/excelImport', async (ctx, next) => {
         const {files, fields} = await parse(ctx.req);
-        if (fields['flow_id'] != undefined) {
+        let flow_id = fields['flow_id'],
+            user_name = fields['user_name'],
+            project_no = fields['project_no'];
+        console.log('==========');
+        console.log(project_no);
+        if (flow_id != undefined && user_name != undefined && project_no != undefined) {
             for (let file of files) {
                 let file_path = disk_path + Date.now() + file.filename;
                 console.log(file_path);
@@ -39,7 +44,7 @@ module.exports = function (router) {
 
                 // let json = XLSX.utils.sheet_to_json(workSheet);
                 
-                await d_excel.excelImport(fields['flow_id'], json);
+                await d_excel.excelImport(flow_id, user_name, project_no, json);
 
                 ctx.response.body = {result: 'succeed'};
                 ctx.response.type = 'application/json';
@@ -62,17 +67,33 @@ module.exports = function (router) {
         }
         ctx.response.type = 'application/json';
     });
-    router.get('/excel/loadAll', async (ctx, next) => {
+    router.get('/excel/loadAll_affaid', async (ctx, next) => {
         // 插件的自动加载只支持json格式的字符串,不支持json
-        let flow_id = ctx.query.flow_id;
-        if (flow_id !== undefined) {
-            let datas = await d_excel.loadAll(flow_id);
+        let affa_id = ctx.query.affa_id;
+        if (affa_id !== undefined) {
+            let datas = await d_excel.loadAll_affaid(affa_id);
             ctx.response.body = {
                 result: 'succeed',
                 data: datas
             };
         } else {
-            ctx.response.body = {result: 'failed',message:'缺少流程编号'};
+            ctx.response.body = {result: 'failed',message:'缺少流程实例编号'};
+        }
+        ctx.response.type = 'application/json';
+    });
+    router.get('/excel/loadAll_flowid', async (ctx, next) => {
+        let flow_id = ctx.query.flow_id,
+            user_name = ctx.query.user_name,
+            project_no = ctx.query.project_no;
+        // console.log(project_no);
+        if (flow_id !== undefined && user_name != undefined) {
+            let datas = await d_excel.loadAll_flowid(flow_id, user_name, project_no);
+            ctx.response.body = {
+                result: 'succeed',
+                data: datas
+            };
+        } else {
+            ctx.response.body = {result: 'failed',message:'缺少流程编号及用户编号'};
         }
         ctx.response.type = 'application/json';
     });

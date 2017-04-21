@@ -25,6 +25,8 @@
     <div id="div_operate" style="text-align:right">
         <form id="fileuploadForm" action="'/node/excelImport'" method="POST" enctype="multipart/form-data" class="" novalidate="novalidate">
             <input type="hidden" name="flow_id" id="flow_id" />
+            <input type="hidden" name="user_name" id="user_name" />
+            <input type="hidden" name="project_no" id="project_no" />
             <span class="btn fileinput-button">
                 <i class="glyphicon glyphicon-plus"></i>
                 <span>选择文件...</span>
@@ -53,11 +55,16 @@
     var grid;
     $(function(){
         // 获取url内flow_id
-        var flow_id = getUrlParam('flow_id');
+        var flow_id = getUrlParam('flow_id'),
+            affa_id = getUrlParam('affa_id'),
+            user_name = decodeURIComponent(getUrlParam('user_name')),
+            project_no = getUrlParam('project_no');
         $('#flow_id').val(flow_id);
+        $('#user_name').val(user_name);
+        $('#project_no').val(project_no);
         // 获取列设置
         var gridColumns;
-        $.getJSON('/node/excel/gridColumns', {flow_id: flow_id}, function(data){
+        $.getJSON('/node/excel/gridColumns', {flow_id: flow_id,user_name: user_name}, function(data){
             if (data.result === 'succeed' && data.data.length > 0) {
                 gridColumns = data.data;
                 var gridOption = {
@@ -73,7 +80,7 @@
                     pageSize : 10,
                     pageSizeLimit : [10, 20, 50]
                 };
-                loadData(flow_id, function(data){
+                loadData(affa_id, flow_id, user_name, project_no, function(data){
                     gridOption.datas = data;
                     grid = $.fn.dlshouwen.grid.init(gridOption);
                     grid.load();
@@ -96,7 +103,7 @@
                 var result = data.result.result;
                 if(result === 'succeed'){
                     $('#upload_progress').html('');
-                    loadData(flow_id, function(data){
+                    loadData(affa_id, flow_id, user_name, project_no, function(data){
                         grid.originalDatas = data;
                         grid.reload(true);
                     });
@@ -127,8 +134,19 @@
         });
     });
     // 加载数据    
-    function loadData(flow_id, callback){
-        $.getJSON('/node/excel/loadAll', {flow_id: flow_id}, function(data){
+    function loadData(affa_id, flow_id, user_name, project_no, callback){
+        var url,
+            params;
+        if (affa_id !=undefined && affa_id != '') {
+            url = '/node/excel/loadAll_affaid';
+            params = {affa_id: affa_id};
+        } else if (flow_id != undefined && user_name != undefined && flow_id != '' && user_name != '' && project_no != '' && project_no != '') {
+            url = '/node/excel/loadAll_flowid';
+            params = {flow_id: flow_id, user_name: user_name, project_no: project_no};
+        } else {
+            return;
+        }
+        $.getJSON(url, params, function(data){
             if (data.result === 'succeed') {
                 callback(data.data);
             }

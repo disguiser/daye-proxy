@@ -19,7 +19,7 @@ function bindingUpload(data){
     $('#divControlContainer_x7857b1e3ebc11e68228184f32ca6bca').append(data);
     // 同步temp_id过来
     $('#another_temp_id').val($('#temp_id').val());
-    // 页面唯一值
+    // 页面唯一值 随着流程提交被保存到json内
     $('#flow_list_id').val($('#LIST_UUID').val());
     // 不能校验文件上传的form
     $("#fileuploadForm").validate({
@@ -61,6 +61,7 @@ $(function(){
     }
     $('.btn.blue.mini').attr('href','javascript:listAdd();');
     $('#theform .row-fluid:last').html('<input type="hidden" id="temp_id" />');
+    // 本用于删除,目前不起作用
     $('#temp_id').val(UUID.prototype.createUUID());
     // 附件list内容发生变化则清空对话框
     $('#x7857b1e3ebc11e68228184f32ca6bca').change(function(){

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const d_excel = require('../dao/d_excel');
+const d_flow = require('../dao/d_flow');
 
 describe('#d_excel.js', () => {
     describe('#excelImport()', () => {
@@ -20,13 +20,9 @@ describe('#d_excel.js', () => {
         });
 
         it('#excelImport should return id', async () => {
-            let excelImport = await d_excel.excelImport('121', [
-                {col010:1},
-                {col010:2}
-            ]);
-            console.log(excelImport[0].id);
-            console.log(excelImport[0].col010);
-            // assert.strictEqual(excelImport.id, 1);
+            let affair = await d_flow.find_affar('s7332e6e241111e7a55b208984d80bae');
+            console.log(affair);
+            assert.strictEqual(affair, undefined);
         });
 
     });

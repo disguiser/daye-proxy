@@ -82,6 +82,10 @@ proxy.use('/x/workflow/rtview', async (req, res, next) => {
   } else if (parsed.affaid != undefined) {
     affair = await d_flow.find_affar(parsed.affaid);
   }
+  if (affair == undefined) {
+    console.log('uuid可能不存在!!!!');
+    next();
+  }
   if (proxy_flow_select_dict.indexOf(affair.flow_id) >= 0) { // 项目签报变更流程 + 中后期签报变更流程
     let harmonBinary = harmon([], proxy_flow_select, true);
     harmonBinary(req, res);
@@ -91,7 +95,7 @@ proxy.use('/x/workflow/rtview', async (req, res, next) => {
   }
   next();
 });
-// 项目签报审批流程 项目立项审批流程(合并) + 收款流程
+// 项目签报审批流程 项目立项审批流程(合并) + 收款流程 + 收支计划审批流程
 proxy.use('/x/workflow/rtflow', async (req, res, next) => {
   let parsed = queryString.parse(req._parsedUrl.query);
   let affair;

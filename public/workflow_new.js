@@ -10,7 +10,24 @@ $(function(){
         });
     } else if (flowid == 'tc539970ff0911e694b4005056a60fd8') { // 抵质押物录入流程
         $('.btn.blue.mini').attr('href','javascript:listAdd_tc539970ff0911e694b4005056a60fd8();');
-        excelImport(flowid);// func.js
+
+        var user_name = $('#spanUsername').text();
+        var project_name = $('#u8ba69f0ff2c11e6af631c3e84e5807c').val();
+        var project_no;
+        var loop = setInterval(function(){
+            if ($('.table.table-striped.table-bordered.table-hover.dataTable tbody tr td').size() > 0) {
+                $('.table.table-striped.table-bordered.table-hover.dataTable tbody tr td').each(function(index, obj){
+                    if (project_name == $(obj).text()) {
+                        project_no = $(obj).prev().text();
+                        if (flowid == undefined || flowid == '' || user_name == undefined || user_name == '' || project_no == undefined || project_no == '') {
+                            return;
+                        }
+                        excelImport('', flowid, user_name, project_no);// func.js
+                    }
+                });
+                clearInterval(loop);
+            }
+        });
     } else if (flowid == 'v7608f2e3e8811e688c2184f32ca6bca') { // 收款流程
         $('#controlContainer').append('<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="1000px" src="/x/intrustqlc/views/dy/printInNotice?itemid=' + urlParams.itemid + '&itemName=' + urlParams.itemName + '&flowname=' + urlParams.flowname + '&uuid=' + urlParams.uuid + '"></iframe>');
     } else if (flowid == 'v11a7d403e8611e6b07e184f32ca6bca') { // 付款流程

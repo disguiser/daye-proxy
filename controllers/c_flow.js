@@ -23,6 +23,7 @@ let contractApproval = async (affair) => {
         });
         let attachments = await d_attachment.find_by_flis(flow_list_ids);
         // console.log(attachments);
+        // 根据flow_id分组
         let attach_rebuild = {};
         attachments.forEach(function(element){
             if( attach_rebuild[element.flow_list_id] == undefined){
@@ -38,7 +39,8 @@ let contractApproval = async (affair) => {
             success: temple.render('atta_table.html' ,{
                 intrust_attachments: intrust_attachments,
                 attachments: attach_rebuild,
-                dict_file_type: dict_file_type
+                dict_file_type: dict_file_type,
+                temp_id: attachments[0] === undefined ? '' : attachments[0].temp_id
             })
         };
     } else {

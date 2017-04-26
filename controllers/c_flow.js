@@ -126,7 +126,7 @@ let receivables = async(affair) => {
         return {
             success: `<a id="theA" href="/x/intrustqlc/views/dy/inPayPlan?affa_id=${affair.affa_id}" >查看收支计划</a>`
         }
-    } else if (affair.flow_id == 'wb2eee409a6211e687f3415645000030') {
+    } else if (affair.flow_id == 'wb2eee409a6211e687f3415645000030') { // 工作计划审批流程
         return {
             success: `<a id="theA" href="/x/intrustqlc/views/dy/taskPlan?affa_id=${affair.affa_id}" >查看工作计划</a>`
         }

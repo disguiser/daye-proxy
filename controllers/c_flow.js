@@ -126,6 +126,10 @@ let receivables = async(affair) => {
         return {
             success: `<a id="theA" href="/x/intrustqlc/views/dy/inPayPlan?affa_id=${affair.affa_id}" >查看收支计划</a>`
         }
+    } else if (affair.flow_id == 'wb2eee409a6211e687f3415645000030') {
+        return {
+            success: `<a id="theA" href="/x/intrustqlc/views/dy/taskPlan?affa_id=${affair.affa_id}" >查看工作计划</a>`
+        }
     }
 }
 let accountOpen = async(affair) => {
@@ -166,7 +170,7 @@ let flowRouter = async(affair) => {
         res = await productDistribution(affair);
     } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
         res = await projectReport(affair);
-    } else if (affair.flow_id == 'v7608f2e3e8811e688c2184f32ca6bca' || affair.flow_id == 'v11a7d403e8611e6b07e184f32ca6bca' || affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642' || affair.flow_id=='rfb70130910911e6a83c184f32ca6bca') { // 收款流程 + 付款流程 + 放款审批流程 + 收支计划审批流程
+    } else if (affair.flow_id == 'v7608f2e3e8811e688c2184f32ca6bca' || affair.flow_id == 'v11a7d403e8611e6b07e184f32ca6bca' || affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642' || affair.flow_id=='rfb70130910911e6a83c184f32ca6bca' || affair.flow_id=='wb2eee409a6211e687f3415645000030') { // 收款流程 + 付款流程 + 放款审批流程 + 收支计划审批流程 + 工作计划审批流程
         res = await receivables(affair);
     } else if (affair.flow_id == 'o53659213e5c11e6a7bd184f32ca6bca' || affair.flow_id == 'rdf83711470311e68bb0184f32ca6bca') { // 项目签报变更流程 + 中后期变更签报流程
         res = await signChange(affair);

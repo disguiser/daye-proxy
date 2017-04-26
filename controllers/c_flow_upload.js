@@ -6,6 +6,8 @@ const urlencode = require('urlencode');
 const parse = require('async-busboy');
 const filesize = require('filesize');
 const disk_path = require('../config').fileupload.path;
+const archiver = require('archiver-promise');
+const fs = require('mz/fs');
 
 module.exports = function (router) {
     // router.post('/testUpload', async (ctx, next) => {
@@ -108,11 +110,29 @@ module.exports = function (router) {
     });
     router.get('/download/:id', async (ctx, next) => {
         let id = ctx.params.id;
-        console.log(id);
+        // console.log(id);
         let attachment = await d_attachment.find_by_id(id);
-        var scream = fs.createReadStream(attachment.file_path);
+        let scream = fs.createReadStream(attachment.file_path);
         ctx.response.body = scream;
         ctx.response.type = 'mimetype';
         ctx.response.set('Content-disposition', 'attachment; filename='+urlencode(attachment.file_name));
+    });
+    router.get('/downloadAll/:temp_id', async (ctx, next) => {
+        let temp_id = ctx.params.temp_id;
+        let attachments = await d_attachment.find_by_ti(temp_id);
+        let zip_path = disk_path + Date.now() + '.zip';
+
+        console.log(zip_path);
+        let archive = archiver(zip_path ,{
+            store: false
+        });
+        for (let attachment of attachments) {
+            archive.file(attachment.file_path, { name: attachment.file_name });
+        }
+        await archive.finalize();
+        ctx.response.body = fs.createReadStream(zip_path);
+        ctx.response.type = 'mimetype';
+        ctx.response.set('Content-disposition', 'attachment; filename='+urlencode('批量下载.zip'));
+        fs.unlink(zip_path);
     });
 }

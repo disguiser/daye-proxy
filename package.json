@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "archiver-promise": "^1.0.0",
     "async-busboy": "0.4.0",
     "babel-core": "6.13.2",
     "babel-polyfill": "6.13.0",

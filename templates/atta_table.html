@@ -6,7 +6,11 @@
         <th>合同类型</th>
         <th>盖章份数</th>
         <th>合同备注</th>
+        {% if temp_id !== '' %}
+        <th>附件(<a href="/node/downloadAll/{{ temp_id }}">批量下载</a>)</th>
+        {% else %}
         <th>附件</th>
+        {% endif %}
     </thead>
     <tbody>
         {% for a in intrust_attachments %}
@@ -33,5 +37,8 @@
     #node_table td,#node_table th {
         padding: 5px;
         border: 1px solid black;
+    }
+    #node_table th {
+        text-align: center
     }
 </style>

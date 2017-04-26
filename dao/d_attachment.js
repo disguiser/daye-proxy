@@ -1,7 +1,7 @@
 'use strict';
 const Attachment = require('../models/Attachment');
 
-var insert = async (flow_list_id, file_name, file_size, upload_time, file_path, temp_id) => {
+let insert = async (flow_list_id, file_name, file_size, upload_time, file_path, temp_id) => {
     let attachment = await Attachment.create({
         flow_list_id: flow_list_id,
         temp_id: temp_id,
@@ -14,8 +14,8 @@ var insert = async (flow_list_id, file_name, file_size, upload_time, file_path, 
     return attachment.id;
 }
 
-var find_by_id = async (id) => {
-    var attachment = await Attachment.findOne({
+let find_by_id = async (id) => {
+    let attachment = await Attachment.findOne({
         where: {
             id: id
         }
@@ -24,8 +24,8 @@ var find_by_id = async (id) => {
     return attachment;
 }
 
-var find_by_fli = async (flow_list_id) => {
-    var attachments = await Attachment.findAll({
+let find_by_fli = async (flow_list_id) => {
+    let attachments = await Attachment.findAll({
         where: {
             flow_list_id: flow_list_id
         }
@@ -33,9 +33,18 @@ var find_by_fli = async (flow_list_id) => {
     // console.log(`find attachment: ${attachments.file_name}`);
     return attachments;
 }
+
+let find_by_ti = async (temp_id) => {
+    let attachments = await Attachment.findAll({
+        where: {
+            temp_id: temp_id
+        }
+    });
+    return attachments;
+}
 // 多个 flow_list_id
-var find_by_flis = async (flow_list_ids) => {
-    var attachments = await Attachment.findAll({
+let find_by_flis = async (flow_list_ids) => {
+    let attachments = await Attachment.findAll({
         where: {
             flow_list_id: {
                 $in: flow_list_ids
@@ -46,14 +55,14 @@ var find_by_flis = async (flow_list_ids) => {
     return attachments;
 }
 
-var delete_by_id  = async (id) => {
-    var attachment = await find_by_id(id);
+let delete_by_id  = async (id) => {
+    let attachment = await find_by_id(id);
     // console.log(attachment);
     await attachment.destroy();
     console.log(`${attachment.name} was destroyed.`);
     return {success: attachment.file_path};
 }
-var delete_by_fli  = async (flow_list_id) => {
+let delete_by_fli  = async (flow_list_id) => {
     let attachments = await find_by_fli(flow_list_id);
     for(let attachment of attachments){
         await attachment.destroy();
@@ -62,8 +71,8 @@ var delete_by_fli  = async (flow_list_id) => {
     return {success: attachments};
 }
 
-var delete_by_ti = async (temp_id) => {
-    var attachments = await Attachment.findAll({
+let delete_by_ti = async (temp_id) => {
+    let attachments = await Attachment.findAll({
         where: {
             temp_id: temp_id
         }
@@ -78,6 +87,7 @@ module.exports = {
     find_by_id: find_by_id,
     find_by_fli: find_by_fli,
     find_by_flis: find_by_flis,
+    find_by_ti: find_by_ti,
     insert: insert,
     delete_by_ti: delete_by_ti,
     delete_by_id: delete_by_id,

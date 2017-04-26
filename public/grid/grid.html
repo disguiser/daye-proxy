@@ -24,6 +24,7 @@
 <body>
     <div id="div_operate" style="text-align:right">
         <form id="fileuploadForm" action="'/node/excelImport'" method="POST" enctype="multipart/form-data" class="" novalidate="novalidate">
+            <input type="hidden" name="affa_id" id="affa_id" />
             <input type="hidden" name="flow_id" id="flow_id" />
             <input type="hidden" name="user_name" id="user_name" />
             <input type="hidden" name="project_no" id="project_no" />
@@ -59,6 +60,7 @@
             affa_id = getUrlParam('affa_id'),
             user_name = decodeURIComponent(getUrlParam('user_name')),
             project_no = getUrlParam('project_no');
+        $('#affa_id').val(affa_id);
         $('#flow_id').val(flow_id);
         $('#user_name').val(user_name);
         $('#project_no').val(project_no);

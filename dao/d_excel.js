@@ -2,21 +2,27 @@
 const ExcelTemp = require('../models/ExcelTemp');
 const GridColumns = require('../models/GridColumns');
 const sequelize = require('../utils/sequelize_init').pjmain;
+const tools = require('../utils/tools');
 
-let excelImport = async (flow_id, user_name, project_no, json) => {
+let excelImport = async (affa_id, flow_id, user_name, project_no, json) => {
     let values = [],
-        now = Date.now();
-    let result = await sequelize.query(`select user_code from org_user where full_name = '${user_name}'`, {
-        type: sequelize.QueryTypes.SELECT
-    });
+        now = Date.now(),
+        result;
+    if (tools.isEmpty(user_name)) {
+        result = await sequelize.query(`select user_code from org_user where full_name = '${user_name}'`, {
+            type: sequelize.QueryTypes.SELECT
+        });
+    }
     // console.log('========+');
-    // console.log(result);
+    // console.log(user_name==='undefined');
+    // console.log(user_name!= undefined);
     for (let j of json) {
         values.push({
+            affa_id: tools.isEmpty(affa_id) ? null : affa_id,
             flow_id: flow_id,
-            user_code: result[0].user_code,
-            user_name: user_name,
-            regitem_no: project_no,
+            user_code: tools.isEmpty(user_name) ? null : result[0].user_code,
+            user_name: tools.isEmpty(user_name) ? null : user_name,
+            regitem_no: tools.isEmpty(project_no) ? null : project_no,
             col010: j.col010,
             col020: j.col020,
             col030: j.col030,

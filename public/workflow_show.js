@@ -57,30 +57,43 @@ $(function(){
             }
         });
     } else if (excel_flownames.indexOf(flowname) >= 0) {
-        $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').append('<button type="button" id="excelImport" class="btn bule">查看excel导入信息</button>');
-        $('#excelImport').click(function(){
-            if ($('.modal.container.fade').size() === 0) {
-                $('body').append(`
-                    <div class="modal container fade" tabindex="-1" role="dialog" aria-hidden="false" style="margin-top: 0px; display: block;">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                            <h1></h1>
-                        </div>
-                        <div class="modal-body" id="div_mdform_tc6b9900ff2f11e6bcbd1c3e84e5807c"></div>
-                    </div>
-                `);
+        var url;
+        if (taskid !== undefined) {
+            url = '/node/affa_task/' + taskid;
+        } else if (affaid !== undefined) {
+            url = '/node/affa_affa/' + affaid;
+        } else {
+            return;
+        }
+        $.getJSON(url, function(data){
+            if (data.affa_id !== undefined) {
+                createExcelPage(data.flow_id, data.affa_id);
             }
-            $('.modal.container.fade').css('overflow', 'auto');
-            $('.modal.container.fade').css('top', '0');
-            $('.modal.container.fade .modal-header').css('padding', '0');
-            $('.modal.container.fade .modal-body').css('padding', '0');
-            $('.modal.container.fade .modal-header h1').text('excel导入');
-            $('.modal.container.fade .modal-footer').hide();
-            $('.modal.container.fade .modal-body').html('<iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?flow_id=' + flow_name_key[flowname] + '&type=edit"></iframe>');
-            $('.modal.container.fade').modal('show');
         });
     }
 });
-var flow_name_key = {
-    抵质押物录入流程 : 'tc539970ff0911e694b4005056a60fd8'
+
+function createExcelPage(flowid, affaid) {
+    $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').append('<button type="button" id="excelImport" class="btn bule">查看excel导入信息</button>');
+    $('#excelImport').click(function(){
+        if ($('.modal.container.fade').size() === 0) {
+            $('body').append(`
+                <div class="modal container fade" tabindex="-1" role="dialog" aria-hidden="false" style="margin-top: 0px; display: block;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h1></h1>
+                    </div>
+                    <div class="modal-body" id="div_mdform_tc6b9900ff2f11e6bcbd1c3e84e5807c"></div>
+                </div>
+            `);
+        }
+        $('.modal.container.fade').css('overflow', 'auto');
+        $('.modal.container.fade').css('top', '0');
+        $('.modal.container.fade .modal-header').css('padding', '0');
+        $('.modal.container.fade .modal-body').css('padding', '0');
+        $('.modal.container.fade .modal-header h1').text('excel导入');
+        $('.modal.container.fade .modal-footer').hide();
+        $('.modal.container.fade .modal-body').html('<iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?flow_id=' + flowid + '&affa_id=' + affaid + '&type=edit"></iframe>');
+        $('.modal.container.fade').modal('show');
+    });
 }

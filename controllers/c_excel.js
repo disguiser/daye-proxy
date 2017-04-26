@@ -5,16 +5,18 @@ const pipeSync = require('../utils/tools').pipeSync;
 const XLSX = require('xlsx');
 const d_excel = require('../dao/d_excel');
 const dict_excel_temp_col = require('../dicts/dict_excel_temp_col');
+const tools = require('../utils/tools');
 
 module.exports = function (router) {
     router.post('/excel/excelImport', async (ctx, next) => {
         const {files, fields} = await parse(ctx.req);
         let flow_id = fields['flow_id'],
             user_name = fields['user_name'],
-            project_no = fields['project_no'];
-        console.log('==========');
-        console.log(project_no);
-        if (flow_id != undefined && user_name != undefined && project_no != undefined) {
+            project_no = fields['project_no'],
+            affa_id = fields['affa_id'];
+        // console.log('==========');
+        // console.log(project_no);
+        if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, user_name, project_no])){
             for (let file of files) {
                 let file_path = disk_path + Date.now() + file.filename;
                 console.log(file_path);
@@ -44,13 +46,13 @@ module.exports = function (router) {
 
                 // let json = XLSX.utils.sheet_to_json(workSheet);
                 
-                await d_excel.excelImport(flow_id, user_name, project_no, json);
+                await d_excel.excelImport(affa_id, flow_id, user_name, project_no, json);
 
                 ctx.response.body = {result: 'succeed'};
                 ctx.response.type = 'application/json';
             }
         } else {
-            ctx.response.body = {result: 'failed',message:'缺少流程编号'};
+            ctx.response.body = {result: 'failed',message:'参数不正确:affa_id=' + affa_id + ',flow_id=' + flow_id + ',user_name=' + user_name + ',project_no=' + project_no};
             ctx.response.type = 'application/json';
         }
     });

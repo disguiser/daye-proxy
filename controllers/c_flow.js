@@ -122,7 +122,7 @@ let receivables = async(affair) => {
         return {
             success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printOutNotice?loan_uuid=${json_data.q6d38600020811e7b242415645000030}&node_id=${node_id}"></iframe>`
         }
-    } else if (affair.flow_id == 'rfb70130910911e6a83c184f32ca6bca') {
+    } else if (affair.flow_id == 'rfb70130910911e6a83c184f32ca6bca') { // 收支计划审批流程
         return {
             success: `<a id="theA" href="/x/intrustqlc/views/dy/inPayPlan?affa_id=${affair.affa_id}" >查看收支计划</a>`
         }
@@ -204,13 +204,13 @@ module.exports = function (router) {
         let contract_ids = await d_dict.get_contract_id(regitem_id, next);
         ctx.response.body = contract_ids.join(',');
     });
-    // 获取流程id
-    router.get('/flowid_task/:task_id', async (ctx, next) => {
+    // 获取流程实例信息
+    router.get('/affa_task/:task_id', async (ctx, next) => {
         let task_id = ctx.params.task_id;
-        ctx.response.body = await d_flow.flowid_task(task_id);
+        ctx.response.body = await d_flow.find_affar_by_taskid(task_id);
     });
-    router.get('/flowid_affa/:affa_id', async (ctx, next) => {
+    router.get('/affa_affa/:affa_id', async (ctx, next) => {
         let affa_id = ctx.params.affa_id;
-        ctx.response.body = await d_flow.flowid_affa(affa_id);
+        ctx.response.body = await d_flow.find_affar(affa_id);
     });
 }

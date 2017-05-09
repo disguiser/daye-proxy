@@ -4,11 +4,11 @@ const GridColumns = require('../models/GridColumns');
 const sequelize = require('../utils/sequelize_init').pjmain;
 const tools = require('../utils/tools');
 
-let excelImport = async (affa_id, flow_id, user_name, project_no, json) => {
+let excelImport = async (affa_id, flow_id, user_name, project_no, temp_state, json) => {
     let values = [],
         now = Date.now(),
         result;
-    if (tools.isEmpty(user_name)) {
+    if (!tools.isEmpty(user_name)) {
         result = await sequelize.query(`select user_code from org_user where full_name = '${user_name}'`, {
             type: sequelize.QueryTypes.SELECT
         });
@@ -23,6 +23,7 @@ let excelImport = async (affa_id, flow_id, user_name, project_no, json) => {
             user_code: tools.isEmpty(user_name) ? null : result[0].user_code,
             user_name: tools.isEmpty(user_name) ? null : user_name,
             regitem_no: tools.isEmpty(project_no) ? null : project_no,
+			temp_state: tools.isEmpty(temp_state) ? null : temp_state,
             col010: j.col010,
             col020: j.col020,
             col030: j.col030,
@@ -87,12 +88,13 @@ let loadAll_affaid = async (affa_id) => {
     });
     return datas;
 }
-let loadAll_flowid = async (flow_id, user_name, project_no) => {
+let loadAll_flowid = async (flow_id, user_name, project_no, temp_state) => {
     let datas = await ExcelTemp.findAll({
         where: {
             user_name: user_name,
             flow_id: flow_id,
-            regitem_no: project_no
+            regitem_no: project_no,
+			temp_state:temp_state
         }
     });
     return datas;

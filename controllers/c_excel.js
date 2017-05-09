@@ -13,9 +13,10 @@ module.exports = function (router) {
         let flow_id = fields['flow_id'],
             user_name = fields['user_name'],
             project_no = fields['project_no'],
+			temp_state = 0,
             affa_id = fields['affa_id'];
         // console.log('==========');
-        // console.log(project_no);
+         console.log('=========='+user_name);
         if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, user_name, project_no])){
             for (let file of files) {
                 let file_path = disk_path + Date.now() + file.filename;
@@ -46,7 +47,7 @@ module.exports = function (router) {
 
                 // let json = XLSX.utils.sheet_to_json(workSheet);
                 
-                await d_excel.excelImport(affa_id, flow_id, user_name, project_no, json);
+                await d_excel.excelImport(affa_id, flow_id, user_name, project_no, temp_state, json);
 
                 ctx.response.body = {result: 'succeed'};
                 ctx.response.type = 'application/json';
@@ -86,10 +87,11 @@ module.exports = function (router) {
     router.get('/excel/loadAll_flowid', async (ctx, next) => {
         let flow_id = ctx.query.flow_id,
             user_name = ctx.query.user_name,
+			temp_state = 0,
             project_no = ctx.query.project_no;
         // console.log(project_no);
         if (flow_id !== undefined && user_name != undefined) {
-            let datas = await d_excel.loadAll_flowid(flow_id, user_name, project_no);
+            let datas = await d_excel.loadAll_flowid(flow_id, user_name, project_no, temp_state);
             ctx.response.body = {
                 result: 'succeed',
                 data: datas

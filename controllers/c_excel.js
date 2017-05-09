@@ -76,11 +76,12 @@ module.exports = function (router) {
         let affa_id = ctx.query.affa_id;
         if (affa_id !== undefined) {
             let datas;
-            if (affa_id === 'op539970ff0911e694b4005056a603rf') {
+            if (affa_id !== 'op539970ff0911e694b4005056a603rf') {
                 datas = await d_excel.loadAll_affaid_flow(affa_id);
             } else {
                 let session_id = ctx.cookies.get('webpy_session_id')
-                let user_code = await rp(`/x/intrustqlc/session?session_id=${session_id}`)
+                let user_code = await rp(`http://localhost:8071/x/intrustqlc/session?session_id=${session_id}`)
+				 console.log('=========='+user_code);
                 if (user_code !== 'notLoggin') {
                     datas = await d_excel.loadAll_affaid_obj(affa_id,user_code);
                 } else {

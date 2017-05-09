@@ -13,6 +13,7 @@ module.exports = sequelize.define('excel_temp', {
     user_code: Sequelize.STRING(50),
     user_name: Sequelize.STRING(10),
     regitem_no: Sequelize.STRING(10),
+	temp_state: Sequelize.STRING(10),
     col010: Sequelize.STRING(200),
     col020: Sequelize.STRING(200),
     col030: Sequelize.STRING(200),

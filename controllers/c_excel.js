@@ -16,7 +16,7 @@ module.exports = function (router) {
 			temp_state = 0,
             affa_id = fields['affa_id'];
         // console.log('==========');
-         console.log('=========='+user_name);
+        // console.log('=========='+user_name);
         if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, user_name, project_no])){
             for (let file of files) {
                 let file_path = disk_path + Date.now() + file.filename;
@@ -91,7 +91,12 @@ module.exports = function (router) {
             project_no = ctx.query.project_no;
         // console.log(project_no);
         if (flow_id !== undefined && user_name != undefined) {
-            let datas = await d_excel.loadAll_flowid(flow_id, user_name, project_no, temp_state);
+            let datas;
+            if (flow_id === 'op539970ff0911e694b4005056a603rf') {
+                datas = await d_excel.loadAll_flowid_obj(flow_id, user_name, project_no, temp_state);
+            } else {
+                datas = await d_excel.loadAll_flowid_flow(flow_id, user_name, project_no, temp_state);
+            }
             ctx.response.body = {
                 result: 'succeed',
                 data: datas

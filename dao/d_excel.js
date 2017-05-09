@@ -88,7 +88,18 @@ let loadAll_affaid = async (affa_id) => {
     });
     return datas;
 }
-let loadAll_flowid = async (flow_id, user_name, project_no, temp_state) => {
+let loadAll_flowid_flow = async (flow_id, user_name, project_no, temp_state) => {
+    let datas = await ExcelTemp.findAll({
+        where: {
+            user_name: user_name,
+            flow_id: flow_id,
+            regitem_no: project_no,
+			temp_state:temp_state
+        }
+    });
+    return datas;
+}
+let loadAll_flowid_obj = async (flow_id, user_name, project_no, temp_state) => {
     let datas = await ExcelTemp.findAll({
         where: {
             user_name: user_name,
@@ -122,7 +133,8 @@ let gridColumns = async (flow_id) => {
 module.exports = {
     excelImport: excelImport,
     loadAll_affaid: loadAll_affaid,
-    loadAll_flowid: loadAll_flowid,
+    loadAll_flowid_flow: loadAll_flowid_flow,
+    loadAll_flowid_obj: loadAll_flowid_obj,
     remove: remove,
     gridColumns: gridColumns
 }

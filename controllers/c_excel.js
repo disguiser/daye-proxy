@@ -80,7 +80,7 @@ module.exports = function (router) {
                 datas = await d_excel.loadAll_affaid_flow(affa_id);
             } else {
                 let session_id = ctx.cookies.get('webpy_session_id')
-                let user_code = await rp(`/x/intrustqlc/excel?session_id=${session_id}`)
+                let user_code = await rp(`/x/intrustqlc/session?session_id=${session_id}`)
                 if (user_code !== 'notLoggin') {
                     datas = await d_excel.loadAll_affaid_obj(affa_id,user_code);
                 } else {

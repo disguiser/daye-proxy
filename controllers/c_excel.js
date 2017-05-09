@@ -6,6 +6,7 @@ const XLSX = require('xlsx');
 const d_excel = require('../dao/d_excel');
 const dict_excel_temp_col = require('../dicts/dict_excel_temp_col');
 const tools = require('../utils/tools');
+const rp = require('request-promise');
 
 module.exports = function (router) {
     router.post('/excel/excelImport', async (ctx, next) => {
@@ -78,7 +79,13 @@ module.exports = function (router) {
             if (affa_id === 'op539970ff0911e694b4005056a603rf') {
                 datas = await d_excel.loadAll_affaid_flow(affa_id);
             } else {
-                datas = await d_excel.loadAll_affaid_obj(affa_id);
+                let session_id = ctx.cookies.get('webpy_session_id')
+                let user_code = await rp(`/x/intrustqlc/session?session_id=${session_id}`)
+                if (user_code !== 'notLoggin') {
+                    datas = await d_excel.loadAll_affaid_obj(affa_id,user_code);
+                } else {
+                    ctx.response.body = {result: 'failed',message:'未登录,无法获取user_code'};
+                }
             }
             ctx.response.body = {
                 result: 'succeed',

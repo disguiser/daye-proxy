@@ -88,10 +88,11 @@ let loadAll_affaid_flow = async (affa_id) => {
     });
     return datas;
 }
-let loadAll_affaid_obj = async (affa_id) => {
+let loadAll_affaid_obj = async (affa_id,user_code) => {
     let datas = await ExcelTemp.findAll({
         where: {
-            affa_id: affa_id
+            affa_id: affa_id,
+			user_code: user_code
         }
     });
     return datas;

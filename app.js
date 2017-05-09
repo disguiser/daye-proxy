@@ -5,6 +5,7 @@ const serve = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 const router = require('koa-router')();
 const path = require('path');
+// const sequelize = require('./utils/sequelize_init').pjmain;
 
 const app = new Koa();
 
@@ -16,6 +17,21 @@ app.use(serve(path.join(__dirname, '/public')));
 
 app.use(async (ctx, next) => {
   console.log(`通过 ${ctx.request.method} ${ctx.request.url}...`);
+  let session_id = ctx.cookies.get('webpy_session_id');
+  // console.log('++++++++');
+  // console.log(session_id);
+  // if (session_id !== undefined) {
+  //   let result = await sequelize.query(`select 1 from sessions where session_id='${session_id}'`,{
+  //       type: sequelize.QueryTypes.SELECT
+  //   });
+  //   console.log(result);
+  //   // if ()
+  //   ctx.redirect('/');
+  //   return;
+  // } else {
+  //   ctx.redirect('/');
+  //   return;
+  // }
   await next();
   if (ctx.body || !ctx.idempotent) return;
   ctx.redirect('/node/404.html');
@@ -35,3 +51,6 @@ require('./controllers/c_excel.js')(router);
 app.use(router.routes());
 // listen
 module.exports = app;
+
+// let option = process.argv;
+// console.log(option);

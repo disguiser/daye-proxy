@@ -61,8 +61,8 @@ module.exports = function (router) {
     router.get('/attachments/:flow_list_id', async (ctx, next) => {
         var flow_list_id = ctx.params.flow_list_id;
         var res;
-        console.log('++++++++');
-        console.log(flow_list_id);
+        // console.log('++++++++');
+        // console.log(ctx.cookies.get('webpy_session_id'));
         if( flow_list_id == 0 ) {
             res = temple.render('attachment.html' ,{ attachments: ''});
         } else {

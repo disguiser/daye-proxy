@@ -75,7 +75,7 @@ module.exports = function (router) {
         let affa_id = ctx.query.affa_id;
         if (affa_id !== undefined) {
             let datas;
-            if (flow_id === 'op539970ff0911e694b4005056a603rf') {
+            if (affa_id === 'op539970ff0911e694b4005056a603rf') {
                 datas = await d_excel.loadAll_affaid_flow(affa_id);
             } else {
                 datas = await d_excel.loadAll_affaid_obj(affa_id);

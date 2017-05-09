@@ -74,7 +74,12 @@ module.exports = function (router) {
         // 插件的自动加载只支持json格式的字符串,不支持json
         let affa_id = ctx.query.affa_id;
         if (affa_id !== undefined) {
-            let datas = await d_excel.loadAll_affaid(affa_id);
+            let datas;
+            if (flow_id === 'op539970ff0911e694b4005056a603rf') {
+                datas = await d_excel.loadAll_affaid_flow(affa_id);
+            } else {
+                datas = await d_excel.loadAll_affaid_obj(affa_id);
+            }
             ctx.response.body = {
                 result: 'succeed',
                 data: datas
@@ -91,12 +96,7 @@ module.exports = function (router) {
             project_no = ctx.query.project_no;
         // console.log(project_no);
         if (flow_id !== undefined && user_name != undefined) {
-            let datas;
-            if (flow_id === 'op539970ff0911e694b4005056a603rf') {
-                datas = await d_excel.loadAll_flowid_obj(flow_id, user_name, project_no, temp_state);
-            } else {
-                datas = await d_excel.loadAll_flowid_flow(flow_id, user_name, project_no, temp_state);
-            }
+            let datas = await d_excel.loadAll_flowid(flow_id, user_name, project_no, temp_state);
             ctx.response.body = {
                 result: 'succeed',
                 data: datas

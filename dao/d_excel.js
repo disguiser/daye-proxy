@@ -80,7 +80,7 @@ let excelImport = async (affa_id, flow_id, user_name, project_no, temp_state, js
     let importDatas = await ExcelTemp.bulkCreate(values);
     return importDatas;
 }
-let loadAll_affaid = async (affa_id) => {
+let loadAll_affaid_flow = async (affa_id) => {
     let datas = await ExcelTemp.findAll({
         where: {
             affa_id: affa_id
@@ -88,18 +88,15 @@ let loadAll_affaid = async (affa_id) => {
     });
     return datas;
 }
-let loadAll_flowid_flow = async (flow_id, user_name, project_no, temp_state) => {
+let loadAll_affaid_obj = async (affa_id) => {
     let datas = await ExcelTemp.findAll({
         where: {
-            user_name: user_name,
-            flow_id: flow_id,
-            regitem_no: project_no,
-			temp_state:temp_state
+            affa_id: affa_id
         }
     });
     return datas;
 }
-let loadAll_flowid_obj = async (flow_id, user_name, project_no, temp_state) => {
+let loadAll_flowid = async (flow_id, user_name, project_no, temp_state) => {
     let datas = await ExcelTemp.findAll({
         where: {
             user_name: user_name,
@@ -132,9 +129,9 @@ let gridColumns = async (flow_id) => {
 }
 module.exports = {
     excelImport: excelImport,
-    loadAll_affaid: loadAll_affaid,
-    loadAll_flowid_flow: loadAll_flowid_flow,
-    loadAll_flowid_obj: loadAll_flowid_obj,
+    loadAll_affaid_flow: loadAll_affaid_flow,
+    loadAll_affaid_obj: loadAll_affaid_obj,
+    loadAll_flowid: loadAll_flowid,
     remove: remove,
     gridColumns: gridColumns
 }

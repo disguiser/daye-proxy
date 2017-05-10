@@ -118,7 +118,10 @@ let gridColumns = async (flow_id) => {
         ],
         where: {
             flow_id: flow_id
-        }
+        },
+        order: [
+            ['id']
+        ]
     });
     return result;
 }

@@ -1,27 +1,31 @@
 'use strict';
 const parse = require('async-busboy');
-const disk_path = require('../config').fileupload.path;
+const config = require('../config');
 const pipeSync = require('../utils/tools').pipeSync;
 const XLSX = require('xlsx');
 const d_excel = require('../dao/d_excel');
 const dict_excel_temp_col = require('../dicts/dict_excel_temp_col');
 const tools = require('../utils/tools');
-const rp = require('request-promise');
 
 module.exports = function (router) {
+    router.get('/test', async (ctx, next) => {
+        console.log(ctx.session.user_code);
+        ctx.session.user_code = ctx.cookies.get('webpy_session_id');
+        // console.log(ctx.session);
+        ctx.response.body = 1;
+    });
     router.post('/excel/excelImport', async (ctx, next) => {
         const {files, fields} = await parse(ctx.req);
         let flow_id = fields['flow_id'],
-            user_name = fields['user_name'],
             project_no = fields['project_no'],
 			temp_state = 0,
             affa_id = fields['affa_id'];
         // console.log('==========');
         // console.log('=========='+user_name);
-        if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, user_name, project_no])){
+        if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, project_no])){
             for (let file of files) {
-                let file_path = disk_path + Date.now() + file.filename;
-                console.log(file_path);
+                let file_path = config.fileupload.path + Date.now() + file.filename;
+                // console.log(file_path);
                 let stat = await pipeSync(file, file_path);
                 let workbook = XLSX.readFile(file_path);
                 let sheetNames = workbook.SheetNames;
@@ -47,8 +51,8 @@ module.exports = function (router) {
                 json.push(jsonOb);
 
                 // let json = XLSX.utils.sheet_to_json(workSheet);
-                
-                await d_excel.excelImport(affa_id, flow_id, user_name, project_no, temp_state, json);
+                let user_code = await tools.getUserCode(ctx);
+                await d_excel.excelImport(affa_id, flow_id, user_code, project_no, temp_state, json);
 
                 ctx.response.body = {result: 'succeed'};
                 ctx.response.type = 'application/json';
@@ -76,17 +80,15 @@ module.exports = function (router) {
         let affa_id = ctx.query.affa_id;
         if (affa_id !== undefined) {
             let datas;
-            if (affa_id !== 'op539970ff0911e694b4005056a603rf') {
-                datas = await d_excel.loadAll_affaid_flow(affa_id);
-            } else {
-                let session_id = ctx.cookies.get('webpy_session_id')
-                let user_code = await rp(`http://localhost:8071/x/intrustqlc/session?session_id=${session_id}`)
-				 console.log('=========='+user_code);
+            if (affa_id === 'op539970ff0911e694b4005056a603rf') {
+                let user_code = await tools.getUserCode(ctx);
                 if (user_code !== 'notLoggin') {
                     datas = await d_excel.loadAll_affaid_obj(affa_id,user_code);
                 } else {
                     ctx.response.body = {result: 'failed',message:'未登录,无法获取user_code'};
                 }
+            } else {
+                datas = await d_excel.loadAll_affaid_flow(affa_id);
             }
             ctx.response.body = {
                 result: 'succeed',
@@ -99,12 +101,12 @@ module.exports = function (router) {
     });
     router.get('/excel/loadAll_flowid', async (ctx, next) => {
         let flow_id = ctx.query.flow_id,
-            user_name = ctx.query.user_name,
 			temp_state = 0,
             project_no = ctx.query.project_no;
         // console.log(project_no);
-        if (flow_id !== undefined && user_name != undefined) {
-            let datas = await d_excel.loadAll_flowid(flow_id, user_name, project_no, temp_state);
+        if (flow_id !== undefined) {
+            let user_code = await tools.getUserCode(ctx);
+            let datas = await d_excel.loadAll_flowid(flow_id, user_code, project_no, temp_state);
             ctx.response.body = {
                 result: 'succeed',
                 data: datas

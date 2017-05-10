@@ -11,7 +11,6 @@ module.exports = sequelize.define('excel_temp', {
     affa_id: Sequelize.STRING(50),
     flow_id: Sequelize.STRING(50),
     user_code: Sequelize.STRING(50),
-    user_name: Sequelize.STRING(10),
     regitem_no: Sequelize.STRING(10),
 	temp_state: Sequelize.STRING(10),
     col010: Sequelize.STRING(200),

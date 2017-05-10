@@ -1,4 +1,6 @@
 const fs = require('mz/fs');
+const rp = require('request-promise');
+const config = require('../config');
 // async-busboy里的文件流是异步的, 需要用promise包装后变成同步
 let pipeSync = (rs, file_path) => {
     let ws = fs.createWriteStream(file_path);
@@ -25,8 +27,33 @@ let isEmpty = obj => {
         return false;
     }
 }
+
+let getUserCode = async ctx => {
+    let user_code;
+    console.log('++++++++');
+    if (ctx.session.user_code === undefined) {
+        let session_id = ctx.cookies.get('webpy_session_id');
+        if (!isEmpty(session_id)) {
+            user_code = await rp(`http://localhost:${config.proxy.proxy_port}/x/intrustqlc/session?session_id=${session_id}`);
+            console.log('远程获取' + user_code);
+            if (isEmpty(user_code)) {
+                user_code = '';
+            } else {
+                ctx.session.user_code = user_code;
+            }
+        } else {
+            user_code = '';
+        }
+    } else {
+        user_code = ctx.session.user_code;
+        console.log('session' + user_code);
+    }
+    console.log('++++++++');
+    return user_code;
+}
 module.exports = {
     pipeSync: pipeSync,
     isEmpty: isEmpty,
-    includeEmpty: includeEmpty
+    includeEmpty: includeEmpty,
+    getUserCode: getUserCode
 }

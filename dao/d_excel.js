@@ -3,16 +3,11 @@ const ExcelTemp = require('../models/ExcelTemp');
 const GridColumns = require('../models/GridColumns');
 const sequelize = require('../utils/sequelize_init').pjmain;
 const tools = require('../utils/tools');
+const moment = require('moment');
 
-let excelImport = async (affa_id, flow_id, user_name, project_no, temp_state, json) => {
+let excelImport = async (affa_id, flow_id, user_code, project_no, temp_state, json) => {
     let values = [],
-        now = Date.now(),
-        result;
-    if (!tools.isEmpty(user_name)) {
-        result = await sequelize.query(`select user_code from org_user where full_name = '${user_name}'`, {
-            type: sequelize.QueryTypes.SELECT
-        });
-    }
+        now = moment().format('YYYY-MM-DD hh:mm:ss');
     // console.log('========+');
     // console.log(user_name==='undefined');
     // console.log(user_name!= undefined);
@@ -20,8 +15,7 @@ let excelImport = async (affa_id, flow_id, user_name, project_no, temp_state, js
         values.push({
             affa_id: tools.isEmpty(affa_id) ? null : affa_id,
             flow_id: flow_id,
-            user_code: tools.isEmpty(user_name) ? null : result[0].user_code,
-            user_name: tools.isEmpty(user_name) ? null : user_name,
+            user_code: tools.isEmpty(user_code) ? null : user_code,
             regitem_no: tools.isEmpty(project_no) ? null : project_no,
 			temp_state: tools.isEmpty(temp_state) ? null : temp_state,
             col010: j.col010,
@@ -88,7 +82,7 @@ let loadAll_affaid_flow = async (affa_id) => {
     });
     return datas;
 }
-let loadAll_affaid_obj = async (affa_id,user_code) => {
+let loadAll_affaid_obj = async (affa_id, user_code) => {
     let datas = await ExcelTemp.findAll({
         where: {
             affa_id: affa_id,
@@ -97,10 +91,10 @@ let loadAll_affaid_obj = async (affa_id,user_code) => {
     });
     return datas;
 }
-let loadAll_flowid = async (flow_id, user_name, project_no, temp_state) => {
+let loadAll_flowid = async (flow_id, user_code, project_no, temp_state) => {
     let datas = await ExcelTemp.findAll({
         where: {
-            user_name: user_name,
+            user_code: user_code,
             flow_id: flow_id,
             regitem_no: project_no,
 			temp_state:temp_state

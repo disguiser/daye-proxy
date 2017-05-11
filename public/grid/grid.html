@@ -20,6 +20,12 @@
 
     <link rel="stylesheet" href="/node/fileupload/jquery.fileupload.css">
     <link rel="stylesheet" type="text/css" href="/node/grid/dlshouwen.grid.min.css"/>
+
+    <!-- excel -->
+    <script lang="javascript" src="/node/xlsx.full.min.js"></script>
+
+    <!-- filesaver -->
+    <script lang="javascript" src="/node/FileSaver.min.js"></script>
 </head>
 <body>
     <div id="div_operate" style="text-align:right">
@@ -28,6 +34,7 @@
             <input type="hidden" name="flow_id" id="flow_id" />
             <input type="hidden" name="user_name" id="user_name" />
             <input type="hidden" name="project_no" id="project_no" />
+            <button id="templDownload" type="button" class="btn btn-xs"><i class="fa fa-download"></i> 模版下载</button>
             <span class="btn fileinput-button">
                 <i class="glyphicon glyphicon-plus"></i>
                 <span>选择文件...</span>
@@ -52,8 +59,14 @@
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
         if (r != null) return unescape(r[2]); return null; //返回参数值
     }
-
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
     var grid;
+    var gridColumns;
     $(function(){
         // 获取url内flow_id
         var flow_id = getUrlParam('flow_id'),
@@ -65,10 +78,10 @@
         $('#user_name').val(user_name);
         $('#project_no').val(project_no);
         // 获取列设置
-        var gridColumns;
         $.getJSON('/node/excel/gridColumns', {flow_id: flow_id,user_name: user_name}, function(data){
             if (data.result === 'succeed' && data.data.length > 0) {
                 gridColumns = data.data;
+                console.log(JSON.stringify(gridColumns));
                 var gridOption = {
                     lang : 'zh-cn',
                     ajaxLoad : false,
@@ -86,6 +99,25 @@
                     gridOption.datas = data;
                     grid = $.fn.dlshouwen.grid.init(gridOption);
                     grid.load();
+                });
+                // 模版导出按钮
+                $('#templDownload').click(function(){
+                    var output = {};
+                    gridColumns.forEach(function(e){
+                        output[e.cell] = {
+                            v: e.title
+                        };
+                    });
+                    var ref = gridColumns[0].cell + ':' + gridColumns[gridColumns.length-1].cell;
+                    var wb = {
+                        SheetNames: ['sheet1'],
+                        Sheets: {
+                            'sheet1': Object.assign({}, output, { '!ref': ref })
+                        }
+                    }
+                    var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
+                    var wbout = XLSX.write(wb,wopts);
+                    saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), "模版.xlsx");
                 });
             } else {
                 alert('未查询到列数据!');

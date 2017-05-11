@@ -113,9 +113,6 @@ let remove = async (ids) => {
 }
 let gridColumns = async (flow_id) => {
     let result = await GridColumns.findAll({
-        attributes: [
-            'id', 'title', 'type', 'columnClass'
-        ],
         where: {
             flow_id: flow_id
         },

@@ -10,6 +10,7 @@ module.exports = sequelize.define('grid_columns', {
     },
     flow_id: Sequelize.STRING(50),
     id: Sequelize.STRING(6),
+    cell: Sequelize.STRING(5),
     title: Sequelize.STRING(20),
     type: Sequelize.STRING(20),
     columnClass: Sequelize.STRING(20)

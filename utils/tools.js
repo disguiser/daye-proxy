@@ -36,7 +36,7 @@ let getUserCode = async ctx => {
         if (!isEmpty(session_id)) {
             user_code = await rp(`http://localhost:${config.proxy.proxy_port}/x/intrustqlc/session?session_id=${session_id}`);
             console.log('远程获取' + user_code);
-            if (isEmpty(user_code)) {
+            if (user_code === 'notLoggin') {
                 user_code = '';
             } else {
                 ctx.session.user_code = user_code;

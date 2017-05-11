@@ -21,7 +21,6 @@ module.exports = function (router) {
 			temp_state = 0,
             affa_id = fields['affa_id'];
         // console.log('==========');
-        // console.log('=========='+user_name);
         if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, project_no])){
             for (let file of files) {
                 let file_path = config.fileupload.path + Date.now() + file.filename;
@@ -58,7 +57,7 @@ module.exports = function (router) {
                 ctx.response.type = 'application/json';
             }
         } else {
-            ctx.response.body = {result: 'failed',message:'参数不正确:affa_id=' + affa_id + ',flow_id=' + flow_id + ',user_name=' + user_name + ',project_no=' + project_no};
+            ctx.response.body = {result: 'failed',message:'参数不正确:affa_id=' + affa_id + ',flow_id=' + flow_id + ',project_no=' + project_no};
             ctx.response.type = 'application/json';
         }
     });

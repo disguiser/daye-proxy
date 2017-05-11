@@ -1,7 +1,7 @@
 var selects = [];
 var bodyselect = {};
 
-bodyselect.query = '.detailinfo_ul_title';
+bodyselect.query = '.widget-toolbar';
 
 bodyselect.func = function (node) {
 	

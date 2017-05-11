@@ -9,8 +9,6 @@ let excelImport = async (affa_id, flow_id, user_code, project_no, temp_state, js
     let values = [],
         now = moment().format('YYYY-MM-DD hh:mm:ss');
     // console.log('========+');
-    // console.log(user_name==='undefined');
-    // console.log(user_name!= undefined);
     for (let j of json) {
         values.push({
             affa_id: tools.isEmpty(affa_id) ? null : affa_id,

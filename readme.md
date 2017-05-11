@@ -132,6 +132,7 @@ select REGITEM_NO from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=
 * p0cf06613e8e11e680a2184f32ca6bca-销户流程
 * rfb70130910911e6a83c184f32ca6bca-收支计划审批流程
 * wb2eee409a6211e687f3415645000030-工作计划审批流程
+* v4b02a4f3e8a11e6ac80184f32ca6bca-资产解押审批流程
 #### 对象
 * v747d92ec81311e68aa0005056a687a8-资产端个人客户
 * c588f5c0c81311e68438005056a687a8-资产端机构客户

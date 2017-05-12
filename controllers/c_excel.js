@@ -38,12 +38,12 @@ module.exports = function (router) {
                     // 除去特殊参数以及第一行
                     if (!e.startsWith('!') && !/^[A-Z]{1,}1$/.test(e)) {
                         if (e.match(/[0-9]{1,}/)[0] === flag) {
-                            jsonOb[dict_excel_temp_col[e.replace(/[0-9]{1,}/, '1')]] = workSheet[e].v;
+                            jsonOb[dict_excel_temp_col[e.replace(/[0-9]{1,}/, '1')]] = workSheet[e].v.toString();
                         } else {
                             flag = e.match(/[0-9]{1,}/)[0];
                             json.push(jsonOb);
                             jsonOb = {};
-                            jsonOb[dict_excel_temp_col[e.replace(/[0-9]{1,}/, '1')]] = workSheet[e].v;
+                            jsonOb[dict_excel_temp_col[e.replace(/[0-9]{1,}/, '1')]] = workSheet[e].v.toString();
                         }
                     }
                 }

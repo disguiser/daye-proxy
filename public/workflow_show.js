@@ -27,7 +27,7 @@ $(function(){
         '合同审批流程','产品发行流程','项目签报审批流程','项目立项审批流程','收款流程','付款流程','放款审批流程', '销户流程', '账户开户流程','收支计划审批流程','工作计划审批流程'
     ];
     var excel_flownames = [
-        '抵质押物录入流程'
+        '抵质押物录入流程','资产解押审批流程'
     ];
     if (zw_flownames.indexOf(flowname) >= 0) {
         if(affaid != undefined){
@@ -74,7 +74,8 @@ $(function(){
 });
 
 function createExcelPage(flowid, affaid) {
-    $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').append('<button type="button" id="excelImport" class="btn bule">查看excel导入信息</button>');
+    // $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').append('<button type="button" id="excelImport" class="btn bule">查看excel导入信息</button>');
+    $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').append('<button type="button" id="excelImport" class="btn bule">查看excel导入信息</button><div id="div_excelImport" class="modal container fade" tabindex="-1" role="dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button><h3>excel导入</h3></div><div class="modal-body"><iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?flow_id=' + flowid + '&affa_id=' + affaid + '&type=edit"></iframe></div></div>');
     $('#excelImport').click(function(){
         if ($('.modal.container.fade').size() === 0) {
             $('body').append(`
@@ -87,13 +88,10 @@ function createExcelPage(flowid, affaid) {
                 </div>
             `);
         }
-        $('.modal.container.fade').css('overflow', 'auto');
-        $('.modal.container.fade').css('top', '0');
-        $('.modal.container.fade .modal-header').css('padding', '0');
-        $('.modal.container.fade .modal-body').css('padding', '0');
-        $('.modal.container.fade .modal-header h1').text('excel导入');
-        $('.modal.container.fade .modal-footer').hide();
-        $('.modal.container.fade .modal-body').html('<iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?flow_id=' + flowid + '&affa_id=' + affaid + '&type=edit"></iframe>');
-        $('.modal.container.fade').modal('show');
+        $('#div_excelImport').css('overflow', 'auto');
+        $('#div_excelImport').css('top', '0');
+        $('#div_excelImport .modal-header').css('padding', '0');
+        $('#div_excelImport .modal-body').css('padding', '0');
+        $('#div_excelImport').modal('show');
     });
 }

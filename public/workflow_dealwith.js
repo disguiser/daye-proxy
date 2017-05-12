@@ -27,7 +27,7 @@ $(function(){
     }
     $.getJSON(url, function(data){
         // 抵质押物录入
-        if (data.flow_id === 'tc539970ff0911e694b4005056a60fd8') {
+        if (data.flow_id === 'tc539970ff0911e694b4005056a60fd8' || data.flow_id === 'v4b02a4f3e8a11e6ac80184f32ca6bca') {
             excelImport(data.affa_id, data.flow_id);
         }
     });

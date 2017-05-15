@@ -112,7 +112,7 @@ let receivables = async(affair) => {
     let node_id = affair.node_id ? affair.node_id : '';
     if (affair.flow_id=='v7608f2e3e8811e688c2184f32ca6bca') { // 收款
         return {
-            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printInNotice?in_uuid=${json_data.u948ea80f5b911e68893415645000030}&node_id=${node_id}"></iframe>`
+            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printInNotice?in_uuid=${json_data.IN_UUID}&node_id=${node_id}"></iframe>`
         }
     } else if (affair.flow_id=='v11a7d403e8611e6b07e184f32ca6bca'){ // 付款
         return {

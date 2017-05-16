@@ -23,14 +23,17 @@
         <td>
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120801' %}checked{% endif %} disabled>专用账户
         </td>
-        <td colspan="2">
+        <td>
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120802' %}checked{% endif %} disabled>募集账户
         </td>
         <td>
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120809' %}checked{% endif %} disabled>理财账户
         </td>
-        <td colspan="2">
+        <td>
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120810' %}checked{% endif %} disabled>归集监管账户
+        </td>
+        <td colspan="2">
+            <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120899' %}checked{% endif %} disabled>其他
         </td>
     </tr>
     <tr>
@@ -50,6 +53,7 @@
         <td><b>开户要求及备注</b></td>
         <td colspan="6">{{ affair_json['s6305480520711e6acaab888e335e00a'] }}</td>
     </tr>
+<!--
     <tr>
         <td><b>申请人签字</b></td>
         <td colspan="3"></td>
@@ -62,6 +66,7 @@
         <td><b>财务部负责人审核</b></td>
         <td colspan="2"></td>
     </tr>
+-->
     <tr>
         <td colspan="7"></td>
     </tr>
@@ -90,12 +95,14 @@
         <td><b>备注</b></td>
         <td colspan="6">{{ affair_json['reb09c006f4f11e6b5a440f02f0658fc'] }}</td>
     </tr>
+<!--
     <tr>
         <td><b>开户经办人签字</b></td>
         <td colspan="2"></td>
         <td colspan="2"><b>出纳主管审核</b></td>
         <td colspan="2"></td>
     </tr>
+-->
     <tr>
         <td><b>银行划款联系人</b></td>
         <td>{{ affair_json['obf0d05e593c11e6840240f02f0658fc'] }}</td>
@@ -110,7 +117,7 @@
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820804' %}checked{% endif %} disabled>网银
         </td>
         <td colspan="2">
-            <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820803' %}checked{% endif %} disabled>其他
+            <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820803' %}checked{% endif %} disabled>电汇单
         </td>
         <td>
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820802' %}checked{% endif %} disabled>划款指令
@@ -129,6 +136,7 @@
         <td><b>收件人及地址</b></td>
         <td colspan="2">{{ affair_json['s40be980593c11e6a34d40f02f0658fc'] }}</td>
     </tr>
+<!--
     <tr>
         <td><b>银行联系人（客户经理等）</b></td>
         <td colspan="2"></td>
@@ -137,6 +145,7 @@
         <td><b>邮箱</b></td>
         <td></td>
     </tr>
+-->
     <tr>
         <td><b>联系人地址</b></td>
         <td colspan="6">{{ affair_json['s40be980593c11e6a34d40f02f0658fc'] }}</td>

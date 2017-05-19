@@ -14,9 +14,11 @@
     </tr>
     <tr>
         <td><b>项目编号</b></td>
-        <td colspan="3">{{ project_info.REGITEM_NO }}</td>
+        <td colspan="6">{{ project_info.REGITEM_NO }}</td>
+        <!--
         <td><b>产品编号</b></td>
         <td colspan="2">{{ product_info.PRODUCT_CODE }}</td>
+        -->
     </tr>
     <tr>
         <td><b>账户性质</b></td>
@@ -79,7 +81,7 @@
     </tr>
     <tr>
         <td><b>开户银行名称</b></td>
-        <td colspan="6">{{ affair_json['of1ebc1e520711e6abcdb888e335e00a'] }}</td>
+        <td colspan="6">{{ dict_bank_type[affair_json['aaf42ff0520611e688c2b888e335e00a']] }}&nbsp;{{ affair_json['of1ebc1e520711e6abcdb888e335e00a'] }}</td>
     </tr>
     <tr>
         <td><b>银行账号</b></td>

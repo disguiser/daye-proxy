@@ -26,8 +26,8 @@ $(function(){
         return;
     }
     $.getJSON(url, function(data){
-        // 抵质押物录入
-        if (data.flow_id === 'tc539970ff0911e694b4005056a60fd8' || data.flow_id === 'v4b02a4f3e8a11e6ac80184f32ca6bca') {
+        // 抵质押物录入，资产解押审批流程，放款审批流程(消费贷及房抵贷)
+        if (data.flow_id === 'tc539970ff0911e694b4005056a60fd8' || data.flow_id === 'v4b02a4f3e8a11e6ac80184f32ca6bca' || data.flow_id == 'wfee86703bb611e7ae5d000c294af360') {
             excelImport(data.affa_id, data.flow_id);
         }
     });

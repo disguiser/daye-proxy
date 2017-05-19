@@ -8,12 +8,14 @@ $(function(){
                 changeJSFunc(this, 'listEdit_faca20a152f311e6892e184f32ca6bca');
             });
         });
-    } else if (flowid == 'tc539970ff0911e694b4005056a60fd8' || flowid == 'v4b02a4f3e8a11e6ac80184f32ca6bca') { // 抵质押物录入流程 + 资产解押审批流程
+    } else if (flowid == 'tc539970ff0911e694b4005056a60fd8' || flowid == 'v4b02a4f3e8a11e6ac80184f32ca6bca' || flowid == 'wfee86703bb611e7ae5d000c294af360') { // 抵质押物录入流程 + 资产解押审批流程+ 放款审批流程(消费贷及房抵贷)
         var project_name;
         if (flowid == 'tc539970ff0911e694b4005056a60fd8') {
             project_name = $('#u8ba69f0ff2c11e6af631c3e84e5807c').val();
         } else if (flowid == 'v4b02a4f3e8a11e6ac80184f32ca6bca') {
             project_name = $('#ve4d5cf053c911e69f0ab888e335e00a').val();
+        }else if (flowid == 'wfee86703bb611e7ae5d000c294af360') {
+            project_name = $('#tb73ff7057b311e68aa5184f32ca6bca').val();
         }
         var project_no;
         var loop = setInterval(function(){

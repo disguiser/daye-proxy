@@ -30,7 +30,8 @@ let proxy_flow_new_dict = [
   'tc539970ff0911e694b4005056a60fd8',
   'v7608f2e3e8811e688c2184f32ca6bca',
   'v11a7d403e8611e6b07e184f32ca6bca',
-  'v4b02a4f3e8a11e6ac80184f32ca6bca'
+  'v4b02a4f3e8a11e6ac80184f32ca6bca',
+  'wfee86703bb611e7ae5d000c294af360'
 ];
 // 项目签报变更流程 + 中后期签报变更流程
 let proxy_flow_select_dict = [
@@ -44,7 +45,7 @@ proxy.use('/x/workflow/rtnew', function (req, res, next) {
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
-  // 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 付款流程 + 资产解押审批流程
+  // 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 付款流程 + 资产解押审批流程 + 放款审批流程(消费贷及房抵贷)
   if ( proxy_flow_new_dict.indexOf(parsed.flowid)>=0 ) {
     let harmonBinary = harmon([], proxy_flow_new, true);
     harmonBinary(req, res);

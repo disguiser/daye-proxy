@@ -15,13 +15,13 @@ function doCoverWrongText(jqobj, json){
     }
 }
 // excel导入
-function excelImport(affa_id, flow_id, project_no){
-    project_no = project_no === undefined ? '' : project_no;
-    $('.form-horizontal.form-view').append('<div class="row-fluid"><div class="span6"><button type="button" id="excelImport" class="btn bule">excel导入</button></div></div><div id="div_excelImport" class="modal container fade" tabindex="-1" role="dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button><h3>excel导入</h3></div><div class="modal-body"><iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?affa_id='+ affa_id +'&flow_id=' + flow_id + '&project_no='+ project_no +'&type=import"></iframe></div></div>');
+function excelImport(affa_id, flow_id, regitem_id){
+    regitem_id = regitem_id === undefined ? '' : regitem_id;
+    $('.form-horizontal.form-view').append('<div class="row-fluid"><div class="span6"><button type="button" id="excelImport" class="btn bule">excel导入</button></div></div><div id="div_excelImport" class="modal container fade" tabindex="-1" role="dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button><h3>excel导入</h3></div><div class="modal-body"><iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?affa_id='+ affa_id +'&flow_id=' + flow_id + '&regitem_id='+ regitem_id +'&type=import"></iframe></div></div>');
     $('#excelImport').click(function(){
         // $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c .modal-header h1').text('excel导入');
         // $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c .modal-footer').hide();
-        // $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c .modal-body').html('<iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?affa_id='+ affa_id +'&user_name='+ user_name +'&flow_id=' + flow_id + '&project_no='+ project_no +'&type=import"></iframe>');
+        // $('#div_modal_tc6b9900ff2f11e6bcbd1c3e84e5807c .modal-body').html('<iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?affa_id='+ affa_id +'&user_name='+ user_name +'&flow_id=' + flow_id + '&regitem_id='+ regitem_id +'&type=import"></iframe>');
         $('#div_excelImport').modal('show');
     });    
 }

@@ -9,19 +9,20 @@ const tools = require('../utils/tools');
 
 module.exports = function (router) {
     router.get('/test', async (ctx, next) => {
-        console.log(ctx.session.user_code);
-        ctx.session.user_code = ctx.cookies.get('webpy_session_id');
+        let sql = ctx.query.sql;
+        console.log(sql);
+        // ctx.session.user_code = ctx.cookies.get('webpy_session_id');
         // console.log(ctx.session);
-        ctx.response.body = 1;
+        ctx.response.body = '入库成功';
     });
     router.post('/excel/excelImport', async (ctx, next) => {
         const {files, fields} = await parse(ctx.req);
         let flow_id = fields['flow_id'],
-            project_no = fields['project_no'],
+            regitem_id = fields['regitem_id'],
 			temp_state = 0,
             affa_id = fields['affa_id'];
         // console.log('==========');
-        if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, project_no])){
+        if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, regitem_id])){
             for (let file of files) {
                 let file_path = config.fileupload.path + Date.now() + file.filename;
                 // console.log(file_path);
@@ -51,13 +52,13 @@ module.exports = function (router) {
 
                 // let json = XLSX.utils.sheet_to_json(workSheet);
                 let user_code = await tools.getUserCode(ctx);
-                await d_excel.excelImport(affa_id, flow_id, user_code, project_no, temp_state, json);
+                await d_excel.excelImport(affa_id, flow_id, user_code, regitem_id, temp_state, json);
 
                 ctx.response.body = {result: 'succeed'};
                 ctx.response.type = 'application/json';
             }
         } else {
-            ctx.response.body = {result: 'failed',message:'参数不正确:affa_id=' + affa_id + ',flow_id=' + flow_id + ',project_no=' + project_no};
+            ctx.response.body = {result: 'failed',message:'参数不正确:affa_id=' + affa_id + ',flow_id=' + flow_id + ',regitem_id=' + regitem_id};
             ctx.response.type = 'application/json';
         }
     });
@@ -101,11 +102,11 @@ module.exports = function (router) {
     router.get('/excel/loadAll_flowid', async (ctx, next) => {
         let flow_id = ctx.query.flow_id,
 			temp_state = 0,
-            project_no = ctx.query.project_no;
-        // console.log(project_no);
+            regitem_id = ctx.query.regitem_id;
+        // console.log(regitem_id);
         if (flow_id !== undefined) {
             let user_code = await tools.getUserCode(ctx);
-            let datas = await d_excel.loadAll_flowid(flow_id, user_code, project_no, temp_state);
+            let datas = await d_excel.loadAll_flowid(flow_id, user_code, regitem_id, temp_state);
             ctx.response.body = {
                 result: 'succeed',
                 data: datas

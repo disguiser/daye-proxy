@@ -5,7 +5,7 @@ const sequelize = require('../utils/sequelize_init').pjmain;
 const tools = require('../utils/tools');
 const moment = require('moment');
 
-let excelImport = async (affa_id, flow_id, user_code, project_no, temp_state, json) => {
+let excelImport = async (affa_id, flow_id, user_code, regitem_id, temp_state, json) => {
     let values = [],
         now = moment().format('YYYY-MM-DD hh:mm:ss');
     // console.log('========+');
@@ -14,7 +14,7 @@ let excelImport = async (affa_id, flow_id, user_code, project_no, temp_state, js
             affa_id: tools.isEmpty(affa_id) ? null : affa_id,
             flow_id: flow_id,
             user_code: tools.isEmpty(user_code) ? null : user_code,
-            regitem_no: tools.isEmpty(project_no) ? null : project_no,
+            regitem_no: tools.isEmpty(regitem_id) ? null : regitem_id,
 			temp_state: tools.isEmpty(temp_state) ? null : temp_state,
             col010: j.col010,
             col020: j.col020,
@@ -90,12 +90,12 @@ let loadAll_affaid_obj = async (affa_id, user_code) => {
     });
     return datas;
 }
-let loadAll_flowid = async (flow_id, user_code, project_no, temp_state) => {
+let loadAll_flowid = async (flow_id, user_code, regitem_id, temp_state) => {
     let datas = await ExcelTemp.findAll({
         where: {
             user_code: user_code,
             flow_id: flow_id,
-            regitem_no: project_no,
+            regitem_no: regitem_id,
 			temp_state:temp_state
         }
     });

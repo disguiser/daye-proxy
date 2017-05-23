@@ -1,7 +1,7 @@
 'use strict';
-const http = require('http');
+// const http = require('http');
 const connect = require('connect');
-const httpProxy = require('http-proxy');
+const HttpProxy = require('http-proxy');
 const queryString = require('query-string');
 const proxy_fileupload = require('./proxy/proxy_fileupload.js');
 const proxy_flow_new = require('./proxy/proxy_flow_new.js');
@@ -10,21 +10,25 @@ const proxy_flow_select = require('./proxy/proxy_flow_select.js');
 const proxy_obj_new = require('./proxy/proxy_obj_new.js');
 const proxy_flow_dealwith = require('./proxy/proxy_flow_dealwith.js');
 const harmon = require('./utils/harmon');
-const proxy = connect();
+const app = require('connect')();
 const config = require('./config').proxy;
 
 const d_flow = require('./dao/d_flow');
 
-// proxy.use('/x/workflow/rtnew', harmon([], [selects[0]], true));
-// proxy.use('/x/workflow/rtnew', function (req, res, next) {
-//   let parsed = queryString.parse(req._parsedUrl.query);
-//   if(parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca'){
-//     let harmonBinary = harmon([], [proxy_flow_new[0]], true);
-//     harmonBinary(req, res);
-//   }
-//   next();
-// });
-// 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 资产解押审批流程
+function createProxy(ip){
+    let httpProxy = HttpProxy.createProxyServer({
+      target: ip
+    });
+    httpProxy.on('error', function (err, req, res) {
+      res.writeHead(500, {
+        'Content-Type': 'text/plain'
+      });
+      res.end('Something went wrong. And we are reporting a custom error message.');
+    });
+    return httpProxy;
+  }
+
+// 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 资产解押审批流程 + 放款审批流程(消费贷及房抵贷)
 let proxy_flow_new_dict = [
   'faca20a152f311e6892e184f32ca6bca',
   'tc539970ff0911e694b4005056a60fd8',
@@ -38,7 +42,7 @@ let proxy_flow_select_dict = [
   'o53659213e5c11e6a7bd184f32ca6bca',
   'rdf83711470311e68bb0184f32ca6bca'
 ];
-proxy.use('/x/workflow/rtnew', function (req, res, next) {
+app.use('/x/workflow/rtnew', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
   // 合同审批流程 附件上传
   if ( parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca' ) {
@@ -58,7 +62,7 @@ proxy.use('/x/workflow/rtnew', function (req, res, next) {
   next();
 });
 
-proxy.use('/x/workflow/dealwith', async (req, res, next) => {
+app.use('/x/workflow/dealwith', async (req, res, next) => {
 
   let harmonBinary = harmon([], proxy_flow_dealwith, true);
   harmonBinary(req, res);
@@ -75,8 +79,8 @@ proxy.use('/x/workflow/dealwith', async (req, res, next) => {
   next();
 });
 
-// proxy.use('/x/workflow/rtview', harmon([], [selects[2]], true));
-proxy.use('/x/workflow/rtview', async (req, res, next) => {
+// app.use('/x/workflow/rtview', harmon([], [selects[2]], true));
+app.use('/x/workflow/rtview', async (req, res, next) => {
   let parsed = queryString.parse(req._parsedUrl.query);
   let affair;
   if (parsed.taskid != undefined) {
@@ -98,7 +102,7 @@ proxy.use('/x/workflow/rtview', async (req, res, next) => {
   next();
 });
 // 项目签报审批流程 项目立项审批流程(合并) + 收款流程 + 收支计划审批流程
-proxy.use('/x/workflow/rtflow', async (req, res, next) => {
+app.use('/x/workflow/rtflow', async (req, res, next) => {
   let parsed = queryString.parse(req._parsedUrl.query);
   let affair;
   if (parsed.taskid != undefined) {
@@ -119,7 +123,7 @@ let proxy_obj_new_dict = [
   'v747d92ec81311e68aa0005056a687a8',
   'c588f5c0c81311e68438005056a687a8'
 ];
-proxy.use('/f/v/objedit', function (req, res, next) {
+app.use('/f/v/objedit', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
   if (proxy_obj_new_dict.indexOf(parsed.clsid) >= 0) {
     let harmonBinary = harmon([], proxy_obj_new, true);
@@ -128,15 +132,16 @@ proxy.use('/f/v/objedit', function (req, res, next) {
   next();
 });
 // 下载pdf
-proxy.use('/x/intrustqlc/static/pdf', function (req, res, next) {
+app.use('/x/intrustqlc/static/pdf', function (req, res, next) {
   res.type = 'mimetype';
   res.setHeader('Content-disposition', 'attachment; filename=1.pdf');
   next();
 });
-proxy.use('/node', function (req, res){
-    httpProxy.createProxyServer({
-      target: 'http://localhost:3000/'
-    }).web(req, res);
+app.use('/node', function (req, res){
+    // proxy = httpProxy.createProxyServer({
+    //   target: 'http://localhost:3000/'
+    // }).web(req, res);
+    createProxy('http://localhost:3000/').web(req, res);
   }
 );
 // 获取ip
@@ -148,17 +153,18 @@ function getClientIp(req) {
 };
 let ipHash = {},
     ip;
-proxy.use('/', function (req, res){
+app.use('/', function (req, res){
   ip = getClientIp(req);
   if(ipHash[ip]==undefined){
     ipHash[ip] = config.target.shift();
     config.target.push(ipHash[ip]);
   }
-  httpProxy.createProxyServer({
-    target: ipHash[ip]
-    // target: 'http://127.0.0.1:8071/'
-  }).web(req, res);
+  // proxy = httpProxy.createProxyServer({
+  //   target: ipHash[ip]
+  //   // target: 'http://127.0.0.1:8071/'
+  // }).web(req, res);
+  createProxy(ipHash[ip]).web(req, res);
 });
 
-proxy.listen(config.proxy_port);
+app.listen(config.proxy_port);
 console.log('代理服务器启动,监听端口 ' + config.proxy_port);

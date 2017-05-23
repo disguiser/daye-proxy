@@ -15,18 +15,15 @@ const config = require('./config').proxy;
 
 const d_flow = require('./dao/d_flow');
 
-function createProxy(ip){
-    let httpProxy = HttpProxy.createProxyServer({
-      target: ip
-    });
-    httpProxy.on('error', function (err, req, res) {
-      res.writeHead(500, {
-        'Content-Type': 'text/plain'
-      });
-      res.end('Something went wrong. And we are reporting a custom error message.');
-    });
-    return httpProxy;
-  }
+
+let httpProxy = HttpProxy.createProxyServer();
+
+httpProxy.on('error', function (err, req, res) {
+  res.writeHead(500, {
+    'Content-Type': 'text/plain'
+  });
+  res.end('Something went wrong. And we are reporting a custom error message.');
+});
 
 // 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 资产解押审批流程 + 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程
 let proxy_flow_new_dict = [
@@ -139,10 +136,7 @@ app.use('/x/intrustqlc/static/pdf', function (req, res, next) {
   next();
 });
 app.use('/node', function (req, res){
-    // proxy = httpProxy.createProxyServer({
-    //   target: 'http://localhost:3000/'
-    // }).web(req, res);
-    createProxy('http://localhost:3000/').web(req, res);
+    httpProxy.web(req, res, {target: 'http://localhost:3000/'});
   }
 );
 // 获取ip
@@ -160,11 +154,7 @@ app.use('/', function (req, res){
     ipHash[ip] = config.target.shift();
     config.target.push(ipHash[ip]);
   }
-  // proxy = httpProxy.createProxyServer({
-  //   target: ipHash[ip]
-  //   // target: 'http://127.0.0.1:8071/'
-  // }).web(req, res);
-  createProxy(ipHash[ip]).web(req, res);
+  httpProxy.web(req, res, {target: ipHash[ip]});
 });
 
 app.listen(config.proxy_port);

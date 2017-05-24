@@ -13,7 +13,7 @@ $(function(){
         if (flowid == 'tc539970ff0911e694b4005056a60fd8') {
             regitem_id = $('#t7d2de5eff2c11e6b53c1c3e84e5807c').val();
         } else if (flowid == 'v4b02a4f3e8a11e6ac80184f32ca6bca') {
-            regitem_id = $('#cbe6307761304df39f476bc1fc7088e7').val();
+            regitem_id = $('#xcd1b98f59e211e6b633f0def1c335c3').val();
         }else if (flowid == 'wfee86703bb611e7ae5d000c294af360') {
             regitem_id = $('#t2481c3059e111e68f3bf0def1c335c3').val();
         }
@@ -23,7 +23,7 @@ $(function(){
     } else if (flowid == 'v11a7d403e8611e6b07e184f32ca6bca') { // 付款流程
         $('#controlContainer').append('<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="1000px" src="/x/intrustqlc/views/dy/printPayNotice?itemid=' + urlParams.itemid + '&itemName=' + urlParams.itemName + '&flowname=' + urlParams.flowname + '&uuid=' + urlParams.uuid + '"></iframe>');
     } else if (flowid == 'p688af403e6e11e6a580184f32ca6bca') { // 资金信托合同登记流程
-        $('#div_b1af1ec6942a11e69526ac2b6e56399c label').html('<a href="/f/v/objlist?clsid=fb1e00cf227e11e68731b8ee65291727&amp;pagid=r0e2aa00228311e68dccb8ee65291727" target="_blank">' + $('#div_b1af1ec6942a11e69526ac2b6e56399c label').html() + '</a>')
+        $('#div_b1af1ec6942a11e69526ac2b6e56399c label:eq(0)').html('<a href="/f/v/objlist?clsid=fb1e00cf227e11e68731b8ee65291727&amp;pagid=r0e2aa00228311e68dccb8ee65291727" target="_blank">' + $('#div_b1af1ec6942a11e69526ac2b6e56399c label').html() + '</a>')
     }
 });
 // 代理编辑函数 贷款投资合同录入流程

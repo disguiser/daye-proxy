@@ -89,7 +89,7 @@
     </tr>
     <tr>
         <td><b>预留印鉴</b></td>
-        <td colspan="3">{{ dict_yes_or_no[affair_json['v2f84fb0593a11e6a39a40f02f0658fc']] }}</td>
+        <td colspan="3">{{ affair_json['v2f84fb0593a11e6a39a40f02f0658fc'] }}</td>
         <td><b>开户完成日期</b></td>
         <td colspan="2">{{ affair_json['sf7bbe8f520611e6990cb888e335e00a'] }}</td>
     </tr>
@@ -118,12 +118,15 @@
         <td>
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820804' %}checked{% endif %} disabled>网银
         </td>
-        <td colspan="2">
-            <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820803' %}checked{% endif %} disabled>电汇单
+        <td>
+            <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820803' %}checked{% endif %} disabled>网银+划款指令
         </td>
         <td>
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820802' %}checked{% endif %} disabled>划款指令
         </td>
+        <td>
+            <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820805' %}checked{% endif %} disabled>业务凭证
+        </td>		
         <td><b>银企对账方式</b></td>
         <td>{% if affair_json['e1d75661593a11e6864c40f02f0658fc']=='1' %}网银{% elif affair_json['e1d75661593a11e6864c40f02f0658fc']=='2' %}电话{%endif%}</td>
     </tr>

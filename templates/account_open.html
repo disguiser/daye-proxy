@@ -1,3 +1,5 @@
+<input type="button" id="accPrint" onclick="accPrint();" value="打印">
+<!--start print-->
 <h1>信托账户开立申请审批表</h1>
 <table id="node_table">
     <tr>
@@ -94,8 +96,8 @@
         <td colspan="2">{{ affair_json['sf7bbe8f520611e6990cb888e335e00a'] }}</td>
     </tr>
     <tr>
-        <td><b>备注</b></td>
-        <td colspan="6">{{ affair_json['reb09c006f4f11e6b5a440f02f0658fc'] }}</td>
+        <td><b>银行联系人及<br>联系电话</b></td>
+        <td colspan="6">{{ affair_json['wca77a70467a11e79776415645000030'] }}</td>
     </tr>
 <!--
     <tr>
@@ -106,7 +108,7 @@
     </tr>
 -->
     <tr>
-        <td><b>银行划款联系人</b></td>
+        <td><b>划款联系人</b></td>
         <td>{{ affair_json['obf0d05e593c11e6840240f02f0658fc'] }}</td>
         <td><b>电话</b></td>
         <td>{{ affair_json['pdf27e80593c11e69d6d40f02f0658fc'] }}</td>
@@ -161,6 +163,7 @@
     </tr>
 </table>
 <style type="text/css">
+    h1{text-align: center;}
     #node_table {
         margin: auto;
         width: 770px;
@@ -171,4 +174,26 @@
         padding: 5px;
         border: 1px solid black;
     }
+    #accPrint{
+        margin-left:84%;
+        width:60px;
+        height:32px;
+        cursor:pointer;
+        background:#CCC;
+        border:0;
+        text-align:center;
+    }
 </style>
+<!--end print-->
+<script>
+    function accPrint(){
+            bdhtml = window.document.body.innerHTML;
+            start = "\<!--start print-->";
+            end = "\<!--end print-->";
+            prmhtml = bdhtml.substring(bdhtml.indexOf(start)+18);
+            prmhtml = prmhtml.substring(0,prmhtml.indexOf(end));
+            window.document.body.innerHTML = prmhtml;
+            window.print();
+            window.document.body.innerHTML = bdhtml;
+    }
+</script>

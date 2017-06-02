@@ -21,11 +21,9 @@ module.exports = function (router) {
             regitem_id = fields['regitem_id'],
 			temp_state = 0,
             affa_id = fields['affa_id'];
-        // console.log('==========');
         if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, regitem_id])){
             for (let file of files) {
                 let file_path = config.fileupload.path + Date.now() + file.filename;
-                // console.log(file_path);
                 let stat = await pipeSync(file, file_path);
                 let workbook = XLSX.readFile(file_path);
                 let sheetNames = workbook.SheetNames;

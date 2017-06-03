@@ -60,6 +60,8 @@ require('./controllers/c_flow.js')(router);
 
 require('./controllers/c_excel.js')(router);
 
+require('./controllers/c_word.js')(router);
+
 app.use(router.routes());
 
 app.on('error', function(err, ctx){

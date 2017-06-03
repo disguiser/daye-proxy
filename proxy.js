@@ -27,7 +27,11 @@ httpProxy.on('error', function (err, req, res) {
   res.end('Something went wrong. Check the python servers.');
 });
 
-// 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 资产解押审批流程 + 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程
+/**
+ * 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 资产解押审批流程 + 
+ * 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程 + 受益权转让审批流程 +
+ * 财产信托合同登记流程
+ */
 let proxy_flow_new_dict = [
   'faca20a152f311e6892e184f32ca6bca',
   'tc539970ff0911e694b4005056a60fd8',
@@ -35,7 +39,9 @@ let proxy_flow_new_dict = [
   'v11a7d403e8611e6b07e184f32ca6bca',
   'v4b02a4f3e8a11e6ac80184f32ca6bca',
   'wfee86703bb611e7ae5d000c294af360',
-  'p688af403e6e11e6a580184f32ca6bca'
+  'p688af403e6e11e6a580184f32ca6bca',
+  'ta32efd13e8c11e6ae36184f32ca6bca',
+  'p5b270cfdbdd11e691db1c3e84e5807c'
 ];
 // 项目签报变更流程 + 中后期签报变更流程
 let proxy_flow_select_dict = [

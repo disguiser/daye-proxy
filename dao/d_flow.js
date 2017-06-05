@@ -15,7 +15,7 @@ let find_affar_by_taskid = async (task_id) => {
     return data[0];
 }
 let find_project_info = async (regitem_id) => {
-    let project_info = await sequelize.query(`select REGITEM_NO,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE from INTRUSTQLC..QLC_TITEMREGINFO 
+    let project_info = await sequelize.query(`select REGITEM_CODE,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE from INTRUSTQLC..QLC_TITEMREGINFO 
         where REGITEM_ID = ${regitem_id}`,{
         type: sequelize.QueryTypes.SELECT
     });

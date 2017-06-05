@@ -28,6 +28,13 @@ let find_product_info = async (regitem_id) => {
     });
     return product_info[0];
 }
+let find_account_info = async (account_id) => {
+    let account_info = await sequelize.query(`select ACCT_BANK_NAME,ACCT_SUB_NAME,ACCT_BANK_ACCT from INTRUSTQLC..qlc_txtacctinfo
+        where XTACCT_INTID = ${account_id}`,{
+        type: sequelize.QueryTypes.SELECT
+    });
+    return account_info[0];
+}
 let find_project_info_by_product_id = async (product_id) => {
     let product_info = await sequelize.query(`select REGITEM_NO,REGITEM_NAME from INTRUSTQLC..QLC_TITEMREGINFO where REGITEM_ID = 
         (select REGITEM_ID from INTRUSTQLC..qlc_tproduct where PRODUCT_ID=${product_id})`,{
@@ -60,5 +67,6 @@ module.exports = {
     find_project_info: find_project_info,
     find_project_info_by_product_id: find_project_info_by_product_id,
     find_project_info_by_problem_id: find_project_info_by_problem_id,
-    find_product_info: find_product_info
+    find_product_info: find_product_info,
+    find_account_info:find_account_info
 }

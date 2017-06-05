@@ -6,6 +6,7 @@ const dict_file_type = require('../dicts/dict_file_type');
 const dict_yes_or_no = require('../dicts/dict_yes_or_no');
 const dict_bank_type = require('../dicts/dict_bank_type');
 const d_dict = require('../dao/d_dict.js');
+const moment = require('moment');
 
 let contractApproval = async (affair) => {
     // 合同审批流程
@@ -151,12 +152,16 @@ let accountOpen = async(affair) => {
 let accountCancel = async(affair) => {
     let affair_json = JSON.parse(affair.jsondata);
     let regitem_id = affair_json[flow_regitem[affair.flow_id]['regitem_id']];
+    let account_id = affair_json['s64420403ea311e6aebb184f32ca6bca'];
     let project_info = await d_flow.find_project_info(regitem_id);
     let product_info = await d_flow.find_product_info(regitem_id);
+    let account_info = await d_flow.find_account_info(account_id);
     return {
         success: temple.render('account_cancel.html', {
             project_info: project_info,
             product_info: product_info,
+            account_info: account_info,
+            today:moment().format('YYYY-MM-DD'),
             affair_json: affair_json
         })
     };

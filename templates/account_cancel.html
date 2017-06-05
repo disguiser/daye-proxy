@@ -5,7 +5,7 @@
         <td width="14%"><b>申请人</b></td>
         <td width="14%">{{ project_info.REGITEM_OP_NAME }}</td>
         <td width="14%"><b>申请日期</b></td>
-        <td width="14%">{{ project_info.APPLY_DATE }}</td>
+        <td width="14%">{{ today }}</td>
     </tr>
     <tr>
         <td><b>产品编号</b></td>
@@ -18,15 +18,15 @@
     <tr>
         <td rowspan="3"><b>拟销账户信息</b></td>
         <td><b>银行账户名称</b></td>
-        <td colspan="3"></td>
+        <td colspan="3">{{ account_info.ACCT_BANK_NAME }}</td>
     </tr>
     <tr>
         <td><b>开户银行名称</b></td>
-        <td colspan="3">{{ affair_json['s64420403ea311e6aebb184f32ca6bca'] }}</td>
+        <td colspan="3">{{ account_info.ACCT_SUB_NAME }}</td>
     </tr>
     <tr>
         <td><b>银行账号</b></td>
-        <td colspan="3"></td>
+        <td colspan="3">{{ account_info.ACCT_BANK_ACCT }}</td>
     </tr>
     <tr>
         <td><b>销户原因</b></td>

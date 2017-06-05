@@ -177,7 +177,11 @@ let flowRouter = async(affair) => {
     } else if (affair.flow_id == 'eebf606e3e6411e68f15184f32ca6bca') { // 账户开户流程
         res = await accountOpen(affair);
     } else if (affair.flow_id == 'p0cf06613e8e11e680a2184f32ca6bca') { // 销户流程
-        res = await accountCancel(affair); 
+        res = await accountCancel(affair);
+    } else if (affair.flow_id == 'b20e08f0476611e794d9000c294af360') { // 信息披露(季度管理报告)审批流程
+        res = {
+            success: `<a href="/node/word/${affair.affa_id}">导出word</a>`
+        };
     } else {
         res = {fail: '非指定流程'};
     }
@@ -185,13 +189,11 @@ let flowRouter = async(affair) => {
 }
 // 流程展示
 module.exports = function (router) {
-    // 合同审批流程 + 产品发行流程 + 项目签报审批流程 + 收款流程
     router.get('/flow_show_task/:task_id', async (ctx, next) => {
         let task_id = ctx.params.task_id;
         let affair = await d_flow.find_affar_by_taskid(task_id);
         ctx.response.body = await flowRouter(affair);
     });
-    // 合同审批流程 + 产品发行流程 + 项目签报审批流程 + 收款流程
     router.get('/flow_show_affa/:affa_id', async (ctx, next) => {
         let affa_id = ctx.params.affa_id;
         let affair = await d_flow.find_affar(affa_id);

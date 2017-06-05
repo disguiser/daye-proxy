@@ -24,6 +24,10 @@ $(function(){
         $('#controlContainer').append('<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="1000px" src="/x/intrustqlc/views/dy/printPayNotice?itemid=' + urlParams.itemid + '&itemName=' + urlParams.itemName + '&flowname=' + urlParams.flowname + '&uuid=' + urlParams.uuid + '"></iframe>');
     } else if (flowid == 'p688af403e6e11e6a580184f32ca6bca') { // 资金信托合同登记流程
         $('#div_b1af1ec6942a11e69526ac2b6e56399c label:eq(0)').html('<a href="/f/v/objlist?clsid=fb1e00cf227e11e68731b8ee65291727&amp;pagid=r0e2aa00228311e68dccb8ee65291727" target="_blank">' + $('#div_b1af1ec6942a11e69526ac2b6e56399c label').html() + '</a>')
+    } else if (flowid == 'ta32efd13e8c11e6ae36184f32ca6bca') { // 受益权转让审批流程
+        $('#div_sfbe518f3e9911e6ad2d184f32ca6bca label:eq(0)').html('<a href="/f/v/objlist?clsid=fb1e00cf227e11e68731b8ee65291727&amp;pagid=r0e2aa00228311e68dccb8ee65291727" target="_blank">' + $('#div_sfbe518f3e9911e6ad2d184f32ca6bca label').html() + '</a>')
+    } else if (flowid == 'p5b270cfdbdd11e691db1c3e84e5807c') { // 财产信托合同登记流程
+        $('#div_pbce5bdedc9711e6a54d1c3e84e5807c label:eq(0)').html('<a href="/f/v/objlist?clsid=fb1e00cf227e11e68731b8ee65291727&amp;pagid=r0e2aa00228311e68dccb8ee65291727" target="_blank">' + $('#div_pbce5bdedc9711e6a54d1c3e84e5807c label').html() + '</a>')
     }
 });
 // 代理编辑函数 贷款投资合同录入流程
@@ -35,3 +39,4 @@ function listEdit_faca20a152f311e6892e184f32ca6bca(flow_list_id,obj){
         // });
     });
 }
+ 

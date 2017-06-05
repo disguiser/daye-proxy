@@ -15,6 +15,8 @@ const config = require('./config').proxy;
 
 const d_flow = require('./dao/d_flow');
 
+const logger = require('./utils/logger');
+
 
 let httpProxy = HttpProxy.createProxyServer();
 
@@ -22,10 +24,14 @@ httpProxy.on('error', function (err, req, res) {
   res.writeHead(500, {
     'Content-Type': 'text/plain'
   });
-  res.end('Something went wrong. And we are reporting a custom error message.');
+  res.end('Something went wrong. Check the python servers.');
 });
 
-// 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 资产解押审批流程 + 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程
+/**
+ * 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 资产解押审批流程 + 
+ * 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程 + 受益权转让审批流程 +
+ * 财产信托合同登记流程
+ */
 let proxy_flow_new_dict = [
   'faca20a152f311e6892e184f32ca6bca',
   'tc539970ff0911e694b4005056a60fd8',
@@ -33,7 +39,9 @@ let proxy_flow_new_dict = [
   'v11a7d403e8611e6b07e184f32ca6bca',
   'v4b02a4f3e8a11e6ac80184f32ca6bca',
   'wfee86703bb611e7ae5d000c294af360',
-  'p688af403e6e11e6a580184f32ca6bca'
+  'p688af403e6e11e6a580184f32ca6bca',
+  'ta32efd13e8c11e6ae36184f32ca6bca',
+  'p5b270cfdbdd11e691db1c3e84e5807c'
 ];
 // 项目签报变更流程 + 中后期签报变更流程
 let proxy_flow_select_dict = [
@@ -87,8 +95,9 @@ app.use('/x/workflow/rtview', async (req, res, next) => {
     affair = await d_flow.find_affar(parsed.affaid);
   }
   if (affair == undefined) {
-    console.log('uuid可能不存在!!!!');
+    logger.warn('uuid可能不存在,请检查node服务与python服务数据源是否一致!');
     next();
+    return;
   }
   if (proxy_flow_select_dict.indexOf(affair.flow_id) >= 0) { // 项目签报变更流程 + 中后期签报变更流程
     let harmonBinary = harmon([], proxy_flow_select, true);
@@ -158,4 +167,4 @@ app.use('/', function (req, res){
 });
 
 app.listen(config.proxy_port);
-console.log('代理服务器启动,监听端口 ' + config.proxy_port);
+logger.info(`代理服务器启动,监听端口: ${config.proxy_port}`);

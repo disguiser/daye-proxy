@@ -115,7 +115,7 @@ module.exports = function (router) {
         let scream = fs.createReadStream(attachment.file_path);
         ctx.response.body = scream;
         ctx.response.type = 'mimetype';
-        ctx.response.set('Content-disposition', 'attachment; filename='+urlencode(attachment.file_name));
+        ctx.response.set('Content-disposition', `attachment; filename*=UTF-8''${urlencode(attachment.file_name)}`);
     });
     router.get('/downloadAll/:temp_id', async (ctx, next) => {
         let temp_id = ctx.params.temp_id;

@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../utils/sequelize_init').pjmain;
 
 module.exports = sequelize.define('attachment', {
-    id: {
+    ID: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true

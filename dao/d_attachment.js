@@ -10,8 +10,8 @@ let insert = async (flow_list_id, file_name, file_size, upload_time, file_path, 
         file_path: file_path,
         upload_time: Date.now()
     });
-    // console.log('created.' + attachment.id);
-    return attachment.id;
+    // console.log(JSON.stringify(attachment));
+    return attachment.ID;
 }
 
 let find_by_id = async (id) => {

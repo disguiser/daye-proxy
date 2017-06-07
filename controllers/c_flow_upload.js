@@ -21,11 +21,13 @@ module.exports = function (router) {
     router.post('/upload', async (ctx, next) => {
         const {files, fields} = await parse(ctx.req);
         let stream;
-        // console.log('caocaocao!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         let result = [];
-        for (let key in fields) {
-            console.log("key:"+key);
-            console.log("value:"+fields[key]);
+        if (ctx.logger.debug()) {
+            for (let key in fields) {
+                // console.log("key:"+key);
+                // console.log("value:"+fields[key]);
+                ctx.logger.debug(`${key}: ${fields[key]}`);
+            }
         }
         let temp_id = fields['another_temp_id'],
             flow_list_id = fields['flow_list_id'];
@@ -40,8 +42,12 @@ module.exports = function (router) {
                 let stat = await pipeSync(file, file_path);
                 // console.log(stat.size);
                 file_size = filesize(stat.size);
-                console.log('uploading %s %s -> %s', file_name, file_size, file_path);
+                if (ctx.logger.debug()) {
+                    ctx.logger.debug(`uploading ${file_name} ${file_size} -> ${file_path}`);
+                }
+                // console.log('uploading %s %s -> %s', file_name, file_size, file_path);
                 let id = await d_attachment.insert(flow_list_id, file_name, file_size, upload_time, file_path, fields['another_temp_id']);
+                // ctx.logger.info(id);
                 result.push({
                     id: id,
                     file_name: file_name,
@@ -54,7 +60,6 @@ module.exports = function (router) {
             ctx.response.body = {result: 'failed'};
         }
         ctx.response.type = 'application/json';
-        // ctx.response.status = 200;
     });
 
     // flow_list_id:流程信托文件对应id

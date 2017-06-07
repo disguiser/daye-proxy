@@ -169,7 +169,7 @@ let accountCancel = async(affair) => {
 let flowRouter = async(affair) => {
     let res;
     // console.log(affair);
-    if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca') { // 合同审批流程
+    if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca' || affair.flow_id == 'd70e099e240411e7a3af005056a687a8') { // 合同审批流程 + 合同审批流程(简易)
         res = await contractApproval(affair);
     } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
         res = await productDistribution(affair);

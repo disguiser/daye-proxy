@@ -50,8 +50,8 @@ let proxy_flow_select_dict = [
 ];
 app.use('/x/workflow/rtnew', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
-  // 合同审批流程 附件上传
-  if ( parsed.flowid=='afad680f3ec711e6ae92184f32ca6bca' ) {
+  // 合同审批流程 合同审批流程(简易) 附件上传
+  if (['d70e099e240411e7a3af005056a687a8','afad680f3ec711e6ae92184f32ca6bca'].indexOf(parsed.flowid) >= 0) {
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
@@ -75,7 +75,7 @@ app.use('/x/workflow/dealwith', async (req, res, next) => {
 
   let parsed = queryString.parse(req._parsedUrl.query);
   let affair = await d_flow.find_affar_by_taskid(parsed.taskid);
-  if(parsed.nextnode=='X72D77CA26F1489F92A305DDED6BE002'){ // 合同审批流程 业务部负责人
+  if(parsed.nextnode == 'X72D77CA26F1489F92A305DDED6BE002' || parsed.nextnode == 'd7107aa4240411e7a832005056a687a8'){ // 合同审批流程 业务部负责人
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }else if(affair != undefined && proxy_flow_select_dict.indexOf(affair.flow_id) >= 0){ // 项目签报变更流程 + 中后期签报变更流程

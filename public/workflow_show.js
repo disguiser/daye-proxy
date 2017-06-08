@@ -1,5 +1,6 @@
 // 流程展示界面
 $(function(){
+    $('.col-sm-12').css('width','100%');
     // 去掉表单内的超链接
     var count = 0;
     var loop = setInterval(function(){

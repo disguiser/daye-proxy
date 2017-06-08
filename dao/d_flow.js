@@ -43,7 +43,7 @@ let find_project_info_by_product_id = async (product_id) => {
     return product_info[0];
 }
 let find_project_info_by_problem_id = async (problem_id) => {
-    let product_info = await sequelize.query(`select REGITEM_CODE from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=(select REGITEM_ID 
+    let product_info = await sequelize.query(`select REGITEM_NO,REGITEM_CODE,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=(select REGITEM_ID 
                         from INTRUSTQLC..QLC_TITEMPBINFO where problemid='${problem_id}')`,{
         type: sequelize.QueryTypes.SELECT
     });

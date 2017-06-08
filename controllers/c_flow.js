@@ -99,11 +99,21 @@ let signChange = async(affair) => {
         }
     }
 }
-// 项目签报审批流程 与 项目立项审批流程(合并)
+// 项目签报审批流程
 let projectReport = async(affair) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
     return {
         success: '项目编号为: ' + project_info['REGITEM_CODE']
+    };
+}
+// 项目审批流程
+let projectApproval = async(affair) => {
+    let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
+    project_info.APPLY_DATE = moment(project_info.APPLY_DATE).format('YYYY年MM月DD日');
+    return {
+        success: temple.render('project_declare.html', {
+            project_info: project_info
+        })
     };
 }
 // 收款流程 + 付款流程
@@ -117,11 +127,11 @@ let receivables = async(affair) => {
         }
     } else if (affair.flow_id=='v11a7d403e8611e6b07e184f32ca6bca'){ // 付款
         return {
-            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printPayNotice?pay_uuid=${json_data.c7d2586153c611e6858ab888e335e00a}&node_id=${node_id}"></iframe>`
+            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printPayNotice?pay_uuid=${json_data.c7d2586153c611e6858ab888e335e00a}&affaid=${affair.affa_id}&node_id=${node_id}"></iframe>`
         }
     } else if(affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642'){ // 放款审批流程
         return {
-            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printOutNotice?loan_uuid=${json_data.q6d38600020811e7b242415645000030}&node_id=${node_id}"></iframe>`
+            success: `<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="800px" src="/x/intrustqlc/views/dy/printOutNotice?loan_uuid=${json_data.q6d38600020811e7b242415645000030}&affaid=${affair.affa_id}&node_id=${node_id}"></iframe>`
         }
     } else if (affair.flow_id == 'rfb70130910911e6a83c184f32ca6bca') { // 收支计划审批流程
         return {
@@ -173,8 +183,10 @@ let flowRouter = async(affair) => {
         res = await contractApproval(affair);
     } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
         res = await productDistribution(affair);
-    } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca' || affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目签报审批流程 项目立项审批流程(合并)
+    } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca') { // 项目签报审批流程
         res = await projectReport(affair);
+    } else if (affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目审批流程
+        res = await projectApproval(affair);
     } else if (affair.flow_id == 'v7608f2e3e8811e688c2184f32ca6bca' || affair.flow_id == 'v11a7d403e8611e6b07e184f32ca6bca' || affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642' || affair.flow_id=='rfb70130910911e6a83c184f32ca6bca' || affair.flow_id=='wb2eee409a6211e687f3415645000030') { // 收款流程 + 付款流程 + 放款审批流程 + 收支计划审批流程 + 工作计划审批流程
         res = await receivables(affair);
     } else if (affair.flow_id == 'o53659213e5c11e6a7bd184f32ca6bca' || affair.flow_id == 'rdf83711470311e68bb0184f32ca6bca') { // 项目签报变更流程 + 中后期变更签报流程

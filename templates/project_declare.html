@@ -1,0 +1,122 @@
+<div style="width:800px">
+	<br>
+	<h2>大业信托有限责任公司</h2>
+	<h2><b>信托项目立项申报表</b></h2>
+	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE }}</b></span>
+	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_NO }}</b></span>
+	<table id="node_table">
+		<tbody>
+			<tr>
+				<td width="12.5%"><b>项目名称</b></td>
+				<td width="37.5%">{{ project_info.REGITEM_NAME }}</td>
+				<td width="12.5%"><b>项目类别</b></td>
+				<td width="37.5%"></td>
+			</tr>
+			<tr>
+				<td><b>申报部门</b></td>
+				<td>{{ project_info.REGITEM_DP_NAME }}</td>
+				<td><b>责任经理</b></td>
+				<td>{{ project_info.REGITEM_OP_NAME }}</td>
+			</tr>
+			<tr>
+				<td rowspan="10"><b>项目内容简介</b>（包括项目合作方信息、融资、规模、初步交易结构、风控措施等内容）</td>
+				<td colspan="3" height="100px">
+					<div class="textDiv">
+						<p>（项目合作方情况）</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="100px">
+					<div class="textDiv">
+						<p>（融资规模及期限）</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="100px">
+					<div class="textDiv">
+						<p>（融资成本及公司收益率）</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="100px">
+					<div class="textDiv">
+						<p>（初步交易结构）</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="100px">
+					<div class="textDiv">
+						<p>（还款来源）</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="100px">
+					<div class="textDiv">
+						<p>（担保措施）</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="100px">
+					<div class="textDiv">
+						<p>（其他风控措施）</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="100px">
+					<div class="textDiv">
+						<p>项目团队人员构成（不少于2名正式员工）：</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="200px">
+					<div class="textDiv">
+						<p>是否存在关联方交易情况，请简要说明，并在尽职调查报告中进行专节详细说明，如不存在关联方交易情况，无需在尽职调查报告中进行专门说明）</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="100px">
+					<div class="textDiv">
+						<p>（其他事项）</p>
+						<p></p>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

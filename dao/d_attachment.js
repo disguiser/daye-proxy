@@ -55,12 +55,26 @@ let find_by_flis = async (flow_list_ids) => {
     return attachments;
 }
 
-let delete_by_id  = async (id) => {
+let delete_by_id  = async (ctx, id) => {
     let attachment = await find_by_id(id);
     // console.log(attachment);
     await attachment.destroy();
-    console.log(`${attachment.name} was destroyed.`);
+    if (ctx.logger.debug()) {
+        ctx.logger.debug(`${attachment.name} was destroyed.`);
+    }
     return {success: attachment.file_path};
+}
+let delete_by_ids = async (ctx, ids) => {
+    let result = await Attachment.destroy({
+        where: {
+            id: {
+                $in: ids
+            }
+        }
+    });
+    if (ctx.logger.debug()) {
+        ctx.logger.debug(`attachments ${ids} was destroyed.`);
+    }
 }
 let delete_by_fli  = async (flow_list_id) => {
     let attachments = await find_by_fli(flow_list_id);
@@ -82,6 +96,14 @@ let delete_by_ti = async (temp_id) => {
     }
     return {success: attachments};
 }
+let find_by_lu = async (list_uuid) => {
+    let attachment = await Attachment.findOne({
+        where: {
+            flow_list_id: list_uuid
+        }
+    });
+    return attachment;
+}
 
 module.exports = {
     find_by_id: find_by_id,
@@ -91,5 +113,6 @@ module.exports = {
     insert: insert,
     delete_by_ti: delete_by_ti,
     delete_by_id: delete_by_id,
+    delete_by_ids: delete_by_ids,
     delete_by_fli: delete_by_fli
 };

@@ -80,7 +80,7 @@ module.exports = function (router) {
 
     router.get('/delete_by_id/:id', async (ctx, next) => {
         var id = ctx.params.id;
-        let attachment = await d_attachment.delete_by_id(id);
+        let attachment = await d_attachment.delete_by_id(ctx, id);
         if ( attachment.success != undefined ) {
             fs.unlinkSync(attachment.success);
             ctx.response.body = {result: 'successed'};
@@ -139,5 +139,12 @@ module.exports = function (router) {
         ctx.response.type = 'mimetype';
         ctx.response.set('Content-disposition', 'attachment; filename='+urlencode('批量下载.zip'));
         fs.unlink(zip_path);
+    });
+    router.get('/getTempId', async (ctx, next) => {
+        let flow_list_id = ctx.query.flow_list_id;
+        let attachments = await d_attachment.find_by_fli(flow_list_id);
+        ctx.response.body = {
+            success: attachments[0].temp_id
+        }
     });
 }

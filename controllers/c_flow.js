@@ -7,8 +7,9 @@ const dict_yes_or_no = require('../dicts/dict_yes_or_no');
 const dict_bank_type = require('../dicts/dict_bank_type');
 const d_dict = require('../dao/d_dict.js');
 const moment = require('moment');
+const fs = require('mz/fs');
 
-let contractApproval = async (affair) => {
+let contractApproval = async (ctx, affair) => {
     // 合同审批流程
     let res;
     let json_data = affair.jsondata;
@@ -23,6 +24,23 @@ let contractApproval = async (affair) => {
             flow_list_ids.push(element.LIST_UUID);
         });
         let attachments = await d_attachment.find_by_flis(flow_list_ids);
+        // 去除冗余
+        let _attachments = await d_attachment.find_by_ti(attachments[0].temp_id);
+        if (ctx.logger.debug()) {
+            ctx.logger.debug(JSON.stringify(attachments));
+            ctx.logger.debug(JSON.stringify(_attachments));
+        }
+        if (_attachments.length > attachments.length) {
+            let ids = [],
+                file_paths;
+            _attachments.forEach(function(ele, i){
+                if (flow_list_ids.indexOf(ele.flow_list_id) < 0) {
+                    ids.push(ele.ID);
+                    fs.unlink(ele.file_path);
+                }
+            });
+            await d_attachment.delete_by_ids(ctx, ids);
+        }
         // console.log(attachments);
         // 根据flow_id分组
         let attach_rebuild = {};
@@ -176,11 +194,11 @@ let accountCancel = async(affair) => {
         })
     };
 }
-let flowRouter = async(affair) => {
+let flowRouter = async(ctx, affair) => {
     let res;
     // console.log(affair);
     if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca' || affair.flow_id == 'd70e099e240411e7a3af005056a687a8') { // 合同审批流程 + 合同审批流程(简易)
-        res = await contractApproval(affair);
+        res = await contractApproval(ctx, affair);
     } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
         res = await productDistribution(affair);
     } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca') { // 项目签报审批流程
@@ -209,12 +227,12 @@ module.exports = function (router) {
     router.get('/flow_show_task/:task_id', async (ctx, next) => {
         let task_id = ctx.params.task_id;
         let affair = await d_flow.find_affar_by_taskid(task_id);
-        ctx.response.body = await flowRouter(affair);
+        ctx.response.body = await flowRouter(ctx, affair);
     });
     router.get('/flow_show_affa/:affa_id', async (ctx, next) => {
         let affa_id = ctx.params.affa_id;
         let affair = await d_flow.find_affar(affa_id);
-        ctx.response.body = await flowRouter(affair);
+        ctx.response.body = await flowRouter(ctx, affair);
     });
     // 通过字典id找字典名称 涉及流程: 贷款投资合同录入流程
     router.get('/getDictName/:dict_id', async (ctx, next) => {

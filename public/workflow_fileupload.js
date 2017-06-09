@@ -61,8 +61,21 @@ $(function(){
     }
     $('.btn.blue.mini').attr('href','javascript:listAdd();');
     $('#theform .row-fluid:last').html('<input type="hidden" id="temp_id" />');
-    // 本用于删除,目前不起作用
-    $('#temp_id').val(UUID.prototype.createUUID());
+    // 用于批量下载
+    if ($('#x7857b1e3ebc11e68228184f32ca6bca').val() !== '') {
+        $.ajax({
+            type: 'get',
+            url: '/node/getTempId',
+            data: {flow_list_id: JSON.parse($('#x7857b1e3ebc11e68228184f32ca6bca').val())[0]['LIST_UUID']},
+            async: false
+        }).done(function(data){
+            if (data.success != undefined) {
+                $('#temp_id').val(data.success);
+            }
+        });
+    } else {
+        $('#temp_id').val(UUID.prototype.createUUID());
+    }
     // 附件list内容发生变化则清空对话框
     $('#x7857b1e3ebc11e68228184f32ca6bca').change(function(){
         $('#div_mdform_x7857b1e3ebc11e68228184f32ca6bca').html('');

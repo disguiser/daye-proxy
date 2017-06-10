@@ -8,14 +8,12 @@ $(function(){
                 changeJSFunc(this, 'listEdit_faca20a152f311e6892e184f32ca6bca');
             });
         });
-    } else if (flowid == 'tc539970ff0911e694b4005056a60fd8' || flowid == 'v4b02a4f3e8a11e6ac80184f32ca6bca' || flowid == 'wfee86703bb611e7ae5d000c294af360') { // 抵质押物录入流程 + 资产解押审批流程+ 放款审批流程(消费贷及房抵贷)
+    } else if (flowid == 'tc539970ff0911e694b4005056a60fd8' || flowid == 'v4b02a4f3e8a11e6ac80184f32ca6bca') { // 抵质押物录入流程 + 资产解押审批流程+ 放款审批流程(消费贷及房抵贷)
         var regitem_id;
         if (flowid == 'tc539970ff0911e694b4005056a60fd8') {
             regitem_id = $('#t7d2de5eff2c11e6b53c1c3e84e5807c').val();
         } else if (flowid == 'v4b02a4f3e8a11e6ac80184f32ca6bca') {
             regitem_id = $('#xcd1b98f59e211e6b633f0def1c335c3').val();
-        }else if (flowid == 'wfee86703bb611e7ae5d000c294af360') {
-            regitem_id = $('#t2481c3059e111e68f3bf0def1c335c3').val();
         }
         excelImport('', flowid, regitem_id);// func.js
     } else if (flowid == 'v7608f2e3e8811e688c2184f32ca6bca') { // 收款流程

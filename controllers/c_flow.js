@@ -4,7 +4,6 @@ const d_flow = require('../dao/d_flow.js');
 const d_attachment = require('../dao/d_attachment.js');
 const dict_file_type = require('../dicts/dict_file_type');
 const dict_yes_or_no = require('../dicts/dict_yes_or_no');
-const dict_bank_type = require('../dicts/dict_bank_type');
 const d_dict = require('../dao/d_dict.js');
 const moment = require('moment');
 const fs = require('mz/fs');
@@ -167,13 +166,14 @@ let accountOpen = async(affair) => {
     let project_info = await d_flow.find_project_info(regitem_id);
     let product_info = await d_flow.find_product_info(regitem_id);
     // let task_jsons = await d_flow.find_tasks(affair, "'O91D097B848A4CFD934EB2A1848D5D04','UEBA868CD26E4027A05B3D6CB91B4201'");
+    let bank_name = await d_flow.find_bank_name(affair_json['aaf42ff0520611e688c2b888e335e00a']);
     return {
         success: temple.render('account_open.html', {
             project_info: project_info,
             product_info: product_info,
             affair_json: affair_json,
             dict_yes_or_no: dict_yes_or_no,
-            dict_bank_type: dict_bank_type
+            bank_name: bank_name
         })
     };
 }

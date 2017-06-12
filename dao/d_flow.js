@@ -1,6 +1,6 @@
 'use strict';
-const pjmain = require('../utils/pjmain_init').pjmain;
-const intrustqlc = require('../utils/pjmain_init').intrustqlc;
+const pjmain = require('../utils/sequelize_init').pjmain;
+const intrustqlc = require('../utils/sequelize_init').intrustqlc;
 
 let find_affar = async (affa_id) => {
     let affair = await pjmain.query(`select affa_id,flow_id,jsondata from WF_AFFAIR where affa_id='${affa_id}'`, {

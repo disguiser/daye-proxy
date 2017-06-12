@@ -65,7 +65,7 @@ let find_bank_name = async (bank_id) => {
     let data = await intrustqlc.query(`select BANK_NAME from QLC_TCPACCTORG where BANK_ID = '${bank_id}'`, {
         type: intrustqlc.QueryTypes.SELECT
     });
-    return data[0];
+    return data[0]['BANK_NAME'];
 }
 module.exports = {
     find_affar: find_affar,

@@ -67,6 +67,12 @@ let find_bank_name = async (bank_id) => {
     });
     return data[0]['BANK_NAME'];
 }
+let find_pay_apply = async (affa_id) => {
+    let data = await intrustqlc.query(`select PROV_LEVEL_NAME,FK_BANK_NAME from QLC_TPAYAPPLY where problem_id='${affa_id}'`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return data[0];
+}
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
@@ -76,5 +82,6 @@ module.exports = {
     find_project_info_by_problem_id: find_project_info_by_problem_id,
     find_product_info: find_product_info,
     find_account_info:find_account_info,
-    find_bank_name: find_bank_name
+    find_bank_name: find_bank_name,
+    find_pay_apply: find_pay_apply
 }

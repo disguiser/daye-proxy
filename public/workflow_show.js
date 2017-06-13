@@ -26,7 +26,8 @@ $(function(){
     // 需要往正文插入内容的流程
     var zw_flownames = [
         '合同审批流程','合同审批流程(简易)','产品发行流程','项目签报审批流程','收款流程','付款流程',
-        '放款审批流程','销户流程', '账户开户流程','收支计划审批流程','工作计划审批流程','信息披露(季度管理报告)审批流程'
+        '放款审批流程','销户流程', '账户开户流程','收支计划审批流程','工作计划审批流程','信息披露(季度管理报告)审批流程',
+        '放款审批流程(证券投资)','放款审批流程(消费贷及房抵贷)'
     ];
     var excel_flownames = [
         '抵质押物录入流程','资产解押审批流程','放款审批流程(消费贷及房抵贷)'
@@ -58,7 +59,8 @@ $(function(){
                 // }
             }
         });
-    } else if (excel_flownames.indexOf(flowname) >= 0) {
+    } 
+    if (excel_flownames.indexOf(flowname) >= 0) {
         var url;
         if (taskid !== undefined) {
             url = '/node/affa_task/' + taskid;
@@ -77,7 +79,7 @@ $(function(){
 
 function createExcelPage(flowid, affaid) {
     // $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').append('<button type="button" id="excelImport" class="btn bule">查看excel导入信息</button>');
-    $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').append('<button type="button" id="excelImport" class="btn bule">查看excel导入信息</button><div id="div_excelImport" class="modal container fade" tabindex="-1" role="dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button><h3>excel导入</h3></div><div class="modal-body"><iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?flow_id=' + flowid + '&affa_id=' + affaid + '&type=edit"></iframe></div></div>');
+    $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').prepend('<button style="float:left" type="button" id="excelImport" class="btn bule">查看excel导入信息</button><div id="div_excelImport" class="modal container fade" tabindex="-1" role="dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button><h3>excel导入</h3></div><div class="modal-body"><iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?flow_id=' + flowid + '&affa_id=' + affaid + '&type=edit"></iframe></div></div>');
     $('#excelImport').click(function(){
         $('#div_excelImport').css('overflow', 'auto');
         $('#div_excelImport').css('top', '0');

@@ -194,6 +194,16 @@ let accountCancel = async(affair) => {
         })
     };
 }
+let payApply = async (affair) => {
+    let pa_info = await d_flow.find_pay_apply(affair.affa_id);
+    let link = affair.flow_id == 'wfee86703bb611e7ae5d000c294af360' ? true : false; 
+    return {
+        success: temple.render('pay_apply.html', {
+            pa_info: pa_info,
+            link: link
+        })
+    }
+}
 let flowRouter = async(ctx, affair) => {
     let res;
     // console.log(affair);
@@ -213,6 +223,8 @@ let flowRouter = async(ctx, affair) => {
         res = await accountOpen(affair);
     } else if (affair.flow_id == 'p0cf06613e8e11e680a2184f32ca6bca') { // 销户流程
         res = await accountCancel(affair);
+    } else if (affair.flow_id == 'v93e92803bb611e787b3000c294af360' || affair.flow_id == 'wfee86703bb611e7ae5d000c294af360') { //放款审批流程(证券投资) + 放款审批流程(消费贷及房抵贷)
+        res = await payApply(affair);
     } else if (affair.flow_id == 'b20e08f0476611e794d9000c294af360') { // 信息披露(季度管理报告)审批流程
         res = {
             success: `<a href="/node/word/${affair.affa_id}">导出word</a>`

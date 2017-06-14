@@ -43,11 +43,6 @@ let proxy_flow_new_dict = [
   'ta32efd13e8c11e6ae36184f32ca6bca',
   'p5b270cfdbdd11e691db1c3e84e5807c'
 ];
-// 项目签报变更流程 + 中后期签报变更流程
-let proxy_flow_select_dict = [
-  'o53659213e5c11e6a7bd184f32ca6bca',
-  'rdf83711470311e68bb0184f32ca6bca'
-];
 app.use('/x/workflow/rtnew', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
   // 合同审批流程 合同审批流程(简易) 附件上传
@@ -60,11 +55,6 @@ app.use('/x/workflow/rtnew', function (req, res, next) {
     let harmonBinary = harmon([], proxy_flow_new, true);
     harmonBinary(req, res);
   }
-  // 项目签报变更流程 + 中后期签报变更流程
-  if (proxy_flow_select_dict.indexOf(parsed.flowid) >= 0) {
-    let harmonBinary = harmon([], proxy_flow_select, true);
-    harmonBinary(req, res);
-  }
   next();
 });
 
@@ -74,55 +64,22 @@ app.use('/x/workflow/dealwith', async (req, res, next) => {
   harmonBinary(req, res);
 
   let parsed = queryString.parse(req._parsedUrl.query);
-  let affair = await d_flow.find_affar_by_taskid(parsed.taskid);
   if(parsed.nextnode == 'X72D77CA26F1489F92A305DDED6BE002' || parsed.nextnode == 'd7107aa4240411e7a832005056a687a8'){ // 合同审批流程 业务部负责人
     let harmonBinary = harmon([], proxy_fileupload, true);
-    harmonBinary(req, res);
-  }else if(affair != undefined && proxy_flow_select_dict.indexOf(affair.flow_id) >= 0){ // 项目签报变更流程 + 中后期签报变更流程
-    let harmonBinary = harmon([], proxy_flow_select, true);
     harmonBinary(req, res);
   }
   next();
 });
 
-// app.use('/x/workflow/rtview', harmon([], [selects[2]], true));
 app.use('/x/workflow/rtview', async (req, res, next) => {
-  let parsed = queryString.parse(req._parsedUrl.query);
-  let affair;
-  if (parsed.taskid != undefined) {
-    affair = await d_flow.find_affar_by_taskid(parsed.taskid);
-  } else if (parsed.affaid != undefined) {
-    affair = await d_flow.find_affar(parsed.affaid);
-  }
-  if (affair == undefined) {
-    logger.warn('uuid可能不存在,请检查node服务与python服务数据源是否一致!');
-    next();
-    return;
-  }
-  if (proxy_flow_select_dict.indexOf(affair.flow_id) >= 0) { // 项目签报变更流程 + 中后期签报变更流程
-    let harmonBinary = harmon([], proxy_flow_select, true);
-    harmonBinary(req, res);
-  } else { // 项目签报审批流程 项目立项审批流程(合并) + 账户开户流程 + 销户流程
-    let harmonBinary = harmon([], proxy_flow_show, true);
-    harmonBinary(req, res);
-  }
+  let harmonBinary = harmon([], proxy_flow_show, true);
+  harmonBinary(req, res);
   next();
 });
 // 项目签报审批流程 项目立项审批流程(合并) + 收款流程 + 收支计划审批流程
 app.use('/x/workflow/rtflow', async (req, res, next) => {
-  let parsed = queryString.parse(req._parsedUrl.query);
-  let affair;
-  if (parsed.taskid != undefined) {
-    affair = await d_flow.find_affar_by_taskid(parsed.taskid);
-    // 项目签报变更流程 + 中后期签报变更流程
-    if (proxy_flow_select_dict.indexOf(affair.flow_id) >= 0) {
-      let harmonBinary = harmon([], proxy_flow_select, true);
-      harmonBinary(req, res);
-    } else {
-      let harmonBinary = harmon([], proxy_flow_show, true);
-      harmonBinary(req, res);
-    }
-  }
+  let harmonBinary = harmon([], proxy_flow_show, true);
+  harmonBinary(req, res);
   next();
 });
 // 交易对手维护

@@ -78,7 +78,7 @@ $(function(){
             }
         });
     }
-    if (regitem_flownames.indexOf(flowname) >= 0) {
+    if (regitem_flownames.indexOf(flowname) >= -1) {
         var url;
         if (taskid !== undefined) {
             url = '/node/regitemid_taskid/' + taskid;

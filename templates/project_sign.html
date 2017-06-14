@@ -1,7 +1,7 @@
 <div style="width:800px">
 	<br>
 	<h2>大业信托有限责任公司</h2>
-	<h2><b>信托项目立项申报表</b></h2>
+	<h2><b>信托项目签报申报表</b></h2>
 	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE }}</b></span>
 	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
 	<table id="node_table">
@@ -19,83 +19,49 @@
 				<td>{{ project_info.REGITEM_OP_NAME }}</td>
 			</tr>
 			<tr>
-				<td rowspan="10"><b>项目内容简介</b><b>（包括项目合作方信息、融资、规模、初步交易结构、风控措施等内容）</b></td>
+				<td><b>项目基本情况描述</b></td>
 				<td colspan="3">
 					<div class="textDiv">
-						<p><b>（项目合作方情况）</b></p>
-						<p>{{ project_info.TQFS_ZFSJ }}</p>
+						<p>{{ project_info.XMHKLY }}</p>
 					</div>
 				</td>
 			</tr>
 			<tr>
+				<td><b>融资规模及期限</b></td>
 				<td colspan="3">
 					<div class="textDiv">
-						<p><b>（融资规模及期限）</b></p>
 						<p>{{ project_info.TERMANDSUM }}</p>
 					</div>
 				</td>
 			</tr>
 			<tr>
+				<td><b>公司预期收益及成本</b></td>
 				<td colspan="3">
 					<div class="textDiv">
-						<p><b>（融资成本及公司收益率）</b></p>
-						<p>{{ project_info.XTCDFY }}</p>
+						<p>{{ project_info.JHBZCS }}</p>
 					</div>
 				</td>
 			</tr>
 			<tr>
+				<td><b>项目风险状况及控制措施描述</b></td>
 				<td colspan="3">
 					<div class="textDiv">
-						<p><b>（初步交易结构）</b></p>
-						<p>{{ project_info.FXKZ_INFO }}</p>
+						<p>{{ project_info.BJSYHKSJ }}</p>
 					</div>
 				</td>
 			</tr>
 			<tr>
+				<td><b>是否存在关联方交易情况</b></td>
 				<td colspan="3">
 					<div class="textDiv">
-						<p><b>（还款来源）</b></p>
-						<p>{{ project_info.TJFS_INFO }}</p>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<div class="textDiv">
-						<p><b>（担保措施）</b></p>
-						<p>{{ project_info.FY_SP_SJ }}</p>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<div class="textDiv">
-						<p><b>（其他风控措施）</b></p>
-						<p>{{ project_info.RISK_CONTROL }}</p>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<div class="textDiv">
-						<p><b>项目团队人员构成（不少于2名正式员工）：</b></p>
-						<p>{{ project_info.TZFW_INFO }}</p>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<div class="textDiv">
-						<p><b>是否存在关联方交易情况，请简要说明，并在尽职调查报告中进行专节详细说明，如不存在关联方交易情况，无需在尽职调查报告中进行专门说明）</b></p>
 						<p>{{ project_info.TZCL_INFO }}</p>
 					</div>
 				</td>
 			</tr>
-			<tr>
+				<td><b>其他风控措施</b></td>
 				<td colspan="3">
 					<div class="textDiv">
-						<p><b>（其他事项）</b></p>
-						<p>{{ project_info.TZBL_INFO }}</p>
+						<p>{{ project_info.RISK_CONTROL }}</p>
 					</div>
 				</td>
 			</tr>

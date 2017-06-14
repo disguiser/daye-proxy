@@ -32,6 +32,9 @@ $(function(){
     var excel_flownames = [
         '抵质押物录入流程','资产解押审批流程','放款审批流程(消费贷及房抵贷)'
     ];
+    var regitem_flownames = [
+        '项目审批流程', '项目签报审批流程'
+    ];
     if (zw_flownames.indexOf(flowname) >= 0) {
         if(affaid != undefined){
             url = '/node/flow_show_affa/'+affaid;
@@ -72,6 +75,21 @@ $(function(){
         $.getJSON(url, function(data){
             if (data.affa_id !== undefined) {
                 createExcelPage(data.flow_id, data.affa_id);
+            }
+        });
+    }
+    if (regitem_flownames.indexOf(flowname) >= 0) {
+        var url;
+        if (taskid !== undefined) {
+            url = '/node/regitemid_taskid/' + taskid;
+        } else if (affaid !== undefined) {
+            url = '/node/regitemid_affaid/' + affaid;
+        } else {
+            return;
+        }
+        $.getJSON(url, function(data){
+            if (data !== undefined) {
+                $('.detailchoiceleft').append(`<a href="/x/intrustqlc/views/lifecycleDy_ALL?clsid=fb33464f48b911e6b8d8d85de21f6642&id=${data}" target="_blank">关联流程</a>`);
             }
         });
     }

@@ -266,4 +266,13 @@ module.exports = function (router) {
         let affa_id = ctx.params.affa_id;
         ctx.response.body = await d_flow.find_affar(affa_id);
     });
+    // 获取项目id
+    router.get('/regitemid_taskid/:task_id', async (ctx, next) => {
+        let task_id = ctx.params.task_id;
+        ctx.response.body = await d_flow.find_regitem_id_by_taskid(task_id);
+    });
+    router.get('/regitemid_affaid/:affa_id', async (ctx, next) => {
+        let affa_id = ctx.params.affa_id;
+        ctx.response.body = await d_flow.find_regitem_id_by_affaid(affa_id);
+    });
 }

@@ -73,6 +73,18 @@ let find_pay_apply = async (affa_id) => {
     });
     return data[0];
 }
+let find_regitem_id_by_affaid = async (affa_id) => {
+    let regitem_id = await intrustqlc.query(`select REGITEM_ID from QLC_TITEMPBINFO where PROBLEMID = '${affa_id}'` ,{
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return regitem_id[0]['REGITEM_ID'];
+}
+let find_regitem_id_by_taskid = async (task_id) => {
+    let regitem_id = await intrustqlc.query(`select REGITEM_ID from QLC_TITEMPBINFO where PROBLEMID = (select affa_id from PJMAIN..WF_TASK where task_id='${task_id}')` ,{
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return regitem_id[0]['REGITEM_ID'];
+}
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
@@ -83,5 +95,7 @@ module.exports = {
     find_product_info: find_product_info,
     find_account_info:find_account_info,
     find_bank_name: find_bank_name,
-    find_pay_apply: find_pay_apply
+    find_pay_apply: find_pay_apply,
+    find_regitem_id_by_affaid: find_regitem_id_by_affaid,
+    find_regitem_id_by_taskid: find_regitem_id_by_taskid
 }

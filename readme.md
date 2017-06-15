@@ -122,7 +122,7 @@ select REGITEM_NO from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=
 * qba4418052fc11e68f55184f32ca6bca-项目签报审批流程(正文中显示项目编号)
 * b395b7615f9811e6b480b888e3e688de-产品发行(信托产品发行确认单)
 * afad680f3ec711e6ae92184f32ca6bca-合同审批(附件上传)
-* d70e099e240411e7a3af005056a687a8-合同审批(简易)(附件上传)
+* d70e099e240411e7a3af005056a687a8-合同审批(非实质性变更)(附件上传)
 * v11a7d403e8611e6b07e184f32ca6bca-付款流程
 * v7608f2e3e8811e688c2184f32ca6bca-收款流程
 * fdf2ed804a6411e6905fd85de21f6642-放款审批流程

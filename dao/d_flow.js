@@ -30,7 +30,7 @@ let find_product_info = async (regitem_id) => {
     return product_info[0];
 }
 let find_account_info = async (account_id) => {
-    let account_info = await pjmain.query(`select ACCT_BANK_NAME,ACCT_SUB_NAME,ACCT_BANK_ACCT from INTRUSTQLC..qlc_txtacctinfo
+    let account_info = await pjmain.query(`select ACCT_ACCT_NAME,ISNULL(ACCT_BANK_NAME,'')+ISNULL(ACCT_SUB_NAME,'') as ACCT_BANK_NAME,ACCT_BANK_ACCT from INTRUSTQLC..qlc_txtacctinfo
         where XTACCT_INTID = ${account_id}`,{
         type: pjmain.QueryTypes.SELECT
     });

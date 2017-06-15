@@ -130,14 +130,17 @@ let sign = async (affair) => {
 // 项目签报审批流程
 let projectReport = async(affair) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
+    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
-        success: '项目编号为: ' + project_info['REGITEM_CODE']
+        success: temple.render('project_sign.html', {
+            project_info: project_info
+        })
     };
 }
 // 项目审批流程
 let projectApproval = async(affair) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE).format('YYYY年MM月DD日');
+    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('project_declare.html', {
             project_info: project_info

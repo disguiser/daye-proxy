@@ -53,9 +53,36 @@ let getUserCode = async ctx => {
     }
     return user_code;
 }
+
+let splitBankNo = function(bank_no){                                             // 银行账号每4个空格隔开
+    if(bank_no){
+        bank_no = String(bank_no).replace(/\ +/g,'').replace(/[\r\n]+/g,'')      // 清除空格和回车
+        var n = Number(bank_no);
+        if (!isNaN(n)){
+            var bank_no_len = bank_no.length;                                    // 长度
+            if (bank_no_len > 4){                                                // 长度至少>4
+                var blocks = Math.ceil(bank_no_len/4);                           // 分割次数
+                console.log('blocks='+blocks);
+                var start = 0;
+                var t = 0;
+                var bank_no_array = [];
+                while(t < blocks){
+                    var end = start + 4;
+                    bank_no_array.push(bank_no.substring(start,end));
+                    start = end;
+                    t = t+1;
+                }
+                bank_no = bank_no_array.join(' ');
+            }
+        }
+    }
+    return bank_no;
+}
+
 module.exports = {
     pipeSync: pipeSync,
     isEmpty: isEmpty,
     includeEmpty: includeEmpty,
-    getUserCode: getUserCode
+    getUserCode: getUserCode,
+    splitBankNo:splitBankNo
 }

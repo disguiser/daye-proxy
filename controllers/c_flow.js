@@ -5,6 +5,7 @@ const d_attachment = require('../dao/d_attachment.js');
 const dict_file_type = require('../dicts/dict_file_type');
 const dict_yes_or_no = require('../dicts/dict_yes_or_no');
 const d_dict = require('../dao/d_dict.js');
+const tools = require('../utils/tools.js');
 const moment = require('moment');
 const fs = require('mz/fs');
 
@@ -176,6 +177,7 @@ let receivables = async(affair) => {
 }
 let accountOpen = async(affair) => {
     let affair_json = JSON.parse(affair.jsondata);
+    affair_json['q48407a1520711e6b198b888e335e00a'] = tools.splitBankNo(affair_json['q48407a1520711e6b198b888e335e00a']) // 格式化
     let regitem_id = affair_json[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
     let product_info = await d_flow.find_product_info(regitem_id);
@@ -198,6 +200,8 @@ let accountCancel = async(affair) => {
     let project_info = await d_flow.find_project_info(regitem_id);
     let product_info = await d_flow.find_product_info(regitem_id);
     let account_info = await d_flow.find_account_info(account_id);
+    affair_json['w83e270fcccf11e6a211005056a687a8'] = tools.splitBankNo(affair_json['w83e270fcccf11e6a211005056a687a8']) //格式化
+    account_info['ACCT_BANK_ACCT'] = tools.splitBankNo(account_info['ACCT_BANK_ACCT'])             // 银行账号格式化
     return {
         success: temple.render('account_cancel.html', {
             project_info: project_info,

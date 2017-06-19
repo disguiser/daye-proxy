@@ -103,7 +103,7 @@ let flow_regitem = {
         regitem_id: 'o6587480546111e6ac90b888e335e00a'
     }
 }
-// 项目签报变更流程 + 中后期变更签报流程
+// 项目签报变更流程 + 中后期重大事项签报流程
 let signChange = async(affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
@@ -121,10 +121,29 @@ let signChange = async(affair) => {
         }
     }
 }
+// 项目签报变更流程
 let sign = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('zs_chang_apply.html', {
-
+            project_info: project_info,
+            json_data: parsedJson
+        })
+    }
+}
+// 中后期重大事项签报流程
+let importantMatter = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
+    return {
+        success: temple.render('important_matter.html', {
+            project_info: project_info,
+            json_data: parsedJson
         })
     }
 }
@@ -235,9 +254,11 @@ let flowRouter = async(ctx, affair) => {
         res = await projectApproval(affair);
     } else if (affair.flow_id == 'v7608f2e3e8811e688c2184f32ca6bca' || affair.flow_id == 'v11a7d403e8611e6b07e184f32ca6bca' || affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642' || affair.flow_id=='rfb70130910911e6a83c184f32ca6bca' || affair.flow_id=='wb2eee409a6211e687f3415645000030') { // 收款流程 + 付款流程 + 放款审批流程 + 收支计划审批流程 + 工作计划审批流程
         res = await receivables(affair);
-    } else if (affair.flow_id == 'o53659213e5c11e6a7bd184f32ca6bca' || affair.flow_id == 'rdf83711470311e68bb0184f32ca6bca') { // 项目签报变更流程 + 中后期变更签报流程
+    } else if (affair.flow_id == 'o53659213e5c11e6a7bd184f32ca6bca' ) { // 项目签报变更流程
         // res = await signChange(affair);
         res = await sign(affair);
+    } else if (affair.flow_id == 'rdf83711470311e68bb0184f32ca6bca') { // 中后期重大事项签报流程
+        res = await importantMatter(affair);
     } else if (affair.flow_id == 'eebf606e3e6411e68f15184f32ca6bca') { // 账户开户流程
         res = await accountOpen(affair);
     } else if (affair.flow_id == 'p0cf06613e8e11e680a2184f32ca6bca') { // 销户流程

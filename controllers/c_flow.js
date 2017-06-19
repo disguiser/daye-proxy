@@ -76,8 +76,8 @@ let productDistribution  = async(affair) => {
     // 产品ID
     // console.log(json_data.R29FFCA438734A42AE6409144A1D78A3.qc2f64ae5f9811e690e4b888e3e688de);
     // console.log(affair.jsondata);
-    let product_id = JSON.parse(affair.jsondata)['a81a38d15f9711e6aaebb888e3e688de'];
-    let project_info = await d_flow.find_project_info_by_product_id(product_id);
+    let regitem_id = JSON.parse(affair.jsondata)['dbc8550ff27a11e6b67a1c3e84e5807c'];
+    let project_info = await d_flow.find_project_info(regitem_id);
     let json_data = await d_flow.find_tasks(affair.affa_id, "'R29FFCA438734A42AE6409144A1D78A3','PBB558EE7E914339B01828AC11437874','D6887042FAD54274857C6A48018A820F'");
     return {
         success: temple.render('fx_table.html', {

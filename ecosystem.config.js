@@ -4,49 +4,21 @@ module.exports = {
    * http://pm2.keymetrics.io/docs/usage/application-declaration/
    */
   apps : [
-
     // First application
     {
-      name      : 'API',
+      name      : 'node-proxy',
       script    : 'start.js',
+      watch: true,
+      instances: 1,
+      ignore_watch: ['ecosystem.config.js', '.gitignore', '.git', 'node_modules', 'public', 'test', 'log'],
+      error_file: './log/pm2-err.log',
       env: {
         COMMON_VARIABLE: 'true'
       },
       env_production : {
         NODE_ENV: 'production'
-      }
-    },
-
-    // Second application
-    {
-      name      : 'WEB',
-      script    : 'web.js'
+      },
+      exec_mode: 'fork'
     }
-  ],
-
-  /**
-   * Deployment section
-   * http://pm2.keymetrics.io/docs/usage/deployment/
-   */
-  deploy : {
-    production : {
-      user : 'node',
-      host : '212.83.163.1',
-      ref  : 'origin/master',
-      repo : 'git@github.com:repo.git',
-      path : '/var/www/production',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
-    },
-    dev : {
-      user : 'node',
-      host : '212.83.163.1',
-      ref  : 'origin/master',
-      repo : 'git@github.com:repo.git',
-      path : '/var/www/development',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env dev',
-      env  : {
-        NODE_ENV: 'dev'
-      }
-    }
-  }
+  ]
 };

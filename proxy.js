@@ -21,6 +21,7 @@ const logger = require('./utils/logger');
 let httpProxy = HttpProxy.createProxyServer();
 
 httpProxy.on('error', function (err, req, res) {
+  logger.error(err);
   res.writeHead(500, {
     'Content-Type': 'text/plain'
   });
@@ -125,3 +126,7 @@ app.use('/', function (req, res){
 
 app.listen(config.proxy_port);
 logger.info(`代理服务器启动,监听端口: ${config.proxy_port}`);
+
+// process.on('uncaughtException', function(err){
+//   logger.error(err);
+// })

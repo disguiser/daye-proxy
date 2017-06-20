@@ -1,0 +1,107 @@
+<div style="width:800px">
+	<br>
+	<h2>大业信托有限责任公司</h2>
+	<h2><b>信托项目外派人员申请表</b></h2>
+    <table id="node_table">
+        <tbody>
+            <tr>
+                <td colspan="2" width="25%">申请部门</td>
+                <td colspan="2" width="25%">{{ project_info.REGITEM_DP_NAME }}</td>
+                <td width="25%">申请日期</td>
+                <td width="25%">{{ project_info.APPLY_DATE }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">项目名称</td>
+                <td colspan="2">{{ project_info.REGITEM_NAME }}</td>
+                <td>项目编号</td>
+                <td>{{ project_info.REGITEM_CODE }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">项目公司名称</td>
+                <td colspan="2">{{ json_data.w1163900472811e6ba16184f32ca6bca }}</td>
+                <td>我司持股比例<br>(适用时)</td>
+                <td>{{ json_data.x1103040472811e6b5e6184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td rowspan="2" width="12.5%">项目公司董事会组成情况</td>
+                <td colspan="2" width="25%">董事会组成人数</td>
+                <td width="12.5%">{{ json_data.a2d1ef30472811e68d02184f32ca6bca }}</td>
+                <td rowspan="2">推荐董事会人选<br>(注明拟任职务)</td>
+                <td rowspan="2">{{ json_data.c1c55d9e472811e6a2c5184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">我司委派人数</td>
+                <td>{{ json_data.b5d86321472811e6bfff184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td rowspan="2">项目公司监事会组成情况</td>
+                <td colspan="2">监事会组成人数</td>
+                <td>{{ json_data.dc1079ae472811e69bdf184f32ca6bca }}</td>
+                <td rowspan="2">推荐监事会人选<br>(注明拟任职务)</td>
+                <td rowspan="2">{{ json_data.fb333580472811e6897d184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">我公司委派人数</td>
+                <td>{{ json_data.eb54404f472811e68268184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="2">外派财务工程人员</td>
+                <td colspan="2">推荐财务人员人选<br>(注明拟任职务)</td>
+                <td colspan="2">{{ json_data.b884a1f0472911e68f0d184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">推荐工程监理人选</td>
+                <td colspan="2">{{ json_data.c608b72e472911e6811d184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">其他外派人员<br>(如投资决策委员会委员等,请注明拟任职务)</td>
+                <td colspan="4">{{ json_data.d465ee5e472911e69a43184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">附件:外派人员简历<br>(适用外聘人员)</td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align:center"><b>外聘人员劳务报酬/补贴情况</b></td>
+            </tr>
+            {% for a in json_arr %}
+            <tr>
+                <td>人员姓名</td>
+                <td colspan="2">工作地点</td>
+                <td>{{ a.GZDD }}</td>
+                <td>预计工作期间</td>
+                <td>{{ a.YJGZQJ }}</td>
+            </tr>
+            <tr>
+                <td>{{ a.RRXM }}</td>
+                <td colspan="2">报酬/补贴<br>(元/月)</td>
+                <td>{{ a.BC }}</td>
+                <td>承担方式(我公司或项目公司承担)</td>
+                <td>{{ a.CDFS }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="5">备注</td>
+                <td>{{ json_data.rebef7c0472a11e6b34f184f32ca6bca }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

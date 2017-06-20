@@ -101,6 +101,9 @@ let flow_regitem = {
     },
     p0cf06613e8e11e680a2184f32ca6bca: {
         regitem_id: 'o6587480546111e6ac90b888e335e00a'
+    },
+    x0e79ca1470711e69bce184f32ca6bca: {
+        regitem_id: 'ba2f776159e311e6b245f0def1c335c3'
     }
 }
 // 项目签报变更流程 + 中后期重大事项签报流程
@@ -241,6 +244,20 @@ let payApply = async (affair) => {
         })
     }
 }
+// 外派人员申请流程
+let expatriateApply = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
+    return {
+        success: temple.render('expatriate_apply.html', {
+            project_info: project_info,
+            json_data: parsedJson,
+            json_arr: JSON.parse(parsedJson.e78b34f0472911e684f0184f32ca6bca)
+        })
+    }
+}
 let flowRouter = async(ctx, affair) => {
     let res;
     // console.log(affair);
@@ -269,6 +286,8 @@ let flowRouter = async(ctx, affair) => {
         res = {
             success: `<a href="/node/word/${affair.affa_id}">导出word</a>`
         };
+    } else if (affair.flow_id == 'x0e79ca1470711e69bce184f32ca6bca') { // 外派人员申请流程
+        res = await expatriateApply(affair);
     } else {
         res = {fail: '非指定流程'};
     }

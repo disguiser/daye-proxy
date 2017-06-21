@@ -1,0 +1,92 @@
+<div style="width:800px">
+	<br>
+	<h2><b>项目解押/解约申请表</b></h2>
+	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE }}</b></span>
+	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
+	<table class="node_table">
+		<tbody>
+			<tr>
+				<td width="20%" colspan="2"><b>项目名称</b></td>
+				<td width="32.5%">{{ project_info.REGITEM_NAME }}</td>
+				<td width="15%"><b>成立日期</b></td>
+				<td width="32.5%">{{ project_info.CPSTART_DATE }}</td>
+			</tr>
+			<tr>
+				<td colspan="2"><b>申报部门</b></td>
+				<td>{{ project_info.REGITEM_DP_NAME }}</td>
+				<td><b>责任经理</b></td>
+				<td>{{ project_info.REGITEM_OP_NAME }}</td>
+			</tr>
+			<tr>
+				<td colspan="2"><b>事项描述</b></td>
+				<td colspan="3">
+					<div class="textDiv">
+						<p>{{ json_data.d87f71f03e9c11e6bf48184f32ca6bca }}</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><b>解押/解约财产</b></td>
+				<td colspan="3">
+                    <table class="node_table">
+                        <tbody>
+                            <tr>
+                                <td>资产名称</td>
+                                <td>抵质押物类型</td>
+                                <td>抵质押人</td>
+                                <td>抵质押物初始价值(元)</td>
+                                <td>最近抵质押物价值(元)</td>
+                            </tr>
+                            {% for a in json_arr %}
+                            <tr>
+                                <td>{{ datas[a.ASSET_ID] }}</td>
+                                <td>{{ a.BUSI_TYPE }}</td>
+                                <td>{{ a.ASSET_OWN }}</td>
+                                <td>{{ a.APP_MONEY }}</td>
+                                <td>{{ a.ASSET_MONEY }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+			</tr>
+            <tr>
+                <td colspan="2">需用印材料清单</td>
+                <td colspan="3">{{ json_data.fa9185803e9c11e68dd0184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">置换/解押/解约依据</td>
+                <td colspan="3">{{ json_data.o96106803e9d11e68933184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td rowspan="2" width="8%">应收金额</td>
+                <td width="12%">应收保证金/违约金</td>
+                <td>{{ json_data.q9a9a4b03e9d11e68cf3184f32ca6bca }}</td>
+                <td rowspan="2">实收金额</td>
+                <td rowspan="2">{{ json_data.s5b70a2e3e9d11e6bf55184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td>应收本息（回购、溢价款）</td>
+                <td>{{ json_data.r888b60f3e9d11e6bf49184f32ca6bca }}</td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    .node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    .node_table td,.node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

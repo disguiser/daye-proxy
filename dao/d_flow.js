@@ -16,7 +16,7 @@ let find_affar_by_taskid = async (task_id) => {
     return data[0];
 }
 let find_project_info = async (regitem_id) => {
-    let project_info = await pjmain.query(`select REGITEM_CODE,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE from INTRUSTQLC..QLC_TITEMREGINFO 
+    let project_info = await pjmain.query(`select CPSTART_DATE,REGITEM_CODE,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE from INTRUSTQLC..QLC_TITEMREGINFO 
         where REGITEM_ID = ${regitem_id}`,{
         type: pjmain.QueryTypes.SELECT
     });
@@ -68,7 +68,9 @@ let find_bank_name = async (bank_id) => {
     return data[0]['BANK_NAME'];
 }
 let find_pay_apply = async (affa_id) => {
-    let data = await intrustqlc.query(`select PROV_LEVEL_NAME,FK_BANK_NAME from QLC_TPAYAPPLY where problem_id='${affa_id}'`, {
+    let data = await intrustqlc.query(`select PROV_LEVEL_NAME,FK_BANK_NAME,SK_BANK_NAME,SK_BANK_ACCT,CUST_NAME,
+    FK_BANK_SUB_NAME,SK_BANK_ACCT,PAY_MONEY,REMARK1,PROV_LEVEL,DKCD_MONEY,FK_ACCT_ID
+     from QLC_TPAYAPPLY where problem_id='${affa_id}'`, {
         type: intrustqlc.QueryTypes.SELECT
     });
     return data[0];
@@ -85,6 +87,16 @@ let find_regitem_id_by_taskid = async (task_id) => {
     });
     return regitem_id[0]['REGITEM_ID'];
 }
+let find_asst_name = async (ASSET_MONEYS) => {
+    let datas = await intrustqlc.query(`select A.ASSET_ID AS ASSET_ID,B.ASSURE_BH+'-'+A.ASSET_NO+'-'+A.ASSET_NAME AS ASSET_NAME from QLC_TASSET A,QLC_TASSURE_CONTRACT B,QLC_TCOLLATERAL C where A.ASSET_UUID = C.ASSET_UUID and C.ASSURE_UUID = B.ASSURE_UUID and A.ASSET_ID in (${ASSET_MONEYS})`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    let new_datas = {};
+    datas.forEach(e => {
+        new_datas[e.ASSET_ID] = e.ASSET_NAME;
+    });
+    return new_datas;
+}
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
@@ -97,5 +109,6 @@ module.exports = {
     find_bank_name: find_bank_name,
     find_pay_apply: find_pay_apply,
     find_regitem_id_by_affaid: find_regitem_id_by_affaid,
-    find_regitem_id_by_taskid: find_regitem_id_by_taskid
+    find_regitem_id_by_taskid: find_regitem_id_by_taskid,
+    find_asst_name: find_asst_name
 }

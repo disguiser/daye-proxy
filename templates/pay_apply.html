@@ -2,13 +2,13 @@
 	<br>
 	<h2>大业信托有限责任公司</h2>
 	<h2><b>信托项目付款申请书</b></h2>
-	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE }}</b></span>
+	<span style="margin-left:20px;float:left"><b>申报日期：{{ pa_info.APPLY_DATE }}</b></span>
 	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
 	<table id="node_table">
 		<tbody>
 			<tr>
 				<td width="15%">出款项目名称</td>
-				<td width="35%" colspan="2"></td>
+				<td width="35%" colspan="2">{{ pa_info.REGITEM_NAME }}</td>
 				<td width="15%">收款单位名称</td>
 				<td width="35%" colspan="2">{{ pa_info.CUST_NAME }}</td>
 			</tr>
@@ -20,13 +20,13 @@
 			</tr>
 			<tr>
 				<td>出款银行账号</td>
-				<td colspan="2">{{ pa_info.FK_ACCT_ID }}</td>
+				<td colspan="2">{{ pa_info.FK_BANK_ACCT }}</td>
 				<td>收款银行账号</td>
 				<td colspan="2">{{ pa_info.SK_BANK_ACCT }}</td>
 			</tr>
 			<tr>
 				<td>投资类别</td>
-				<td width="17.5%"></td>
+				<td width="17.5%">消费贷及房抵贷</td>
 				<td width="17.5%">放款金额</td>
 				<td colspan="3">{{ pa_info.PAY_MONEY }}</td>
 			</tr>
@@ -36,19 +36,19 @@
 			</tr>
 			<tr>
 				<td>信保基金认购主体</td>
-				<td>{{ pa_info.PROV_LEVEL }}</td>
+				<td>{{ pa_info.PROV_LEVEL_NAME }}</td>
 				<td>是否扣留信保基金</td>
-				<td width="17.5%"></td>
+				<td width="17.5%">{{ pa_info.IS_DD }}</td>
 				<td width="17.5%">合同收益率/利率</td>
 				<td></td>
 			</tr>
 			<tr>
 				<td>付款执行日期</td>
-				<td></td>
+				<td>{{ pa_info.REFUND_DATE }}</td>
 				<td>本笔放款到期日期</td>
 				<td></td>
 				<td>划款方式</td>
-				<td></td>
+				<td>{{ pa_info.REMIT_NAME }}</td>
 			</tr>
 			<tr>
 				<td>
@@ -60,10 +60,10 @@
 			</tr>
 			<tr>
 				<td>申请部门</td>
-				<td colspan="2"></td>
+				<td colspan="2">{{ pa_info.DEPT_NAME }}</td>
 				<td></td>
 				<td>申请人</td>
-				<td colspan="2"></td>
+				<td colspan="2">{{ pa_info.INPUT_MAN_NAME }}</td>
 			</tr>
 		</tbody>
 	</table>

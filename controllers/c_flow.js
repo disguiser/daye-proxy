@@ -120,6 +120,9 @@ let flow_regitem = {
     },
     ta32efd13e8c11e6ae36184f32ca6bca: { // 受益权转让审批流程
         regitem_id: 'w2b93c1e092f11e78e55005056a60fd8'
+    },
+    v93e92803bb611e787b3000c294af360: { // 消费贷款放款
+        regitem_id: 't2481c3059e111e68f3bf0def1c335c3'
     }
 }
 // 项目签报变更流程 + 中后期重大事项签报流程

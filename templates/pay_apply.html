@@ -26,29 +26,25 @@
 			</tr>
 			<tr>
 				<td>投资类别</td>
-				<td width="17.5%">消费贷及房抵贷</td>
+				<td width="17.5%">{% if affair_json['sd752b6e4b5411e7b7a1005056a687a8'] == '1' or affair_json['sd752b6e4b5411e7b7a1005056a687a8'] == '2' or affair_json['sd752b6e4b5411e7b7a1005056a687a8'] == '3' %}消费贷及房抵贷{% else %}证券投资{% endif %}</td>
 				<td width="17.5%">放款金额</td>
 				<td colspan="3">{{ pa_info.PAY_MONEY }}</td>
 			</tr>
 			<tr>
 				<td>摘要</td>
-				<td colspan="5">{{ pa_info.REMARK1 }}</td>
+				<td colspan="5">{{ affair_json['p0a4e06e70d311e698e240f02f0658fc'] }}</td>
 			</tr>
 			<tr>
-				<td>信保基金认购主体</td>
-				<td>{{ pa_info.PROV_LEVEL_NAME }}</td>
-				<td>是否扣留信保基金</td>
-				<td width="17.5%">{{ pa_info.IS_DD }}</td>
-				<td width="17.5%">合同收益率/利率</td>
-				<td></td>
+				<td>依据文件</td>
+				<td colspan="5">{{ affair_json['r852351170d711e6b63740f02f0658fc'] }}</td>
 			</tr>
 			<tr>
 				<td>付款执行日期</td>
-				<td>{{ pa_info.REFUND_DATE }}</td>
-				<td>本笔放款到期日期</td>
-				<td></td>
-				<td>划款方式</td>
-				<td>{{ pa_info.REMIT_NAME }}</td>
+				<td>{{ affair_json['o3b14e8f70d711e6893040f02f0658fc'] }}</td>
+				<td>信保基金认购主体</td>
+				<td>{{ pa_info.PROV_LEVEL_NAME }}</td>
+				<td>是否扣留信保基金</td>
+				<td width="17.5%">{% if affair_json['c89e208f70d511e6b26c40f02f0658fc'] == '1' %}是{% else %}否{% endif %}</td>
 			</tr>
 			<tr>
 				<td>
@@ -59,11 +55,12 @@
 				<td colspan="3">{{ pa_info.C_DKCD_MONEY }}</td>
 			</tr>
 			<tr>
+				<td>划款方式</td>
+				<td>{{ pa_info.REMIT_NAME }}</td>
 				<td>申请部门</td>
-				<td colspan="2">{{ pa_info.DEPT_NAME }}</td>
-				<td></td>
+				<td>{{ pa_info.DEPT_NAME }}</td>
 				<td>申请人</td>
-				<td colspan="2">{{ pa_info.INPUT_MAN_NAME }}</td>
+				<td>{{ pa_info.INPUT_MAN_NAME }}</td>
 			</tr>
 		</tbody>
 	</table>

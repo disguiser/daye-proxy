@@ -2,41 +2,41 @@
 	<br>
 	<h2>大业信托有限责任公司</h2>
 	<h2><b>信托项目付款申请书</b></h2>
-	<span style="margin-left:20px;float:left"><b>申报日期：</b></span>
-	<span style="margin-right:20px;float:right"><b>项目编号：</b></span>
+	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE }}</b></span>
+	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
 	<table id="node_table">
 		<tbody>
 			<tr>
 				<td width="15%">出款项目名称</td>
 				<td width="35%" colspan="2"></td>
 				<td width="15%">收款单位名称</td>
-				<td width="35%" colspan="2"></td>
+				<td width="35%" colspan="2">{{ pa_info.CUST_NAME }}</td>
 			</tr>
 			<tr>
 				<td>出款项目银行</td>
-				<td colspan="2">{{ pa_info.FK_BANK_NAME }}</td>
+				<td colspan="2">{{ pa_info.FK_BANK_NAME }}-{{ pa_info.FK_BANK_SUB_NAME }}</td>
 				<td>收款单位银行</td>
-				<td colspan="2"></td>
+				<td colspan="2">{{ pa_info.SK_BANK_NAME }}</td>
 			</tr>
 			<tr>
 				<td>出款银行账号</td>
-				<td colspan="2"></td>
+				<td colspan="2">{{ pa_info.FK_ACCT_ID }}</td>
 				<td>收款银行账号</td>
-				<td colspan="2"></td>
+				<td colspan="2">{{ pa_info.SK_BANK_ACCT }}</td>
 			</tr>
 			<tr>
 				<td>投资类别</td>
 				<td width="17.5%"></td>
 				<td width="17.5%">放款金额</td>
-				<td colspan="3"></td>
+				<td colspan="3">{{ pa_info.PAY_MONEY }}</td>
 			</tr>
 			<tr>
 				<td>摘要</td>
-				<td colspan="5"></td>
+				<td colspan="5">{{ pa_info.REMARK1 }}</td>
 			</tr>
 			<tr>
 				<td>信保基金认购主体</td>
-				<td></td>
+				<td>{{ pa_info.PROV_LEVEL }}</td>
 				<td>是否扣留信保基金</td>
 				<td width="17.5%"></td>
 				<td width="17.5%">合同收益率/利率</td>
@@ -54,7 +54,7 @@
 				<td>
 					实际付款金额<br>（小写）
 				</td>
-				<td></td>
+				<td>{{ pa_info.DKCD_MONEY }}</td>
 				<td>金额(大写)</td>
 				<td colspan="3"></td>
 			</tr>

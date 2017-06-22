@@ -254,7 +254,8 @@ let payApply = async (affair) => {
         success: temple.render('pay_apply.html', {
             project_info: project_info,
             pa_info: pa_info,
-            link: link
+            link: link,
+            affair_json:affair_json
         })
     }
 }

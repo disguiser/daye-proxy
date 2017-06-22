@@ -137,7 +137,7 @@ module.exports = function (router) {
         await archive.finalize();
         ctx.response.body = fs.createReadStream(zip_path);
         ctx.response.type = 'mimetype';
-        ctx.response.set('Content-disposition', 'attachment; filename='+urlencode('批量下载.zip'));
+        ctx.response.set('Content-disposition', `attachment; filename*=UTF-8''${urlencode('合同审批流程.zip')}`);
         fs.unlink(zip_path);
     });
     router.get('/getTempId', async (ctx, next) => {

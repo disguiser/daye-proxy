@@ -1,0 +1,81 @@
+<div style="width:800px">
+	<br>
+	<h2><b>受益权转让登记确认单</b></h2>
+	<table class="node_table">
+		<tbody>
+			<tr>
+				<td width="20%">项目名称</td>
+				<td width="32.5%">{{ project_info.REGITEM_NAME }}</td>
+				<td width="15%">申请部门</td>
+				<td width="32.5%">{{ project_info.REGITEM_DP_NAME }}</td>
+			</tr>
+            <tr>
+                <td colspan="4" align="center">原受益人信息</td>
+            </tr>
+			<tr>
+				<td>原受益人名称</td>
+				<td>{{ json_data.s487aec03e9911e698b7184f32ca6bca }}</td>
+				<td>信托合同编号</td>
+				<td>{{ cb }}</td>
+			</tr>
+            <tr>
+                <td colspan="4" align="center">受让方信息</td>
+            </tr>
+            <tr>
+                <td>受让人名称</td>
+                <td>{{ json_data.sfbe518f3e9911e6ad2d184f32ca6bca }}</td>
+                <td>受让人银行户名</td>
+                <td>{{ json_data.vddcf58f3e9911e6a321184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td>受让人银行总行</td>
+                <td>{{ json_data.ufaa29c03e9911e6aa71184f32ca6bca }}</td>
+                <td>银行支行</td>
+                <td>{{ json_data.td86d280532d11e789fb000c294af360 }}</td>
+            </tr>
+            <tr>
+                <td colspan="4" align="center">转让合同信息</td>
+            </tr>
+            <tr>
+                <td>转让类别</td>
+                <td>全额转让</td>
+                <td>转让份额</td>
+                <td>{{ json_data.b82687703e9911e6ab68184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td>协议签署日期</td>
+                <td>{{ json_data.ob1e9c5e3e9a11e6be4e184f32ca6bca }}</td>
+                <td>转让生效日期</td>
+                <td>{{ json_data.fde599de3e9911e6a607184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td>收益是否转让</td>
+                <td>{% if json_data.r566bcf03e9a11e68dd8184f32ca6bca == '1' %}是{% else %}否{% endif %}</td>
+                <td>转让手续费</td>
+                <td>{{ json_data.ef918a6e3e9911e6be85184f32ca6bca }}</td>
+            </tr>
+            <tr>
+                <td>备注</td>
+                <td colspan="3">{{ json_data.rded5aee3e9a11e698db184f32ca6bca }}</td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    .node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    .node_table td,.node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

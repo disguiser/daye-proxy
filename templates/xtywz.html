@@ -1,0 +1,64 @@
+<div style="width:800px">
+	<br>
+	<h2><b>信托业务章、印鉴使用记录单</b></h2>
+	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE }}</b></span>
+	<span style="margin-right:20px;float:right"><b>编号：</b></span>
+	<table class="node_table">
+		<tbody>
+			<tr>
+				<td width="20%"><b>所在部门</b></td>
+				<td width="32.5%">{{ project_info.REGITEM_DP_NAME }}</td>
+				<td width="15%"><b>申请人员</b></td>
+				<td width="32.5%"></td>
+			</tr>
+			<tr>
+				<td><b>项目编号</b></td>
+				<td>{{ project_info.REGITEM_CODE }}</td>
+				<td><b>项目名称</b></td>
+				<td>{{ project_info.REGITEM_NAME }}</td>
+			</tr>
+			<tr>
+				<td><b>印章用途</b></td>
+				<td colspan="3">
+					<div class="textDiv">
+						<p>{{ json_data.f135b2f24c3711e78a02000c294af360 }}</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><b>使用方式</b></td>
+				<td colspan="3"></td>
+			</tr>
+            <tr>
+                <td>文件名称</td>
+                <td>份数</td>
+                <td>印鉴</td>
+                <td>其他</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    .node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    .node_table td,.node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

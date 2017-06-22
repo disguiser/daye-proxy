@@ -128,7 +128,7 @@ select REGITEM_NO from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=
 * fdf2ed804a6411e6905fd85de21f6642-放款审批流程
 * o53659213e5c11e6a7bd184f32ca6bca-项目签报变更流程
 * tc539970ff0911e694b4005056a60fd8-抵质押物录入流程
-* rdf83711470311e68bb0184f32ca6bca-中后期签报变更流程
+* rdf83711470311e68bb0184f32ca6bca-中后期重大事项签报流程
 * eebf606e3e6411e68f15184f32ca6bca-账户开户流程
 * p0cf06613e8e11e680a2184f32ca6bca-销户流程
 * rfb70130910911e6a83c184f32ca6bca-收支计划审批流程
@@ -137,6 +137,8 @@ select REGITEM_NO from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=
 * p688af403e6e11e6a580184f32ca6bca-资金信托合同登记流程
 * ta32efd13e8c11e6ae36184f32ca6bca-受益权转让审批流程
 * p5b270cfdbdd11e691db1c3e84e5807c-财产信托合同登记流程
+* od1bb94f470811e6ac64184f32ca6bca-外派人员行使表决权审批流程
+* x0e79ca1470711e69bce184f32ca6bca-外派人员（含董监事）委派审批流程
 #### 对象
 * v747d92ec81311e68aa0005056a687a8-资产端个人客户
 * c588f5c0c81311e68438005056a687a8-资产端机构客户

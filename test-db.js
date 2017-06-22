@@ -2,7 +2,10 @@ require('babel-core/register')({
     presets: ['stage-3']
 });
 // require('./httprequest');
-const moment = require('moment');
+const accounting = require('accounting-js');
 
-console.log(moment().format('YYYY-MM-DD hh:mm:ss'));
+console.log(accounting.formatMoney(100000, {symbol: "￥"}));
 
+const nzhcn = require("nzh").cn
+
+console.log(nzhcn.encodeB(100111));

@@ -112,6 +112,12 @@ let flow_regitem = {
     v4b02a4f3e8a11e6ac80184f32ca6bca: {
         regitem_id: 'xcd1b98f59e211e6b633f0def1c335c3',
         JXZC: 'eb4692f03e9c11e6b807184f32ca6bca'
+    },
+    s8555e40476611e7a73d000c294af360: {
+        regitem_id: 'f135b2f84c3711e7ba6b000c294af360'
+    },
+    ta32efd13e8c11e6ae36184f32ca6bca: { // 受益权转让审批流程
+        regitem_id: 'w2b93c1e092f11e78e55005056a60fd8'
     }
 }
 // 项目签报变更流程 + 中后期重大事项签报流程
@@ -309,6 +315,23 @@ let zcjyzysp = async (affair) => {
         })
     }
 }
+let syqzrdjqrd = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    parsedJson.ob1e9c5e3e9a11e6be4e184f32ca6bca = moment(parsedJson.ob1e9c5e3e9a11e6be4e184f32ca6bca.toString()).format('YYYY年MM月DD日');
+    parsedJson.fde599de3e9911e6a607184f32ca6bca = moment(parsedJson.fde599de3e9911e6a607184f32ca6bca.toString()).format('YYYY年MM月DD日');
+    parsedJson.sfbe518f3e9911e6ad2d184f32ca6bca = await d_flow.find_cust_name(parsedJson.sfbe518f3e9911e6ad2d184f32ca6bca);
+    parsedJson.ufaa29c03e9911e6aa71184f32ca6bca = await d_flow.find_bank_name_ta(parsedJson.ufaa29c03e9911e6aa71184f32ca6bca);
+    let cb = await d_flow.find_cb(parsedJson.f5d7cacf3e9811e6995f184f32ca6bca);
+    return {
+        success: temple.render('syqzrdjqrd.html', {
+            json_data: parsedJson,
+            project_info: project_info,
+            cb: cb['cb']
+        })
+    }
+}
 let flowRouter = async(ctx, affair) => {
     let res;
     // console.log(affair);
@@ -343,6 +366,8 @@ let flowRouter = async(ctx, affair) => {
         res = await expatriateApply(affair);
     } else if (affair.flow_id == 'v4b02a4f3e8a11e6ac80184f32ca6bca') { // 资产解押审批流程
         res = await zcjyzysp(affair);
+    } else if (affair.flow_id == 'ta32efd13e8c11e6ae36184f32ca6bca') { // 受益权转让审批流程
+        res = await syqzrdjqrd(affair);
     } else {
         res = {fail: '非指定流程'};
     }

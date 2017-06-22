@@ -18,7 +18,18 @@ module.exports = {
       env_production : {
         NODE_ENV: 'production'
       },
-      exec_mode: 'fork'
-    }
+      exec_mode: 'cluster'
+    },
+    // {
+    //   name: 'python',
+    //   script: 'E:/64workspace/py/daye/running/WebplatRuntime/index.wsgi',
+    //   cwd: 'E:/64workspace/py/daye/running/WebplatRuntime/',
+    //   interpreter: 'python',
+    //   env_production : {
+    //     NODE_ENV: 'production'
+    //   },
+    //   interpreter_args: ['-8071'],
+    //   exec_mode: 'fork'
+    // }
   ]
 };

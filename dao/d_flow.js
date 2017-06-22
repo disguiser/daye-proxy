@@ -1,6 +1,7 @@
 'use strict';
 const pjmain = require('../utils/sequelize_init').pjmain;
 const intrustqlc = require('../utils/sequelize_init').intrustqlc;
+const enfota = require('../utils/sequelize_init').enfota;
 
 let find_affar = async (affa_id) => {
     let affair = await pjmain.query(`select affa_id,flow_id,jsondata from WF_AFFAIR where affa_id='${affa_id}'`, {
@@ -97,6 +98,25 @@ let find_asst_name = async (ASSET_MONEYS) => {
     });
     return new_datas;
 }
+let find_cb = async (ASSET_ID) => {
+    let datas = await enfota.query(`select B.CONTRACT_SUB_BH+'-'+cast(A.ASSET_CURRENT_AMOUNT as varchar)+'-'+C.CUST_NAME cb from TA_TCUSTOMERASSET A,TA_TPRODUCTCONTRACT B,TA_TCUSTMAININFO C  
+    where A.ASSET_CURRENT_AMOUNT>0 and A.CUST_ID=C.CUST_ID and A.ASSET_APPLY_NO=B.CONTRACT_BH and A.ASSET_ID='${ASSET_ID}'`,{
+        type: enfota.QueryTypes.SELECT
+    });
+    return datas[0];
+}
+let find_bank_name_ta = async (bank_id) => {
+    let bank_name = await enfota.query(`select BANK_NAME from TA_VCPACCTORG where BANK_ID='${bank_id}'`, {
+        type: enfota.QueryTypes.SELECT
+    });
+    return bank_name[0]['BANK_NAME'];
+}
+let find_cust_name = async (cust_id) => {
+    let cust_name = await enfota.query(`select cust_name from TA_TCUSTMAININFO where cust_id='${cust_id}'`, {
+        type: enfota.QueryTypes.SELECT
+    });
+    return cust_name[0]['cust_name'];
+}
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
@@ -110,5 +130,8 @@ module.exports = {
     find_pay_apply: find_pay_apply,
     find_regitem_id_by_affaid: find_regitem_id_by_affaid,
     find_regitem_id_by_taskid: find_regitem_id_by_taskid,
-    find_asst_name: find_asst_name
+    find_asst_name: find_asst_name,
+    find_cb: find_cb,
+    find_bank_name_ta: find_bank_name_ta,
+    find_cust_name: find_cust_name
 }

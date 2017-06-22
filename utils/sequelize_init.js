@@ -20,8 +20,18 @@ let intrustqlc = new Sequelize(config.INTRUSTQLC, config.username, config.passwo
         idle: 30000
     }
 });
+let enfota = new Sequelize(config.ENFOTA, config.username, config.password, {
+    host: config.host,
+    dialect: config.dialect,
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 30000
+    }
+});
 
 module.exports = {
     pjmain: pjmain,
-    intrustqlc: intrustqlc
+    intrustqlc: intrustqlc,
+    enfota: enfota
 }

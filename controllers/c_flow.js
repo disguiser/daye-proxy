@@ -260,6 +260,7 @@ let payApply = async (affair) => {
     let link = affair.flow_id == 'wfee86703bb611e7ae5d000c294af360' ? true : false; 
     pa_info['C_DKCD_MONEY'] = nzhcn.encodeB(pa_info.DKCD_MONEY);
     pa_info.DKCD_MONEY = accounting.formatMoney(pa_info.DKCD_MONEY, {symbol: "￥"});
+    pa_info.PAY_MONEY = accounting.formatMoney(pa_info.PAY_MONEY, {symbol: "￥"});
     return {
         success: temple.render('pay_apply.html', {
             project_info: project_info,

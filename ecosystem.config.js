@@ -10,7 +10,7 @@ module.exports = {
       script    : 'start.js',
       watch: true,
       instances: 1,
-      ignore_watch: ['ecosystem.config.js', '.gitignore', '.git', 'node_modules', 'public', 'test', 'log'],
+      ignore_watch: ['ecosystem.config.js', '.gitignore', '.git', 'node_modules', 'public', 'test', 'log', 'templates'],
       error_file: './log/pm2-err.log',
       env: {
         COMMON_VARIABLE: 'true'

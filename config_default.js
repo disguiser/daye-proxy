@@ -5,6 +5,7 @@ module.exports = {
         dialect: 'mssql',
         PJMAIN: 'PJMAIN',
         INTRUSTQLC: 'INTRUSTQLC',
+        ENFOTA: 'ENFOTA',
         username: 'sa',
         password: '1qa@WS',
         // password: '000000',

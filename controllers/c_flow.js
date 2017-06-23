@@ -123,6 +123,9 @@ let flow_regitem = {
     },
     v93e92803bb611e787b3000c294af360: { // 消费贷款放款
         regitem_id: 't2481c3059e111e68f3bf0def1c335c3'
+    },
+    pfb34fc0471111e6a77b184f32ca6bca: { // 信托资金/销售资金监管使用申请流程
+        regitem_id: 'fb5fcf5e59e211e683acf0def1c335c3'
     }
 }
 // 项目签报变更流程 + 中后期重大事项签报流程
@@ -341,6 +344,20 @@ let syqzrdjqrd = async (affair) => {
         })
     }
 }
+let xtzjxszjjgsysq = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    parsedJson.t87fa8ee473c11e6a705184f32ca6bca = accounting.formatMoney(parsedJson.t87fa8ee473c11e6a705184f32ca6bca, {symbol: "￥"});
+    parsedJson.u30aa270473c11e6803e184f32ca6bca = accounting.formatMoney(parsedJson.u30aa270473c11e6803e184f32ca6bca, {symbol: "￥"});
+    parsedJson.uf4bfe80473c11e6b38c184f32ca6bca = accounting.formatMoney(parsedJson.uf4bfe80473c11e6b38c184f32ca6bca, {symbol: "￥"});
+    return {
+        success: temple.render('xtzjxszjjgsysq.html', {
+            json_data: parsedJson,
+            project_info: project_info
+        })
+    }
+}
 let flowRouter = async(ctx, affair) => {
     let res;
     // console.log(affair);
@@ -377,6 +394,8 @@ let flowRouter = async(ctx, affair) => {
         res = await zcjyzysp(affair);
     } else if (affair.flow_id == 'ta32efd13e8c11e6ae36184f32ca6bca') { // 受益权转让审批流程
         res = await syqzrdjqrd(affair);
+    } else if (affair.flow_id == 'pfb34fc0471111e6a77b184f32ca6bca') { // 信托资金/销售资金监管使用申请流程
+        res = await xtzjxszjjgsysq(affair);
     } else {
         res = {fail: '非指定流程'};
     }

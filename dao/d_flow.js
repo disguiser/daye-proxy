@@ -70,7 +70,7 @@ let find_bank_name = async (bank_id) => {
 }
 let find_pay_apply = async (affa_id) => {
     let data = await intrustqlc.query(`select REGITEM_NAME,PROV_LEVEL_NAME,FK_BANK_NAME,SK_BANK_NAME,SK_BANK_ACCT,CUST_NAME,CONVERT(varchar(10),INPUT_TIME,120) as APPLY_DATE,
-    FK_BANK_SUB_NAME,SK_BANK_ACCT,PAY_MONEY,REMARK1,PROV_LEVEL,DKCD_MONEY,FK_ACCT_ID,IS_DD,REFUND_DATE,FK_BANK_ACCT,INPUT_TIME,INPUT_MAN_NAME,
+    FK_BANK_SUB_NAME,SK_BANK_ACCT,PAY_MONEY,REMARK1,PROV_LEVEL,case when PROV_LEVEL='191203' then DKCD_MONEY else PAY_MONEY end as DKCD_MONEY,FK_ACCT_ID,IS_DD,REFUND_DATE,FK_BANK_ACCT,INPUT_TIME,INPUT_MAN_NAME,
     (select a.dept_name from pjmain..org_dept a,pjmain..org_user b where a.dept_code=b.dept_code and b.user_code=QLC_TPAYAPPLY.INPUT_MAN) as DEPT_NAME,
     (select param_name from qlc_txtacctinfo a,QLC_TINTPARAM b where b.param_value = a.REMIT_TYPE and a.XTACCT_INTID=QLC_TPAYAPPLY.FK_ACCT_ID) as REMIT_NAME
      from QLC_TPAYAPPLY where problem_id='${affa_id}'`, {

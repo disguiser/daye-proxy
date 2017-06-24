@@ -34,9 +34,7 @@ let getUserCode = async ctx => {
         let session_id = ctx.cookies.get('webpy_session_id');
         if (!isEmpty(session_id)) {
             user_code = await rp(`http://localhost:${config.proxy.proxy_port}/x/intrustqlc/session?session_id=${session_id}`);
-            if (ctx.logger.debug()) {
-                ctx.logger.debug(`远程获取${user_code}`);
-            }
+            ctx.logger.debug(`远程获取${user_code}`);
             if (user_code === 'notLoggin') {
                 user_code = '';
             } else {
@@ -47,9 +45,7 @@ let getUserCode = async ctx => {
         }
     } else {
         user_code = ctx.session.user_code;
-        if (ctx.logger.debug()) {
-            ctx.logger.debug(`session中存在${user_code}`);
-        }
+        ctx.logger.debug(`session中存在${user_code}`);
     }
     return user_code;
 }

@@ -65,7 +65,7 @@ require('./controllers/c_word.js')(router);
 app.use(router.routes());
 
 app.on('error', function(err, ctx){
-  logger.error('server error', err, ctx);
+  logger.error('server error', err);
 });
 
 // listen

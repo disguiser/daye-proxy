@@ -59,9 +59,7 @@ let delete_by_id  = async (ctx, id) => {
     let attachment = await find_by_id(id);
     // console.log(attachment);
     await attachment.destroy();
-    if (ctx.logger.debug()) {
-        ctx.logger.debug(`${attachment.name} was destroyed.`);
-    }
+    ctx.logger.debug(`${attachment.name} was destroyed.`);
     return {success: attachment.file_path};
 }
 let delete_by_ids = async (ctx, ids) => {
@@ -72,9 +70,7 @@ let delete_by_ids = async (ctx, ids) => {
             }
         }
     });
-    if (ctx.logger.debug()) {
-        ctx.logger.debug(`attachments ${ids} was destroyed.`);
-    }
+    ctx.logger.debug(`attachments ${ids} was destroyed.`);
 }
 let delete_by_fli  = async (flow_list_id) => {
     let attachments = await find_by_fli(flow_list_id);

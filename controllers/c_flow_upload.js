@@ -22,7 +22,7 @@ module.exports = function (router) {
         const {files, fields} = await parse(ctx.req);
         let stream;
         let result = [];
-        if (ctx.logger.debug()) {
+        if (ctx.logger.transports.console.level == 'debug') {
             for (let key in fields) {
                 // console.log("key:"+key);
                 // console.log("value:"+fields[key]);
@@ -42,9 +42,7 @@ module.exports = function (router) {
                 let stat = await pipeSync(file, file_path);
                 // console.log(stat.size);
                 file_size = filesize(stat.size);
-                if (ctx.logger.debug()) {
-                    ctx.logger.debug(`uploading ${file_name} ${file_size} -> ${file_path}`);
-                }
+                ctx.logger.debug(`uploading ${file_name} ${file_size} -> ${file_path}`);
                 // console.log('uploading %s %s -> %s', file_name, file_size, file_path);
                 let id = await d_attachment.insert(flow_list_id, file_name, file_size, upload_time, file_path, fields['another_temp_id']);
                 // ctx.logger.info(id);

@@ -32,10 +32,8 @@ let contractApproval = async (ctx, affair) => {
         let attachments = await d_attachment.find_by_flis(flow_list_ids);
         // 去除冗余
         let _attachments = await d_attachment.find_by_ti(attachments[0].temp_id);
-        if (ctx.logger.debug()) {
-            ctx.logger.debug(JSON.stringify(attachments));
-            ctx.logger.debug(JSON.stringify(_attachments));
-        }
+        ctx.logger.debug(JSON.stringify(attachments));
+        ctx.logger.debug(JSON.stringify(_attachments));
         if (_attachments.length > attachments.length) {
             let ids = [],
                 file_paths;
@@ -358,6 +356,18 @@ let xtzjxszjjgsysq = async (affair) => {
         })
     }
 }
+let xtywz = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    return {
+        success: temple.render('xtywz.html', {
+            json_data: parsedJson,
+            project_info: project_info
+        })
+    }
+
+}
 let flowRouter = async(ctx, affair) => {
     let res;
     // console.log(affair);
@@ -396,6 +406,8 @@ let flowRouter = async(ctx, affair) => {
         res = await syqzrdjqrd(affair);
     } else if (affair.flow_id == 'pfb34fc0471111e6a77b184f32ca6bca') { // 信托资金/销售资金监管使用申请流程
         res = await xtzjxszjjgsysq(affair);
+    } else if (affair.flow_id == 's8555e40476611e7a73d000c294af360') { // 信托业务章/印签使用审批流程
+        res = await xtywz(affair);
     } else {
         res = {fail: '非指定流程'};
     }

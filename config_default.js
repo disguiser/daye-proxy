@@ -25,14 +25,8 @@ module.exports = {
     fileupload: {
         path: 'E:/audio/'
     },
-    loggerStreams: [
-        {
-            level: 'debug',
-            stream: process.stdout
-        },
-        {
-            level: 'error',
-            path: 'E:/64workspace/VS/daye/log/error.log'
-        }
-    ]
+    log_config: {
+        console_level: 'debug',
+        error_path: 'log/somefile.log'
+    }
 };

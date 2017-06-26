@@ -2,7 +2,7 @@
 	<br>
 	<h2><b>信托业务章、印鉴使用记录单</b></h2>
 	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE }}</b></span>
-	<span style="margin-right:20px;float:right"><b>编号：</b></span>
+	<span style="margin-right:20px;float:right"><b>编号：{{ project_info.REGITEM_CODE }}</b></span>
 	<table class="node_table">
 		<tbody>
 			<tr>
@@ -19,27 +19,19 @@
 			</tr>
 			<tr>
 				<td><b>印章用途</b></td>
-				<td colspan="3">
-					<div class="textDiv">
-						<p>{{ json_data.f135b2f24c3711e78a02000c294af360 }}</p>
-					</div>
-				</td>
+				<td colspan="3">{% if json_data.f135b2f24c3711e78a02000c294af360=='1' %}合同签约印章{% elif json_data.f135b2f24c3711e78a02000c294af360=='2' %}信托开户{% elif json_data.f135b2f24c3711e78a02000c294af360=='3' %}信息报送{% elif json_data.f135b2f24c3711e78a02000c294af360=='4' %}采购合同用章{% elif json_data.f135b2f24c3711e78a02000c294af360=='9' %}其他{% endif %}</td>
 			</tr>
 			<tr>
 				<td><b>使用方式</b></td>
-				<td colspan="3"></td>
+				<td colspan="3">{% if json_data.o927c991565911e79ce5000c294af360=='1' %}使用{% else %}外借{% endif %}</td>
+			</tr>
+			<tr>
+				<td><b>印章类型</b></td>
+				<td colspan="3">{% if json_data.f135b2f54c3711e78b0a000c294af360=='1' %}信托业务章{% elif json_data.f135b2f54c3711e78b0a000c294af360=='2' %}王毅总人名章(北京){% elif json_data.f135b2f54c3711e78b0a000c294af360=='3' %}王毅手签章{% elif json_data.f135b2f54c3711e78b0a000c294af360=='4' %}信托业务章(二){% elif json_data.f135b2f54c3711e78b0a000c294af360=='5' %}王毅总人名章(广州){% endif %}</td>
 			</tr>
             <tr>
-                <td>文件名称</td>
-                <td>份数</td>
-                <td>印鉴</td>
-                <td>其他</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>具体说明</td>
+                <td colspan="3">{{ json_data.f135b2f44c3711e788dd000c294af360 }}</td>
             </tr>
 		</tbody>
 	</table>

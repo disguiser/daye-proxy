@@ -87,8 +87,7 @@ let productDistribution  = async(affair) => {
 }
 let flow_regitem = {
     rdf83711470311e68bb0184f32ca6bca: {
-        regitem_id: 'wb14720059e311e6adbef0def1c335c3',
-        json_data: 's085a85e4f0911e69112184f32ca6bca'
+        regitem_id: 'wb14720059e311e6adbef0def1c335c3'
     },
     o53659213e5c11e6a7bd184f32ca6bca: {
         regitem_id: 'd7fbd530789311e6a510184f32ca6bca',

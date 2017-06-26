@@ -6,8 +6,8 @@ $(function(){
     var loop = setInterval(function(){
         if ($('.portlet span a').size() > 0) {
             $('.portlet span a').each(function(index, element){
-                console.log($(element).parent().html());
-                console.log($(element).text());
+                // console.log($(element).parent().html());
+                // console.log($(element).text());
                 $(element).parent().html($(element).text());
             });
             clearInterval(loop);
@@ -90,7 +90,7 @@ $(function(){
         }
         $.getJSON(url, function(data){
             if (data !== undefined) {
-                $('.detailchoiceleft').append(`<a href="/x/intrustqlc/views/lifecycleDy_ALL?clsid=fb33464f48b911e6b8d8d85de21f6642&id=${data}" target="_blank">关联流程</a>`);
+                $('.detailchoiceleft').append('<a href="/x/intrustqlc/views/lifecycleDy_ALL?clsid=fb33464f48b911e6b8d8d85de21f6642&id=' + data + '" target="_blank">关联流程</a>');
             }
         });
     }

@@ -123,6 +123,10 @@ let flow_regitem = {
     },
     pfb34fc0471111e6a77b184f32ca6bca: { // 信托资金/销售资金监管使用申请流程
         regitem_id: 'fb5fcf5e59e211e683acf0def1c335c3'
+    },
+    b5792af0470e11e68438184f32ca6bca: { // 用印审批流程
+        APPROVALSELA: 'w240a48f41b511e79398000c294af360',
+        regitem_id: 'sa87f08f59e311e6b81ff0def1c335c3'
     }
 }
 // 项目签报变更流程 + 中后期重大事项签报流程
@@ -367,6 +371,19 @@ let xtywz = async (affair) => {
     }
 
 }
+// 用印审批流程
+let yysplc = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let json_arr = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['APPROVALSELA']]);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let apprpvalsela = await d_flow.find_apprpvalsela(regitem_id);
+    return {
+        success: temple.render('yysplc.html', {
+            json_data: parsedJson,
+            apprpvalsela: apprpvalsela
+        })
+    }
+}
 let flowRouter = async(ctx, affair) => {
     let res;
     // console.log(affair);
@@ -407,6 +424,8 @@ let flowRouter = async(ctx, affair) => {
         res = await xtzjxszjjgsysq(affair);
     } else if (affair.flow_id == 's8555e40476611e7a73d000c294af360') { // 信托业务章/印签使用审批流程
         res = await xtywz(affair);
+    } else if (affair.flow_id == 'b5792af0470e11e68438184f32ca6bca') { // 用印审批流程
+        res = await yysplc(affair);
     } else {
         res = {fail: '非指定流程'};
     }

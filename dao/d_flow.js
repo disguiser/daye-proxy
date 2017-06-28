@@ -119,6 +119,12 @@ let find_cust_name = async (cust_id) => {
     });
     return cust_name[0]['cust_name'];
 }
+let find_apprpvalsela = async (regitem_id) => {
+    let seal_type_name = await intrustqlc.query(`select FILE_NAME,NUMBER,SEAL_TYPE_NAME,SPECAL_CHAPTER from QLC_APPROVAL_SEAL where REGITEM_ID=${regitem_id}`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return seal_type_name;
+}
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
@@ -135,5 +141,6 @@ module.exports = {
     find_asst_name: find_asst_name,
     find_cb: find_cb,
     find_bank_name_ta: find_bank_name_ta,
-    find_cust_name: find_cust_name
+    find_cust_name: find_cust_name,
+    find_apprpvalsela: find_apprpvalsela
 }

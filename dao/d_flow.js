@@ -101,8 +101,7 @@ let find_asst_name = async (ASSET_MONEYS) => {
     return new_datas;
 }
 let find_cb = async (ASSET_ID) => {
-    let datas = await enfota.query(`select B.CONTRACT_SUB_BH+'-'+cast(A.ASSET_CURRENT_AMOUNT as varchar)+'-'+C.CUST_NAME cb from TA_TCUSTOMERASSET A,TA_TPRODUCTCONTRACT B,TA_TCUSTMAININFO C  
-    where A.ASSET_CURRENT_AMOUNT>0 and A.CUST_ID=C.CUST_ID and A.ASSET_APPLY_NO=B.CONTRACT_BH and A.ASSET_ID='${ASSET_ID}'`,{
+    let datas = await intrustqlc.query(`select CONTRACT_BH+'-'+cast(ADD_SUM as varchar)+'-'+CUST_NAME cb from QLC_TCONTRACT_SUPPLY where CONTRACT_BH='${ASSET_ID}'`,{
         type: enfota.QueryTypes.SELECT
     });
     return datas[0];

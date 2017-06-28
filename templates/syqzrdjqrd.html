@@ -42,7 +42,7 @@
             </tr>
             <tr>
                 <td>转让类别</td>
-                <td>全额转让</td>
+                <td>{% if json_data['ddb27f803e9911e6893d184f32ca6bca']=='1' %}交易型转让{% elif json_data['ddb27f803e9911e6893d184f32ca6bca']=='2' %}非交易型-继承{% elif json_data['ddb27f803e9911e6893d184f32ca6bca']=='3' %}非交易型-转赠{% elif json_data['ddb27f803e9911e6893d184f32ca6bca']=='4' %}非交易型-其他{%endif%}</td>
                 <td>转让份额</td>
                 <td>{{ json_data.b82687703e9911e6ab68184f32ca6bca }}</td>
             </tr>

@@ -9,7 +9,7 @@ const tools = require('../utils/tools.js');
 const moment = require('moment');
 const fs = require('mz/fs');
 const accounting = require('accounting-js');
-const ChinesesCurrencyFormatter = require('chinese-currency-formatter');
+const nzhcn = require('nzh').cn;
 
 let contractApproval = async (ctx, affair) => {
     // 合同审批流程
@@ -265,7 +265,7 @@ let payApply = async (affair) => {
     project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     let pa_info = await d_flow.find_pay_apply(affair.affa_id);
     let link = affair.flow_id == 'wfee86703bb611e7ae5d000c294af360' ? true : false; 
-    pa_info['C_DKCD_MONEY'] = ChinesesCurrencyFormatter(pa_info.DKCD_MONEY);
+    pa_info['C_DKCD_MONEY'] = nzhcn.toMoney(pa_info.DKCD_MONEY,{outSymbol:false});
     pa_info.DKCD_MONEY = accounting.formatMoney(pa_info.DKCD_MONEY, {symbol: "￥"});
     pa_info.PAY_MONEY = accounting.formatMoney(pa_info.PAY_MONEY, {symbol: "￥"});
     return {

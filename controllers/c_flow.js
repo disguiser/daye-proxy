@@ -376,7 +376,7 @@ let yysplc = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let json_arr = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['APPROVALSELA']]);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
-    let apprpvalsela = await d_flow.find_apprpvalsela(regitem_id);
+    let apprpvalsela = await d_flow.find_apprpvalsela(affair.affa_id,regitem_id);
     return {
         success: temple.render('yysplc.html', {
             json_data: parsedJson,

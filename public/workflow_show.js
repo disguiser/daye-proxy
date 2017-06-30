@@ -51,34 +51,11 @@ $(function(){
                 if ($('.detailinfo_ul li:nth-child(2) div:nth-child(2) table').size()) {
                     $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').css('text-align', 'center');
                 }
-                // $('.detailinfo_ul_cont').html(data.success);
-                // 如果是iframe,隐藏内部按钮
-                // var noticeIframe = document.getElementById('noticeIframe');
-                // if(noticeIframe != null){
-                //     noticeIframe.onload = noticeIframe.onreadystatechange = function() {
-                //         if (this.readyState && this.readyState != 'complete') return;
-                //         else {
-                //             document.getElementById('noticeIframe').contentWindow.document.querySelector('button.editor').style.display='none';
-                //         }
-                //     }
-                // }
+                createExcelPage(taskid, affaid);
             }
         });
-    } 
-    if (excel_flownames.indexOf(flowname) >= 0) {
-        var url;
-        if (taskid !== undefined) {
-            url = '/node/affa_task/' + taskid;
-        } else if (affaid !== undefined) {
-            url = '/node/affa_affa/' + affaid;
-        } else {
-            return;
-        }
-        $.getJSON(url, function(data){
-            if (data.affa_id !== undefined) {
-                createExcelPage(data.flow_id, data.affa_id);
-            }
-        });
+    } else if (excel_flownames.indexOf(flowname) >= 0) {
+        createExcelPage(taskid, affaid);
     }
     if (regitem_flownames.indexOf(flowname) >= -1) {
         var url;
@@ -97,14 +74,27 @@ $(function(){
     }
 });
 
-function createExcelPage(flowid, affaid) {
-    // $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').append('<button type="button" id="excelImport" class="btn bule">查看excel导入信息</button>');
-    $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').prepend('<button style="float:left" type="button" id="excelImport" class="btn bule">查看excel导入信息</button><div id="div_excelImport" class="modal container fade" tabindex="-1" role="dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button><h3>excel导入</h3></div><div class="modal-body"><iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?flow_id=' + flowid + '&affa_id=' + affaid + '&type=edit"></iframe></div></div>');
-    $('#excelImport').click(function(){
-        $('#div_excelImport').css('overflow', 'auto');
-        $('#div_excelImport').css('top', '0');
-        $('#div_excelImport .modal-header').css('padding', '0');
-        $('#div_excelImport .modal-body').css('padding', '0');
-        $('#div_excelImport').modal('show');
+function createExcelPage(taskid, affaid) {
+    var url;
+    if (taskid !== undefined) {
+        url = '/node/affa_task/' + taskid;
+    } else if (affaid !== undefined) {
+        url = '/node/affa_affa/' + affaid;
+    } else {
+        return;
+    }
+    $.getJSON(url, function(data){
+        if (data.affa_id !== undefined) {
+            // createExcelPage(data.flow_id, data.affa_id);
+            // $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').append('<button type="button" id="excelImport" class="btn bule">查看excel导入信息</button>');
+            $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').prepend('<button style="float:left" type="button" id="excelImport" class="btn bule">查看excel导入信息</button><div id="div_excelImport" class="modal container fade" tabindex="-1" role="dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button><h3>excel导入</h3></div><div class="modal-body"><iframe id="theIframe" name="theIframe" width="100%" height="500px" frameborder="0" src="/node/grid/grid.html?flow_id=' + data.flow_id + '&affa_id=' + data.affa_id + '&type=edit"></iframe></div></div>');
+            $('#excelImport').click(function(){
+                $('#div_excelImport').css('overflow', 'auto');
+                $('#div_excelImport').css('top', '0');
+                $('#div_excelImport .modal-header').css('padding', '0');
+                $('#div_excelImport .modal-body').css('padding', '0');
+                $('#div_excelImport').modal('show');
+            });
+        }
     });
 }

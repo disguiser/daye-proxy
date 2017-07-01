@@ -329,9 +329,15 @@ let zcjyzysp = async (ctx, affair) => {
         });
         datas = await d_flow.find_asst_name(ASSET_MONEYS);
     }
-    let XYYSCLQD = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['XYYSCLQD']]);
+    let XYYSCLQD = parsedJson[flow_regitem[affair.flow_id]['XYYSCLQD']]
 
-    let attach_rebuild = await attaRebuild(ctx, XYYSCLQD);
+    let attach_rebuild;
+    try {
+        XYYSCLQD = JSON.parse(XYYSCLQD); 
+        attach_rebuild = await attaRebuild(ctx, XYYSCLQD);
+    } catch (error) {
+        ctx.logger.debug('老数据');
+    }
 
     return {
         success: temple.render('zcjyzysp.html', {

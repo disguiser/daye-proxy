@@ -53,6 +53,9 @@
             <tr>
                 <td colspan="2">需用印材料清单</td>
                 <td colspan="3">
+                    {% if attachments==undefined %}
+                    {{ XYYSCLQD }}
+                    {% else %}
                     <table class="node_table">
                         <tbody>
                             <tr>
@@ -77,6 +80,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    {% endif %}
                 </td>
             </tr>
             <tr>

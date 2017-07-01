@@ -6,8 +6,8 @@
         <th>合同类型</th>
         <th>盖章份数</th>
         <th>合同备注</th>
-        {% if temp_id !== '' %}
-        <th>附件(<a href="/node/downloadAll/{{ temp_id }}">批量下载</a>)</th>
+        {% if attachments.temp_id !== '' %}
+        <th>附件(<a href="/node/downloadAll/{{ attachments.temp_id }}?file_name=合同审批流程.zip">批量下载</a>)</th>
         {% else %}
         <th>附件</th>
         {% endif %}

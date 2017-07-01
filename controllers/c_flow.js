@@ -11,81 +11,16 @@ const fs = require('mz/fs');
 const accounting = require('accounting-js');
 const nzhcn = require('nzh').cn;
 
-let contractApproval = async (ctx, affair) => {
-    // 合同审批流程
-    let res;
-    let json_data = affair.jsondata;
-    if(json_data!=''){
-        json_data = JSON.parse(json_data);
-        // 信托文件
-        let intrust_attachments;
-        if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca') {
-            intrust_attachments = JSON.parse(json_data.x7857b1e3ebc11e68228184f32ca6bca);
-        } else if (affair.flow_id == 'd70e099e240411e7a3af005056a687a8') {
-            intrust_attachments = JSON.parse(json_data.w7824b2650e711e79fa3000c294af360);
-        }
-        let flow_list_ids = [];
-        intrust_attachments.forEach(function(element) {
-            // console.log(element.LIST_UUID);
-            flow_list_ids.push(element.LIST_UUID);
-        });
-        let attachments = await d_attachment.find_by_flis(flow_list_ids);
-        // 去除冗余
-        let _attachments = await d_attachment.find_by_ti(attachments[0].temp_id);
-        ctx.logger.debug(JSON.stringify(attachments));
-        ctx.logger.debug(JSON.stringify(_attachments));
-        if (_attachments.length > attachments.length) {
-            let ids = [],
-                file_paths;
-            _attachments.forEach(function(ele, i){
-                if (flow_list_ids.indexOf(ele.flow_list_id) < 0) {
-                    ids.push(ele.ID);
-                    fs.unlink(ele.file_path);
-                }
-            });
-            await d_attachment.delete_by_ids(ctx, ids);
-        }
-        // console.log(attachments);
-        // 根据flow_id分组
-        let attach_rebuild = {};
-        attachments.forEach(function(element){
-            if( attach_rebuild[element.flow_list_id] == undefined){
-                attach_rebuild[element.flow_list_id] = new Array();
-                attach_rebuild[element.flow_list_id].push(element);
-            }else{
-                attach_rebuild[element.flow_list_id].push(element);
-            }
-        });
-        // console.log(JSON.stringify(intrust_attachments));
-        // console.log(JSON.stringify(attach_rebuild));
-        res = {
-            success: temple.render('atta_table.html' ,{
-                intrust_attachments: intrust_attachments,
-                attachments: attach_rebuild,
-                dict_file_type: dict_file_type,
-                temp_id: attachments[0] === undefined ? '' : attachments[0].temp_id
-            })
-        };
-    } else {
-        res = {fail: '未找到对应jsondata'};
-    }
-    return res;
-}
-// 产品发行流程
-let productDistribution  = async(affair) => {
-    // 产品ID
-    let regitem_id = JSON.parse(affair.jsondata)['dbc8550ff27a11e6b67a1c3e84e5807c'];
-    let project_info = await d_flow.find_project_info(regitem_id);
-    let json_data = await d_flow.find_tasks(affair.affa_id, "'T16D12D1A5D3406D9CC65A76AD7691B1','PBB558EE7E914339B01828AC11437874','D6887042FAD54274857C6A48018A820F'");
-    return {
-        success: temple.render('fx_table.html', {
-            project_info: project_info,
-            json_data: json_data,
-            dict_yes_or_no: dict_yes_or_no
-        })
-    };
-}
+// 字典,用于映射
 let flow_regitem = {
+    // 合同审批流程
+    afad680f3ec711e6ae92184f32ca6bca: {
+        XTWJMC: 'x7857b1e3ebc11e68228184f32ca6bca' // 信托文件
+    },
+    // 合同审批流程(非实质性变更)
+    d70e099e240411e7a3af005056a687a8: {
+        XTWJMC: 'w7824b2650e711e79fa3000c294af360' // 信托文件
+    },
     rdf83711470311e68bb0184f32ca6bca: {
         regitem_id: 'wb14720059e311e6adbef0def1c335c3'
     },
@@ -108,9 +43,10 @@ let flow_regitem = {
     od1bb94f470811e6ac64184f32ca6bca: {
         regitem_id: 'd85e0f3059e311e6993bf0def1c335c3'
     },
-    v4b02a4f3e8a11e6ac80184f32ca6bca: {
+    v4b02a4f3e8a11e6ac80184f32ca6bca: { // 资产解押审批流程
         regitem_id: 'xcd1b98f59e211e6b633f0def1c335c3',
-        JXZC: 'eb4692f03e9c11e6b807184f32ca6bca'
+        JXZC: 'eb4692f03e9c11e6b807184f32ca6bca',
+        XYYSCLQD: 'fa9185803e9c11e68dd0184f32ca6bca' // 需要用印材料清单
     },
     s8555e40476611e7a73d000c294af360: {
         regitem_id: 'f135b2f84c3711e7ba6b000c294af360'
@@ -128,6 +64,80 @@ let flow_regitem = {
         APPROVALSELA: 'w240a48f41b511e79398000c294af360',
         regitem_id: 'sa87f08f59e311e6b81ff0def1c335c3'
     }
+}
+let attaRebuild = async (ctx, json_attachments) => {
+    let flow_list_ids = [];
+    json_attachments.forEach(e => {
+        // console.log(element.LIST_UUID);
+        flow_list_ids.push(e.LIST_UUID);
+    });
+    let attachments = await d_attachment.find_by_flis(flow_list_ids);
+    // 去除冗余
+    let _attachments = await d_attachment.find_by_ti(attachments[0].temp_id);
+    ctx.logger.debug(JSON.stringify(attachments));
+    ctx.logger.debug(JSON.stringify(_attachments));
+    if (_attachments.length > attachments.length) {
+        let ids = [],
+            file_paths;
+        _attachments.forEach((e, i) => {
+            if (flow_list_ids.indexOf(e.flow_list_id) < 0) {
+                ids.push(e.ID);
+                fs.unlink(e.file_path);
+            }
+        });
+        await d_attachment.delete_by_ids(ctx, ids);
+    }
+    // console.log(attachments);
+    // 根据flow_list_id分组
+    let attach_rebuild = {};
+    attach_rebuild['temp_id'] = attachments[0] === undefined ? '' : attachments[0].temp_id
+    attachments.forEach(element => {
+        if( attach_rebuild[element.flow_list_id] == undefined){
+            attach_rebuild[element.flow_list_id] = new Array();
+            attach_rebuild[element.flow_list_id].push(element);
+        }else{
+            attach_rebuild[element.flow_list_id].push(element);
+        }
+    });
+    ctx.logger.debug("attach_rebuild", JSON.stringify(attach_rebuild));
+    return attach_rebuild;
+}
+let contractApproval = async (ctx, affair) => {
+    // 合同审批流程
+    let res;
+    let json_data = affair.jsondata;
+    if(json_data!=''){
+        json_data = JSON.parse(json_data);
+        // 信托文件
+        let intrust_attachments = JSON.parse(json_data[flow_regitem[affair.flow_id]['XTWJMC']]);
+        
+        let attach_rebuild = await attaRebuild(ctx, intrust_attachments);
+
+        res = {
+            success: temple.render('atta_table.html' ,{
+                intrust_attachments: intrust_attachments,
+                attachments: attach_rebuild,
+                dict_file_type: dict_file_type
+            })
+        };
+    } else {
+        res = {fail: '未找到对应jsondata'};
+    }
+    return res;
+}
+// 产品发行流程
+let productDistribution  = async(affair) => {
+    // 产品ID
+    let regitem_id = JSON.parse(affair.jsondata)['dbc8550ff27a11e6b67a1c3e84e5807c'];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    let json_data = await d_flow.find_tasks(affair.affa_id, "'T16D12D1A5D3406D9CC65A76AD7691B1','PBB558EE7E914339B01828AC11437874','D6887042FAD54274857C6A48018A820F'");
+    return {
+        success: temple.render('fx_table.html', {
+            project_info: project_info,
+            json_data: json_data,
+            dict_yes_or_no: dict_yes_or_no
+        })
+    };
 }
 // 项目签报变更流程 + 中后期重大事项签报流程
 let signChange = async(affair) => {
@@ -305,7 +315,7 @@ let xsbjq = async (affair) => {
     }
 }
 // 资产解押审批流程
-let zcjyzysp = async (affair) => {
+let zcjyzysp = async (ctx, affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
@@ -319,12 +329,18 @@ let zcjyzysp = async (affair) => {
         });
         datas = await d_flow.find_asst_name(ASSET_MONEYS);
     }
+    let XYYSCLQD = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['XYYSCLQD']]);
+
+    let attach_rebuild = await attaRebuild(ctx, XYYSCLQD);
+
     return {
         success: temple.render('zcjyzysp.html', {
             json_data: parsedJson,
             project_info: project_info,
             json_arr: json_arr,
-            datas: datas
+            datas: datas,
+            XYYSCLQD: XYYSCLQD,
+            attachments: attach_rebuild
         })
     }
 }
@@ -417,7 +433,7 @@ let flowRouter = async(ctx, affair) => {
     } else if (affair.flow_id == 'x0e79ca1470711e69bce184f32ca6bca') { // 外派人员（含董监事）委派审批流程
         res = await expatriateApply(affair);
     } else if (affair.flow_id == 'v4b02a4f3e8a11e6ac80184f32ca6bca') { // 资产解押审批流程
-        res = await zcjyzysp(affair);
+        res = await zcjyzysp(ctx, affair);
     } else if (affair.flow_id == 'ta32efd13e8c11e6ae36184f32ca6bca') { // 受益权转让审批流程
         res = await syqzrdjqrd(affair);
     } else if (affair.flow_id == 'pfb34fc0471111e6a77b184f32ca6bca') { // 信托资金/销售资金监管使用申请流程

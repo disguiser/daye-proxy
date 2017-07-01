@@ -46,8 +46,8 @@ let proxy_flow_new_dict = [
 ];
 app.use('/x/workflow/rtnew', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
-  // 合同审批流程 合同审批流程(简易) 附件上传
-  if (['d70e099e240411e7a3af005056a687a8','afad680f3ec711e6ae92184f32ca6bca'].indexOf(parsed.flowid) >= 0) {
+  // 合同审批流程 合同审批流程(简易) 附件上传 资产解押审批流程
+  if (['d70e099e240411e7a3af005056a687a8','afad680f3ec711e6ae92184f32ca6bca','v4b02a4f3e8a11e6ac80184f32ca6bca'].indexOf(parsed.flowid) >= 0) {
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
@@ -65,7 +65,8 @@ app.use('/x/workflow/dealwith', async (req, res, next) => {
   harmonBinary(req, res);
 
   let parsed = queryString.parse(req._parsedUrl.query);
-  if(parsed.nextnode == 'X72D77CA26F1489F92A305DDED6BE002' || parsed.nextnode == 'd7107aa4240411e7a832005056a687a8'){ // 合同审批流程 业务部负责人
+  // 合同审批流程 合同审批流程(非实质性变更) 资产解押审批流程 只有发起人撤回才有编辑内容的权限,所以判断url里存在的nextnode即可,无需查询flow_id
+  if(['X72D77CA26F1489F92A305DDED6BE002', 'd7107aa4240411e7a832005056a687a8', 'V4E5281C10C94801B6DF6A1A58E2CACD'].indexOf(parsed.nextnode) >= 0) {
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }

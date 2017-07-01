@@ -33,7 +33,7 @@ function bindingUpload(data){
                     var attachments = data.result;
                     if(attachments instanceof Array){
                         for (let attachment of attachments) {
-                            $('#node_ul_uploads').append('<li><a id="'+attachment.id+'" href="/node/download/'+attachment.id+'">' + attachment.file_name + '(' + attachment.file_size + ' ' + attachment.upload_time + ')' +'</a> <i class="icon-trash" onclick="javascript:delAttachment(this);"></i></li>');
+                            $('#node_ul_uploads').append('<li><a id="'+attachment.id+'" href="/node/download/'+attachment.id+'">' + attachment.file_name + '(' + attachment.file_size + ' ' + attachment.upload_time + ')' +'</a> <i class="icon-trash" id="'+attachment.id+'" onclick="javascript:delAttachment(this);"></i></li>');
                         }
                         $('#upload_progress').html('');
                     } else {
@@ -62,6 +62,10 @@ $(function(){
         // 合同审批流程(非实质性变更)
         'd70e099e240411e7a3af005056a687a8': {
             prp_id: 'w7824b2650e711e79fa3000c294af360'
+        },
+        // 资产解押审批流程
+        'v4b02a4f3e8a11e6ac80184f32ca6bca': {
+            prp_id: 'fa9185803e9c11e68dd0184f32ca6bca'
         }
     }
     dict = dict[flowid];
@@ -75,7 +79,7 @@ $(function(){
             brandp.css('margin-top','3px');
         }
     }
-    $('.btn.blue.mini').attr('href','javascript:listAdd();');
+    $('#childObjTable_' + dict['prp_id'] + ' .btn.blue.mini').attr('href','javascript:listAdd();');
     $('#theform .row-fluid:last').html('<input type="hidden" id="temp_id" /><input id="new_or_edit" type="hidden" />');
     // 用于批量下载
     if ($('#' + dict['prp_id']).val() !== '') {
@@ -93,28 +97,11 @@ $(function(){
         $('#temp_id').val(UUID.prototype.createUUID());
     }
     // 附件list内容发生变化则清空对话框
-    $('#' + dict['prp_id']).change(function(){
-        $('#div_mdform_' + dict['prp_id']).html('');
-        // 并修改编辑按钮的点击函数
-        $('.btn.btn-purple.btn-xs.mini.purple').each(function(){
-            changeJSFunc(this, 'listEdit');
-        });
-        // 以及删除函数的点击函数
-        $('.btn.btn-grey.btn-xs.mini.black').each(function(){
-            changeJSFunc(this, 'listDelete');
-        });
-    });
+    $('#' + dict['prp_id']).change(proxy_edit_delete);
 
     // 如果是编辑页面,可能预先存在数据
     if($('#' + dict['prp_id']).val()!=""){
-        // 修改编辑按钮的点击函数
-        $('.btn.btn-purple.btn-xs.mini.purple').each(function(){
-            changeJSFunc(this, 'listEdit');
-        });
-        // 以及删除函数的点击函数
-        $('.btn.btn-grey.btn-xs.mini.black').each(function(){
-            changeJSFunc(this, 'listDelete');
-        });
+        proxy_edit_delete();
     }
 });
 // 代理编辑函数
@@ -137,6 +124,18 @@ function listDelete(flow_list_id){
 //         console.log('已删除');
 //     });
 // };
+
+function proxy_edit_delete() {
+    // $('#div_mdform_' + dict['prp_id']).html('');
+    // 并修改编辑按钮的点击函数
+    $('#childObjTable_' + dict['prp_id'] + ' .btn.btn-purple.btn-xs.mini.purple').each(function(){
+        changeJSFunc(this, 'listEdit');
+    });
+    // 以及删除函数的点击函数
+    $('#childObjTable_' + dict['prp_id'] + ' .btn.btn-grey.btn-xs.mini.black').each(function(){
+        changeJSFunc(this, 'listDelete');
+    });
+}
 
 function delAttachment(obj){
     if(confirm('确认删除?')){

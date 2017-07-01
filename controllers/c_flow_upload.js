@@ -121,6 +121,7 @@ module.exports = function (router) {
         ctx.response.set('Content-disposition', `attachment; filename*=UTF-8''${urlencode(attachment.file_name)}`);
     });
     router.get('/downloadAll/:temp_id', async (ctx, next) => {
+        let file_name = ctx.query.file_name;
         let temp_id = ctx.params.temp_id;
         let attachments = await d_attachment.find_by_ti(temp_id);
         let zip_path = disk_path + Date.now() + '.zip';
@@ -135,7 +136,7 @@ module.exports = function (router) {
         await archive.finalize();
         ctx.response.body = fs.createReadStream(zip_path);
         ctx.response.type = 'mimetype';
-        ctx.response.set('Content-disposition', `attachment; filename*=UTF-8''${urlencode('合同审批流程.zip')}`);
+        ctx.response.set('Content-disposition', `attachment; filename*=UTF-8''${urlencode(file_name)}`);
         fs.unlink(zip_path);
     });
     router.get('/getTempId', async (ctx, next) => {

@@ -31,11 +31,11 @@
                     <table class="node_table">
                         <tbody>
                             <tr>
-                                <td>资产名称</td>
-                                <td>抵质押物类型</td>
-                                <td>抵质押人</td>
-                                <td>抵质押物初始价值(元)</td>
-                                <td>最近抵质押物价值(元)</td>
+                                <th>资产名称</th>
+                                <th>抵质押物类型</th>
+                                <th>抵质押人</th>
+                                <th>抵质押物初始价值(元)</th>
+                                <th>最近抵质押物价值(元)</th>
                             </tr>
                             {% for a in json_arr %}
                             <tr>
@@ -52,7 +52,32 @@
 			</tr>
             <tr>
                 <td colspan="2">需用印材料清单</td>
-                <td colspan="3">{{ json_data.fa9185803e9c11e68dd0184f32ca6bca }}</td>
+                <td colspan="3">
+                    <table class="node_table">
+                        <tbody>
+                            <tr>
+                                <th>文件名称</th>
+                                <th>份数</th>
+                                {% if attachments.temp_id !== '' %}
+                                <th>附件(<a href="/node/downloadAll/{{ attachments.temp_id }}?file_name=资产解押审批流程.zip">批量下载</a>)</th>
+                                {% else %}
+                                <th>附件</th>
+                                {% endif %}
+                            </tr>
+                            {% for a in XYYSCLQD %}
+                            <tr>
+                                <td>{{ a.WJMC }}</td>
+                                <td>{{ a.FS }}</td>
+                                <td>
+                                    {% for i in attachments[a.LIST_UUID] %}
+                                    <a href="/node/download/{{ i.ID }}">{{ i.file_name }}</a><br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
             </tr>
             <tr>
                 <td colspan="2">置换/解押/解约依据</td>

@@ -51,7 +51,9 @@ $(function(){
                 if ($('.detailinfo_ul li:nth-child(2) div:nth-child(2) table').size()) {
                     $('.detailinfo_ul li:nth-child(2) div:nth-child(2)').css('text-align', 'center');
                 }
-                createExcelPage(taskid, affaid);
+                if (excel_flownames.indexOf(flowname) >= 0) {
+                    createExcelPage(taskid, affaid);
+                }
             }
         });
     } else if (excel_flownames.indexOf(flowname) >= 0) {

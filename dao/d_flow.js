@@ -78,6 +78,12 @@ let find_pay_apply = async (affa_id) => {
     });
     return data[0];
 }
+let find_supply_info = async (affa_id) => {
+    let data = await intrustqlc.query(`select DJ_CODE from QLC_TCONTRACT_SUPPLY where problem_id='${affa_id}'`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return data[0];
+}
 let find_regitem_id_by_affaid = async (affa_id) => {
     let regitem_id = await intrustqlc.query(`select REGITEM_ID from QLC_TITEMPBINFO where PROBLEMID = '${affa_id}'` ,{
         type: intrustqlc.QueryTypes.SELECT
@@ -142,5 +148,6 @@ module.exports = {
     find_cb: find_cb,
     find_bank_name_ta: find_bank_name_ta,
     find_cust_name: find_cust_name,
-    find_apprpvalsela: find_apprpvalsela
+    find_apprpvalsela: find_apprpvalsela,
+    find_supply_info:find_supply_info
 }

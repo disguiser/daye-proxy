@@ -356,6 +356,7 @@ let syqzrdjqrd = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
+    let pa_info = await d_flow.find_supply_info(affair.affa_id);
     parsedJson.ob1e9c5e3e9a11e6be4e184f32ca6bca = moment(parsedJson.ob1e9c5e3e9a11e6be4e184f32ca6bca.toString()).format('YYYY年MM月DD日');
     parsedJson.fde599de3e9911e6a607184f32ca6bca = moment(parsedJson.fde599de3e9911e6a607184f32ca6bca.toString()).format('YYYY年MM月DD日');
     parsedJson.sfbe518f3e9911e6ad2d184f32ca6bca = await d_flow.find_cust_name(parsedJson.sfbe518f3e9911e6ad2d184f32ca6bca);
@@ -365,6 +366,7 @@ let syqzrdjqrd = async (affair) => {
         success: temple.render('syqzrdjqrd.html', {
             json_data: parsedJson,
             project_info: project_info,
+            pa_info:pa_info,
             cb: cb['cb']
         })
     }

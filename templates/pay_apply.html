@@ -27,8 +27,16 @@
 			<tr>
 				<td>投资类别</td>
 				<td width="17.5%">{% if affair_json['sd752b6e4b5411e7b7a1005056a687a8'] == '1' or affair_json['sd752b6e4b5411e7b7a1005056a687a8'] == '2' or affair_json['sd752b6e4b5411e7b7a1005056a687a8'] == '3' %}消费贷及房抵贷{% else %}证券投资{% endif %}</td>
-				<td width="17.5%">放款金额</td>
+				<td width="17.5%">拨付金额</td>
 				<td colspan="3">{{ pa_info.PAY_MONEY }}</td>
+			</tr>
+			<tr>
+				<td>实际放款笔数</td>
+				<td>{{ affair_json.se96f9804da111e7a93d005056a687a8 }}</td>
+				<td>实际放款金额</td>
+				<td width="17.5%">{{ affair_json.v103226170d311e6afca40f02f0658fc }}</td>
+				<td>实际退款金额</td>
+				<td>{{ affair_json.aea738214b5411e79924005056a687a8 }}</td>
 			</tr>
 			<tr>
 				<td>摘要</td>
@@ -48,7 +56,7 @@
 			</tr>
 			<tr>
 				<td>
-					实际付款金额<br>（小写）
+					实际拨付金额<br>（小写）
 				</td>
 				<td>{{ pa_info.DKCD_MONEY }}</td>
 				<td>金额(大写)</td>

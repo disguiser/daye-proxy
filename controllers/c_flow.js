@@ -278,6 +278,8 @@ let payApply = async (affair) => {
     pa_info['C_DKCD_MONEY'] = nzhcn.toMoney(pa_info.DKCD_MONEY,{outSymbol:false});
     pa_info.DKCD_MONEY = accounting.formatMoney(pa_info.DKCD_MONEY, {symbol: "￥"});
     pa_info.PAY_MONEY = accounting.formatMoney(pa_info.PAY_MONEY, {symbol: "￥"});
+    affair_json.v103226170d311e6afca40f02f0658fc = accounting.formatMoney(affair_json.v103226170d311e6afca40f02f0658fc, {symbol: "￥"});
+    affair_json.aea738214b5411e79924005056a687a8 = accounting.formatMoney(affair_json.aea738214b5411e79924005056a687a8, {symbol: "￥"});
     return {
         success: temple.render('pay_apply.html', {
             project_info: project_info,

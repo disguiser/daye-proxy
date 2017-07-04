@@ -63,6 +63,12 @@ let flow_regitem = {
     b5792af0470e11e68438184f32ca6bca: { // 用印审批流程
         APPROVALSELA: 'w240a48f41b511e79398000c294af360',
         regitem_id: 'sa87f08f59e311e6b81ff0def1c335c3'
+    },
+    xca765cf519611e79e8d005056a687a8: { // 抵质押权利证书(证明)领用审批
+        regitem_id: 'q9bd48de516f11e79ac9005056a687a8'
+    },
+    c722681e519411e78b64005056a687a8: { // 信托合同交接记录(集合)
+        regitem_id: 'f3461aee519e11e78d3b005056a687a8'
     }
 }
 let attaRebuild = async (ctx, json_attachments) => {
@@ -408,6 +414,33 @@ let yysplc = async (affair) => {
         })
     }
 }
+// 抵质押权利证书(证明)领用审批
+let dzyqlzs = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    parsedJson.aae59561516c11e7b147005056a687a8 = moment(parsedJson.aae59561516c11e7b147005056a687a8).format('YYYY年MM月DD日');
+    return {
+        success: temple.render('dzyqlzs.html', {
+            json_data: parsedJson,
+            project_info: project_info
+        })
+    }
+}
+// 信托合同交接记录(集合)
+let xthtjjjl = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    parsedJson.ta644ccf516c11e7a4da005056a687a8 = accounting.formatMoney(parsedJson.ta644ccf516c11e7a4da005056a687a8, {symbol: "￥"}) + '('+ nzhcn.toMoney(parsedJson.ta644ccf516c11e7a4da005056a687a8,{outSymbol:false}) +')';
+    parsedJson.aae59561516c11e7b147005056a687a8 = moment(parsedJson.aae59561516c11e7b147005056a687a8.toString()).format('YYYY年MM月DD日');
+    return {
+        success: temple.render('xthtjjjl.html', {
+            json_data: parsedJson,
+            project_info: project_info
+        })
+    }
+}
 let flowRouter = async(ctx, affair) => {
     let res;
     // console.log(affair);
@@ -450,6 +483,10 @@ let flowRouter = async(ctx, affair) => {
         res = await xtywz(affair);
     } else if (affair.flow_id == 'b5792af0470e11e68438184f32ca6bca') { // 用印审批流程
         res = await yysplc(affair);
+    } else if (affair.flow_id == 'xca765cf519611e79e8d005056a687a8') { // 抵质押权利证书(证明)领用审批
+        res = await dzyqlzs(affair);
+    } else if (affair.flow_id == 'c722681e519411e78b64005056a687a8') { // 信托合同交接记录(集合)
+        res = await xthtjjjl(affair);
     } else {
         res = {fail: '非指定流程'};
     }

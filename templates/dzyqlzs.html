@@ -1,0 +1,46 @@
+<div>
+	<br>
+	<h2><b>抵质押权利证书(证明)领用审批表</b></h2>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td width="25%">项目名称</td>
+                <td width="25%">{{ project_info.REGITEM_NAME }}</td>
+                <td width="25%">申报部门</td>
+                <td width="25%">{{ project_info.REGITEM_DP_NAME }}</td>
+            </tr>
+            <tr>
+                <td>领用日期</td>
+                <td>{{ json_data.e3ab3f00516f11e7a571005056a687a8 }}</td>
+                <td>责任经理</td>
+                <td>{{ project_info.REGITEM_OP_NAME }}</td>
+            </tr>
+            <tr>
+                <td>权利证书(证明)编号</td>
+                <td colspan="3">{{ json_data.o9e5dbb0517211e7942a005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td>领用事由</td>
+                <td colspan="3">{{ json_data.r4b072b0517211e79718005056a687a8 }}</td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

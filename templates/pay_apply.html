@@ -2,7 +2,7 @@
 	<br>
 	<h2>大业信托有限责任公司</h2>
 	<h2><b>信托项目付款申请书</b></h2>
-	<span style="margin-left:20px;float:left"><b>申报日期：{{ pa_info.APPLY_DATE }}</b></span>
+	<span style="margin-left:20px;float:left"><b>申报日期：{{ pa_info.APPLY_DATE | moneyFormat }}</b></span>
 	<span style="margin-right:20px;float:right"><b>系统编号：{{ pa_info.DJ_CODE }}</b></span>
 	<table id="node_table">
 		<tbody>
@@ -28,15 +28,15 @@
 				<td>投资类别</td>
 				<td width="17.5%">{% if affair_json['sd752b6e4b5411e7b7a1005056a687a8'] == '1' or affair_json['sd752b6e4b5411e7b7a1005056a687a8'] == '2' or affair_json['sd752b6e4b5411e7b7a1005056a687a8'] == '3' %}消费贷及房抵贷{% else %}证券投资{% endif %}</td>
 				<td width="17.5%">拨付金额</td>
-				<td colspan="3">{{ pa_info.PAY_MONEY }}</td>
+				<td colspan="3">{{ pa_info.PAY_MONEY | moneyFormat }}</td>
 			</tr>
 			<tr>
 				<td>实际放款笔数</td>
 				<td>{{ affair_json.se96f9804da111e7a93d005056a687a8 }}</td>
 				<td>实际放款金额</td>
-				<td width="17.5%">{{ affair_json.v103226170d311e6afca40f02f0658fc }}</td>
+				<td width="17.5%">{{ affair_json.v103226170d311e6afca40f02f0658fc | moneyFormat }}</td>
 				<td>实际退款金额</td>
-				<td>{{ affair_json.aea738214b5411e79924005056a687a8 }}</td>
+				<td>{{ affair_json.aea738214b5411e79924005056a687a8 | moneyFormat }}</td>
 			</tr>
 			<tr>
 				<td>摘要</td>
@@ -48,7 +48,7 @@
 			</tr>
 			<tr>
 				<td>付款执行日期</td>
-				<td>{{ affair_json['o3b14e8f70d711e6893040f02f0658fc'] }}</td>
+				<td>{{ affair_json['o3b14e8f70d711e6893040f02f0658fc'] | moneyFormat }}</td>
 				<td>信保基金认购主体</td>
 				<td>{{ pa_info.PROV_LEVEL_NAME }}</td>
 				<td>是否扣留信保基金</td>
@@ -58,9 +58,9 @@
 				<td>
 					实际拨付金额<br>（小写）
 				</td>
-				<td>{{ pa_info.DKCD_MONEY }}</td>
+				<td>{{ pa_info.DKCD_MONEY | moneyFormat }}</td>
 				<td>金额(大写)</td>
-				<td colspan="3">{{ pa_info.C_DKCD_MONEY }}</td>
+				<td colspan="3">{{ pa_info.DKCD_MONEY | moneyFormatC }}</td>
 			</tr>
 			<tr>
 				<td>划款方式</td>

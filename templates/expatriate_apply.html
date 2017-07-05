@@ -8,7 +8,7 @@
                 <td colspan="2" width="25%">申请部门</td>
                 <td colspan="2" width="25%">{{ project_info.REGITEM_DP_NAME }}</td>
                 <td width="25%">申请日期</td>
-                <td width="25%">{{ project_info.APPLY_DATE }}</td>
+                <td width="25%">{{ project_info.APPLY_DATE | dateFormat }}</td>
             </tr>
             <tr>
                 <td colspan="2">项目名称</td>

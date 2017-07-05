@@ -8,8 +8,8 @@ const d_dict = require('../dao/d_dict.js');
 const tools = require('../utils/tools.js');
 const moment = require('moment');
 const fs = require('mz/fs');
-const accounting = require('accounting-js');
-const nzhcn = require('nzh').cn;
+// const accounting = require('accounting-js');
+// const nzhcn = require('nzh').cn;
 
 // 字典,用于映射
 let flow_regitem = {
@@ -150,7 +150,6 @@ let sign = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('zs_chang_apply.html', {
             project_info: project_info,
@@ -163,7 +162,6 @@ let importantMatter = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('important_matter.html', {
             project_info: project_info,
@@ -174,7 +172,6 @@ let importantMatter = async (affair) => {
 // 项目签报审批流程
 let projectReport = async(affair) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('project_sign.html', {
             project_info: project_info
@@ -184,7 +181,6 @@ let projectReport = async(affair) => {
 // 项目审批流程
 let projectApproval = async(affair) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('project_declare.html', {
             project_info: project_info
@@ -260,14 +256,8 @@ let payApply = async (affair) => {
     let affair_json = JSON.parse(affair.jsondata);
     let regitem_id = affair_json[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     let pa_info = await d_flow.find_pay_apply(affair.affa_id);
     let link = affair.flow_id == 'wfee86703bb611e7ae5d000c294af360' ? true : false; 
-    pa_info['C_DKCD_MONEY'] = nzhcn.toMoney(pa_info.DKCD_MONEY,{outSymbol:false});
-    pa_info.DKCD_MONEY = accounting.formatMoney(pa_info.DKCD_MONEY, {symbol: "￥"});
-    pa_info.PAY_MONEY = accounting.formatMoney(pa_info.PAY_MONEY, {symbol: "￥"});
-    affair_json.v103226170d311e6afca40f02f0658fc = accounting.formatMoney(affair_json.v103226170d311e6afca40f02f0658fc, {symbol: "￥"});
-    affair_json.aea738214b5411e79924005056a687a8 = accounting.formatMoney(affair_json.aea738214b5411e79924005056a687a8, {symbol: "￥"});
     return {
         success: temple.render('pay_apply.html', {
             project_info: project_info,
@@ -282,7 +272,6 @@ let expatriateApply = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('expatriate_apply.html', {
             project_info: project_info,
@@ -294,7 +283,6 @@ let expatriateApply = async (affair) => {
 // 外派人员行使表决权审批流程
 let xsbjq = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
-    parsedJson.a15077ee472b11e689df184f32ca6bca = moment(parsedJson.a15077ee472b11e689df184f32ca6bca).format('YYYY年MM月DD日');
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
     return {
@@ -309,7 +297,6 @@ let zcjyzysp = async (ctx, affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.CPSTART_DATE = moment(project_info.CPSTART_DATE.toString()).format('YYYY年MM月DD日');
     let json_arr = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['JXZC']]);
     let datas = {};
     if (json_arr.length > 0) {
@@ -326,9 +313,9 @@ let zcjyzysp = async (ctx, affair) => {
         XYYSCLQD = JSON.parse(XYYSCLQD); 
         attach_rebuild = await attaRebuild(ctx, XYYSCLQD);
     } catch (error) {
-        ctx.logger.debug('老数据');
+        ctx.logger.debug('老数据', XYYSCLQD);
     }
-
+    console.log(XYYSCLQD);
     return {
         success: temple.render('zcjyzysp.html', {
             json_data: parsedJson,
@@ -345,8 +332,6 @@ let syqzrdjqrd = async (affair) => {
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
     let pa_info = await d_flow.find_supply_info(affair.affa_id);
-    parsedJson.ob1e9c5e3e9a11e6be4e184f32ca6bca = moment(parsedJson.ob1e9c5e3e9a11e6be4e184f32ca6bca.toString()).format('YYYY年MM月DD日');
-    parsedJson.fde599de3e9911e6a607184f32ca6bca = moment(parsedJson.fde599de3e9911e6a607184f32ca6bca.toString()).format('YYYY年MM月DD日');
     parsedJson.sfbe518f3e9911e6ad2d184f32ca6bca = await d_flow.find_cust_name(parsedJson.sfbe518f3e9911e6ad2d184f32ca6bca);
     parsedJson.ufaa29c03e9911e6aa71184f32ca6bca = await d_flow.find_bank_name_ta(parsedJson.ufaa29c03e9911e6aa71184f32ca6bca);
     let cb = await d_flow.find_cb(parsedJson.f5d7cacf3e9811e6995f184f32ca6bca);
@@ -359,13 +344,11 @@ let syqzrdjqrd = async (affair) => {
         })
     }
 }
+// 信托资金/销售资金监管使用申请流程
 let xtzjxszjjgsysq = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    parsedJson.t87fa8ee473c11e6a705184f32ca6bca = accounting.formatMoney(parsedJson.t87fa8ee473c11e6a705184f32ca6bca, {symbol: "￥"});
-    parsedJson.u30aa270473c11e6803e184f32ca6bca = accounting.formatMoney(parsedJson.u30aa270473c11e6803e184f32ca6bca, {symbol: "￥"});
-    parsedJson.uf4bfe80473c11e6b38c184f32ca6bca = accounting.formatMoney(parsedJson.uf4bfe80473c11e6b38c184f32ca6bca, {symbol: "￥"});
     return {
         success: temple.render('xtzjxszjjgsysq.html', {
             json_data: parsedJson,
@@ -373,6 +356,7 @@ let xtzjxszjjgsysq = async (affair) => {
         })
     }
 }
+// 信托业务章/印签使用审批流程
 let xtywz = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
@@ -403,7 +387,6 @@ let dzyqlzs = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    parsedJson.aae59561516c11e7b147005056a687a8 = moment(parsedJson.aae59561516c11e7b147005056a687a8).format('YYYY年MM月DD日');
     return {
         success: temple.render('dzyqlzs.html', {
             json_data: parsedJson,
@@ -416,8 +399,6 @@ let xthtjjjl = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    parsedJson.ta644ccf516c11e7a4da005056a687a8 = accounting.formatMoney(parsedJson.ta644ccf516c11e7a4da005056a687a8, {symbol: "￥"}) + '('+ nzhcn.toMoney(parsedJson.ta644ccf516c11e7a4da005056a687a8,{outSymbol:false}) +')';
-    parsedJson.aae59561516c11e7b147005056a687a8 = moment(parsedJson.aae59561516c11e7b147005056a687a8).format('YYYY年MM月DD日');
     return {
         success: temple.render('xthtjjjl.html', {
             json_data: parsedJson,

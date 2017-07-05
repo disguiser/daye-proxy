@@ -2,7 +2,7 @@
 	<br>
 	<h2>大业信托有限责任公司</h2>
 	<h2><b>信托项目签报申报表</b></h2>
-	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE }}</b></span>
+	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE | dateFormat }}</b></span>
 	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
 	<table id="node_table">
 		<tbody>

@@ -24,9 +24,9 @@
             </tr>
             <tr>
                 <td>认购日期</td>
-                <td>{{ json_data.vde1f40050cc11e79d1c005056a687a8 }}</td>
+                <td>{{ json_data.vde1f40050cc11e79d1c005056a687a8 | dateFormat }}</td>
                 <td>预计到期日</td>
-                <td>{{ json_data.accfa7cf50cc11e78876005056a687a8 }}</td>
+                <td>{{ json_data.accfa7cf50cc11e78876005056a687a8 | dateFormat }}</td>
             </tr>
             <tr>
                 <td>销售部门或机构</td>
@@ -66,9 +66,9 @@
             </tr>
             <tr>
                 <td>登记日期</td>
-                <td>{{ json_data.f65d639150ce11e7a679005056a687a8 }}</td>
+                <td>{{ json_data.f65d639150ce11e7a679005056a687a8 | dateFormat }}</td>
                 <td>收益划分时点</td>
-                <td>{{ json_data.q898468f50cf11e790ea005056a687a8 }}</td>
+                <td>{{ json_data.q898468f50cf11e790ea005056a687a8 | dateFormat }}</td>
             </tr>
             <tr>
                 <td>转让手续费</td>
@@ -77,7 +77,7 @@
                 <td>{{ json_data.w60fbc4050cf11e7b477005056a687a8 }}</td>
             </tr>
             <tr>
-                <td>备注</td>
+                <td>备dsa注</td>
                 <td colspan="3">{{ json_data.xa90742150cf11e7878b005056a687a8 }}</td>
             </tr>
         </tbody>
@@ -104,16 +104,20 @@
 	}
 </style>
 <script src="/node/nunjucks.min.js"></script>
+<script src="/node/moment.min.js"></script>
 <script type="text/javascript">
     var loop = setInterval(function(){
-        if ($('.widget-body span').size() > 0) {
+        if ($('#ud0385a150cb11e78009005056a687a8').size() !== 0) {
             var json_data = {};
             $('.widget-body span').each(function(i, e){
                 e = $(e);
                 json_data[e.attr('id')] = e.text();
             });
-            nunjucks.configure({ autoescape: true });
-            $('#node_div').html(nunjucks.renderString($('#theTemplate').html(), {json_data:json_data}));
+            var env = new nunjucks.Environment();
+            env.addFilter('dateFormat', function(str, count) {
+                return moment(str).format('YYYY年MM月DD日');
+            });
+            $('#node_div').html(env.renderString($('#theTemplate').html(), {json_data:json_data}));
             clearInterval(loop);
         }
     }, 1000);

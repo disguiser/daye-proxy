@@ -7,7 +7,7 @@ module.exports = {
         INTRUSTQLC: 'INTRUSTQLC',
         ENFOTA: 'ENFOTA',
         username: 'sa',
-        password: '1qa@WS',
+        password: '1qaz@WSX',
         // password: '000000',
         host: '192.168.1.118',
         // host: 'localhost',

@@ -17,9 +17,9 @@ let find_affar_by_taskid = async (task_id) => {
     return data[0];
 }
 let find_project_info = async (regitem_id) => {
-    let project_info = await pjmain.query(`select CPSTART_DATE,REGITEM_CODE,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE from INTRUSTQLC..QLC_TITEMREGINFO 
+    let project_info = await intrustqlc.query(`select CPSTART_DATE,REGITEM_CODE,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE from QLC_TITEMREGINFO 
         where REGITEM_ID = ${regitem_id}`,{
-        type: pjmain.QueryTypes.SELECT
+        type: intrustqlc.QueryTypes.SELECT
     });
     return project_info[0];
 }
@@ -69,11 +69,17 @@ let find_bank_name = async (bank_id) => {
     return data[0]['BANK_NAME'];
 }
 let find_pay_apply = async (affa_id) => {
-    let data = await intrustqlc.query(`select REGITEM_NAME,PROV_LEVEL_NAME,FK_BANK_NAME,SK_BANK_NAME,SK_BANK_ACCT,CUST_NAME,CONVERT(varchar(10),INPUT_TIME,120) as APPLY_DATE,
+    let data = await intrustqlc.query(`select DJ_CODE,REGITEM_NAME,PROV_LEVEL_NAME,FK_BANK_NAME,SK_BANK_NAME,SK_BANK_ACCT,CUST_NAME,CONVERT(varchar(10),INPUT_TIME,120) as APPLY_DATE,
     FK_BANK_SUB_NAME,SK_BANK_ACCT,PAY_MONEY,REMARK1,PROV_LEVEL,case when PROV_LEVEL='191203' then DKCD_MONEY else PAY_MONEY end as DKCD_MONEY,FK_ACCT_ID,IS_DD,REFUND_DATE,FK_BANK_ACCT,INPUT_TIME,INPUT_MAN_NAME,
     (select a.dept_name from pjmain..org_dept a,pjmain..org_user b where a.dept_code=b.dept_code and b.user_code=QLC_TPAYAPPLY.INPUT_MAN) as DEPT_NAME,
     (select param_name from qlc_txtacctinfo a,QLC_TINTPARAM b where b.param_value = a.REMIT_TYPE and a.XTACCT_INTID=QLC_TPAYAPPLY.FK_ACCT_ID) as REMIT_NAME
      from QLC_TPAYAPPLY where problem_id='${affa_id}'`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return data[0];
+}
+let find_supply_info = async (affa_id) => {
+    let data = await intrustqlc.query(`select DJ_CODE from QLC_TCONTRACT_SUPPLY where problem_id='${affa_id}'`, {
         type: intrustqlc.QueryTypes.SELECT
     });
     return data[0];
@@ -142,5 +148,6 @@ module.exports = {
     find_cb: find_cb,
     find_bank_name_ta: find_bank_name_ta,
     find_cust_name: find_cust_name,
-    find_apprpvalsela: find_apprpvalsela
+    find_apprpvalsela: find_apprpvalsela,
+    find_supply_info:find_supply_info
 }

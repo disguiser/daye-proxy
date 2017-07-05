@@ -80,7 +80,7 @@ $(function(){
         }
     }
     $('#childObjTable_' + dict['prp_id'] + ' .btn.blue.mini').attr('href','javascript:listAdd();');
-    $('#theform .row-fluid:last').html('<input type="hidden" id="temp_id" /><input id="new_or_edit" type="hidden" />');
+    $('body').append('<input type="hidden" id="temp_id" /><input id="new_or_edit" type="hidden" />');
     // 用于批量下载
     if ($('#' + dict['prp_id']).val() !== '') {
         $.ajax({

@@ -29,6 +29,8 @@ app.use(koaLogger());
 // custom 404
 app.use(serve(path.join(__dirname, '/public')));
 
+// app.use(serve(path.join(__dirname, '/templates')));
+
 app.use(async (ctx, next) => {
   ctx.logger = logger;
   await next();
@@ -70,7 +72,7 @@ app.on('error', function(err, ctx){
 
 // listen
 app.listen(3000);
-logger.info('应用服务器启动,监听端口 3000');
+logger.info('应用服务器启动,监听端口: 3000');
 
 // let option = process.argv;
 // console.log(option);

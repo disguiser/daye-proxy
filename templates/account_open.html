@@ -127,10 +127,13 @@
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820802' %}checked{% endif %} disabled>划款指令
         </td>
         <td>
+            <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820806' %}checked{% endif %} disabled>指令+凭证
+        </td>
+        <td>
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820805' %}checked{% endif %} disabled>业务凭证
         </td>		
         <td><b>银企对账方式</b></td>
-        <td>{% if affair_json['e1d75661593a11e6864c40f02f0658fc']=='1' %}网银{% elif affair_json['e1d75661593a11e6864c40f02f0658fc']=='2' %}电话{%endif%}</td>
+        <td>{% if affair_json['e1d75661593a11e6864c40f02f0658fc']=='1' %}网银{% elif affair_json['e1d75661593a11e6864c40f02f0658fc']=='2' %}纸质{%endif%}</td>
     </tr>
     <tr>
         <td><b>银行是否收划款指令原件</b></td>

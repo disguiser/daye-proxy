@@ -8,8 +8,8 @@ const d_dict = require('../dao/d_dict.js');
 const tools = require('../utils/tools.js');
 const moment = require('moment');
 const fs = require('mz/fs');
-const accounting = require('accounting-js');
-const nzhcn = require('nzh').cn;
+// const accounting = require('accounting-js');
+// const nzhcn = require('nzh').cn;
 
 // 字典,用于映射
 let flow_regitem = {
@@ -63,6 +63,12 @@ let flow_regitem = {
     b5792af0470e11e68438184f32ca6bca: { // 用印审批流程
         APPROVALSELA: 'w240a48f41b511e79398000c294af360',
         regitem_id: 'sa87f08f59e311e6b81ff0def1c335c3'
+    },
+    xca765cf519611e79e8d005056a687a8: { // 抵质押权利证书(证明)领用审批
+        regitem_id: 'q9bd48de516f11e79ac9005056a687a8'
+    },
+    c722681e519411e78b64005056a687a8: { // 信托合同交接记录(集合)
+        regitem_id: 'f3461aee519e11e78d3b005056a687a8'
     }
 }
 let attaRebuild = async (ctx, json_attachments) => {
@@ -139,30 +145,11 @@ let productDistribution  = async(affair) => {
         })
     };
 }
-// 项目签报变更流程 + 中后期重大事项签报流程
-let signChange = async(affair) => {
-    let parsedJson = JSON.parse(affair.jsondata);
-    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
-    let project_info = await d_flow.find_project_info(regitem_id);
-    let json_data = parsedJson[flow_regitem[affair.flow_id]['json_data']];
-    // console.log(JSON.parse(json_data));
-    return {
-        success: {
-            flow_id: affair.flow_id,
-            html: temple.render('change_table.html', {
-                project_info: project_info,
-                json_data: JSON.parse(json_data),
-                risk_assessment: parsedJson['v9d0af4070e511e6935b184f32ca6bca']
-            })
-        }
-    }
-}
 // 项目签报变更流程
 let sign = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('zs_chang_apply.html', {
             project_info: project_info,
@@ -175,7 +162,6 @@ let importantMatter = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('important_matter.html', {
             project_info: project_info,
@@ -186,7 +172,6 @@ let importantMatter = async (affair) => {
 // 项目签报审批流程
 let projectReport = async(affair) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('project_sign.html', {
             project_info: project_info
@@ -196,7 +181,6 @@ let projectReport = async(affair) => {
 // 项目审批流程
 let projectApproval = async(affair) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('project_declare.html', {
             project_info: project_info
@@ -272,12 +256,8 @@ let payApply = async (affair) => {
     let affair_json = JSON.parse(affair.jsondata);
     let regitem_id = affair_json[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     let pa_info = await d_flow.find_pay_apply(affair.affa_id);
     let link = affair.flow_id == 'wfee86703bb611e7ae5d000c294af360' ? true : false; 
-    pa_info['C_DKCD_MONEY'] = nzhcn.toMoney(pa_info.DKCD_MONEY,{outSymbol:false});
-    pa_info.DKCD_MONEY = accounting.formatMoney(pa_info.DKCD_MONEY, {symbol: "￥"});
-    pa_info.PAY_MONEY = accounting.formatMoney(pa_info.PAY_MONEY, {symbol: "￥"});
     return {
         success: temple.render('pay_apply.html', {
             project_info: project_info,
@@ -292,7 +272,6 @@ let expatriateApply = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.APPLY_DATE = moment(project_info.APPLY_DATE.toString()).format('YYYY年MM月DD日');
     return {
         success: temple.render('expatriate_apply.html', {
             project_info: project_info,
@@ -304,7 +283,6 @@ let expatriateApply = async (affair) => {
 // 外派人员行使表决权审批流程
 let xsbjq = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
-    parsedJson.a15077ee472b11e689df184f32ca6bca = moment(parsedJson.a15077ee472b11e689df184f32ca6bca).format('YYYY年MM月DD日');
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
     return {
@@ -319,7 +297,6 @@ let zcjyzysp = async (ctx, affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    project_info.CPSTART_DATE = moment(project_info.CPSTART_DATE.toString()).format('YYYY年MM月DD日');
     let json_arr = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['JXZC']]);
     let datas = {};
     if (json_arr.length > 0) {
@@ -336,9 +313,9 @@ let zcjyzysp = async (ctx, affair) => {
         XYYSCLQD = JSON.parse(XYYSCLQD); 
         attach_rebuild = await attaRebuild(ctx, XYYSCLQD);
     } catch (error) {
-        ctx.logger.debug('老数据');
+        ctx.logger.debug('老数据', XYYSCLQD);
     }
-
+    console.log(XYYSCLQD);
     return {
         success: temple.render('zcjyzysp.html', {
             json_data: parsedJson,
@@ -354,8 +331,7 @@ let syqzrdjqrd = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    parsedJson.ob1e9c5e3e9a11e6be4e184f32ca6bca = moment(parsedJson.ob1e9c5e3e9a11e6be4e184f32ca6bca.toString()).format('YYYY年MM月DD日');
-    parsedJson.fde599de3e9911e6a607184f32ca6bca = moment(parsedJson.fde599de3e9911e6a607184f32ca6bca.toString()).format('YYYY年MM月DD日');
+    let pa_info = await d_flow.find_supply_info(affair.affa_id);
     parsedJson.sfbe518f3e9911e6ad2d184f32ca6bca = await d_flow.find_cust_name(parsedJson.sfbe518f3e9911e6ad2d184f32ca6bca);
     parsedJson.ufaa29c03e9911e6aa71184f32ca6bca = await d_flow.find_bank_name_ta(parsedJson.ufaa29c03e9911e6aa71184f32ca6bca);
     let cb = await d_flow.find_cb(parsedJson.f5d7cacf3e9811e6995f184f32ca6bca);
@@ -363,17 +339,16 @@ let syqzrdjqrd = async (affair) => {
         success: temple.render('syqzrdjqrd.html', {
             json_data: parsedJson,
             project_info: project_info,
+            pa_info:pa_info,
             cb: cb['cb']
         })
     }
 }
+// 信托资金/销售资金监管使用申请流程
 let xtzjxszjjgsysq = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    parsedJson.t87fa8ee473c11e6a705184f32ca6bca = accounting.formatMoney(parsedJson.t87fa8ee473c11e6a705184f32ca6bca, {symbol: "￥"});
-    parsedJson.u30aa270473c11e6803e184f32ca6bca = accounting.formatMoney(parsedJson.u30aa270473c11e6803e184f32ca6bca, {symbol: "￥"});
-    parsedJson.uf4bfe80473c11e6b38c184f32ca6bca = accounting.formatMoney(parsedJson.uf4bfe80473c11e6b38c184f32ca6bca, {symbol: "￥"});
     return {
         success: temple.render('xtzjxszjjgsysq.html', {
             json_data: parsedJson,
@@ -381,6 +356,7 @@ let xtzjxszjjgsysq = async (affair) => {
         })
     }
 }
+// 信托业务章/印签使用审批流程
 let xtywz = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
@@ -406,50 +382,131 @@ let yysplc = async (affair) => {
         })
     }
 }
+// 抵质押权利证书(证明)领用审批
+let dzyqlzs = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    return {
+        success: temple.render('dzyqlzs.html', {
+            json_data: parsedJson,
+            project_info: project_info
+        })
+    }
+}
+// 信托合同交接记录(集合)
+let xthtjjjl = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    return {
+        success: temple.render('xthtjjjl.html', {
+            json_data: parsedJson,
+            project_info: project_info
+        })
+    }
+}
+// 信托受益权转让(集合)
+let syqzrjh = async (affair) => {
+    // 客户端渲染方式
+    let data = await fs.readFile('templates/syqzrjh.html', 'utf-8');
+    return {
+        success: data
+    }
+}
 let flowRouter = async(ctx, affair) => {
     let res;
     // console.log(affair);
-    if (affair.flow_id == 'afad680f3ec711e6ae92184f32ca6bca' || affair.flow_id == 'd70e099e240411e7a3af005056a687a8') { // 合同审批流程 + 合同审批流程(非实质性变更)
-        res = await contractApproval(ctx, affair);
-    } else if (affair.flow_id == 'b395b7615f9811e6b480b888e3e688de') { // 产品发行流程
-        res = await productDistribution(affair);
-    } else if (affair.flow_id == 'qba4418052fc11e68f55184f32ca6bca') { // 项目签报审批流程
-        res = await projectReport(affair);
-    } else if (affair.flow_id == 'de19f3e165a911e68d9140f02f0658fc') { // 项目审批流程
-        res = await projectApproval(affair);
-    } else if (affair.flow_id == 'v7608f2e3e8811e688c2184f32ca6bca' || affair.flow_id == 'v11a7d403e8611e6b07e184f32ca6bca' || affair.flow_id=='fdf2ed804a6411e6905fd85de21f6642' || affair.flow_id=='rfb70130910911e6a83c184f32ca6bca' || affair.flow_id=='wb2eee409a6211e687f3415645000030') { // 收款流程 + 付款流程 + 放款审批流程 + 收支计划审批流程 + 工作计划审批流程
-        res = await receivables(affair);
-    } else if (affair.flow_id == 'o53659213e5c11e6a7bd184f32ca6bca' ) { // 项目签报变更流程
-        // res = await signChange(affair);
-        res = await sign(affair);
-    } else if (affair.flow_id == 'rdf83711470311e68bb0184f32ca6bca') { // 中后期重大事项签报流程
-        res = await importantMatter(affair);
-    } else if (affair.flow_id == 'eebf606e3e6411e68f15184f32ca6bca') { // 账户开户流程
-        res = await accountOpen(affair);
-    } else if (affair.flow_id == 'p0cf06613e8e11e680a2184f32ca6bca') { // 销户流程
-        res = await accountCancel(affair);
-    } else if (affair.flow_id == 'v93e92803bb611e787b3000c294af360' || affair.flow_id == 'wfee86703bb611e7ae5d000c294af360') { //放款审批流程(证券投资) + 放款审批流程(消费贷及房抵贷)
-        res = await payApply(affair);
-    } else if (affair.flow_id == 'b20e08f0476611e794d9000c294af360') { // 信息披露(季度管理报告)审批流程
-        res = {
-            success: `<a href="/node/word/${affair.affa_id}">导出word</a>`
-        };
-    } else if (affair.flow_id == 'od1bb94f470811e6ac64184f32ca6bca') { // 外派人员行使表决权审批流程
-        res = await xsbjq(affair);
-    } else if (affair.flow_id == 'x0e79ca1470711e69bce184f32ca6bca') { // 外派人员（含董监事）委派审批流程
-        res = await expatriateApply(affair);
-    } else if (affair.flow_id == 'v4b02a4f3e8a11e6ac80184f32ca6bca') { // 资产解押审批流程
-        res = await zcjyzysp(ctx, affair);
-    } else if (affair.flow_id == 'ta32efd13e8c11e6ae36184f32ca6bca') { // 受益权转让审批流程
-        res = await syqzrdjqrd(affair);
-    } else if (affair.flow_id == 'pfb34fc0471111e6a77b184f32ca6bca') { // 信托资金/销售资金监管使用申请流程
-        res = await xtzjxszjjgsysq(affair);
-    } else if (affair.flow_id == 's8555e40476611e7a73d000c294af360') { // 信托业务章/印签使用审批流程
-        res = await xtywz(affair);
-    } else if (affair.flow_id == 'b5792af0470e11e68438184f32ca6bca') { // 用印审批流程
-        res = await yysplc(affair);
-    } else {
-        res = {fail: '非指定流程'};
+    switch (affair.flow_id) {
+        // 合同审批流程 + 合同审批流程(非实质性变更)
+        case 'afad680f3ec711e6ae92184f32ca6bca':
+        case 'd70e099e240411e7a3af005056a687a8':
+            res = await contractApproval(ctx, affair);
+            break;
+        // 产品发行流程
+        case 'b395b7615f9811e6b480b888e3e688de':
+            res = await productDistribution(affair);
+            break;
+        // 项目签报审批流程
+        case 'qba4418052fc11e68f55184f32ca6bca':
+            res = await projectReport(affair);
+            break;
+        // 项目审批流程
+        case 'de19f3e165a911e68d9140f02f0658fc':
+            res = await projectApproval(affair);
+            break;
+        // 收款流程 + 付款流程 + 放款审批流程 + 收支计划审批流程 + 工作计划审批流程
+        case 'v7608f2e3e8811e688c2184f32ca6bca':
+        case 'v11a7d403e8611e6b07e184f32ca6bca':
+        case 'fdf2ed804a6411e6905fd85de21f6642':
+        case 'rfb70130910911e6a83c184f32ca6bca':
+        case 'wb2eee409a6211e687f3415645000030':
+            res = await receivables(affair);
+            break;
+        // 项目签报变更流程
+        case 'o53659213e5c11e6a7bd184f32ca6bca':
+            res = await sign(affair);
+            break;
+        // 中后期重大事项签报流程
+        case 'rdf83711470311e68bb0184f32ca6bca':
+            res = await importantMatter(affair);
+            break;
+        // 账户开户流程
+        case 'eebf606e3e6411e68f15184f32ca6bca':
+            res = await accountOpen(affair);
+            break;
+        // 销户流程
+        case 'p0cf06613e8e11e680a2184f32ca6bca':
+            res = await accountCancel(affair);
+            break;
+        // 放款审批流程(证券投资) + 放款审批流程(消费贷及房抵贷)
+        case 'v93e92803bb611e787b3000c294af360':
+        case 'wfee86703bb611e7ae5d000c294af360':
+            res = await payApply(affair);
+            break;
+        // 外派人员行使表决权审批流程
+        case 'od1bb94f470811e6ac64184f32ca6bca':
+            res = await xsbjq(affair);
+            break;
+        // 外派人员（含董监事）委派审批流程
+        case 'x0e79ca1470711e69bce184f32ca6bca':
+            res = await expatriateApply(affair);
+            break;
+        // 资产解押审批流程
+        case 'v4b02a4f3e8a11e6ac80184f32ca6bca':
+            res = await zcjyzysp(ctx, affair);
+            break;
+        // 受益权转让审批流程
+        case 'ta32efd13e8c11e6ae36184f32ca6bca':
+            res = await syqzrdjqrd(affair);
+            break;
+        // 信托资金/销售资金监管使用申请流程
+        case 'pfb34fc0471111e6a77b184f32ca6bca':
+            res = await xtzjxszjjgsysq(affair);
+            break;
+        // 信托业务章/印签使用审批流程
+        case 's8555e40476611e7a73d000c294af360':
+            res = await xtywz(affair);
+            break;
+        // 用印审批流程
+        case 'b5792af0470e11e68438184f32ca6bca':
+            res = await yysplc(affair);
+            break;
+        // 抵质押权利证书(证明)领用审批
+        case 'xca765cf519611e79e8d005056a687a8':
+            res = await dzyqlzs(affair);
+            break;
+        // 信托合同交接记录(集合)
+        case 'c722681e519411e78b64005056a687a8':
+            res = await xthtjjjl(affair);
+            break;
+        // 信托受益权转让(集合)
+        case 'sae22ba150d211e79ce6005056a687a8':
+            res = await syqzrjh(affair);
+            break;
+        default:
+            res = {fail: '非指定流程'};
+            break;
     }
     return res;
 }

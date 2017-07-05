@@ -2,7 +2,7 @@
 	<br>
 	<h2>大业信托有限责任公司</h2>
 	<h2><b>信托项目中后期重大事项签报表</b></h2>
-    <span style="margin-left:20px;float:left"><b>签报日期：{{ project_info.APPLY_DATE }}</b></span>
+    <span style="margin-left:20px;float:left"><b>签报日期：{{ project_info.APPLY_DATE | dateFormat }}</b></span>
 	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
     <table id="node_table">
         <tbody>
@@ -10,7 +10,7 @@
                 <td width="15%">项目名称</td>
                 <td width="35%">{{ project_info.REGITEM_NAME }}</td>
                 <td width="15%">成立日期</td>
-                <td width="35%"></td>
+                <td width="35%">{{ project_info.CPSTART_DATE | dateFormat}}</td>
             </tr>
             <tr>
                 <td>申报部门</td>
@@ -33,10 +33,6 @@
             <tr>
                 <td>重大事项风险评估</td>
                 <td colspan="3">{{ json_data.aef7d930471611e6b902184f32ca6bca }}</td>
-            </tr>
-            <tr>
-                <td>附件材料</td>
-                <td colspan="3"></td>
             </tr>
         </tbody>
     </table>

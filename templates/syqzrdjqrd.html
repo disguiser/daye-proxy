@@ -1,6 +1,7 @@
 <div style="width:800px">
 	<br>
 	<h2><b>受益权转让登记确认单</b></h2>
+    <span style="margin-right:20px;float:right"><b>系统编号：{{ pa_info.DJ_CODE }}</b></span>
 	<table class="node_table">
 		<tbody>
 			<tr>
@@ -48,15 +49,15 @@
             </tr>
             <tr>
                 <td>协议签署日期</td>
-                <td>{{ json_data.ob1e9c5e3e9a11e6be4e184f32ca6bca }}</td>
+                <td>{{ json_data.ob1e9c5e3e9a11e6be4e184f32ca6bca | dateFormat }}</td>
                 <td>转让生效日期</td>
-                <td>{{ json_data.fde599de3e9911e6a607184f32ca6bca }}</td>
+                <td>{{ json_data.fde599de3e9911e6a607184f32ca6bca | dateFormat }}</td>
             </tr>
             <tr>
                 <td>收益是否转让</td>
                 <td>{% if json_data.r566bcf03e9a11e68dd8184f32ca6bca == '1' %}是{% else %}否{% endif %}</td>
                 <td>转让手续费</td>
-                <td>{{ json_data.ef918a6e3e9911e6be85184f32ca6bca }}</td>
+                <td>{{ json_data.ef918a6e3e9911e6be85184f32ca6bca | moneyFormat }}</td>
             </tr>
             <tr>
                 <td>备注</td>

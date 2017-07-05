@@ -1,0 +1,124 @@
+<template id="theTemplate">
+    <table class="node_table">
+        <tbody>
+            <tr>
+                <td width="20%">产品名称</td>
+                <td width="32.5%">{{ json_data.vb7d3af050ca11e79a65005056a687a8 }}</td>
+                <td width="15%">业务部门</td>
+                <td width="32.5%">{{ json_data.de4fd84050ca11e7b3df005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>原受益人</td>
+                <td>{{ json_data.ud0385a150cb11e78009005056a687a8 }}</td>
+                <td>证件号码</td>
+                <td>{{ json_data.d670333050cb11e7aaa8005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td>合同编号</td>
+                <td>{{ json_data.o537c15e50cc11e7ba32005056a687a8 }}</td>
+                <td>合同金额</td>
+                <td>{{ json_data.u20402f050cc11e7b3a9005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td>认购日期</td>
+                <td>{{ json_data.vde1f40050cc11e79d1c005056a687a8 | dateFormat }}</td>
+                <td>预计到期日</td>
+                <td>{{ json_data.accfa7cf50cc11e78876005056a687a8 | dateFormat }}</td>
+            </tr>
+            <tr>
+                <td>销售部门或机构</td>
+                <td>{{ json_data.e297d04050cc11e7aed8005056a687a8 }}</td>
+                <td>客户经理</td>
+                <td>{{ json_data.q74a068f50cd11e797c3005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>受让人</td>
+                <td>{{ json_data.sa1c83f050cd11e78736005056a687a8 }}</td>
+                <td>证件号码</td>
+                <td>{{ json_data.u769203050cd11e78e2b005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td>受让协议编号</td>
+                <td>{{ json_data.w4b0da7050cd11e7858e005056a687a8 }}</td>
+                <td>受让金额</td>
+                <td>{{ json_data.x93fea2e50cd11e7b1e8005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td>银行账号</td>
+                <td>{{ json_data.c7cc1d0f50cd11e7b374005056a687a8 }}</td>
+                <td>开户银行</td>
+                <td>{{ json_data.efcee18050cd11e78c7b005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td>销售部门或机构</td>
+                <td>{{ json_data.ce74ddde50ce11e7be9c005056a687a8 }}</td>
+                <td>客户经理</td>
+                <td>{{ json_data.de4aab5150ce11e781af005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>登记日期</td>
+                <td>{{ json_data.f65d639150ce11e7a679005056a687a8 | dateFormat }}</td>
+                <td>收益划分时点</td>
+                <td>{{ json_data.q898468f50cf11e790ea005056a687a8 | dateFormat }}</td>
+            </tr>
+            <tr>
+                <td>转让手续费</td>
+                <td>{{ json_data.sea72a4050cf11e7bc42005056a687a8 }}</td>
+                <td>分摊方式</td>
+                <td>{{ json_data.w60fbc4050cf11e7b477005056a687a8 }}</td>
+            </tr>
+            <tr>
+                <td>备dsa注</td>
+                <td colspan="3">{{ json_data.xa90742150cf11e7878b005056a687a8 }}</td>
+            </tr>
+        </tbody>
+    </table>
+</template>
+<div id="node_div" style="width:800px">
+</div>
+<style type="text/css">
+    .node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    .node_table td,.node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>
+<script src="/node/nunjucks.min.js"></script>
+<script src="/node/moment.min.js"></script>
+<script type="text/javascript">
+    var loop = setInterval(function(){
+        if ($('#ud0385a150cb11e78009005056a687a8').size() !== 0) {
+            var json_data = {};
+            $('.widget-body span').each(function(i, e){
+                e = $(e);
+                json_data[e.attr('id')] = e.text();
+            });
+            var env = new nunjucks.Environment();
+            env.addFilter('dateFormat', function(str, count) {
+                return moment(str).format('YYYY年MM月DD日');
+            });
+            $('#node_div').html(env.renderString($('#theTemplate').html(), {json_data:json_data}));
+            clearInterval(loop);
+        }
+    }, 1000);
+</script>

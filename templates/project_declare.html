@@ -2,7 +2,7 @@
 	<br>
 	<h2>大业信托有限责任公司</h2>
 	<h2><b>信托项目立项申报表</b></h2>
-	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE }}</b></span>
+	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE | dateFormat }}</b></span>
 	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
 	<table id="node_table">
 		<tbody>
@@ -101,8 +101,23 @@
 			</tr>
 		</tbody>
 	</table>
+	<div class="notice_div">
+		<h2><b>终审结果通知单</b></h2>
+		<p style="text-align:left">信托业务部：<b>{{ project_info.REGITEM_DP_NAME }}</b></p>
+		<p style="text-align:left;text-indent:2em;">你部报送的<b>{{ project_info.REGITEM_NAME }}</b>（项目编号:<b>{{ project_info.REGITEM_CODE }}</b>）于<b>{{ today }}</b>报公司终审。</p>
+		<p style="text-align:left;text-indent:2em;">经公司信托业务审查委员会审查，表决结果为：批准通过实施该项目。现将该终审结果通知你部，请持此通知单按照公司的审批管理相关制度，办理该项目的实施手续。</p>
+		<p style="text-align:left;text-indent:2em;">特此通知。</p>
+		<p style="text-align:right">信托审查委员会主任委员</p>
+		<p style="text-align:right">董事长</p>
+		<p style="text-align:right">{{ today }}</p>
+	</div>
 </div>
 <style type="text/css">
+	.notice_div {
+		border:1px solid #000;
+		margin-top:20px;
+		padding: 10px 10px;
+	}
     #node_table {
         width: 100%;
         border: 1px solid black;

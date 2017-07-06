@@ -28,6 +28,7 @@ function createEnv(path, opts) {
 module.exports = createEnv('templates', {
     watch: true,
     noCache: true,
+    autoescape: false,
     filters: {
         hex: function (n) {
             return '0x' + n.toString(16);

@@ -31,9 +31,9 @@
 				<td colspan="3">{{ pa_info.PAY_MONEY | moneyFormat }}</td>
 			</tr>
 			<tr>
-				<td>实际放款笔数</td>
+				<td>贷款合同笔数</td>
 				<td>{{ affair_json.se96f9804da111e7a93d005056a687a8 }}</td>
-				<td>实际放款金额</td>
+				<td>贷款合同总额</td>
 				<td>{% if affair_json['aea738214b5411e79924005056a687a8'] == '' or affair_json['aea738214b5411e79924005056a687a8'] == undefined %} 
                 &nbsp;{% else %}{{ (pa_info.PAY_MONEY-affair_json.aea738214b5411e79924005056a687a8) | moneyFormat }}{% endif %}</td>                
 				<td>实际退款金额</td>

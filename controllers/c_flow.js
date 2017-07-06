@@ -183,7 +183,8 @@ let projectApproval = async(affair) => {
     let project_info = await d_flow.find_project_info_by_problem_id(affair.affa_id);
     return {
         success: temple.render('project_declare.html', {
-            project_info: project_info
+            project_info: project_info,
+            today: moment().format('YYYY年MM月DD日')
         })
     };
 }

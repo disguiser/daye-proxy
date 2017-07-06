@@ -118,6 +118,7 @@
                 return moment(str).format('YYYY年MM月DD日');
             });
             $('#node_div').html(env.renderString($('#theTemplate').html(), {json_data:json_data}));
+            $('#theTemplate').html("");
             clearInterval(loop);
         }
     }, 1000);

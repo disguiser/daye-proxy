@@ -45,7 +45,7 @@ let flow_regitem = {
     },
     v4b02a4f3e8a11e6ac80184f32ca6bca: { // 资产解押审批流程
         regitem_id: 'xcd1b98f59e211e6b633f0def1c335c3',
-        JXZC: 'eb4692f03e9c11e6b807184f32ca6bca',
+        JXZC: 'eb4692f03e9c11e6b807184f32ca6bca', // 解押/解约财产
         XYYSCLQD: 'fa9185803e9c11e68dd0184f32ca6bca' // 需要用印材料清单
     },
     s8555e40476611e7a73d000c294af360: {
@@ -77,6 +77,9 @@ let attaRebuild = async (ctx, json_attachments) => {
         // console.log(element.LIST_UUID);
         flow_list_ids.push(e.LIST_UUID);
     });
+    if (flow_list_ids.length == 0) {
+        return;
+    }
     let attachments = await d_attachment.find_by_flis(flow_list_ids);
     // 去除冗余
     let _attachments = await d_attachment.find_by_ti(attachments[0].temp_id);
@@ -298,33 +301,33 @@ let zcjyzysp = async (ctx, affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
-    let json_arr = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['JXZC']]);
-    let datas = {};
-    if (json_arr.length > 0) {
-        let ASSET_MONEYS = '0';
-        json_arr.forEach(e => {
-            ASSET_MONEYS += ',' + e.ASSET_ID;
-        });
-        datas = await d_flow.find_asst_name(ASSET_MONEYS);
-    }
-    let XYYSCLQD = parsedJson[flow_regitem[affair.flow_id]['XYYSCLQD']]
 
-    let attach_rebuild;
+    let XYYSCLQD = parsedJson[flow_regitem[affair.flow_id]['XYYSCLQD']]
+    /**
+     * flow_list_id == LIST_UUID
+     * [{\"FS\":\"3\",\"WJMC\":\"\\u6388\\u6743\\u59d4\\u6258\\u4e66\",\"LIST_UUID\":\"C796EE44F2300001F2937C101BF0B9D0\"}]
+     * [C796EE44F2300001F2937C101BF0B9D0:{file_name:'xxx',...}]
+     */
+    let XYYSCLQD_atta;
     try {
         XYYSCLQD = JSON.parse(XYYSCLQD); 
-        attach_rebuild = await attaRebuild(ctx, XYYSCLQD);
+        XYYSCLQD_atta = await attaRebuild(ctx, XYYSCLQD);
     } catch (error) {
         ctx.logger.debug('老数据', XYYSCLQD);
     }
-    console.log(XYYSCLQD);
+    let JXZC = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['JXZC']]);
+    ctx.logger.debug('JXZC', JXZC);
+    let JXZC_atta = await attaRebuild(ctx, JXZC);
+
     return {
         success: temple.render('zcjyzysp.html', {
             json_data: parsedJson,
             project_info: project_info,
-            json_arr: json_arr,
-            datas: datas,
+            // datas: datas,
+            JXZC: JXZC,
+            JXZC_atta: JXZC_atta,
             XYYSCLQD: XYYSCLQD,
-            attachments: attach_rebuild
+            XYYSCLQD_atta: XYYSCLQD_atta
         })
     }
 }

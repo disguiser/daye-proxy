@@ -64,8 +64,6 @@ module.exports = function (router) {
     router.get('/attachments/:flow_list_id', async (ctx, next) => {
         var flow_list_id = ctx.params.flow_list_id;
         var res;
-        // console.log('++++++++');
-        // console.log(ctx.cookies.get('webpy_session_id'));
         if( flow_list_id == 0 ) {
             res = temple.render('attachment.html' ,{ attachments: ''});
         } else {
@@ -73,7 +71,6 @@ module.exports = function (router) {
             res = temple.render('attachment.html' ,{ attachments: attachments});
         }
         ctx.response.body = res;
-    // console.log(res);
     });
 
     router.get('/delete_by_id/:id', async (ctx, next) => {

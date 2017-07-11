@@ -1,7 +1,7 @@
 $(function(){
     var urlParams = parseUrlParams();
     var flowid = urlParams.flowid;
-    if (flowid == 'faca20a152f311e6892e184f32ca6bca') { // 贷款投资合同录入流程
+    if (flowid == 'faca20a152f311e6892e184f32ca6bca') { // 贷款融资类合同录入流程
         // 修改编辑按钮的点击函数
         $('#d71c3200555111e69b1eb888e3e688de').change(function(){
             $('.btn.btn-purple.btn-xs.mini.purple').each(function(){

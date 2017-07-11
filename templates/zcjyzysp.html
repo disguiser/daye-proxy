@@ -32,18 +32,20 @@
                         <tbody>
                             <tr>
                                 <th>资产名称</th>
-                                <th>抵质押物类型</th>
-                                <th>抵质押人</th>
-                                <th>抵质押物初始价值(元)</th>
-                                <th>最近抵质押物价值(元)</th>
+                                {% if JXZC_atta.temp_id !== '' %}
+                                <th>附件(<a href="/node/downloadAll/{{ JXZC_atta.temp_id }}?file_name=解押解约财产.zip">批量下载</a>)</th>
+                                {% else %}
+                                <th>附件</th>
+                                {% endif %}
                             </tr>
-                            {% for a in json_arr %}
+                            {% for a in JXZC %}
                             <tr>
-                                <td>{{ datas[a.ASSET_ID] }}</td>
-                                <td>{{ a.BUSI_TYPE }}</td>
-                                <td>{{ a.ASSET_OWN }}</td>
-                                <td>{{ a.APP_MONEY }}</td>
-                                <td>{{ a.ASSET_MONEY }}</td>
+                                <td>{{ a.ASSET_ID }}</td>
+                                <td>
+                                    {% for i in JXZC_atta[a.LIST_UUID] %}
+                                    <a href="/node/download/{{ i.ID }}">{{ i.file_name }}</a><br>
+                                    {% endfor %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -53,7 +55,7 @@
             <tr>
                 <td colspan="2">需用印材料清单</td>
                 <td colspan="3">
-                    {% if attachments==undefined %}
+                    {% if XYYSCLQD_atta==undefined %}
                     {{ XYYSCLQD }}
                     {% else %}
                     <table class="node_table">
@@ -61,8 +63,8 @@
                             <tr>
                                 <th>文件名称</th>
                                 <th>份数</th>
-                                {% if attachments.temp_id !== '' %}
-                                <th>附件(<a href="/node/downloadAll/{{ attachments.temp_id }}?file_name=资产解押审批流程.zip">批量下载</a>)</th>
+                                {% if XYYSCLQD_atta.temp_id !== '' %}
+                                <th>附件(<a href="/node/downloadAll/{{ XYYSCLQD_atta.temp_id }}?file_name=需用印材料清单.zip">批量下载</a>)</th>
                                 {% else %}
                                 <th>附件</th>
                                 {% endif %}
@@ -72,7 +74,7 @@
                                 <td>{{ a.WJMC }}</td>
                                 <td>{{ a.FS }}</td>
                                 <td>
-                                    {% for i in attachments[a.LIST_UUID] %}
+                                    {% for i in XYYSCLQD_atta[a.LIST_UUID] %}
                                     <a href="/node/download/{{ i.ID }}">{{ i.file_name }}</a><br>
                                     {% endfor %}
                                 </td>

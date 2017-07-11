@@ -187,7 +187,8 @@ let projectApproval = async(affair) => {
     return {
         success: temple.render('project_declare.html', {
             project_info: project_info,
-            today: moment().format('YYYY年MM月DD日')
+            today: moment().format('YYYY年MM月DD日'),
+            affa_id: affair.affa_id
         })
     };
 }

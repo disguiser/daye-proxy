@@ -81,6 +81,9 @@ let attaRebuild = async (ctx, json_attachments) => {
         return;
     }
     let attachments = await d_attachment.find_by_flis(flow_list_ids);
+    if (attachments.length == 0) {
+        return;
+    }
     // 去除冗余
     let _attachments = await d_attachment.find_by_ti(attachments[0].temp_id);
     ctx.logger.debug(JSON.stringify(attachments));

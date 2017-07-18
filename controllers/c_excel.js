@@ -78,7 +78,8 @@ module.exports = function (router) {
         let affa_id = ctx.query.affa_id;
         if (affa_id !== undefined) {
             let datas;
-            if (affa_id === 'op539970ff0911e694b4005056a603rf') {
+            // 流程外excel导入,目前只有个人消费贷维护一处
+            if (affa_id === 'v11a7d403e8611e6b07e184f32ca6bca') {
                 let user_code = await tools.getUserCode(ctx);
                 if (user_code !== 'notLoggin') {
                     datas = await d_excel.loadAll_affaid_obj(affa_id,user_code);
@@ -86,6 +87,7 @@ module.exports = function (router) {
                     ctx.response.body = {result: 'failed',message:'未登录,无法获取user_code'};
                 }
             } else {
+                // 流程内excel导入
                 datas = await d_excel.loadAll_affaid_flow(affa_id);
             }
             ctx.response.body = {

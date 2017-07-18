@@ -32,7 +32,7 @@
                         <tbody>
                             <tr>
                                 <th>资产名称</th>
-                                {% if JXZC_atta.temp_id !== '' %}
+                                {% if JXZC_atta.temp_id !== undefined %}
                                 <th>附件(<a href="/node/downloadAll/{{ JXZC_atta.temp_id }}?file_name=解押解约财产.zip">批量下载</a>)</th>
                                 {% else %}
                                 <th>附件</th>

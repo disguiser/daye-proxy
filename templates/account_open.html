@@ -24,20 +24,16 @@
     </tr>
     <tr>
         <td><b>账户性质</b></td>
-        <td>
+        <td colspan="5">
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120801' %}checked{% endif %} disabled>专用账户
-        </td>
-        <td>
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120802' %}checked{% endif %} disabled>募集账户
-        </td>
-        <td>
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120805' %}checked{% endif %} disabled>理财账户
-        </td>
-        <td>
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120806' %}checked{% endif %} disabled>归集监管账户
+            <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120807' %}checked{% endif %} disabled>待拨户
+            <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120808' %}checked{% endif %} disabled>证券账户
+            <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120809' %}checked{% endif %} disabled>其他
         </td>
         <td colspan="2">
-            <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120809' %}checked{% endif %} disabled>其他
         </td>
     </tr>
     <tr>

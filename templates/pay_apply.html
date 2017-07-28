@@ -30,6 +30,8 @@
 				<td width="17.5%">拨付金额</td>
 				<td colspan="3">{{ pa_info.PAY_MONEY | moneyFormat }}</td>
 			</tr>
+            {% if affair_json['aea738214b5411e79924005056a687a8'] == '' or affair_json['aea738214b5411e79924005056a687a8'] == undefined %}
+            {% else %}
 			<tr>
 				<td>贷款合同笔数</td>
 				<td>{{ affair_json.se96f9804da111e7a93d005056a687a8 }}</td>
@@ -39,6 +41,7 @@
 				<td>实际退款金额</td>
 				<td>{{ affair_json.aea738214b5411e79924005056a687a8 | moneyFormat }}</td>
 			</tr>
+            {% endif %}
 			<tr>
 				<td>摘要</td>
 				<td colspan="5">{{ affair_json['p0a4e06e70d311e698e240f02f0658fc'] }}</td>

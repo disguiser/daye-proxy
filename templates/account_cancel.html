@@ -46,16 +46,11 @@
         <td colspan="3">{{ affair_json['w83e270fcccf11e6a211005056a687a8'] }}</td>
     </tr>
     <tr>
-        <td><b>申请人签字</b></td>
-        <td></td>
-        <td><b>申请部门负责人审核</b></td>
-        <td colspan="2"></td>
-    </tr>
-    <tr>
-        <td><b>经办会计审核</b></td>
-        <td></td>
-        <td><b>财务负责人审核</b></td>
-        <td colspan="2"></td>
+        <td><b>自营借款及代垫款是否结清</b></td>
+        <td><input type="checkbox" {% if affair_json['ofb31530cccf11e6b9b1005056a687a8']==1 %}checked{% endif %} disabled>是
+        <input type="checkbox" {% if affair_json['ofb31530cccf11e6b9b1005056a687a8']==2 %}checked{% endif %} disabled>否</td>
+        <td><b>自营借款及代垫款余额</b></td>
+        <td colspan="2">{{ affair_json['a09d2a8fcccf11e6b0aa005056a687a8'] }}</td>
     </tr>
     <tr>
         <td colspan="5">销户情况（信托财务部填写）</td>

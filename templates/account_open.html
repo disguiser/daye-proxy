@@ -8,15 +8,15 @@
         <td width="14%"><b>申请人</b></td>
         <td width="14%">{{ project_info.REGITEM_OP_NAME }}</td>
         <td width="14%"><b>申请日期</b></td>
-        <td width="14%">{{ project_info.APPLY_DATE }}</td>
+        <td width="14%" colspan="2">{{ project_info.APPLY_DATE }}</td>
     </tr>
     <tr>
         <td><b>项目名称</b></td>
-        <td colspan="6">{{ project_info.REGITEM_NAME }}</td>
+        <td colspan="7">{{ project_info.REGITEM_NAME }}</td>
     </tr>
     <tr>
         <td><b>项目编号</b></td>
-        <td colspan="6">{{ project_info.REGITEM_CODE }}</td>
+        <td colspan="7">{{ project_info.REGITEM_CODE }}</td>
         <!--
         <td><b>产品编号</b></td>
         <td colspan="2">{{ product_info.PRODUCT_CODE }}</td>
@@ -24,19 +24,19 @@
     </tr>
     <tr>
         <td><b>账户性质</b></td>
-        <td colspan="5">
+        <td colspan="7">
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120801' %}checked{% endif %} disabled>专用账户
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120802' %}checked{% endif %} disabled>募集账户
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120805' %}checked{% endif %} disabled>理财账户
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120806' %}checked{% endif %} disabled>归集监管账户
-            <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120807' %}checked{% endif %} disabled>待拨户
-            <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120808' %}checked{% endif %} disabled>证券账户
+            <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120808' %}checked{% endif %} disabled>待拨户
+            <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120811' %}checked{% endif %} disabled>证券资金账户
             <input type="checkbox" {% if affair_json['r4f74300520611e6a966b888e335e00a']=='120809' %}checked{% endif %} disabled>其他
         </td>
     </tr>
     <tr>
         <td><b>是否银行托管</b></td>
-        <td colspan="3">
+        <td colspan="4">
             <input type="checkbox" {% if affair_json['r63dc300592811e6bcb940f02f0658fc']=='1' %}checked{% endif %} disabled>是
         </td>
         <td colspan="3">
@@ -45,11 +45,11 @@
     </tr>
     <tr>
         <td><b>拟开户银行名称</b></td>
-        <td colspan="6">{{ bank_name }}</td>
+        <td colspan="7">{{ bank_name }}</td>
     </tr>
     <tr>
         <td><b>开户要求及备注</b></td>
-        <td colspan="6">{{ affair_json['s6305480520711e6acaab888e335e00a'] }}</td>
+        <td colspan="7">{{ affair_json['s6305480520711e6acaab888e335e00a'] }}</td>
     </tr>
 <!--
     <tr>
@@ -66,32 +66,32 @@
     </tr>
 -->
     <tr>
-        <td colspan="7"></td>
+        <td colspan="8"></td>
     </tr>
     <tr>
-        <td colspan="7"><b>账户信息</b></td>
+        <td colspan="8"><b>账户信息</b></td>
     </tr>
     <tr>
         <td><b>银行账户名称</b></td>
-        <td colspan="6">{{ affair_json['r6c61a21520711e69021b888e335e00a'] }}</td>
+        <td colspan="7">{{ affair_json['r6c61a21520711e69021b888e335e00a'] }}</td>
     </tr>
     <tr>
         <td><b>开户银行名称</b></td>
-        <td colspan="6">{{ bank_name }}&nbsp;{{ affair_json['of1ebc1e520711e6abcdb888e335e00a'] }}</td>
+        <td colspan="7">{{ bank_name }}&nbsp;{{ affair_json['of1ebc1e520711e6abcdb888e335e00a'] }}</td>
     </tr>
     <tr>
         <td><b>银行账号</b></td>
-        <td colspan="6">{{ affair_json['q48407a1520711e6b198b888e335e00a'] }}</td>
+        <td colspan="7">{{ affair_json['q48407a1520711e6b198b888e335e00a'] }}</td>
     </tr>
     <tr>
         <td><b>预留印鉴</b></td>
         <td colspan="3">{{ affair_json['v2f84fb0593a11e6a39a40f02f0658fc'] }}</td>
         <td><b>开户完成日期</b></td>
-        <td colspan="2">{{ affair_json['sf7bbe8f520611e6990cb888e335e00a'] }}</td>
+        <td colspan="3">{{ affair_json['sf7bbe8f520611e6990cb888e335e00a'] }}</td>
     </tr>
     <tr>
         <td><b>银行联系人及<br>联系电话</b></td>
-        <td colspan="6">{{ affair_json['s8c17bb046a411e7b9e3000c294af360'] }}</td>
+        <td colspan="7">{{ affair_json['s8c17bb046a411e7b9e3000c294af360'] }}</td>
     </tr>
 <!--
     <tr>
@@ -107,27 +107,19 @@
         <td><b>电话</b></td>
         <td>{{ affair_json['pdf27e80593c11e69d6d40f02f0658fc'] }}</td>
         <td><b>传真号码及邮箱</b></td>
-        <td colspan="2">{{ affair_json['r94e955e593c11e6bcb840f02f0658fc'] }}  {{ affair_json['qd1576ae593c11e6922b40f02f0658fc'] }}</td>
+        <td colspan="3">{{ affair_json['r94e955e593c11e6bcb840f02f0658fc'] }}  {{ affair_json['qd1576ae593c11e6922b40f02f0658fc'] }}</td>
     </tr>
     <tr>
         <td><b>银行划款方式</b></td>
-        <td>
+        <td colspan="4">
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820804' %}checked{% endif %} disabled>网银
-        </td>
-        <td>
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820803' %}checked{% endif %} disabled>网银+划款指令
-        </td>
-        <td>
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820802' %}checked{% endif %} disabled>划款指令
-        </td>
-        <td>
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820806' %}checked{% endif %} disabled>指令+凭证
-        </td>
-        <td>
             <input type="checkbox" {% if affair_json['e9eb1e0f592911e6a8fa40f02f0658fc']=='820805' %}checked{% endif %} disabled>业务凭证
         </td>		
         <td><b>银企对账方式</b></td>
-        <td>{% if affair_json['e1d75661593a11e6864c40f02f0658fc']=='1' %}网银{% elif affair_json['e1d75661593a11e6864c40f02f0658fc']=='2' %}纸质{%endif%}</td>
+        <td colspan="2"><input type="checkbox" {% if affair_json['e1d75661593a11e6864c40f02f0658fc']=='1' %}checked{% endif %} disabled>网银<input type="checkbox" {% if affair_json['e1d75661593a11e6864c40f02f0658fc']=='2' %}checked{% endif %} disabled>纸质</td>
     </tr>
     <tr>
         <td><b>银行是否收划款指令原件</b></td>
@@ -138,7 +130,7 @@
             <input type="checkbox">否
         </td>
         <td><b>收件人及地址</b></td>
-        <td colspan="2">{{ affair_json['s40be980593c11e6a34d40f02f0658fc'] }}</td>
+        <td colspan="3">{{ affair_json['s40be980593c11e6a34d40f02f0658fc'] }}</td>
     </tr>
 <!--
     <tr>
@@ -152,11 +144,11 @@
 -->
     <tr>
         <td><b>联系人地址</b></td>
-        <td colspan="6">{{ affair_json['s40be980593c11e6a34d40f02f0658fc'] }}</td>
+        <td colspan="7">{{ affair_json['s40be980593c11e6a34d40f02f0658fc'] }}</td>
     </tr>
     <tr>
         <td><b>备注</b></td>
-        <td colspan="6">{{ affair_json['reb09c006f4f11e6b5a440f02f0658fc'] }}</td>
+        <td colspan="7">{{ affair_json['reb09c006f4f11e6b5a440f02f0658fc'] }}</td>
     </tr>
 </table>
 <style type="text/css">

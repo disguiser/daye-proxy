@@ -47,8 +47,8 @@
     </tr>
     <tr>
         <td><b>自营借款及代垫款是否结清</b></td>
-        <td><input type="checkbox" {% if affair_json['ofb31530cccf11e6b9b1005056a687a8']==1 %}checked{% endif %} disabled>是
-        <input type="checkbox" {% if affair_json['ofb31530cccf11e6b9b1005056a687a8']==2 %}checked{% endif %} disabled>否</td>
+        <td><input type="checkbox" {% if affair_json['oa66c530ccd011e6a3d4005056a687a8']=="0" %}checked{% endif %} disabled>是
+        <input type="checkbox" {% if affair_json['oa66c530ccd011e6a3d4005056a687a8']=="1" %}checked{% endif %} disabled>否</td>
         <td><b>自营借款及代垫款余额</b></td>
         <td colspan="2">{{ affair_json['a09d2a8fcccf11e6b0aa005056a687a8'] }}</td>
     </tr>

@@ -29,8 +29,8 @@ $(function(){
         // 抵质押物录入，资产解押审批流程，放款审批流程(消费贷及房抵贷)
         if (data.flow_id === 'tc539970ff0911e694b4005056a60fd8' || data.flow_id === 'v4b02a4f3e8a11e6ac80184f32ca6bca' || data.flow_id == 'wfee86703bb611e7ae5d000c294af360') {
             excelImport(data.affa_id, data.flow_id);
-        } else if (['x353dfa173d311e6bab240f02f0658fc','faca20a152f311e6892e184f32ca6bca','rc3f698052f611e68138184f32ca6bca','s5a6a630766611e69f7640f02f0658fc','s5a6a630766611e69f7640f02f0658fc'].indexOf(data.flow_id) >= 0) {
-            // 贷款投资合同录入流程 + 股权投资合同录入流程 + 非标金融资产投资类合同录入流程 + 其他投资类合同录入流程 + 其他投资类合同录入流程
+        } else if (['x353dfa173d311e6bab240f02f0658fc','rc3f698052f611e68138184f32ca6bca','s5a6a630766611e69f7640f02f0658fc','s5a6a630766611e69f7640f02f0658fc'].indexOf(data.flow_id) >= 0) {
+            // 贷款投资合同录入流程 + 股权投资合同录入流程 + 非标金融资产投资类合同录入流程 + 其他投资类合同录入流程 + 其他投资类合同录入流程'faca20a152f311e6892e184f32ca6bca',
             var loop = setInterval(function(){
                 if ($('#div_d668178052d011e6baafb888e3e688de label').size() > 0) {
                     $('#div_d668178052d011e6baafb888e3e688de label').html('<a style="color:#72ACE3" href="/f/v/objlist?clsid=c588f5c0c81311e68438005056a687a8&pagid=c588f606c81311e694c1005056a687a8" target="_blank">' + $('#div_d668178052d011e6baafb888e3e688de label').html() + '</a>');

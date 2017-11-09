@@ -29,7 +29,7 @@ $(function(){
         '放款审批流程','销户流程', '账户开户流程','收支计划审批流程','工作计划审批流程','信息披露(季度管理报告)审批流程',
         '放款审批流程(证券投资)','放款审批流程(消费贷及房抵贷)','项目签报变更流程','中后期重大事项签报流程', '外派人员（含董监事）委派审批流程',
         '外派人员行使表决权审批流程','资产解押审批流程','受益权转让审批流程','信托资金/销售资金监管使用申请流程','信托业务章/印签使用审批流程',
-        '用印审批流程','抵质押权利证书(证明)领用审批','信托合同交接记录(集合)','信托受益权转让(集合)'
+        '用印审批流程','抵质押权利证书(证明)领用审批','信托合同交接记录(集合)','信托受益权转让(集合)','清算报告审批流程','信息披露流程'
     ];
     var excel_flownames = [
         '抵质押物录入流程','资产解押审批流程','放款审批流程(消费贷及房抵贷)'
@@ -64,15 +64,17 @@ $(function(){
     var url;
     if (taskid !== undefined) {
         url = '/node/regitemid_taskid/' + taskid;
+        $('.detailchoiceleft').append('<a href="/f/v/objlist?clsid=c342ec5eb7b711e69395005056ac2cf1&pagid=ba8d29c0a36411e795f3000c294af360&affa_id=' + taskid + '" target="_blank">关联流程</a>');
     } else if (affaid !== undefined) {
         url = '/node/regitemid_affaid/' + affaid;
         $('.detailchoiceleft').append('<a href="/x/intrustqlc/pdfsign/pdfcreate?affaid=' + affaid + '&fileName=' + flowname + '.pdf" >打印流程</a>');
+        $('.detailchoiceleft').append('<a href="/f/v/objlist?clsid=c342ec5eb7b711e69395005056ac2cf1&pagid=ba8d29c0a36411e795f3000c294af360&affa_id=' + affaid + '" target="_blank">关联流程</a>');
     } else {
         return;
     }
     $.getJSON(url, function(data){
         if (data !== undefined) {
-            $('.detailchoiceleft').append('<a href="/x/intrustqlc/views/lifecycleDy_ALL?clsid=fb33464f48b911e6b8d8d85de21f6642&id=' + data + '" target="_blank">关联流程</a>');
+            $('.detailchoiceleft').append('<a href="/x/intrustqlc/views/lifecycleDy_ALL?clsid=fb33464f48b911e6b8d8d85de21f6642&id=' + data + '" target="_blank">全流程图</a>');
         }
     });
 });

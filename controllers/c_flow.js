@@ -69,14 +69,25 @@ let flow_regitem = {
     },
     c722681e519411e78b64005056a687a8: { // 信托合同交接记录(集合)
         regitem_id: 'f3461aee519e11e78d3b005056a687a8'
+    },
+    f92d6e211fe711e7bca7005056a687a8: { // 清算报告审批单
+        regitem_id: 'qa29b430b77d11e6b6e460d819cae7ab'
+    },
+    t4cd0f403e8b11e6ad89184f32ca6bca: { // 清算报告审批单
+        regitem_id: 't879ff4f59e211e69feff0def1c335c3'
     }
+    //d30aa0dea29711e79897000c294af360: { // 房屋抵押贷款用印申请流程
+        //regitem_id: 'c740c958a29811e79ab5000c294af360'
+    //}
 }
 let attaRebuild = async (ctx, json_attachments) => {
     let flow_list_ids = [];
     json_attachments.forEach(e => {
-        // console.log(element.LIST_UUID);
+        //console.log(e.LIST_UUID);
         flow_list_ids.push(e.LIST_UUID);
     });
+    console.log("++++++++++++++++flow_list_ids++++++++++++++++++++++");
+    console.log(flow_list_ids);
     if (flow_list_ids.length == 0) {
         return;
     }
@@ -112,6 +123,8 @@ let attaRebuild = async (ctx, json_attachments) => {
         }
     });
     ctx.logger.debug("attach_rebuild", JSON.stringify(attach_rebuild));
+    console.log("++++++++++++++++attach_rebuild++++++++++++++++++++++");
+    console.log(attach_rebuild);
     return attach_rebuild;
 }
 let contractApproval = async (ctx, affair) => {
@@ -306,23 +319,29 @@ let zcjyzysp = async (ctx, affair) => {
     let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
 
-    let XYYSCLQD = parsedJson[flow_regitem[affair.flow_id]['XYYSCLQD']]
+    let XYYSCLQD = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['XYYSCLQD']]);
     /**
      * flow_list_id == LIST_UUID
      * [{\"FS\":\"3\",\"WJMC\":\"\\u6388\\u6743\\u59d4\\u6258\\u4e66\",\"LIST_UUID\":\"C796EE44F2300001F2937C101BF0B9D0\"}]
      * [C796EE44F2300001F2937C101BF0B9D0:{file_name:'xxx',...}]
      */
+    console.log(XYYSCLQD);
     let XYYSCLQD_atta;
     try {
-        XYYSCLQD = JSON.parse(XYYSCLQD); 
+        //XYYSCLQD = JSON.parse(XYYSCLQD); 
         XYYSCLQD_atta = await attaRebuild(ctx, XYYSCLQD);
     } catch (error) {
         ctx.logger.debug('老数据', XYYSCLQD);
     }
     let JXZC = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['JXZC']]);
     ctx.logger.debug('JXZC', JXZC);
+    console.log(JXZC);
     let JXZC_atta = await attaRebuild(ctx, JXZC);
-
+    console.log("===========XYYSCLQD_atta================");
+    console.log(XYYSCLQD_atta);
+    console.log("===========XYYSCLQD================");
+    console.log(XYYSCLQD);
+    console.log(typeof XYYSCLQD);
     return {
         success: temple.render('zcjyzysp.html', {
             json_data: parsedJson,
@@ -331,7 +350,8 @@ let zcjyzysp = async (ctx, affair) => {
             JXZC: JXZC,
             JXZC_atta: JXZC_atta,
             XYYSCLQD: XYYSCLQD,
-            XYYSCLQD_atta: XYYSCLQD_atta
+            XYYSCLQD_atta: XYYSCLQD_atta,
+            type: typeof XYYSCLQD
         })
     }
 }
@@ -415,6 +435,35 @@ let xthtjjjl = async (affair) => {
             project_info: project_info
         })
     }
+}
+// 清算报告审批流程
+let qsbgbd = async (affair) => {
+    let affair_json = JSON.parse(affair.jsondata);
+    let regitem_id = affair_json[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    return {
+        success: temple.render('qsbgbd.html', {
+            affair_json: affair_json,
+            project_info: project_info
+        })
+    }
+
+}
+
+// 信息披露审批流程
+let xxpllcspb = async (affair) => {
+    let affair_json = JSON.parse(affair.jsondata);
+    let regitem_id = affair_json[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    return {
+        success: temple.render('xxpllcspb.html', {
+            affair_json: affair_json,
+            project_info: project_info,
+            create_user:affair.create_user,
+            create_dept:affair.create_dept
+        })
+    }
+
 }
 // 信托受益权转让(集合)
 let syqzrjh = async (affair) => {
@@ -514,6 +563,18 @@ let flowRouter = async(ctx, affair) => {
         case 'sae22ba150d211e79ce6005056a687a8':
             res = await syqzrjh(affair);
             break;
+        // 清算报告审批流程
+        case 'f92d6e211fe711e7bca7005056a687a8':
+            res = await qsbgbd(affair);
+            break;
+        // 信息披露审批流程
+        case 't4cd0f403e8b11e6ad89184f32ca6bca':
+            res = await xxpllcspb(affair);
+            break;
+        // 房屋抵押贷款用印申请流程
+        //case 'd30aa0dea29711e79897000c294af360':
+            //res = await fwdydkyysplc(affair);
+            //break;
         default:
             res = {fail: '非指定流程'};
             break;

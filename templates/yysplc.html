@@ -3,12 +3,12 @@
 	<table class="node_table">
 		<tbody>
             <tr>
-                <td>项目名称</td>
-                <td>{{ json_data.ad282040472c11e69d1a184f32ca6bca }}</td>
+                <td width='10%'>项目名称</td>
+                <td width='90%'>{{ json_data.ad282040472c11e69d1a184f32ca6bca }}</td>
             </tr>
             <tr>
-                <td>用印类型</td>
-                <td>
+                <td width='10%'>用印类型</td>
+                <td width='90%'>
                     {% if json_data.bc686470472c11e683f9184f32ca6bca=='1' %}
                     普通用印
                     {% elseif json_data.bc686470472c11e683f9184f32ca6bca=='2' %}
@@ -19,19 +19,20 @@
                 </td>
             </tr>
             <tr>
-                <td>所在部门</td>
-                <td>{{ project_info.REGITEM_DP_NAME }}</td>
+                <td width='10%'>所在部门</td>
+                <td width='90%'>{{ project_info.REGITEM_DP_NAME }}</td>
             </tr>
             <tr>
-                <td>信托经理</td>
-                <td>{{ project_info.REGITEM_OP_NAME }}</td>
+                <td width='10%'>信托经理</td>
+                <td width='90%'>{{ project_info.REGITEM_OP_NAME }}</td>
             </tr>
             <tr>
-                <td>用印信息</td>
-                <td>
+                <td width='10%'>用印信息</td>
+                <td width='90%'>
                     <table class="node_table">
                         <tbody>
                             <tr>
+                                <td>序号</td>
                                 <td>文件名称</td>
                                 <td>份数</td>
                                 <td>印章类型</td>
@@ -39,6 +40,7 @@
                             </tr>
                             {% for a in apprpvalsela %}
                             <tr>
+                                <td>{{ a.YYXH }}</td>
                                 <td>{{ a.FILE_NAME }}</td>
                                 <td>{{ a.NUMBER }}</td>
                                 <td>{{ a.SEAL_TYPE_NAME }}</td>
@@ -50,8 +52,8 @@
                 </td>
             </tr>
             <tr>
-                <td>具体说明</td>
-                <td>{{ json_data.f53e1f4f12b111e7b173005056a60fd8 }}</td>
+                <td width='10%'>具体说明</td>
+                <td width='90%'>{{ json_data.f53e1f4f12b111e7b173005056a60fd8 }}</td>
             </tr>
 		</tbody>
 	</table>

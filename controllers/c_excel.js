@@ -24,8 +24,15 @@ module.exports = function (router) {
         if (!tools.includeEmpty([flow_id, affa_id]) || !tools.includeEmpty([flow_id, regitem_id])){
             for (let file of files) {
                 let file_path = config.fileupload.path + Date.now() + file.filename;
-                let stat = await pipeSync(file, file_path);
-                let workbook = XLSX.readFile(file_path);
+                //let file_path = "C:/env/node/fileupload/1508149726493盛业万家2号第29批.xlsx";
+                //let file_path = "C:/env/node/fileupload/"+ Date.now() + file.filename;
+                console.log('============file_path==============');
+                console.log(file_path);
+                console.log(file);
+                //let stat = await pipeSync(file, file_path);
+                //let stat = await pipeSync(file, file_path);
+                //let workbook = XLSX.readFile(file_path);
+                let workbook = XLSX.readFile(file.path);
                 let sheetNames = workbook.SheetNames;
 
                 let workSheet = workbook.Sheets[sheetNames[0]];

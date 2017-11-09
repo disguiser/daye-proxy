@@ -4,7 +4,7 @@ const intrustqlc = require('../utils/sequelize_init').intrustqlc;
 const enfota = require('../utils/sequelize_init').enfota;
 
 let find_affar = async (affa_id) => {
-    let affair = await pjmain.query(`select affa_id,flow_id,jsondata from WF_AFFAIR where affa_id='${affa_id}'`, {
+    let affair = await pjmain.query(`select A.affa_id,A.flow_id,A.jsondata,B.full_name as create_user,C.dept_name as create_dept from WF_AFFAIR A,org_user B,org_dept C where A.affa_id='${affa_id}' and  A.create_user=B.user_code and B.dept_code=C.dept_code`, {
         type: pjmain.QueryTypes.SELECT
     });
     return affair[0];
@@ -45,7 +45,7 @@ let find_project_info_by_product_id = async (product_id) => {
     return product_info[0];
 }
 let find_project_info_by_problem_id = async (problem_id) => {
-    let product_info = await pjmain.query(`select REGITEM_NO,REGITEM_CODE,REGITEM_NAME,(case when type1='1' then '单一' when type1='2' then '集合' else '财产' end)+(case when SFSW=1 then '事务类' else '非事务类' end)+'('+type3_name+')' as REGITEM_TYPE,'('+cast(Convert(decimal(18,2),pre_money/10000) as nvarchar)+'万元)('+cast(CPSTART_PERIOD as nvarchar)+'月)' as TERMANDSUM,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE,JHBZCS,XMHKLY,BJSYHKSJ,TQFS_ZFSJ,XTCDFY,FY_SP_SJ,RISK_CONTROL,FXKZ_INFO,TJFS_INFO,TZFW_INFO,TZCL_INFO,TZBL_INFO from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=(select REGITEM_ID 
+    let product_info = await pjmain.query(`select REGITEM_NO,REGITEM_CODE,REGITEM_NAME,(case when type1='1' then '单一' when type1='2' then '集合' else '财产' end)+(case when SFSW=1 then '事务类' else '非事务类' end)+'('+type3_name+')' as REGITEM_TYPE,'('+cast(Convert(decimal(18,2),pre_money/10000) as nvarchar)+'万元)('+cast(CPSTART_PERIOD as nvarchar)+'月)' as TERMANDSUM,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE,JHBZCS,XMHKLY,BJSYHKSJ,TQFS_ZFSJ,XTCDFY,FY_SP_SJ,RISK_CONTROL,FXKZ_INFO,TJFS_INFO,TZFW_INFO,TZCL_INFO,TZBL_INFO,SFYD from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=(select REGITEM_ID 
                         from INTRUSTQLC..QLC_TITEMPBINFO where problemid='${problem_id}')`,{
         type: pjmain.QueryTypes.SELECT
     });
@@ -107,7 +107,7 @@ let find_asst_name = async (ASSET_MONEYS) => {
     return new_datas;
 }
 let find_cb = async (ASSET_ID) => {
-    let datas = await intrustqlc.query(`select CONTRACT_BH+'-'+cast(ADD_SUM as varchar)+'-'+CUST_NAME cb from QLC_TCONTRACT_SUPPLY where CONTRACT_BH='${ASSET_ID}'`,{
+    let datas = await intrustqlc.query(`select CONTRACT_NAME+'-'+cast(ADD_SUM as varchar)+'-'+CUST_NAME cb from QLC_TCONTRACT_SUPPLY where CONTRACT_BH='${ASSET_ID}'`,{
         type: enfota.QueryTypes.SELECT
     });
     return datas[0];
@@ -125,11 +125,18 @@ let find_cust_name = async (cust_id) => {
     return cust_name[0]['cust_name'];
 }
 let find_apprpvalsela = async (affa_id,regitem_id) => {
-    let seal_type_name = await intrustqlc.query(`select FILE_NAME,NUMBER,SEAL_TYPE_NAME,SPECAL_CHAPTER from QLC_APPROVAL_SEAL where 
-    problem_id='${affa_id}' and REGITEM_ID=${regitem_id}`, {
+    let seal_type_name = await intrustqlc.query(`select YYXH,FILE_NAME,NUMBER,SEAL_TYPE_NAME,SPECAL_CHAPTER from QLC_APPROVAL_SEAL where 
+    problem_id='${affa_id}' and REGITEM_ID=${regitem_id} order by YYXH`, {
         type: intrustqlc.QueryTypes.SELECT
     });
     return seal_type_name;
+}
+let find_affairnumber = async (affa_id) => {
+    let affanumber = await intrustqlc.query(`select count(1) from V_QLC_ITEMPBINFO where AFFA_ID in 
+    (select FOR_AFFA_ID from QLC_ASSOCIATED_PROCESS where AFFA_ID='${affa_id}' or AFFA_ID in  (select affa_id from PJMAIN..WF_TASK where task_id='${affa_id}'))`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return affanumber;
 }
 module.exports = {
     find_affar: find_affar,

@@ -8,7 +8,7 @@ const moment = require('moment');
 let excelImport = async (affa_id, flow_id, user_code, regitem_id, temp_state, json) => {
     let values = [],
         now = moment().format('YYYY-MM-DD hh:mm:ss');
-    // console.log('========+');
+     console.log('==========================');
     for (let j of json) {
         values.push({
             affa_id: tools.isEmpty(affa_id) ? null : affa_id,

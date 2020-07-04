@@ -1,0 +1,53 @@
+<div>
+	<br>
+	<h2><b>不良资产处置方案签报审批表</b></h2>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td width="15%">项目名称</td>
+                <td width="35%">{{ project_info.REGITEM_NAME }}</td>
+                <td width="15%">签报日期</td>
+                <td width="35%">{{ json_data.t8a169b0ff7511e8b20e005056a61cf9 | dateFormat }}</td>
+            </tr>
+            <tr>
+                <td>风险情况描述</td>
+                <td colspan="4">
+                    <div class="textDiv">
+                        <p>{{ json_data.v3fdf5c0ff7511e8a760005056a61cf9 }}</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>处置方案描述</td>
+                <td colspan="4">
+                    <div class="textDiv">
+                        <p>{{ json_data.xbad1bf0ff7511e89dcb005056a61cf9 }}</p>
+                    </div>
+                </td>
+            </tr>
+			<tr>
+				<td colspan="4" align="center">
+						<a href="/x/intrustqlc/views/printBLZCCZFABJYJS?affa_id={{ affa_id }}&regitem_id={{ regitem_id }}">不良资产处置方案表决意见书</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

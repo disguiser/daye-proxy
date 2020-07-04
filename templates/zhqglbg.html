@@ -1,0 +1,40 @@
+<div>
+	<br>
+	<h2><b>中后期管理报告</b></h2>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td width="25%">项目名称</td>
+                <td width="25%">{{ project_info.REGITEM_NAME }}</td>
+                <td width="25%">签报日期</td>
+                <td width="25%">{{ json_data.ed9850cf4f6e11e9b59a005056a6a83a | dateFormat }}</td>
+            </tr>
+            <tr>
+                <td>摘要</td>
+                <td colspan="4">
+                    <div class="textDiv">
+                        <p>{{ json_data.oe9153404f6f11e9bccd005056a6a83a }}</p>
+                    </div>
+                </td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

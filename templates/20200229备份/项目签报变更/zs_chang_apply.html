@@ -41,26 +41,12 @@
 
             <tr>
                 <td colspan="4" align="center">
-                {% if affair_info.cur_version < 1.97 %}
-                    {% if project_info.TYPE3 == '113801' %}
-                        {% if project_info.TYPE1 == '2' %}
-                        <a href="/x/intrustqlc/views/printXMQBBG?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">集合项目签报变更</a>
-                        {% endif %}
-                    {% endif %}
-                        <a href="/x/intrustqlc/views/printZSBGSQB?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">终审变更申请表</a>
-                {% endif %}
-                {% if affair_info.cur_version > 1.97 %}
-                    {% if project_info.GNFL == '114303' %}
-                        <a href="/x/intrustqlc/views/printSWLXMQBBG?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">事务类项目签报变更</a>
-                    {% endif %}
-                    {% if project_info.GNFL != '114303' %}
-                        {% if project_info.PRE_MONEY > 500000000 %}
-                            <a href="/x/intrustqlc/views/printFSWLXMQBBG5?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">非事务类项目签报变更</a>
-                        {% else %}
-                            <a href="/x/intrustqlc/views/printFSWLXMQBBG?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">非事务类项目签报变更</a>
-                        {% endif %}
+                {% if project_info.TYPE3 == '113801' %}
+                    {% if project_info.TYPE1 == '2' %}
+                    <a href="/x/intrustqlc/views/printXMQBBG?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">集合项目签报变更</a>
                     {% endif %}
                 {% endif %}
+                    <a href="/x/intrustqlc/views/printZSBGSQB?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">终审变更申请表</a>
 
                 </td>
             </tr>

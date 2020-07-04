@@ -1,0 +1,87 @@
+<div>
+	<br>
+	<h2><b>不良资产处置中介选聘审批表</b></h2>
+	<table class="node_table">
+		<tbody>
+			<tr>
+				<td width="20%" colspan="2"><b>项目名称</b></td>
+				<td width="30%">{{ project_info.REGITEM_NAME }}</td>
+				<td width="20%"><b>申请日期</b></td>
+				<td width="30%">{{ json_data.f87db930ff4711e88039005056a61cf9 | dateFormat }}</td>
+			</tr>
+			<tr>
+				<td><b>拟聘机构名称</b></td>
+				<td colspan="4">
+					<div class="textDiv">
+						<p>{{ json_data.ocd3de9eff4811e8b34a005056a61cf9 }}</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><b>聘用理由</b></td>
+				<td colspan="4">
+					<div class="textDiv">
+						<p>{{ json_data.qfc9e98fff4811e8a82e005056a61cf9 }}</p>
+					</div>
+				</td>
+			</tr>
+            <tr>
+                <td>主要服务律师/会计师/评估师</td>
+                <td colspan="4">
+                    <table class="node_table">
+                        <tbody>
+                            <tr>
+                                <th>姓名</th>
+                                <th>级别</th>
+                                <th>分工</th>
+                                <th>联系方式</th>
+                            </tr>
+                            {% for a in LAWYER %}
+                            <tr>
+                                <td>{{ a.LAWYER_NAME }}</td>
+                                <td>{{ a.LAWYER_LEVEL }}</td>
+                                <td>{{ a.FG }}<br></td>
+                                <td>{{ a.CONTACT_WAY }}<br></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>服务内容</td>
+                <td colspan="4">
+                    <div class="textDiv">
+                        <p>{{ json_data.w9ff539eff4811e8bd87005056a61cf9 }}</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>收费标准</td>
+                <td colspan="4">
+                    <div class="textDiv">
+                        <p>{{ json_data.a8d6fcb0ff4811e89d52005056a61cf9 }}</p>
+                    </div>
+                </td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    .node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    .node_table td,.node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

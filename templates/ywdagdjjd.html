@@ -1,0 +1,97 @@
+<div>
+	<br>
+	<h2><b>信托业务档案归档交接单</b></h2>
+	<table class="node_table">
+		<tbody>
+			<tr>
+				<td width="15%" ><b>归档人员</b></td>
+				<td width="15%">{{ archive_info.INPUT_MAN_NAME }}</td>
+				<td width="15%"><b>所在部门</b></td>
+				<td width="15%">{{ archive_info.INPUT_DEPT_NAME }}</td>
+				<td width="20%"><b>归档日期</b></td>
+				<td width="20%">{{ archive_info.ARCHIVE_DATE | dateFormat }}</td>
+			</tr>
+			<tr>
+				<td ><b>项目编号</b></td>
+				<td colspan="2">{{ archive_info.REGITEM_CODE }}</td>
+				<td ><b>项目名称</b></td>
+				<td colspan="2">{{ archive_info.REGITEM_NAME }}</td>
+			</tr>
+			<tr>
+				<td ><b>档案材料明细</b></td>
+				<td colspan="5">
+                    <table class="node_table">
+                        <tbody>
+                            <tr>
+                                <th>序号</th>
+                                <th>文件名称</th>
+                                <th>是否原件</th>
+                                <th>份数</th>
+                                <th>备注</th>
+                                {% if gdzl_atta.temp_id !== undefined %}
+                                <th>附件(<a href="/node/downloadAll/{{ gdzl_atta.temp_id }}?file_name=档案材料.zip">批量下载</a>)</th>
+                                {% else %}
+                                <th>附件</th>
+                                {% endif %}
+                            </tr>
+                            {% for a in file_archive_list %}
+                            <tr>
+                                <td>{{ a.LIST_NO }}</td>
+                                <td>{{ a.FILE_NAME }}</td>
+                                <td>
+                                    {% if a.IF_ORIGINAL=='1' %}
+                                      是
+                                    {% elseif  a.IF_ORIGINAL=='2' %}
+                                      否
+                                    {% endif %}
+                                </td>
+                                <td>{{ a.NUMBER }}</td>
+                                <td>{{ a.REMARK }}</td>
+                                <td>
+                                    {% for i in gdzl_atta[a.FJ_UUID] %}
+                                    <a href="/node/download/{{ i.ID }}">{{ i.file_name }}</a><br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+				</td>
+			</tr>
+			<tr>
+				<td ><b>是否需要整改</b></td>
+				<td colspan="5">
+                    {% if archive_info.IF_RECTIFY=='1' %}
+                      是
+                    {% elseif  archive_info.IF_RECTIFY=='2' %}
+                      否
+                    {% endif %}
+                </td>
+			</tr>
+			<tr>
+				<td ><b>整理情况及存在问题</b></td>
+				<td colspan="5">
+                    {{ archive_info.REMARK }}
+                </td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    .node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    .node_table td,.node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

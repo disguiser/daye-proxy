@@ -1,0 +1,58 @@
+<div>
+	<br>
+	<h2><b>清算报告流程审批表</b></h2>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td>项目名称</td>
+                <td>{{ project_info.REGITEM_NAME }}</td>
+                <td>成立日期</td>
+                <td>{{ project_info.CPSTART_DATE }}</td>
+            </tr>
+            <tr>
+                <td>申报部门</td>
+                <td>{{ project_info.REGITEM_DP_NAME }}</td>
+                <td>责任经理</td>
+                <td>{{ project_info.REGITEM_OP_NAME+','+ project_info.OPER_MANAGER_NAME2 }}</td>
+            </tr>
+            <tr>
+                <td>是否用印</td>
+                <td> <input type="checkbox" {% if affair_json['d56c1ae1762811e6bf1db888e3e688de']=='0' %}checked{% endif %} disabled>是
+                <input type="checkbox" {% if affair_json['d56c1ae1762811e6bf1db888e3e688de']=='1' %}checked{% endif %} disabled>否</td>
+                <td>用印份数</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>要求对外披露信息时间(T+10工作日内)</td>
+                <td  colspan="3">{{ affair_json.ee76798f762811e6b2a6b888e3e688de | dateFormat }}</td>
+            </tr>
+            <tr>
+                <td>约定披露方式</td>
+                <td  colspan="3"><input type="checkbox" {% if affair_json['o36e3630762911e69fddb888e3e688de']=='1' %}checked{% endif %} disabled>挂号信
+                <input type="checkbox" {% if affair_json['o36e3630762911e69fddb888e3e688de']=='2' %}checked{% endif %} disabled>平信
+                <input type="checkbox" {% if affair_json['o36e3630762911e69fddb888e3e688de']=='3' %}checked{% endif %} disabled>网站披露
+                <input type="checkbox" {% if affair_json['o36e3630762911e69fddb888e3e688de']=='4' %}checked{% endif %} disabled>微信平台
+                <input type="checkbox" {% if affair_json['o36e3630762911e69fddb888e3e688de']=='5' %}checked{% endif %} disabled>受托人办公场所有效备查
+                <input type="checkbox" {% if affair_json['o36e3630762911e69fddb888e3e688de']=='6' %}checked{% endif %} disabled>其他</td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

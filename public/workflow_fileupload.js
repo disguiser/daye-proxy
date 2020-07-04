@@ -62,7 +62,7 @@ function createID(prefix, suffix) {
 var flowid,dict;
 $(function(){
     flowid = parseUrlParams().flowid;
-    flowid = flowid !== undefined ? flowid : $('#auth_flow_id').val();
+    flowid = flowid !== undefined ? flowid : $('#flow_id').val();
     dict = {
         // 合同审批流程
         'afad680f3ec711e6ae92184f32ca6bca': {
@@ -82,6 +82,13 @@ $(function(){
     }
     dict = dict[flowid];
     // python里的初始化脚本被代理覆盖了,所以在这里执行一下
+     jQuery("#mask").hide();
+      // 有ajax请求请求时遮盖完成时取消
+    jQuery("body").ajaxStart(function() {
+       jQuery("#mask").show();
+    }).ajaxStop(function() {
+       jQuery("#mask").hide();
+    })
     App.init(); // initlayout and core plugins
     if (jQuery.isFunction(window.PageInit)) {PageInit()}
 

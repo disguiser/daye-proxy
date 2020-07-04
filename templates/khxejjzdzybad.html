@@ -1,0 +1,65 @@
+<div>
+	<br>
+	<h2><b>客户限额及集中度占用备案单</b></h2>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td>客户名称:{{ info.CUST_NAME }}</td>
+                <td>前次客户评级结果:{{ info.GRADE_BEFORE }}</td>
+                <td>前次客户测算限额:{{ info.QUOTA_BEFORE }} 元 </td>
+            </tr>
+            <tr>
+                <td colspan="3">根据《信托业务客户评级及限额和客户集中度管理办法》此次客户评级为:{{ info.GRADE_NOW }},系统测算额度为:{{ info.QUOTA_NOW }} 元,同时,根据《信托业务客户评级及限额和客户集中度管理办法》第七条“限额测算及集中度限定”的规定,客户集中度应当限定为:{{ info.JZD_NOW }}</td>
+            </tr>
+            <tr>
+                <td>项目名称</td>
+                <td colspan="2"> {{ info.REGITEM_NAME }}</td>
+            </tr>
+            <tr>
+                <td>项目规模(承担兑付责任的规模)</td>
+                <td colspan="2">  {{ info.REGITEM_MONEY }} 元</td>
+            </tr>
+            <tr>
+                <td>本项目已申请累计占用额度</td>
+                <td colspan="2">  {{ info.LJ_MONEY }} 元</td>
+            </tr>
+            <tr>
+                <td>本次申请占用额度</td>
+                <td colspan="2"> {{ info.ZY_MONEY }} 元</td>
+            </tr>
+            <tr>
+                <td>信托经理确认：</td>
+                <td colspan="2">{{ sqyj }} </td>
+            </tr>
+            <tr>
+                <td>部门负责人确认：</td>
+                <td colspan="2">{{ bmfzryj }} </td>
+            </tr>
+            <tr>
+                <td>合规与风控管理部审批意见：</td>
+                <td  colspan="2">{{ hgyj }}</td>
+            </tr>
+            <tr>
+                <td  colspan="3">通知：全部业务部门、合规与风险管理部。</td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="http://localhost:8081/static/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        let ydjData = new Object();
+        $(function(){
+            //获取流程参数
+            let flowid = GetQueryValue('flowid');
+            let itemid = GetQueryValue('itemid');
+            //根据项目ID采集现有信息
+            jQuery.ajax({
+                data: {"flowid":flowid,"itemid":itemid,"rule_uuid":"EC61B8C2-35E8-4165-937B-DF9FCCB0A5DE"},
+                url: "/node/find_regiteminfo_info_by_regitem_id/" + itemid,
+                async:false,
+                cache:false,
+                success: function(data) {
+                    console.log(data);
+                    ydjData = data;
+                    if (data.ccqxtcfzr == "1") {
+                        $("input[name='ccqxtcfzr'][value=1]").attr("checked",true);
+                    } else {
+                        $("input[name='ccqxtcfzr'][value=0]").attr("checked",true);
+                    }
+                    if (data.bgywlx == "0") {
+                        $("input[name='bgywlx'][value=0]").attr("checked",true);
+                    } else if (data.bgywlx == "1") {
+                        $("input[name='bgywlx'][value=1]").attr("checked",true);
+                    } else if (data.bgywlx == "2") {
+                        $("input[name='bgywlx'][value=2]").attr("checked",true);
+                    } else if (data.bgywlx == "3") {
+                        $("input[name='bgywlx'][value=3]").attr("checked",true);
+                    } else if (data.bgywlx == "4") {
+                        $("input[name='bgywlx'][value=4]").attr("checked",true);
+                    }
+                    if (data.sfwxffq == "1") {
+                        $("input[name='sfwxffq'][value=1]").attr("checked",true);
+                    } else {
+                        $("input[name='sfwxffq'][value=0]").attr("checked",true);
+                    }
+                    $("#qtbgywlx").val(data.qtbgywlx);
+                    if (data.nfxclzgmlx == "1") {
+                        $("input[name='nfxclzgmlx'][value=1]").attr("checked",true);
+                    } else {
+                        $("input[name='nfxclzgmlx'][value=0]").attr("checked",true);
+                    }
+                    if (data.yjxtxmgm == "1") {
+                        $("input[name='yjxtxmgm'][value=1]").attr("checked",true);
+                    } else {
+                        $("input[name='yjxtxmgm'][value=0]").attr("checked",true);
+                    }
+                    $("#fqcpqs").val(data.fqcpqs);
+                    $("#wtrjzjly").val(data.wtrjzjly);
+                    $("#sytzrq").val(data.sytzrq);
+                    if (data.bgbs == "1") {
+                        $("input[name='bgbs'][value=1]").attr("checked",true);
+                    } else {
+                        $("input[name='bgbs'][value=0]").attr("checked",true);
+                    }
+                    $("#xtzjbgyh").val(data.xtzjbgyh);
+                    $("#xmtjjg").val(data.xmtjjg);
+                    $("#jydsmc").val(data.jydsmc);
+                    $("#jydsxx").val(data.jydsxx);
+                    $("#jyjg").val(data.jyjg);
+                    $("#yjhklyjtcfs").val(data.yjhklyjtcfs);
+                    $("#fxyasm").val(data.fxyasm);
+                    $("#gshfhgyj").val(data.gshfhgyj);
+                    $("#gljylx").val(data.gljylx);
+                    $("#qtgljylx").val(data.qtgljylx);
+                    $("#glfqkyglgx").val(data.glfqkyglgx);
+                    $("#gljymd").val(data.gljymd);
+                    $("#gljydj").val(data.gljydj);
+                    $("#sctlywdjqk").val(data.sctlywdjqk);
+                    $("#xmlx").val(data.xmlx);
+                    $("#qtxmlx").val(data.qtxmlx);
+                    $("#qtywlx").val(data.qtywlx);
+                    $("#xmszd").val(data.xmszd);
+                    if (data.sfszqq == "1") {
+                        $("input[name='sfszqq'][value=1]").attr("checked",true);
+                    } else {
+                        $("input[name='sfszqq'][value=0]").attr("checked",true);
+                    }
+                    $("#xyzjbh").val(data.xyzjbh);
+                    $("#zbjblqk").val(data.zbjblqk);
+                    $("#kfshqkggdzzqk").val(data.kfshqkggdzzqk);
+                    $("#qtsm").val(data.qtsm);
+                    $("#zjly").val(data.zjly);
+                    if (data.sfjghxt == "1") {
+                        $("input[name='sfjghxt'][value=1]").attr("checked",true);
+                    } else {
+                        $("input[name='sfjghxt'][value=0]").attr("checked",true);
+                    }
+                    $("#yxlhbl").val(data.yxlhbl);
+                    $("#tzfw").val(data.tzfw);
+                    $("#tzgwqk").val(data.tzgwqk);
+                    $("#tgsfglf").val(data.tgsfglf);
+                }
+            });
+        });
+
+        //预登记信息保存
+        function onSave(){
+            alert(ydjData.tzgwqk);
+            //获取补录要素
+            ydjData.ccqxtcfzr = $("input[name='ccqxtcfzr']:checked").val();
+            ydjData.bgywlx = $("input[name='bgywlx']:checked").val();
+            ydjData.sfwxffq = $("input[name='sfwxffq']:checked").val();
+            ydjData.qtbgywlx = $("#qtbgywlx").val();
+            ydjData.nfxclzgmlx = $("input[name='nfxclzgmlx']:checked").val();
+            ydjData.yjxtxmgm = $("input[name='yjxtxmgm']:checked").val();
+            ydjData.fqcpqs = $("#fqcpqs").val();
+            ydjData.wtrjzjly = $("#wtrjzjly").val();
+            ydjData.sytzrq = $("#sytzrq").val();
+            ydjData.bgbs = $("input[name='bgbs']:checked").val();
+            ydjData.xtzjbgyh = $("#xtzjbgyh").val();
+            ydjData.xmtjjg = $("#xmtjjg").val();
+            ydjData.jydsmc = $("#jydsmc").val();
+            ydjData.jydsxx = $("#jydsxx").val();
+            ydjData.jyjg = $("#jyjg").val();
+            ydjData.yjhklyjtcfs = $("#yjhklyjtcfs").val();
+            ydjData.fxyasm = $("#fxyasm").val();
+            ydjData.gshfhgyj = $("#gshfhgyj").val();
+            ydjData.gljylx = $("#gljylx").val();
+            ydjData.qtgljylx = $("#qtgljylx").val();
+            ydjData.glfqkyglgx = $("#glfqkyglgx").val();
+            ydjData.gljymd = $("#gljymd").val();
+            ydjData.gljydj = $("#gljydj").val();
+            ydjData.sctlywdjqk = $("#sctlywdjqk").val();
+            ydjData.xmlx = $("#xmlx").val();
+            ydjData.qtxmlx = $("#qtxmlx").val();
+            ydjData.qtywlx = $("#qtywlx").val();
+            ydjData.xmszd = $("#xmszd").val();
+            ydjData.sfszqq = $("input[name='sfszqq']:checked").val();
+            ydjData.xyzjbh = $("#xyzjbh").val();
+            ydjData.zbjblqk = $("#zbjblqk").val();
+            ydjData.kfshqkggdzzqk = $("#kfshqkggdzzqk").val();
+            ydjData.qtsm = $("#qtsm").val();
+            ydjData.zjly = $("#zjly").val();
+            ydjData.sfjghxt = $("input[name='sfjghxt']:checked").val();
+            ydjData.yxlhbl = $("#yxlhbl").val();
+            ydjData.tzfw = $("#tzfw").val();
+            ydjData.tzgwqk = $("#tzgwqk").val();
+            ydjData.tgsfglf = $("#tgsfglf").val();
+            alert(ydjData.tzgwqk);
+            alert(ydjData);
+        }
+
+        //获取GET参数
+        function GetQueryValue(queryName) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == queryName) { return pair[1]; }
+            }
+            return null;
+        }
+    </script>
+</head>
+<body>
+    <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="border-collapse:collapse;">
+        <tr>
+            <td style="width: 20%;">财产权信托进行受益权拆分转让或者对外发行受益权标识</td>
+            <td style="width: 30%;">
+                <input type="radio" name="ccqxtcfzr" value="1" />是
+                <input type="radio" name="ccqxtcfzr" value="0" />否
+            </td>
+            <td style="width: 20%;">报告业务类型</td>
+            <td style="width: 30%;">
+                <input type="radio" name="bgywlx" value="0"/>信托业务关联交易报告<br>
+                <input type="radio" name="bgywlx" value="1"/>房地产信托业务<br>
+                <input type="radio" name="bgywlx" value="2"/>异地推介<br>
+                <input type="radio" name="bgywlx" value="3"/>商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问<br>
+                <input type="radio" name="bgywlx" value="4"/>其他
+            </td>
+        </tr>
+
+        <tr>
+            <td class="name">
+                是否为新发分期:
+            </td>
+            <td>
+                <input type="radio" name="sfwxffq" value="1" />是
+                <input type="radio" name="sfwxffq" value="0" />否
+            </td>
+            <td class="name">
+                其他报告业务类型:
+            </td>
+            <td>
+                <input type="text" id="qtbgywlx" name="qtbgywlx" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                拟发行或成立总规模类型:
+            </td>
+            <td>
+                <input type="radio" name="nfxclzgmlx" value="1" />固定规模
+                <input type="radio" name="nfxclzgmlx" value="0" />非固定规模
+            </td>
+            <td class="name">
+                拟发行或成立规模类型:
+            </td>
+            <td>
+                <input type="radio" name="yjxtxmgm" value="1" />固定规模
+                <input type="radio" name="yjxtxmgm" value="0" />非固定规模
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                分期产品期数:
+            </td>
+            <td>
+                <input type="text" id="fqcpqs" name="fqcpqs" style="width: 180px;">
+            </td>
+            <td class="name">
+                委托人及财产来源:
+            </td>
+            <td>
+                <input type="text" id="wtrjzjly" name="wtrjzjly" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                适宜投资人群:
+            </td>
+            <td>
+                <input type="text" id="sytzrq" name="sytzrq" style="width: 180px;">
+            </td>
+            <td class="name">
+                保管标识:
+            </td>
+            <td>
+                <input type="radio" name="bgbs" value="00" />保管制
+                <input type="radio" name="bgbs" value="01" />非保管制
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                保管方信息:
+            </td>
+            <td>
+                <input type="text" id="xtzjbgyh" name="xtzjbgyh" style="width: 180px;">
+            </td>
+            <td class="name">
+                项目推荐机构:
+            </td>
+            <td>
+                <input type="text" id="xmtjjg" name="xmtjjg" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                交易对手名称:
+            </td>
+            <td>
+                <input type="text" id="jydsmc" name="jydsmc" style="width: 180px;">
+            </td>
+            <td class="name">
+                交易对手信息:
+            </td>
+            <td>
+                <input type="text" id="jydsxx" name="jydsxx" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                交易结构:
+            </td>
+            <td>
+                <input type="text" id="jyjg" name="jyjg" style="width: 180px;">
+            </td>
+            <td class="name">
+                预计还款来源/信托退出方式:
+            </td>
+            <td>
+                <input type="text" id="yjhklyjtcfs" name="yjhklyjtcfs" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                风险预案说明:
+            </td>
+            <td>
+                <input type="text" id="fxyasm" name="fxyasm" style="width: 180px;">
+            </td>
+            <td class="name">
+                公司合法合规意见:
+            </td>
+            <td>
+                <input type="text" id="gshfhgyj" name="gshfhgyj" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                关联交易类型:
+            </td>
+            <td>
+                <select id="gljylx" name="gljylx" style="width: 180px;">
+                    <option value="0">资金源于非关联方用于关联方</option>
+                    <option value="1">资金来源于关联方用于非关联方</option>
+                    <option value="2">资金来源于关联方用于关联方</option>
+                    <option value="3">以信托资金支付关联方费用</option>
+                    <option value="4">其他关联交易</option>
+                </select>
+            </td>
+            <td class="name">
+                关联交易补充说明:
+            </td>
+            <td>
+                <input type="text" id="qtgljylx" name="qtgljylx" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                关联方情况与关联关系:
+            </td>
+            <td>
+                <input type="text" id="glfqkyglgx" name="glfqkyglgx" style="width: 180px;">
+            </td>
+            <td class="name">
+                关联交易目的:
+            </td>
+            <td>
+                <input type="text" id="gljymd" name="gljymd" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                关联交易定价:
+            </td>
+            <td>
+                <input type="text" id="gljydj" name="gljydj" style="width: 180px;">
+            </td>
+            <td class="name">
+                市场同类业务定价情况:
+            </td>
+            <td>
+                <input type="text" id="sctlywdjqk" name="sctlywdjqk" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                项目类型:
+            </td>
+            <td>
+                <select id="xmlx" name="xmlx" style="width: 180px;">
+                    <option value="0">住宅</option>
+                    <option value="1">商用</option>
+                    <option value="2">保障房</option>
+                    <option value="3">其他</option>
+                </select>
+            </td>
+            <td class="name">
+                其他项目类型:
+            </td>
+            <td>
+                <input type="text" id="qtxmlx" name="qtxmlx" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                其他业务类型:
+            </td>
+            <td>
+                <input type="text" id="qtywlx" name="qtywlx" style="width: 180px;">
+            </td>
+            <td class="name">
+                项目所在地:
+            </td>
+            <td>
+                <input type="text" id="xmszd" name="xmszd" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                是否四证齐全:
+            </td>
+            <td>
+                <input type="radio" name="sfszqq" value="1" />是
+                <input type="radio" name="sfszqq" value="0" />否
+            </td>
+            <td class="name">
+                现有证照编号:
+            </td>
+            <td>
+                <input type="text" id="xyzjbh" name="xyzjbh" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                资本金比例情况:
+            </td>
+            <td>
+                <input type="text" id="zbjblqk" name="zbjblqk" style="width: 180px;">
+            </td>
+            <td class="name">
+                开发商或其控股股东资质情况:
+            </td>
+            <td>
+                <input type="text" id="kfshqkggdzzqk" name="kfshqkggdzzqk" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                其他说明:
+            </td>
+            <td>
+                <input type="text" id="qtsm" name="qtsm" style="width: 180px;">
+            </td>
+            <td class="name">
+                资金来源:
+            </td>
+            <td>
+                <input type="text" id="zjly" name="zjly" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                是否结构化信托:
+            </td>
+            <td>
+                <input type="radio" name="sfjghxt" value="1" />是
+                <input type="radio" name="sfjghxt" value="0" />否
+            </td>
+            <td class="name">
+                优先劣后比例:
+            </td>
+            <td>
+                <input type="text" id="yxlhbl" name="yxlhbl" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                投资范围:
+            </td>
+            <td>
+                <input type="text" id="tzfw" name="tzfw" style="width: 180px;">
+            </td>
+            <td class="name">
+                投资顾问情况:
+            </td>
+            <td>
+                <input type="text" id="tzgwqk" name="tzgwqk" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                投资顾问是否信托公司关联方:
+            </td>
+            <td colspan="3">
+                <input type="text" id="tgsfglf" name="tgsfglf" style="width: 180px;">
+            </td>
+        </tr>
+    </table>
+    <div style="width: 100%; text-align: right;">
+        <button type="button" onclick="javascript:onSave();">保 存</button>&nbsp;&nbsp;
+    </div>
+</body>
+</html>

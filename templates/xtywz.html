@@ -19,7 +19,7 @@
 			</tr>
 			<tr>
 				<td><b>印章用途</b></td>
-				<td colspan="3">{% if json_data.f135b2f24c3711e78a02000c294af360=='1' %}合同签约印章{% elif json_data.f135b2f24c3711e78a02000c294af360=='2' %}信托开户{% elif json_data.f135b2f24c3711e78a02000c294af360=='3' %}信息报送{% elif json_data.f135b2f24c3711e78a02000c294af360=='4' %}采购合同用章{% elif json_data.f135b2f24c3711e78a02000c294af360=='9' %}其他{% endif %}</td>
+				<td colspan="3">{% if json_data.f135b2f24c3711e78a02000c294af360=='1' %}合同签约印章{% elif json_data.f135b2f24c3711e78a02000c294af360=='2' %}信托开户{% elif json_data.f135b2f24c3711e78a02000c294af360=='3' %}信息报送{% elif json_data.f135b2f24c3711e78a02000c294af360=='4' %}采购合同用章{% elif json_data.f135b2f24c3711e78a02000c294af360=='5' %}函件用印{% elif json_data.f135b2f24c3711e78a02000c294af360=='6' %}资料用印{% elif json_data.f135b2f24c3711e78a02000c294af360=='9' %}其他{% endif %}</td>
 			</tr>
 			<tr>
 				<td><b>使用方式</b></td>
@@ -27,7 +27,7 @@
 			</tr>
 			<tr>
 				<td><b>印章类型</b></td>
-				<td colspan="3">{% if json_data.f135b2f54c3711e78b0a000c294af360=='1' %}信托业务章{% elif json_data.f135b2f54c3711e78b0a000c294af360=='2' %}王毅总人名章(北京){% elif json_data.f135b2f54c3711e78b0a000c294af360=='3' %}王毅手签章{% elif json_data.f135b2f54c3711e78b0a000c294af360=='4' %}信托业务章(二){% elif json_data.f135b2f54c3711e78b0a000c294af360=='5' %}王毅总人名章(广州){% endif %}</td>
+				<td colspan="3">{% if json_data.f135b2f54c3711e78b0a000c294af360=='1' %}信托业务章{% elif json_data.f135b2f54c3711e78b0a000c294af360=='2' %}王毅总人名章(北京){% elif json_data.f135b2f54c3711e78b0a000c294af360=='7' %}战伟宏总签字章（北京）{% elif json_data.f135b2f54c3711e78b0a000c294af360=='8' %}战伟宏总人名章（北京）{% elif json_data.f135b2f54c3711e78b0a000c294af360=='9' %}战伟宏总人名章（广州）{% elif json_data.f135b2f54c3711e78b0a000c294af360=='3' %}王毅手签章{% elif json_data.f135b2f54c3711e78b0a000c294af360=='4' %}信托业务章(二){% elif json_data.f135b2f54c3711e78b0a000c294af360=='5' %}王毅总人名章(广州){% elif json_data.f135b2f54c3711e78b0a000c294af360=='6' %}其他印章{% endif %}</td>
 			</tr>
             <tr>
                 <td>具体说明</td>
@@ -41,6 +41,7 @@
         width: 100%;
         border: 1px solid black;
 		text-align: left;
+        line-height:2;
     }
     .node_table td,.node_table th {
         padding: 5px;

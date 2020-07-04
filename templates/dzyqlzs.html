@@ -13,16 +13,46 @@
                 <td>领用日期</td>
                 <td>{{ json_data.e3ab3f00516f11e7a571005056a687a8 | dateFormat }}</td>
                 <td>责任经理</td>
-                <td>{{ project_info.REGITEM_OP_NAME }}</td>
+                <td>{{ project_info.REGITEM_OP_NAME+','+ project_info.OPER_MANAGER_NAME2 }}</td>
             </tr>
-            <tr>
-                <td>权利证书(证明)编号</td>
-                <td colspan="3">{{ json_data.o9e5dbb0517211e7942a005056a687a8 }}</td>
-            </tr>
-            <tr>
-                <td>领用事由</td>
-                <td colspan="3">{{ json_data.r4b072b0517211e79718005056a687a8 }}</td>
-            </tr>
+            {% if qlzs.length>0 %}
+                <tr>
+                    <td width="25%">权利证书信息</td>
+                    <td colspan="3" width="75%">
+                        <table class="node_table" width="75%">
+                            <tbody>
+                                <tr>
+                                    <th>权利证书(证明)编号</th>
+                                    <th>领用事由</th>
+                                    <th>是否归还</th>
+                                    <th>不需要归还原因</th>
+                                </tr>
+                                {% for a in qlzs %}
+                                <tr>
+                                    <td>{{ a.WARRANT_NO }}</td>
+                                    <td>{{ a.REMARK }}</td>
+                                    <td>{% if a.SFGH ==1 %}
+                                            是
+                                        {% else %}
+                                            否
+                                        {% endif %}</td>
+                                    <td>{{ a.REASON }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>权利证书(证明)编号</td>
+                    <td colspan="3">{{ json_data.o9e5dbb0517211e7942a005056a687a8 }}</td>
+                </tr>
+                <tr>
+                    <td>领用事由</td>
+                    <td colspan="3">{{ json_data.r4b072b0517211e79718005056a687a8 }}</td>
+                </tr>
+            {% endif %}
 		</tbody>
 	</table>
 </div>

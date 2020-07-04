@@ -54,11 +54,7 @@
                         <a href="/x/intrustqlc/views/printSWLXMQBBG?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">事务类项目签报变更</a>
                     {% endif %}
                     {% if project_info.GNFL != '114303' %}
-                        {% if project_info.PRE_MONEY > 500000000 %}
-                            <a href="/x/intrustqlc/views/printFSWLXMQBBG5?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">非事务类项目签报变更</a>
-                        {% else %}
-                            <a href="/x/intrustqlc/views/printFSWLXMQBBG?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">非事务类项目签报变更</a>
-                        {% endif %}
+                        <a href="/x/intrustqlc/views/printSWLXMQBBG?regitem_id={{ regitem_id }}&affa_id={{ affa_id }}">非事务类项目签报变更</a>
                     {% endif %}
                 {% endif %}
 

@@ -3,7 +3,7 @@
 	<h2>大业信托有限责任公司</h2>
 	<h2><b>信托项目中后期重大事项签报表</b></h2>
     <span style="margin-left:20px;float:left"><b>签报日期：{{ json_data.r327555e201411e7bb5b005056a687a8 | dateFormat }}</b></span>
-	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
+	<span style="margin-right:60px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
     <table id="node_table">
         <tbody>
             <tr>
@@ -16,11 +16,11 @@
                 <td>申报部门</td>
                 <td>{{ project_info.REGITEM_DP_NAME }}</td>
                 <td>责任经理</td>
-                <td>{{ project_info.REGITEM_OP_NAME }}</td>
+                <td>{{ project_info.REGITEM_OP_NAME+','+ project_info.OPER_MANAGER_NAME2  }}</td>
             </tr>
             <tr>
                 <td>终审委员/<br>公司领导</td>
-                <td colspan="3">{{ json_data.oabb32a17d9c11e7a6e7000c294af360 }}</td>
+                <td colspan="3">{{  sign_name.SIGN_MEMBER_NAME }}</td>
             </tr>
             <tr>
                 <td>申请事项</td>
@@ -39,7 +39,7 @@
 </div>
 <style type="text/css">
     #node_table {
-        width: 100%;
+        width: 95%;
         border: 1px solid black;
 		text-align: left;
     }

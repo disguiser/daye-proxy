@@ -1,0 +1,60 @@
+<div>
+	<br>
+	<h2><b>法人签字登记表</b></h2>
+	<span style="margin-left:20px;float:left"><b>申请时间：{{ time | dateFormat }}</b></span>
+	<table class="node_table">
+		<tbody>
+			<tr>
+				<td width="20%"><b>项目名称</b></td>
+				<td width="30%">{{ project_info.REGITEM_NAME }}</td>
+				<td width="20%"><b>申请部门</b></td>
+				<td width="30%">{{ json_data.wb408acf124f11e9843d005056a6a83a}}</td>
+			</tr>
+
+            <tr>
+                <td>文件</td>
+                <td colspan="3">
+                    <table class="node_table">
+                        <tbody>
+                            <tr>
+                                <th>序号</th>
+                                <th>文件名称</th>
+                                <th>份数</th>
+                            </tr>
+                            {% for i in FILE %}
+                            <tr>
+                                <td>{{ i.FILE_NO }}</td>
+                                <td>{{ i.FILE_NAME }}</td>
+                                <td>{{ i.NUMBER }}<br></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+			<tr>
+				<td colspan="4" align="center">
+					<a href="/x/intrustqlc/views/printFRQZDJB?affa_id={{ affa_id }}&regitem_id={{ regitem_id }}&deptname={{ deptname }}">法人签字登记表</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    .node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    .node_table td,.node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

@@ -1,0 +1,46 @@
+<div>
+	<br>
+	<h2><b>不良资产处置重大事项签报审批流程</b></h2>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td width="25%">项目名称</td>
+                <td width="25%">{{ project_info.REGITEM_NAME }}</td>
+           
+				 <td width="25%">签报日期</td>
+                <td width="25%">{{ json_data.d1424d85ff7511e8aeec005056a61cf9 | dateFormat }}</td>
+            </tr>
+            <tr>
+                <td>申请事项</td>
+                <td colspan="4">{{ json_data.d1424d86ff7511e88d2c005056a61cf9  }}</td>
+               
+            </tr>
+            <tr>
+                <td>重大事项描述</td>
+                <td colspan="4">{{ json_data.d1424d87ff7511e89642005056a61cf9 }}</td>
+            </tr>
+            <tr>
+                <td>风险评价</td>
+                <td colspan="4">{{ json_data.e1e7dc1eff7711e8a0d0005056a61cf9 }}</td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

@@ -1,0 +1,197 @@
+<div>
+	<br>
+	<h2><b> {% if json_data.q05bc94f045c11eaa009005056a61cf9=='1' %} 专项法律顾问聘用审批单
+    {% elseif json_data.q05bc94f045c11eaa009005056a61cf9=='2' %} 审计/评估机构聘用审批单
+    {% else %} 中介机构（律师/审计/评估）聘用审批表
+    {% endif %}</b></h2>
+	<span style="float:right;"><b >填表日期：{{ affair.create_time | dateFormat }}</b></span>
+	<table class="node_table">
+		<tbody>
+			<tr>
+				<td width="20%" colspan="2"><b>申请部门</b></td>
+				<td width="30%">{{ json_data.pd57cf4f810e11e9bdca005056a6a83a }}</td>
+				<td width="20%"><b>信托经理</b></td>
+				<td width="30%">{{ json_data.sf8ee1c0810e11e9b3fe005056a6a83a }}</td>
+			</tr>
+			<tr>
+				<td><b>项目名称</b></td>
+				<td colspan="4">
+					<div class="textDiv">
+						<p>{{  project_info.REGITEM_NAME}}</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><b>拟聘单位</b></td>
+				<td colspan="4">
+					<div class="textDiv">
+						<p>{{ json_data.a20a7e40810f11e98a49005056a6a83a }}</p>
+					</div>
+				</td>
+			</tr>
+            
+			<tr>
+				<td><b>聘请事由</b></td>
+				<td colspan="4">
+					<div class="textDiv">
+						<p>{{ json_data.vf7e58b0810f11e9b69c005056a6a83a }}</p>
+					</div>
+				</td>
+			</tr>
+            <tr>
+                <td colspan="5">{% if json_data.q05bc94f045c11eaa009005056a61cf9=='1' %} 服务律师
+                {% elseif json_data.q05bc94f045c11eaa009005056a61cf9=='2' %} 服务会计师/评估师
+                {% else %} 服务律师/服务会计师/评估师
+                {% endif %}</td>
+			</tr>
+            <tr>
+                <td colspan="2">姓名</td>
+                <td >级别</td>
+                <td colspan="2">联系方式</td>
+            </tr>
+            {% for a in PERSON %}
+            <tr>
+                <td colspan="2">{{ a.PERSON_NAME }}</td>
+                <td >{{ a.LEVEL }}</td>
+                <td colspan="2">{{ a.CONTACT_WAY }}<br></td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="5">
+                    <div class="textDiv">
+                        <p>服务内容及费用预算： 服务内容:{{ json_data.f0c89300810f11e99a4f005056a6a83a }} <br>
+                         费用预算:{{ json_data.we16c08f8cf611e9b32f005056a6a83a }} 元<br></p>
+                    </div>
+                </td>
+            </tr>
+            {% if bmjbinfo  and bmfzrinfo %}
+                <tr>
+                    <td colspan="5">
+                        <div class="textDiv">
+                            <p style="text-align:left">使用部门经办人员：{{  bmjbinfo.full_name }} <br>
+                            使用部门负责人：{{  bmfzrinfo.full_name }}</p>
+                            <p style="text-align:right">{{  bmfzrinfo.read_time | dateFormat }}</p>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            {% if json_data.c1d6eb40fec911e9acab005056a6a83a=='1'  and hgflfzrinfo %}
+                <tr>
+                    <td colspan="5">
+                        <div class="textDiv">
+                            <p style="text-align:left;">法律合规部审查意见：{{  hgflfzrinfo.summary }} <br>
+                            负责人（签字）：{{  hgflfzrinfo.full_name }}</p>
+                            <p style="text-align:right;">{{  hgflfzrinfo.read_time | dateFormat }}</p>
+                        </div>
+                    </td>
+                </tr>
+            {% elseif json_data.c1d6eb40fec911e9acab005056a6a83a=='2'  and fxglfzrinfo  %}
+            <tr>
+                <td colspan="5">
+                    <div class="textDiv">
+                        <p style="text-align:left">风险管理部审查意见：{{  fxglfzrinfo.summary }} <br>
+                        负责人（签字）：{{  fxglfzrinfo.full_name }}</p>
+                        <p style="text-align:right">{{  fxglfzrinfo.read_time | dateFormat }}<br></p>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+            {% if xtcwbinfo %}
+            <tr>
+                <td colspan="5">
+                    <div class="textDiv">
+                        <p style="text-align:left">信托财务部审查意见（信托业务）：{{  xtcwbinfo.summary }} <br>
+                        负责人（签字）：{{  xtcwbinfo.full_name }}</p>
+                        <p style="text-align:right">{{  xtcwbinfo.read_time | dateFormat }}</p>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+            {% if sxfkginfo %}
+            <tr>
+                <td colspan="5">
+                    <div class="textDiv">
+                        <p style="text-align:left">首席风险官审查意见：{{  sxfkginfo.summary }}</p>
+                        <p style="text-align:right">{{  sxfkginfo.read_time | dateFormat }}</p>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+            {% if ywzgldinfo %}
+            <tr>
+                <td colspan="5">
+                    <div class="textDiv">
+                        <p style="text-align:left">业务主管领导审查意见：{{  ywzgldinfo.summary }}</p>
+                        <p style="text-align:right">{{  ywzgldinfo.read_time | dateFormat }}</p>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+            {% if zjlinfo %}
+            <tr>
+                <td colspan="5">
+                    <div class="textDiv">
+                        <p style="text-align:left">总经理审查意见：{{  zjlinfo.summary }}</p>
+                        <p style="text-align:right">{{  zjlinfo.read_time | dateFormat }}</p>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+            {% if syhbmjbinfo and syhbmfzrinfo %}
+            <tr>
+                <td colspan="5">
+                    <h2>服务质量评价（中介机构完成服务后）</h2>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <div class="textDiv">
+                        <p style="text-align:left">使用部门经办人员：{{  syhbmjbinfo.full_name }}<br>
+                        使用部门负责人：{{  syhbmfzrinfo.full_name }}</p>
+                        <p style="text-align:right">{{  syhbmfzrinfo.read_time | dateFormat }}</p>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+            {% if json_data.c1d6eb40fec911e9acab005056a6a83a=='1'  and syhhgflfzrinfo %}
+            <tr>
+                <td colspan="5">
+                    <div class="textDiv">
+                        <p style="text-align:left">法律合规部审查意见：{{  syhhgflfzrinfo.summary }}<br>
+                        负责人（签字）：{{  syhhgflfzrinfo.full_name }}</p>
+                        <p style="text-align:right">{{  syhhgflfzrinfo.read_time | dateFormat }}</p>
+                    </div>
+                </td>
+            </tr>
+            {% elseif json_data.c1d6eb40fec911e9acab005056a6a83a=='2'  and syhfxglfzrinfo  %}
+            <tr>
+                <td colspan="5">
+                    <div class="textDiv">
+                        <p style="text-align:left">风险管理部审查意见：{{  syhfxglfzrinfo.summary }}<br>
+                        负责人（签字）：{{  syhfxglfzrinfo.full_name }}</p>
+                        <p style="text-align:right">{{  syhfxglfzrinfo.read_time | dateFormat }}<br></p>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    .node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    .node_table td,.node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

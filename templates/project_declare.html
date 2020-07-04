@@ -3,7 +3,7 @@
 	<h2>大业信托有限责任公司</h2>
 	<h2><b>信托项目立项申报表</b></h2>
 	<span style="margin-left:20px;float:left"><b>申报日期：{{ project_info.APPLY_DATE | dateFormat }}</b></span>
-	<span style="margin-right:20px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
+	<span style="margin-right:60px;float:right"><b>项目编号：{{ project_info.REGITEM_CODE }}</b></span>
 	<table id="node_table">
 		<tbody>
 			<tr>
@@ -16,10 +16,10 @@
 				<td><b>申报部门</b></td>
 				<td>{{ project_info.REGITEM_DP_NAME }}</td>
 				<td><b>责任经理</b></td>
-				<td>{{ project_info.REGITEM_OP_NAME }}</td>
+				<td>{{ project_info.REGITEM_OP_NAME+','+ project_info.OPER_MANAGER_NAME2  }}</td>
 			</tr>
 			<tr>
-				<td rowspan="11"><b>项目内容简介</b><b>（包括项目合作方信息、融资、规模、初步交易结构、风控措施等内容）</b></td>
+				<td rowspan="12"><b>项目内容简介</b><b>（包括项目合作方信息、融资、规模、初步交易结构、风控措施等内容）</b></td>
 				<td colspan="3">
 					<div class="textDiv">
 						<p><b>（项目合作方情况）</b></p>
@@ -103,6 +103,15 @@
 			<tr>
 				<td colspan="3">
 					<div class="textDiv">
+						<p><b>是否为公司以前从未开展过的创新型项目:</b></p>
+						<p><input type="checkbox" {% if json_data.e8119ec010d811e9ade6005056a61cf9=="1" %}checked{% endif %} disabled>是
+                           <input type="checkbox" {% if json_data.e8119ec010d811e9ade6005056a61cf9=="2" %}checked{% endif %} disabled>否</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<div class="textDiv">
 						<p><b>（其他事项）</b></p>
 						<p>{{ project_info.TZBL_INFO }}</p>
 					</div>
@@ -110,9 +119,12 @@
 			</tr>
 			<tr>
 				<td colspan="4" align="center">
+					<a href="/x/intrustqlc/views/printXMLXSB?affa_id={{ affa_id }}">立项申报表</a>
 					<a href="/x/intrustqlc/views/printXMYSD?affa_id={{ affa_id }}">项目预审单</a>
+					<a href="/x/intrustqlc/views/printYSPSYJS_NEW?affa_id={{ affa_id }}">项目预审评审意见书</a>
 					<a href="/x/intrustqlc/views/printFXSHTZS?affa_id={{ affa_id }}">风险审核意见书</a>
-					<a href="/x/intrustqlc/views/printXTXMPSYJS?affa_id={{ affa_id }}">项目评审意见书</a>
+					<a href="/x/intrustqlc/views/printXTXMPSYJS?affa_id={{ affa_id }}">项目终审评审意见书</a>
+					<a href="/x/intrustqlc/views/printZSSQB?affa_id={{ affa_id }}">终审申请表</a>
 					<a href="/x/intrustqlc/views/printZSHYJY?affa_id={{ affa_id }}">终审会议纪要</a>
 					<a href="/x/intrustqlc/views/printZSJGTZD?affa_id={{ affa_id }}">终审结果通知单</a>
 				</td>
@@ -139,7 +151,7 @@
 		padding: 10px 10px;
 	}
     #node_table {
-        width: 100%;
+        width: 95%;
         border: 1px solid black;
 		text-align: left;
     }

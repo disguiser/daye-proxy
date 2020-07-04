@@ -32,6 +32,7 @@ httpProxy.on('error', function (err, req, res) {
  * 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 资产解押审批流程 + 
  * 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程 + 受益权转让审批流程 +
  * 财产信托合同登记流程
+ * 信托登记审批流程
  */
 let proxy_flow_new_dict = [
   'faca20a152f311e6892e184f32ca6bca',
@@ -42,16 +43,18 @@ let proxy_flow_new_dict = [
   'wfee86703bb611e7ae5d000c294af360',
   'p688af403e6e11e6a580184f32ca6bca',
   'ta32efd13e8c11e6ae36184f32ca6bca',
-  'p5b270cfdbdd11e691db1c3e84e5807c'
+  'p5b270cfdbdd11e691db1c3e84e5807c',
+  'f059a1eedb1d11e7be6b005056a687a8',
+  'ab6e048f3e6211e68067184f32ca6bca'
 ];
 app.use('/x/workflow/rtnew', function (req, res, next) {
   let parsed = queryString.parse(req._parsedUrl.query);
   // 合同审批流程 合同审批流程(简易) 附件上传 资产解押审批流程
-  if (['d70e099e240411e7a3af005056a687a8','afad680f3ec711e6ae92184f32ca6bca','v4b02a4f3e8a11e6ac80184f32ca6bca'].indexOf(parsed.flowid) >= 0) {
+  if (['d70e099e240411e7a3af005056a687a8','afad680f3ec711e6ae92184f32ca6bca','v4b02a4f3e8a11e6ac80184f32ca6bca','q28638b01a2311e998fd005056a61cf9','c1cf5f0f8be711e98947005056a6a83a'].indexOf(parsed.flowid) >= 0) {
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
-  // 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 付款流程 + 资产解押审批流程 + 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程
+  // 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 付款流程 + 资产解押审批流程 + 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程 + 信托登记审批流程
   if ( proxy_flow_new_dict.indexOf(parsed.flowid)>=0 ) {
     let harmonBinary = harmon([], proxy_flow_new, true);
     harmonBinary(req, res);

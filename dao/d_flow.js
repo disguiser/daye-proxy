@@ -2,9 +2,10 @@
 const pjmain = require('../utils/sequelize_init').pjmain;
 const intrustqlc = require('../utils/sequelize_init').intrustqlc;
 const enfota = require('../utils/sequelize_init').enfota;
+const dfs = require('../utils/sequelize_init').dfs;
 
 let find_affar = async (affa_id) => {
-    let affair = await pjmain.query(`select A.affa_id,A.flow_id,A.jsondata,B.full_name as create_user,C.dept_name as create_dept from WF_AFFAIR A,org_user B,org_dept C where A.affa_id='${affa_id}' and  A.create_user=B.user_code and B.dept_code=C.dept_code`, {
+    let affair = await pjmain.query(`select A.affa_id,A.flow_id,A.jsondata,A.cur_version,A.create_time,B.full_name as create_user,C.dept_name as create_dept from WF_AFFAIR A,org_user B,org_dept C where A.affa_id='${affa_id}' and  A.create_user=B.user_code and B.dept_code=C.dept_code`, {
         type: pjmain.QueryTypes.SELECT
     });
     return affair[0];
@@ -17,14 +18,31 @@ let find_affar_by_taskid = async (task_id) => {
     return data[0];
 }
 let find_project_info = async (regitem_id) => {
-    let project_info = await intrustqlc.query(`select CPSTART_DATE,REGITEM_CODE,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE from QLC_TITEMREGINFO 
+    let project_info = await intrustqlc.query(`select CPSTART_DATE,REGITEM_CODE,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE,TYPE1,TYPE3,OPER_MANAGER_NAME2,GNFL,PRE_MONEY from QLC_TITEMREGINFO 
         where REGITEM_ID = ${regitem_id}`,{
         type: intrustqlc.QueryTypes.SELECT
     });
     return project_info[0];
 }
+let find_sign_name_by_affaid = async (affa_id) => {
+    let sign_info = await intrustqlc.query(`select SIGN_MEMBER_NAME from QLC_TSIGN_CHANGE  where PROBLEM_ID = '${affa_id}'`,{
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return sign_info[0];
+}
+let find_assetname_by_assetid = async (asset_id) => {
+    let asset_info = await intrustqlc.query(`select  A.ASSET_ID,C.CONTRACT_BH+'|'+B.ASSURE_BH+'|抵押物名称:'+A.ASSET_NAME+'|评估总价:'+str(isnull(A.APP_MONEY,0))+'元|剩余价值:'+str(isnull(A.BALANCE_MONEY,0))+'元' ASSETINFO  from INTRUSTQLC..QLC_TASSET A,INTRUSTQLC..QLC_TASSURE_CONTRACT B,INTRUSTQLC..QLC_TCONTRACT C  WHERE A.DB_CONTRACT_ID=B.DB_CONTRACT_ID and B.CONTRACT_ID=C.CONTRACT_ID and A.ASSET_ID in (${asset_id})`,{
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    let new_datas = {};
+    asset_info.forEach(e => {
+        new_datas[e.ASSET_ID] = e.ASSETINFO;
+    });
+    return new_datas;
+}
+//2018-3-14在取数中多取了PRODUCT_NAME
 let find_product_info = async (regitem_id) => {
-    let product_info = await pjmain.query(`select PRODUCT_CODE from INTRUSTQLC..qlc_tproduct
+    let product_info = await pjmain.query(`select PRODUCT_CODE,PRODUCT_NAME from INTRUSTQLC..qlc_tproduct
         where REGITEM_ID = ${regitem_id}`,{
         type: pjmain.QueryTypes.SELECT
     });
@@ -45,7 +63,7 @@ let find_project_info_by_product_id = async (product_id) => {
     return product_info[0];
 }
 let find_project_info_by_problem_id = async (problem_id) => {
-    let product_info = await pjmain.query(`select REGITEM_NO,REGITEM_CODE,REGITEM_NAME,(case when type1='1' then '单一' when type1='2' then '集合' else '财产' end)+(case when SFSW=1 then '事务类' else '非事务类' end)+'('+type3_name+')' as REGITEM_TYPE,'('+cast(Convert(decimal(18,2),pre_money/10000) as nvarchar)+'万元)('+cast(CPSTART_PERIOD as nvarchar)+'月)' as TERMANDSUM,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE,JHBZCS,XMHKLY,BJSYHKSJ,TQFS_ZFSJ,XTCDFY,FY_SP_SJ,RISK_CONTROL,FXKZ_INFO,TJFS_INFO,TZFW_INFO,TZCL_INFO,TZBL_INFO,SFYD from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=(select REGITEM_ID 
+    let product_info = await pjmain.query(`select REGITEM_NO,REGITEM_CODE,REGITEM_NAME,(case when type1='1' then '单一' when type1='2' then '集合' else '财产' end)+(case when SFSW=1 then '事务类' else '非事务类' end)+'('+type3_name+')' as REGITEM_TYPE,'('+cast(Convert(decimal(18,2),pre_money/10000) as nvarchar)+'万元)('+cast(CPSTART_PERIOD as nvarchar)+'月)' as TERMANDSUM,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE,JHBZCS,XMHKLY,BJSYHKSJ,TQFS_ZFSJ,XTCDFY,FY_SP_SJ,RISK_CONTROL,FXKZ_INFO,TJFS_INFO,TZFW_INFO,TZCL_INFO,TZBL_INFO,SFYD,TYPE1,TYPE3,PRE_MONEY,OPER_MANAGER_NAME2 from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=(select REGITEM_ID 
                         from INTRUSTQLC..QLC_TITEMPBINFO where problemid='${problem_id}')`,{
         type: pjmain.QueryTypes.SELECT
     });
@@ -112,14 +130,16 @@ let find_cb = async (ASSET_ID) => {
     });
     return datas[0];
 }
+//2018-3-14在TA_VCPACCTORG表名前添加ENFOTA..
 let find_bank_name_ta = async (bank_id) => {
-    let bank_name = await enfota.query(`select BANK_NAME from TA_VCPACCTORG where BANK_ID='${bank_id}'`, {
+    let bank_name = await enfota.query(`select BANK_NAME from ENFOTA..TA_VCPACCTORG where BANK_ID='${bank_id}'`, {
         type: enfota.QueryTypes.SELECT
     });
     return bank_name[0]['BANK_NAME'];
 }
+//2018-3-14在TA_TCUSTMAININFO表名前添加ENFOTA..
 let find_cust_name = async (cust_id) => {
-    let cust_name = await enfota.query(`select cust_name from TA_TCUSTMAININFO where cust_id='${cust_id}'`, {
+    let cust_name = await enfota.query(`select cust_name from ENFOTA..TA_TCUSTMAININFO where cust_id='${cust_id}'`, {
         type: enfota.QueryTypes.SELECT
     });
     return cust_name[0]['cust_name'];
@@ -138,6 +158,220 @@ let find_affairnumber = async (affa_id) => {
     });
     return affanumber;
 }
+let find_affanumber_by_taskid = async (task_id) => {
+    let affanumber = await intrustqlc.query(`select count(1) AS NUMBER from INTRUSTQLC..QLC_ASSOCIATED_PROCESS where AFFA_ID='${task_id}' or AFFA_ID in  (select affa_id from PJMAIN..WF_TASK where task_id='${task_id}')`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    console.log(affanumber);
+    console.log(affanumber[0]['NUMBER']);
+    return affanumber[0]['NUMBER'];
+}
+let find_affanumber_by_affaid = async (affa_id) => {
+    let affanumber = await intrustqlc.query(`select count(1) AS NUMBER  from INTRUSTQLC..QLC_ASSOCIATED_PROCESS where AFFA_ID='${affa_id}' or AFFA_ID in  (select affa_id from PJMAIN..WF_TASK where task_id='${affa_id}')`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    console.log(affanumber);
+    console.log(affanumber[0]['NUMBER']);
+    return affanumber[0]['NUMBER'];
+}
+let find_taskinfo = async (affa_id, node_id) => {
+    let data = await pjmain.query(`select A.task_id,A.affa_id,A.flow_id,A.assignto,A.jsondata,A.create_time,A.exec_user,A.exec_time,A.read_time,replace(replace(A.summary,'<p>',''),'</p>','') AS summary, B.full_name from WF_TASK A left join org_user B on A.exec_user=B.user_code where A.tstatus = 2 and A.affa_id = '${affa_id}' and A.node_id = '${node_id}'`, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if(data.length>0){
+        console.log(data);
+        console.log("-------exec_time-------");
+        console.log(data[0]['exec_time']);
+        return data[0];   
+    }else{
+        return '';
+    }
+}
+let find_taskinfonumber = async (affa_id, node_id) => {
+    let data = await pjmain.query(`select task_id,affa_id,flow_id,assignto,jsondata,create_time,exec_user,exec_time,read_time,summary,tstatus from WF_TASK where  affa_id = '${affa_id}' and node_id = '${node_id}' `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if(data.length>0){
+        return data[0];   
+    }else{
+        return '';
+    }
+}
+
+let find_twarrants_transfer_list_info = async (affa_id) => {
+    let list = await intrustqlc.query(`select TRANS_NO,WARRANT_NAME,WARRANT_NO,NUMBER,REMARK,FJ_UUID,SFGH,REASON from QLC_TWARRANTS_TRANSFER_LIST where PROBLEM_ID='${affa_id}'  order by LIST_ID`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return list;
+}
+
+let find_twarrants_transfer_info = async (affa_id) => {
+    let data = await intrustqlc.query(`select REGITEM_NAME,REGITEM_CODE,TRANS_DATE,TRANS_ITEM,REMARK,ZR_MANAGER_NAME,INPUT_DEPT_NAME from QLC_TWARRANTS_TRANSFER where  PROBLEM_ID = '${affa_id}'  `, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    if(data.length>0){
+        return data[0];   
+    }else{
+        return '';
+    }
+}
+let find_customer_contration_info = async (affa_id) => {
+    let data = await intrustqlc.query(`select REGITEM_NAME,CUST_NAME,GRADE_BEFORE,QUOTA_BEFORE,GRADE_NOW,QUOTA_NOW,JZD_NOW,REMARK,REGITEM_MONEY,LJ_MONEY,ZY_MONEY,GRADE_DATE from QLC_TCUSTOMER_CONCENTRATION_DAY where PROBLEM_ID = '${affa_id}' `, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    if(data.length>0){
+        console.log(data);
+        console.log("-------find_customer_contration_info-------");
+        return data[0];   
+    }else{
+        return '';
+    }
+}
+let find_file_archive_list_info = async (affa_id) => {
+    let list = await intrustqlc.query(`select LIST_NO,FILE_NAME,IF_ORIGINAL,NUMBER,REMARK,FJ_UUID from QLC_TFILE_ARCHIVE_LIST where PROBLEM_ID='${affa_id}'  order by LIST_ID`, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return list;
+}
+
+let find_file_archive_info = async (affa_id) => {
+    let data = await intrustqlc.query(`select REGITEM_NAME,REGITEM_CODE,ARCHIVE_DATE,IF_RECTIFY,IF_RECTIFY_OK,REMARK,INPUT_MAN_NAME,INPUT_DEPT_NAME from QLC_TFILE_ARCHIVE where  PROBLEM_ID = '${affa_id}'  `, {
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    if(data.length>0){
+        return data[0];   
+    }else{
+        return '';
+    }
+}
+let find_task_summer_for_huiq = async (affa_id, node_id) => {
+    let data = await pjmain.query(`select task_id,affa_id,flow_id,assignto,jsondata,create_time,exec_user,exec_time,read_time,summary,tstatus from WF_TASK where  affa_id = '${affa_id}' and node_id = '${node_id}' and isnull(assignto,'')='' `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if(data.length>0){
+        return data[0];   
+    }else{
+        return '';
+    }
+}
+
+let find_next_user_for_huiq = async (user) => {
+    let data = await pjmain.query(`select B.dept_name + '-'+A.full_name AS user_name from PJMAIN..org_user A,PJMAIN..org_dept B  where  A.dept_code=B.dept_code and A.user_code = '${user}' `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if(data.length>0){
+        return data[0]['user_name'];   
+    }else{
+        return '';
+    }
+}
+
+//根据项目ID获取项目信息
+let find_regiteminfo_info_by_regitem_id = async (regitem_id) => {
+    let project_info = await intrustqlc.query(`SELECT 
+                                                    '' bsid,
+                                                    A.PRODUCT_ID productid,
+                                                    A.PRODUCT_CODE productcode,
+                                                    '31D' xtjgmc,
+                                                    0 zcdz,
+                                                    0 symjzc,
+                                                    0 sjmjzc,
+                                                    0 symxtzzc,
+                                                    0 sjmfxzb,
+                                                    '0' ydjlx,
+                                                    CASE WHEN A.TYPE3 = '113801' THEN '0' WHEN A.TYPE3 = '113802' THEN '1' WHEN A.TYPE3 = '113803' THEN '2' ELSE '' END csxtcclx,
+                                                    CASE WHEN A.TYPE3 = '113802' OR A.TYPE3 = '113803' THEN '0' ELSE '' END ccqxtcfzr,
+                                                    CASE WHEN A.TYPE1 = 1 THEN '0' WHEN A.TYPE1 = 2 THEN '1' ELSE '' END dyjhbz,
+                                                    CASE WHEN A.GNFL = '114301' THEN '0' WHEN A.GNFL = '114302' THEN '1' WHEN A.GNFL = '114303' THEN '2' ELSE '' END xtgn,
+                                                    '0' bgywlx,
+                                                    '0' sfwxffq,
+                                                    '' qtbgywlx,
+                                                    A.PRODUCT_NAME xtxmmc,
+                                                    '1' nfxclzgmlx,
+                                                    A.PRODUCT_MONEY / 10000 zdgdgmzfw,
+                                                    0 zggdgmzfw,
+                                                    CASE WHEN A.CPSTART_QXUNIT = 0 THEN '1' ELSE '0' END xtxmzqxlw,
+                                                    CASE WHEN A.CPSTART_QXUNIT = 3 THEN CAST(A.CPSTART_PERIOD AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 4 THEN CAST(A.CPSTART_PERIOD/3 AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 5 THEN CAST(A.CPSTART_PERIOD/12 AS NVARCHAR(10)) ELSE '' END zdgdqxzfw,
+                                                    '' zggdqxzfw,
+                                                    '1' yjxtxmgm,
+                                                    A.PRODUCT_MONEY / 10000 zdxtxmgmfw,
+                                                    0 zgxtxmgmfw,
+                                                    CASE WHEN A.CPSTART_QXUNIT = 0 THEN '1' ELSE '0' END xtxmqxlx,
+                                                    CASE WHEN A.CPSTART_QXUNIT = 3 THEN CAST(A.CPSTART_PERIOD AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 4 THEN CAST(A.CPSTART_PERIOD/3 AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 5 THEN CAST(A.CPSTART_PERIOD/12 AS NVARCHAR(10)) ELSE '' END zdxtxmqxfw,
+                                                    '' zgxtxmqxfw,
+                                                    0 fqljfxgm,
+                                                    null nfxhclsj,
+                                                    '' fqcpqs,
+                                                    '' wtrjzjly,
+                                                    '' sytzrq,
+                                                    '' bgbs,
+                                                    '' xtzjbgyh,
+                                                    ROUND(ISNULL(A.XTBCL,0) * 100,2) xtbcl,
+                                                    CASE WHEN A.HS_FLAG = 1 THEN '2' WHEN A.HS_FLAG = 2 THEN '0' ELSE '1' END syrsyllx,
+                                                    A.MAX_RATE syryqsylqj_zd,
+                                                    A.MIN_RATE syryqsylqj_zg,
+                                                    CASE WHEN B.TYPE4 = '115703' THEN '0' WHEN B.TYPE4 = '115702' THEN '1' WHEN B.TYPE4 = '115701' THEN '2' WHEN B.TYPE4 = '115704' THEN '3' ELSE '' END xmly,
+                                                    CASE WHEN B.GLFS = 1 THEN '0' WHEN B.GLFS = 2 THEN '1' ELSE '' END xmglfs,
+                                                    '' xmtjjg,
+                                                    '' jydsmc,
+                                                    '' jydsxx,
+                                                    B.TYPE5_NAME xtcctxhyyfs,
+                                                    '' jyjg,
+                                                    B.FXKZ_INFO fxkzcs,
+                                                    CASE WHEN B.YJHKLY = 0 THEN '经营性现金流'
+                                                        WHEN B.YJHKLY = 1 THEN '房地产销售收入'
+                                                        WHEN B.YJHKLY = 2 THEN '信托资产转让或出售变现'
+                                                        WHEN B.YJHKLY = 3 THEN '土地出让收入'
+                                                        WHEN B.YJHKLY = 4 THEN '专项费用返还'
+                                                        WHEN B.YJHKLY = 5 THEN '专项税收返还'
+                                                        WHEN B.YJHKLY = 6 THEN 'BOT或类似收入'
+                                                        WHEN B.YJHKLY = 7 THEN '财政兜底'
+                                                        WHEN B.YJHKLY = 8 THEN '其他' ELSE '' END yjhklyjtcfs,
+                                                    '' fxyasm,
+                                                    '' gshfhgyj,
+                                                    B.ADMIN_MANAGER_NAME xtjlxm,
+                                                    '' xtjldh,
+                                                    '' fggjglry,
+                                                    '' gljylx,
+                                                    '' qtgljylx,
+                                                    '' glfqkyglgx,
+                                                    '' gljymd,
+                                                    '' gljydj,
+                                                    '' sctlywdjqk,
+                                                    '' xmlx,
+                                                    '' qtxmlx,
+                                                    '' ywlx,
+                                                    '' qtywlx,
+                                                    '' xmszd,
+                                                    '' sfszqq,
+                                                    '' xyzjbh,
+                                                    '' zbjblqk,
+                                                    '' kfshqkggdzzqk,
+                                                    '' qtsm,
+                                                    '' zjly,
+                                                    '' sfjghxt,
+                                                    '' yxlhbl,
+                                                    '' tzfw,
+                                                    '' tzgwqk,
+                                                    '' tgsfglf
+                                                FROM QLC_TPRODUCT A, QLC_TITEMREGINFO B
+                                                    WHERE A.REGITEM_ID = B.REGITEM_ID AND B.REGITEM_ID = ${regitem_id}`,{
+        type: intrustqlc.QueryTypes.SELECT
+    });
+    return project_info[0];
+}
+
+let insert_app_dfs_zxd_ydjcpxx = async (data) => {
+    await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJCPXX(bsid,productid,productcode,xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,
+        dyjhbz,xtgn,bgywlx,sfwxffq,qtbgywlx,xtxmmc,nfxclzgmlx,zdgdgmzfw,zggdgmzfw,xtxmzqxlw,zdgdqxzfw,zggdqxzfw,
+        yjxtxmgm,zdxtxmgmfw,zgxtxmgmfw,xtxmqxlx,zdxtxmqxfw,zgxtxmqxfw,fqljfxgm,nfxhclsj,fqcpqs,wtrjzjly,sytzrq,bgbs,
+        xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,
+        yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry,gljylx,qtgljylx,glfqkyglgx,gljymd,gljydj,sctlywdjqk,xmlx,
+        qtxmlx,ywlx,qtywlx,xmszd,sfszqq,xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf) values(
+            ${data.bsid},${data.productid},${data.productcode},${data.xtjgmc},${data.zcdz},${data.symjzc},${data.sjmjzc},${data.symxtzzc},${data.sjmfxzb},${data.ydjlx},${data.csxtcclx},${data.ccqxtcfzr},${data.dyjhbz},${data.xtgn},${data.bgywlx},${data.sfwxffq},${data.qtbgywlx},${data.xtxmmc},${data.nfxclzgmlx},${data.zdgdgmzfw},${data.zggdgmzfw},${data.xtxmzqxlw},${data.zdgdqxzfw},${data.zggdqxzfw},${data.yjxtxmgm},${data.zdxtxmgmfw},${data.zgxtxmgmfw},${data.xtxmqxlx},${data.zdxtxmqxfw},${data.zgxtxmqxfw},${data.fqljfxgm},${data.nfxhclsj},${data.fqcpqs},${data.wtrjzjly},${data.sytzrq},${data.bgbs},${data.xtzjbgyh},${data.xtbcl},${data.syrsyllx},${data.syryqsylqj_zd},${data.syryqsylqj_zg},${data.xmly},${data.xmglfs},${data.xmtjjg},${data.jydsmc},${data.jydsxx},${data.xtcctxhyyfs},${data.jyjg},${data.fxkzcs},${data.yjhklyjtcfs},${data.fxyasm},${data.gshfhgyj},${data.xtjlxm},${data.xtjldh},${data.fggjglry},${data.gljylx},${data.qtgljylx},${data.glfqkyglgx},${data.gljymd},${data.gljydj},${data.sctlywdjqk},${data.xmlx},${data.qtxmlx},${data.ywlx},${data.qtywlx},${data.xmszd},${data.sfszqq},${data.xyzjbh},${data.zbjblqk},${data.kfshqkggdzzqk},${data.qtsm},${data.zjly},${data.sfjghxt},${data.yxlhbl},${data.tzfw},${data.tzgwqk},${data.tgsfglf}
+        )`);
+}
+
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
@@ -156,5 +390,20 @@ module.exports = {
     find_bank_name_ta: find_bank_name_ta,
     find_cust_name: find_cust_name,
     find_apprpvalsela: find_apprpvalsela,
-    find_supply_info:find_supply_info
+    find_supply_info:find_supply_info,
+    find_affanumber_by_taskid:find_affanumber_by_taskid,
+    find_affanumber_by_affaid:find_affanumber_by_affaid,
+    find_assetname_by_assetid:find_assetname_by_assetid,
+    find_taskinfo:find_taskinfo,
+    find_taskinfonumber:find_taskinfonumber,
+    find_twarrants_transfer_info:find_twarrants_transfer_info,
+    find_twarrants_transfer_list_info:find_twarrants_transfer_list_info,
+    find_file_archive_list_info:find_file_archive_list_info,
+    find_file_archive_info:find_file_archive_info,
+    find_sign_name_by_affaid:find_sign_name_by_affaid,
+    find_customer_contration_info:find_customer_contration_info,
+    find_task_summer_for_huiq:find_task_summer_for_huiq,
+    find_next_user_for_huiq:find_next_user_for_huiq,
+    find_regiteminfo_info_by_regitem_id: find_regiteminfo_info_by_regitem_id,
+    insert_app_dfs_zxd_ydjcpxx: insert_app_dfs_zxd_ydjcpxx
 }

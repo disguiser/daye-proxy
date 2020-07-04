@@ -1,0 +1,71 @@
+<div>
+	<br>
+	<h2><b>信息披露流程表单</b></h2>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td>项目名称</td>
+                <td>{{ project_info.REGITEM_NAME }}</td>
+                <td>拟披露日期</td>
+                <td>{{ affair_json.x481391e75a111e69902b888e3e68822 | dateFormat }}</td>
+            </tr>
+            <tr>
+                <td>申请部门</td>
+                <td>{{ create_dept }}</td>
+                <td>申请人</td>
+                <td>{{ create_user }}</td>
+            </tr>
+            <tr>
+                <td>披露类型</td>
+                <td colspan="3"> <input type="checkbox" {% if affair_json['s5ce474f53c811e6bd09b888e335e00a']=='1' %}checked{% endif %} disabled>发行方向
+                <input type="checkbox" {% if affair_json['s5ce474f53c811e6bd09b888e335e00a']=='2' %}checked{% endif %} disabled>运营方向
+                <input type="checkbox" {% if affair_json['s5ce474f53c811e6bd09b888e335e00a']=='3' %}checked{% endif %} disabled>客服专用</td>
+            </tr>
+            <tr>
+                <td>披露报告分类</td>
+                <td colspan="3"> 
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='0' %}checked{% endif %} disabled>证券类
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='1' %}checked{% endif %} disabled>季度管理报告
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='2' %}checked{% endif %} disabled>年度管理报告
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='3' %}checked{% endif %} disabled>收益分配公告
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='4' %}checked{% endif %} disabled>发行公告
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='5' %}checked{% endif %} disabled>成立确认书
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='6' %}checked{% endif %} disabled>成立公告及持续募集公告
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='7' %}checked{% endif %} disabled>提前结束公告
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='8' %}checked{% endif %} disabled>临时公告
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68811']=='9' %}checked{% endif %} disabled>其他</td>
+            </tr>
+            <tr>
+                <td>披露方式</td>
+                <td  colspan="3"><input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68813']=='1' %}checked{% endif %} disabled>挂号信
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68813']=='2' %}checked{% endif %} disabled>平信
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68813']=='3' %}checked{% endif %} disabled>网站披露
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68813']=='4' %}checked{% endif %} disabled>微信平台
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68813']=='5' %}checked{% endif %} disabled>受托人办公场所有效备查
+                <input type="checkbox" {% if affair_json['d4490b0075a111e6a1b2b888e3e68813']=='6' %}checked{% endif %} disabled>其他</td>
+            </tr>
+            <tr>
+                <td>要内容简述</td>
+                <td  colspan="3">{{ affair_json.tb51f04053c811e6a9f1b888e335e00a }}</td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

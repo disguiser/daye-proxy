@@ -1,0 +1,89 @@
+<div>
+	<br>
+	<h2><b>他项权利证书(说明)移交审批单</b></h2>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td width="25%">项目名称</td>
+                <td width="25%">{{ trans_info.REGITEM_NAME }}</td>
+                <td width="25%">项目编号</td>
+                <td width="25%">{{ trans_info.REGITEM_CODE }}</td>
+            </tr>
+            <tr>
+                <td>移交日期</td>
+                <td>{{ trans_info.TRANS_DATE | dateFormat }}</td>
+                <td>办理事项</td>
+                <td>                    
+                    {% if trans_info.TRANS_ITEM=='1' %}
+                    交存
+                    {% elseif  trans_info.TRANS_ITEM=='2' %}
+                    领取
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>责任经理</td>
+                <td>{{ trans_info.ZR_MANAGER_NAME  }}</td>
+                <td>申报部门</td>
+                <td>{{ trans_info.INPUT_DEPT_NAME }}</td>
+            </tr>
+            <tr>
+                <td width="25%">权利证书信息</td>
+                <td colspan="3" width="75%">
+                    <table class="node_table" width="75%">
+                        <tbody>
+                            <tr>
+                                <th>序号</th>
+                                <th>证书名称</th>
+                                <th>证书编号</th>
+                                <th>数量</th>
+                                <th>备注</th>
+                                {% if zsxx_atta.temp_id !== undefined %}
+                                <th>附件(<a href="/node/downloadAll/{{ zsxx_atta.temp_id }}?file_name=他项权利证书.zip">批量下载</a>)</th>
+                                {% else %}
+                                <th>附件</th>
+                                {% endif %}
+                            </tr>
+                            {% for a in trans_list_info %}
+                            <tr>
+                                <td>{{ a.TRANS_NO }}</td>
+                                <td>{{ a.WARRANT_NAME }}</td>
+                                <td>{{ a.WARRANT_NO }}</td>
+                                <td>{{ a.NUMBER }}</td>
+                                <td>{{ a.REMARK }}</td>
+                                <td>
+                                    {% for i in zsxx_atta[a.FJ_UUID] %}
+                                    <a href="/node/download/{{ i.ID }}">{{ i.file_name }}</a><br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>备注</td>
+                <td colspan="3">{{ trans_info.REMARK }}</td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

@@ -1,14 +1,14 @@
 var selects = [];
 var bodyselect = {};
 
-bodyselect.query = '.widget-toolbar';
-
+//bodyselect.query = '.widget-toolbar';
+bodyselect.query = '#main2a'; 
 bodyselect.func = function (node) {
 	
     var out = `
 		<script type="text/javascript" src="/node/workflow_show.js"></script>
 	`;
-	
+
 	var rs = node.createReadStream();
 	var ws = node.createWriteStream({outer: false});
 	
@@ -24,4 +24,4 @@ bodyselect.func = function (node) {
 }
 selects.push(bodyselect);
 
-module.exports = selects;
+module.exports =selects;

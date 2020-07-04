@@ -1,0 +1,390 @@
+$def with (ctx={}, param={}, pagedata={})
+$code:
+    pro_name = ctx['modules'].intrustqlc.mintrustqlc.getPro_name(param)
+
+
+
+<style>
+.control-label{
+    float:left;
+}
+</style>
+<script type="text/javascript">
+    function PageInit() {
+    jQuery('#START_DAY').datepicker({autoclose:true, weekStart:1, format:'yyyymmdd'});
+    jQuery('#LAST_DAY').datepicker({autoclose:true, weekStart:1, format:'yyyymmdd'});
+    }
+
+    function changeState(){
+        var REPAY_TYPE=document.getElementById('REPAY_TYPE').value;
+        if(REPAY_TYPE==1)
+            document.getElementById('REPAY_PER_BI').style.display="inline";
+        else
+            document.getElementById('REPAY_PER_BI').style.display="none";
+    }
+    function changeState2(){
+        var REPAY_PER=document.getElementById('REPAY_PER').value;
+        if(REPAY_PER==1)
+            document.getElementById('REPAY_PER_FRE_BI').style.display="inline";
+        else
+            document.getElementById('REPAY_PER_FRE_BI').style.display="none";
+    }
+
+    function subForm(){
+        if(0 == document.getElementById('PRODUNT_NAME').value){
+            alert("请选择产品名称！");
+            return;
+        }else if (0 == document.getElementById('CONTRACT_NUM').value){
+            alert("请选择合同编号！");
+            return;
+        }else if(0 == document.getElementById('BUSINESS_TYPE').value) {
+            alert("请选择业务类型！");
+            return;
+        }else if(0 == document.getElementById('REPAY_TYPE').value) {
+            alert("请选择费用方式！");
+            return;
+        }else if(0 == document.getElementById('REPAY_PER').value) {
+            alert("请选择费用周期！");
+            return;
+        }else if(document.getElementById('REPAY_PER').value == 1 && (null == document.getElementById('REPAY_PER_FRE').value || ""==document.getElementById('REPAY_PER_FRE').value)) {
+            alert("请填写费用周期频度！");
+            return;
+        }else if(0 == document.getElementById('SETTLE_DAY').value) {
+            alert("请选择结算日！");
+            return;
+        }else if(null == document.getElementById('COUNT_WAY').value) {
+            alert("请选择计算方式！");
+            return;
+        }else if(0 == document.getElementById('COUNT_CARDI').value) {
+            alert("请选择计算基数！");
+            return;
+        }else if (null ==document.getElementById('RATE_TYPE').value){
+            alert("请选择利率分类！");
+            return;
+        }else if (null == document.getElementById('RATE').value || ""==document.getElementById('RATE').value){
+            alert("请填写利率！");
+            return;
+        }else if (null == document.getElementById('CARDINALITY').value){
+            alert("请选择基数！");
+            return;
+        }else if (null == document.getElementById('START_DAY').value || ""==document.getElementById('START_DAY').value){
+            alert("请填写开始日！");
+            return;
+        }else if (null == document.getElementById('LAST_DAY').value || ""==document.getElementById('LAST_DAY').value){
+            alert("请填写结束日！");
+            return;
+        }else if (0 == document.getElementById('WC_DEAL').value){
+            alert("请选择尾差处理！");
+            return;
+        }else if (null == document.getElementById('RECE_DAYE').value  || ""==document.getElementById('RECE_DAYE').value){
+            alert("请填写收款日期！");
+            return;
+        }
+    }
+    function changeConNum(){
+        var PRODUCT_ID=document.getElementById('PRODUNT_NAME').value;
+        var CONTRACT_NUM=document.getElementById('CONTRACT_NUM');
+        CONTRACT_NUM.options.length=0;
+        jQuery.ajax({
+        type: "POST",
+        url: "/x/intrustqlc/changeContarctNum",
+        data: {"PRODUCT_ID":PRODUCT_ID},
+        async: true,
+        success: function(json) {
+            var json2=eval(json);
+            if(json2.length == 0)
+            alert("此产品无合同编号,请重新选择产品！");
+            for(var i=0;i<json2.length;i++){
+                var opt = document.createElement ("option");
+                opt.value =json2[i].CONTRACT_ID;
+                opt.text = json2[i].CONTRACT_BH;
+                CONTRACT_NUM.appendChild(opt);
+            }
+
+        }});
+    }
+
+
+</script>
+
+<div class="portlet box light-grey">
+    <div class="portlet-title">
+        <div class="caption"><i class="icon-sitemap"></i>生成费用计划</div>
+    </div>
+    <br/>
+<form action="" method="post" class="form-horizontal" id="theform"  style="background:#ffffff">
+
+<div class="row-fluid">
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    产品名称：
+            </label>
+            <div id="" class="controls">
+                <select id="PRODUNT_NAME" name="PRODUNT_NAME" class="span6 m-wrap" onchange="changeConNum();">
+                    <option  value=""></option>
+                        $for x in pro_name:
+                            <option  value="$x.PRODUCT_ID">$x.PRODUCT_NAME</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    合同编号：
+            </label>
+            <div id="" class="controls">
+                <select id="CONTRACT_NUM" name="CONTRACT_NUM" class="span6 m-wrap" >
+                    <option  value="0"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    业务类型：
+            </label>
+            <div id="" class="controls">
+                <select id="BUSINESS_TYPE" name="BUSINESS_TYPE" class="span6 m-wrap" >
+                    <option  value="0"></option>
+                    <option  value="1">固定受托人报酬</option>
+                    <option  value="2">保管费</option>
+                    <option  value="3">销售服务费</option>
+                    <option  value="4">财务顾问费</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    费用方式：
+            </label>
+            <div id="" class="controls">
+                <select id="REPAY_TYPE" name="REPAY_TYPE"  onchange="changeState();"  class="span6 m-wrap" >
+                    <option  value="0"></option>
+                    <option  value="1">周期分配</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required" id='REPAY_PER_BI'>*</span>
+                    费用周期：
+            </label>
+            <div id="" class="controls">
+                <select id="REPAY_PER" name="REPAY_PER"  onchange="changeState2();"  class="span6 m-wrap" >
+                    <option  value="0"></option>
+                    <option  value="1">月</option>
+                    <option  value="2">自然季</option>
+                    <option  value="3">自然半年</option>
+                    <option  value="4">自然年</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required" id="REPAY_PER_FRE_BI">*</span>
+                    费用周期频度：
+            </label>
+            <div id="" class="controls">
+                <input type="text"  class=" m-wrap" id="REPAY_PER_FRE" name="REPAY_PER_FRE">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    结算日：
+            </label>
+            <div id="" class="controls">
+                <select id="SETTLE_DAY" name="SETTLE_DAY" class="span6 m-wrap" >
+                    <option  value="0"></option>
+                    <option  value="1">1</option>
+                    <option  value="2">2</option>
+                    <option  value="3">3</option>
+                    <option  value="4">4</option>
+                    <option  value="5">5</option>
+                    <option  value="6">6</option>
+                    <option  value="7">7</option>
+                    <option  value="8">8</option>
+                    <option  value="9">9</option>
+                    <option  value="10">10</option>
+                    <option  value="11">11</option>
+                    <option  value="12">12</option>
+                    <option  value="13">13</option>
+                    <option  value="14">14</option>
+                    <option  value="15">15</option>
+                    <option  value="16">16</option>
+                    <option  value="17">17</option>
+                    <option  value="18">18</option>
+                    <option  value="19">19</option>
+                    <option  value="20">20</option>
+                    <option  value="21">21</option>
+                    <option  value="22">22</option>
+                    <option  value="23">23</option>
+                    <option  value="24">24</option>
+                    <option  value="25">25</option>
+                    <option  value="26">26</option>
+                    <option  value="27">27</option>
+                    <option  value="28">28</option>
+                    <option  value="29">29</option>
+                    <option  value="30">30</option>
+                    <option  value="31">31</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    计算方式：
+            </label>
+            <div id="" class="controls">
+                <select id="COUNT_WAY" name="COUNT_WAY" class="span6 m-wrap" >
+                    <option  value="0">算头算尾</option>
+                    <option  value="1">算头不算尾</option>
+                    <option  value="2">算尾不算头</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    计算基数：
+            </label>
+            <div id="" class="controls">
+                <select id="COUNT_CARDI" name="COUNT_CARDI" class="span6 m-wrap" >
+                    <option  value="0"></option>
+                    <option  value="1">实收信托</option>
+                    <option  value="2">收入-费用</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    利率分类：
+            </label>
+            <div id="" class="controls">
+                <select id="RATE_TYPE" name="RATE_TYPE" class="span6 m-wrap" >
+                    <option  value="0">年利率（百分比）</option>
+                    <option  value="1">月利率（千分比）</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    利率：
+            </label>
+            <div id="" class="controls">
+                <input type="text"  class=" m-wrap" id="RATE" name="RATE">
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    基数：
+            </label>
+            <div id="" class="controls">
+                <select id="CARDINALITY" name="CARDINALITY" class="span6 m-wrap" >
+                    <option  value="0">360</option>
+                    <option  value="1">30</option>
+                    <option  value="2">365</option>
+                    <option  value="3">366</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    开始日：
+            </label>
+            <div id="" class="controls">
+                <input type="text"  class=" m-wrap" id="START_DAY" name="START_DAY">
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    结束日：
+            </label>
+            <div id="" class="controls">
+                <input type="text"  class=" m-wrap"  id="LAST_DAY" name="LAST_DAY">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    尾差处理：
+            </label>
+            <div id="" class="controls">
+                <select id="WC_DEAL" name="WC_DEAL"  class="span6 m-wrap" >
+                    <option  value="0"></option>
+                    <option  value="1">四舍五入保留两位小数</option>
+                    <option  value="2">截取小数后两位</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="control-group" id="">
+            <label class="control-label">
+                <span class="required">*</span>
+                    收款日期：
+            </label>
+            <div id="" class="controls">
+                <input type="text"  class=" m-wrap"  id="RECE_DAYE" name="RECE_DAYE">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-actions">
+    <button type="button" class="btn" onclick="subForm();"><i class="icon-ok"></i>确定</button>
+    <button type="button" class="btn"  onclick="historyGoBack();">取消</button>
+</div>
+
+</form>
+</div>
+

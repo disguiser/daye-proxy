@@ -1,0 +1,42 @@
+<div>
+	<br>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td width="25%">项目名称</td>
+                <td width="75%">{{ project_info.REGITEM_NAME }}</td>
+            </tr>
+            <tr>
+                <td width="25%">预审评审意见</td>
+                <td width="75%">{{ hqyj }}</td>
+            </tr>
+			<tr>
+				<td colspan="4" align="center">
+                    {% if type=='1' %}
+                      节点[各个预审委员出具预审评审意见]未审批完毕，无法查看信托项目预审评审意见书
+                    {% elseif type=='2' %}
+					<a href="/x/intrustqlc/views/printZYSPSYJS?affa_id={{ affa_id }}&regitem_id={{ regitem_id }}">信托项目预审评审意见书
+                    {% endif %}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

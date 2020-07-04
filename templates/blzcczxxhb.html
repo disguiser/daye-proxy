@@ -1,0 +1,61 @@
+<div>
+	<br>
+	<h2><b>不良资产处置信息汇报表</b></h2>
+	<table id="node_table">
+		<tbody>
+            <tr>
+                <td width="25%">项目名称</td>
+                <td width="25%">{{ project_info.REGITEM_NAME }}</td>
+                <td width="25%">签报日期</td>
+                <td width="25%">{{ json_data.w1a92595ff7611e8b721005056a61cf9 | dateFormat }}</td>
+            </tr>
+            <tr>
+                <td>汇报类型</td>
+                <td colspan="4">
+                {% if json_data.w1a92596ff7611e89e9e005056a61cf9 == 1 %}
+                    <div class="textDiv">
+                        <p>处置进度周报</p>
+                    </div>
+                {% elseif json_data.w1a92596ff7611e89e9e005056a61cf9 == 2 %}
+                    <div class="textDiv">
+                        <p>处置进度月报</p>
+                    </div>
+                {% elseif json_data.w1a92596ff7611e89e9e005056a61cf9 == 3 %}
+                    <div class="textDiv">
+                        <p>重要会议记录</p>
+                {% elseif json_data.w1a92596ff7611e89e9e005056a61cf9 == 4 %}
+                    <div class="textDiv">
+                        <p>其他</p>
+                    </div>
+                {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>摘要</td>
+                <td colspan="4">
+                    <div class="textDiv">
+                        <p>{{ json_data.w1a92597ff7611e8a410005056a61cf9 }}</p>
+                    </div>
+                </td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+		text-align: left;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

@@ -1,0 +1,279 @@
+<!--信托产品发行确认单(集合事务管理类信托项目发行条件审批表)-->
+<div>
+	<br>
+    <h2><b>集合事务管理类信托项目发行条件审批表</b></h2>
+    <table id="node_table">
+        <tbody>
+            <tr>
+                <td width="200px" colspan="2">项目编号</td>
+                <td width="750px" colspan="6">{{ project_info.REGITEM_CODE }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">项目名称</td>
+                <td colspan="6">{{ project_info.REGITEM_NAME }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">事项</td>
+                <td width="100px">业务部经办人</td>
+                <td width="100px">业务部负责人</td>
+                <td width="100px">合规风险部</td>
+                <td width="250px">备注</td>
+            </tr>
+            <tr>
+                <td width="40px">1</td>
+                <td width="160px">项目是否已经通过了审批</td>
+                <!--业务部经办人(信托经理)-->
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.p4501d0f1a1911e9ba63005056a61cf9] }}</td>
+                <!--业务部负责人-->
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.p4501d0f1a1911e9ba63005056a61cf9] }}</td>
+                <!--合规风险部-->
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.p4501d0f1a1911e9ba63005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.pc89374f1a1911e9830b005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.pc89374f1a1911e9830b005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.pc89374f1a1911e9830b005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>是否通过预登记审批</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.qab3508f1a1911e9979f005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.qab3508f1a1911e9979f005056a61cf9] }}</td>
+                <!--合规风险部-->
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.qab3508f1a1911e9979f005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.rb8ad68f1a1911e98452005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.rb8ad68f1a1911e98452005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.rb8ad68f1a1911e98452005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>本期发行要求的交易文件是否签署完毕</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.vbee9a4f1a1911e98bc3005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.vbee9a4f1a1911e98bc3005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.vbee9a4f1a1911e98bc3005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.ed7bdba11a1a11e98547005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.ed7bdba11a1a11e98547005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.ed7bdba11a1a11e98547005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>本期发行要求的交易文件是否办理完毕强制执行公证</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.w73ce3d11a1911e9b1ea005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.w73ce3d11a1911e9b1ea005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.w73ce3d11a1911e9b1ea005056a61cf9] }}</td>
+ 
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.f7ee440f1a1a11e98cce005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.f7ee440f1a1a11e98cce005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.f7ee440f1a1a11e98cce005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>本期发行要求的承诺函是否已经出具</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.x25d668f1a1911e984b1005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.x25d668f1a1911e984b1005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.x25d668f1a1911e984b1005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.o24694cf1a1b11e9836c005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.o24694cf1a1b11e9836c005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.o24694cf1a1b11e9836c005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>本期发行要求的交易对手有权机构决议是否已经出具</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.a07927ee1a1911e99358005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.a07927ee1a1911e99358005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.a07927ee1a1911e99358005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.oc35ea8f1a1b11e98bd9005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.oc35ea8f1a1b11e98bd9005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.oc35ea8f1a1b11e98bd9005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>本期发行前所需担保措施是否办理完毕且权利证明文件是否已经取得</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.adccb74f1a1911e9b68a005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.adccb74f1a1911e9b68a005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.adccb74f1a1911e9b68a005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.p697b12e1a1b11e9bc0e005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.p697b12e1a1b11e9bc0e005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.p697b12e1a1b11e9bc0e005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>本期发行要求的应收账款质押或转让在中征动产平台登记完成证明是否取得</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.o212f7211a1a11e9b787005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.o212f7211a1a11e9b787005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.o212f7211a1a11e9b787005056a61cf9] }}</td>
+ 
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.q008af301a1b11e9953e005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.q008af301a1b11e9953e005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.q008af301a1b11e9953e005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>法律意见书是否已经出具及原件移交情况</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.p1fd5e001a1a11e9b293005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.p1fd5e001a1a11e9b293005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.p1fd5e001a1a11e9b293005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.qab206211a1b11e9ba47005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.qab206211a1b11e9ba47005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.qab206211a1b11e9ba47005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>保管协议是否已经签署及原件移交情况</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.pe3ee1211a1a11e9b20d005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.pe3ee1211a1a11e9b20d005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.pe3ee1211a1a11e9b20d005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.r441fdd11a1b11e98032005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.r441fdd11a1b11e98032005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.r441fdd11a1b11e98032005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>审批意见是否全部落实</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.q9decd111a1a11e9bc3a005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.q9decd111a1a11e9bc3a005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.q9decd111a1a11e9bc3a005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.s0c3490f1a1b11e98d37005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.s0c3490f1a1b11e98d37005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.s0c3490f1a1b11e98d37005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>交易文件及有关法律文件面签文件、面签视频及照片是否移交合规部</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.rf4b44801a1a11e9b85f005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.rf4b44801a1a11e9b85f005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.rf4b44801a1a11e9b85f005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.sb29caa11a1b11e9acaa005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.sb29caa11a1b11e9acaa005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.sb29caa11a1b11e9acaa005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>《抵质押担保手续办理确认表》原件是否移交合规部</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.v5ec8b704dfa11e9b531005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.v5ec8b704dfa11e9b531005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.v5ec8b704dfa11e9b531005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.xbb0d18f4dfa11e999dc005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.xbb0d18f4dfa11e999dc005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.xbb0d18f4dfa11e999dc005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>是否已经取得信托项目基础材料（复印件须加盖交易对手公章）</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.cfb88ca1512c11e980d7005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.cfb88ca1512c11e980d7005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.cfb88ca1512c11e980d7005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.de3f1dc0512c11e9bb1b005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.de3f1dc0512c11e9bb1b005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.de3f1dc0512c11e9bb1b005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>审计报告是否已经出具及原件移交情况</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.sa298e1e1a1a11e99619005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.sa298e1e1a1a11e99619005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.sa298e1e1a1a11e99619005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.t461902e1a1b11e99617005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.t461902e1a1b11e99617005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.t461902e1a1b11e99617005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>评估报告是否已经出具及原件移交情况</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.t649a68f1a1a11e9988e005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.t649a68f1a1a11e9988e005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.t649a68f1a1a11e9988e005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.tfc9a3401a1b11e997f1005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.tfc9a3401a1b11e997f1005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.tfc9a3401a1b11e997f1005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td>审批意见中提及的其他要求落实情况说明</td>
+                <td>{{ dict_yes_or_no[json_data.T16D12D1A5D3406D9CC65A76AD7691B1.u2c43b0f1a1a11e9bb0f005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.PBB558EE7E914339B01828AC11437874.u2c43b0f1a1a11e9bb0f005056a61cf9] }}</td>
+                <td>{{ dict_yes_or_no[json_data.D6887042FAD54274857C6A48018A820F.u2c43b0f1a1a11e9bb0f005056a61cf9] }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.uf7b1fcf1a1b11e9aa38005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.uf7b1fcf1a1b11e9aa38005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.uf7b1fcf1a1b11e9aa38005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>其他</td>
+                <td>{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.v2bc5d8f1a1a11e99dc9005056a61cf9 }}</td>
+                <td>{{ json_data.PBB558EE7E914339B01828AC11437874.v2bc5d8f1a1a11e99dc9005056a61cf9 }}</td>
+                <td>{{ json_data.D6887042FAD54274857C6A48018A820F.v2bc5d8f1a1a11e99dc9005056a61cf9 }}</td>
+
+                <td>
+                    业务部经办人:{{ json_data.T16D12D1A5D3406D9CC65A76AD7691B1.ab527da11a1b11e99888005056a61cf9 }}</br>时间: {{ jbtime }}</br>
+                    业务部负责人:{{ json_data.PBB558EE7E914339B01828AC11437874.ab527da11a1b11e99888005056a61cf9 }}</br>时间: {{ zgtime }}</br>
+                    合规风险部:{{ json_data.D6887042FAD54274857C6A48018A820F.ab527da11a1b11e99888005056a61cf9 }}  </br>时间: {{ hgtime }}</br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<style type="text/css">
+    #node_table {
+        width: 100%;
+        border: 1px solid black;
+    }
+    #node_table td,#node_table th {
+        padding: 5px;
+        border: 1px solid black;
+    }
+	h2 {
+		text-align: center;
+	}
+	.textDiv {
+		height: 100%;
+		width: 100%;
+	}
+</style>

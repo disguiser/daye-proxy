@@ -15,7 +15,7 @@
 				<td colspan="2"><b>申报部门</b></td>
 				<td>{{ project_info.REGITEM_DP_NAME }}</td>
 				<td><b>责任经理</b></td>
-				<td>{{ project_info.REGITEM_OP_NAME }}</td>
+				<td>{{ project_info.REGITEM_OP_NAME+','+ project_info.OPER_MANAGER_NAME2 }}</td>
 			</tr>
 			<tr>
 				<td colspan="2"><b>事项描述</b></td>
@@ -28,7 +28,7 @@
 			<tr>
 				<td colspan="2"><b>解押/解约财产</b></td>
 				<td colspan="3">
-                    <table class="node_table">
+                <table class="node_table">
                         <tbody>
                             <tr>
                                 <th>资产名称</th>
@@ -40,7 +40,11 @@
                             </tr>
                             {% for a in JXZC %}
                             <tr>
+                                {%  if JXZC_NAME[a.ASSET_ID]  %}
+                                 <td>{{ JXZC_NAME[a.ASSET_ID] }}</td>
+                                {% else %}
                                 <td>{{ a.ASSET_ID }}</td>
+                                {% endif %}
                                 <td>
                                     {% for i in JXZC_atta[a.LIST_UUID] %}
                                     <a href="/node/download/{{ i.ID }}">{{ i.file_name }}</a><br>

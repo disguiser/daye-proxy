@@ -1,4 +1,5 @@
-<template id="theTemplate">
+<template id="theTemplate"> 
+
     <table class="node_table">
         <tbody>
             <tr>
@@ -82,7 +83,8 @@
             </tr>
         </tbody>
     </table>
-</template>
+ </template>
+
 <div id="node_div">
 </div>
 <style type="text/css">
@@ -109,7 +111,7 @@
     var loop = setInterval(function(){
         if ($('#ud0385a150cb11e78009005056a687a8').size() !== 0) {
             var json_data = {};
-            $('.widget-body span').each(function(i, e){
+            $('.portlet-body span').each(function(i, e){
                 e = $(e);
                 json_data[e.attr('id')] = e.text();
             });

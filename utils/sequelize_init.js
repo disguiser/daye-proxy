@@ -29,9 +29,19 @@ let enfota = new Sequelize(config.ENFOTA, config.username, config.password, {
         idle: 30000
     }
 });
+let dfs = new Sequelize(config.DFS, config.username, config.password, {
+    host: config.host,
+    dialect: config.dialect,
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 30000
+    }
+});
 
 module.exports = {
     pjmain: pjmain,
     intrustqlc: intrustqlc,
-    enfota: enfota
+    enfota: enfota,
+    dfs: dfs
 }

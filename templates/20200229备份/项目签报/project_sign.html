@@ -69,23 +69,18 @@
 
 			<tr>
 				<td colspan="4" align="center">
-                {% if affair_info.cur_version < 2.85 %}
-                    {% if project_info.TYPE3 == '113801' %}
-                        {% if project_info.TYPE1 == '2' %}
-                            <a href="/x/intrustqlc/views/printJHXMQB?affa_id={{ affa_id }}">集合项目签报</a>
-                        {% endif %}
-                        {% if project_info.TYPE1 == '1' %}
-                            {% if project_info.PRE_MONEY >= 1500000000 %}
-                                <a href="/x/intrustqlc/views/printDYXMQB?affa_id={{ affa_id }}">单一项目签报(15亿及以上)</a>
-                            {% else %}
-                                <a href="/x/intrustqlc/views/printDYXMQB_CCQ?affa_id={{ affa_id }}">单一项目签报(15亿以下)</a>
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-                {% if affair_info.cur_version > 2.85 %}
-                    <a href="/x/intrustqlc/views/printXMQB?affa_id={{ affa_id }}">项目签报</a>
-                {% endif %}
+				{% if project_info.TYPE3 == '113801' %}
+					{% if project_info.TYPE1 == '2' %}
+						<a href="/x/intrustqlc/views/printJHXMQB?affa_id={{ affa_id }}">集合项目签报</a>
+					{% endif %}
+					{% if project_info.TYPE1 == '1' %}
+						{% if project_info.PRE_MONEY >= 1500000000 %}
+							<a href="/x/intrustqlc/views/printDYXMQB?affa_id={{ affa_id }}">单一项目签报(15亿及以上)</a>
+						{% else %}
+							<a href="/x/intrustqlc/views/printDYXMQB_CCQ?affa_id={{ affa_id }}">单一项目签报(15亿以下)</a>
+						{% endif %}
+					{% endif %}
+				{% endif %}
 				</td>
 			</tr>
 

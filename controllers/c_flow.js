@@ -1263,18 +1263,32 @@ module.exports = function (router) {
         let product_info = await d_flow.find_project_info(regitem_id);
         ctx.response.body = product_info
     });
-    //根据项目ID获取项目信息
-    router.get('/find_regiteminfo_info_by_regitem_id/:regitem_id', async (ctx, next) => {
+
+    //查询预登记-产品信息要素
+    router.get('/find_app_dfs_zxd_ydjcpxx_by_regitem_id/:regitem_id', async (ctx, next) => {
         let regitem_id = ctx.params.regitem_id;
-        let product_info = await d_flow.find_regiteminfo_info_by_regitem_id(regitem_id);
+        let product_info = await d_flow.find_app_dfs_zxd_ydjcpxx_by_regitem_id(regitem_id);
         ctx.response.body = product_info
     });
 
-    //保存预登记信息
-    router.get('/insert_app_dfs_zxd_ydjcpxx/:data', async (ctx, next) => {
-        let data = ctx.params.data;
+    //查询预登记-异地推介补充要素
+    router.get('/find_app_dfs_zxd_ydjtjd_by_uuid/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.find_app_dfs_zxd_ydjtjd_by_uuid(uuid);
+        ctx.response.body = product_info
+    });
+
+    //保存预登记-产品信息要素
+    router.post('/insert_app_dfs_zxd_ydjcpxx', async (ctx, next) => {
+        let data = ctx.request.body;
         let product_info = await d_flow.insert_app_dfs_zxd_ydjcpxx(data);
         ctx.response.body = product_info
     });
 
+    //保存预登记-异地推介补充要素
+    router.post('/insert_app_dfs_zxd_ydjtjd', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.insert_app_dfs_zxd_ydjtjd(data);
+        ctx.response.body = product_info
+    });
 }

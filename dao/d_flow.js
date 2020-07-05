@@ -19,19 +19,19 @@ let find_affar_by_taskid = async (task_id) => {
 }
 let find_project_info = async (regitem_id) => {
     let project_info = await intrustqlc.query(`select CPSTART_DATE,REGITEM_CODE,REGITEM_NAME,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE,TYPE1,TYPE3,OPER_MANAGER_NAME2,GNFL,PRE_MONEY from QLC_TITEMREGINFO 
-        where REGITEM_ID = ${regitem_id}`,{
+        where REGITEM_ID = ${regitem_id}`, {
         type: intrustqlc.QueryTypes.SELECT
     });
     return project_info[0];
 }
 let find_sign_name_by_affaid = async (affa_id) => {
-    let sign_info = await intrustqlc.query(`select SIGN_MEMBER_NAME from QLC_TSIGN_CHANGE  where PROBLEM_ID = '${affa_id}'`,{
+    let sign_info = await intrustqlc.query(`select SIGN_MEMBER_NAME from QLC_TSIGN_CHANGE  where PROBLEM_ID = '${affa_id}'`, {
         type: intrustqlc.QueryTypes.SELECT
     });
     return sign_info[0];
 }
 let find_assetname_by_assetid = async (asset_id) => {
-    let asset_info = await intrustqlc.query(`select  A.ASSET_ID,C.CONTRACT_BH+'|'+B.ASSURE_BH+'|抵押物名称:'+A.ASSET_NAME+'|评估总价:'+str(isnull(A.APP_MONEY,0))+'元|剩余价值:'+str(isnull(A.BALANCE_MONEY,0))+'元' ASSETINFO  from INTRUSTQLC..QLC_TASSET A,INTRUSTQLC..QLC_TASSURE_CONTRACT B,INTRUSTQLC..QLC_TCONTRACT C  WHERE A.DB_CONTRACT_ID=B.DB_CONTRACT_ID and B.CONTRACT_ID=C.CONTRACT_ID and A.ASSET_ID in (${asset_id})`,{
+    let asset_info = await intrustqlc.query(`select  A.ASSET_ID,C.CONTRACT_BH+'|'+B.ASSURE_BH+'|抵押物名称:'+A.ASSET_NAME+'|评估总价:'+str(isnull(A.APP_MONEY,0))+'元|剩余价值:'+str(isnull(A.BALANCE_MONEY,0))+'元' ASSETINFO  from INTRUSTQLC..QLC_TASSET A,INTRUSTQLC..QLC_TASSURE_CONTRACT B,INTRUSTQLC..QLC_TCONTRACT C  WHERE A.DB_CONTRACT_ID=B.DB_CONTRACT_ID and B.CONTRACT_ID=C.CONTRACT_ID and A.ASSET_ID in (${asset_id})`, {
         type: intrustqlc.QueryTypes.SELECT
     });
     let new_datas = {};
@@ -43,28 +43,28 @@ let find_assetname_by_assetid = async (asset_id) => {
 //2018-3-14在取数中多取了PRODUCT_NAME
 let find_product_info = async (regitem_id) => {
     let product_info = await pjmain.query(`select PRODUCT_CODE,PRODUCT_NAME from INTRUSTQLC..qlc_tproduct
-        where REGITEM_ID = ${regitem_id}`,{
+        where REGITEM_ID = ${regitem_id}`, {
         type: pjmain.QueryTypes.SELECT
     });
     return product_info[0];
 }
 let find_account_info = async (account_id) => {
     let account_info = await pjmain.query(`select ACCT_ACCT_NAME,ISNULL(ACCT_BANK_NAME,'')+ISNULL(ACCT_SUB_NAME,'') as ACCT_BANK_NAME,ACCT_BANK_ACCT from INTRUSTQLC..qlc_txtacctinfo
-        where XTACCT_INTID = ${account_id}`,{
+        where XTACCT_INTID = ${account_id}`, {
         type: pjmain.QueryTypes.SELECT
     });
     return account_info[0];
 }
 let find_project_info_by_product_id = async (product_id) => {
     let product_info = await pjmain.query(`select REGITEM_NO,REGITEM_NAME from INTRUSTQLC..QLC_TITEMREGINFO where REGITEM_ID = 
-        (select REGITEM_ID from INTRUSTQLC..qlc_tproduct where PRODUCT_ID=${product_id})`,{
+        (select REGITEM_ID from INTRUSTQLC..qlc_tproduct where PRODUCT_ID=${product_id})`, {
         type: pjmain.QueryTypes.SELECT
     });
     return product_info[0];
 }
 let find_project_info_by_problem_id = async (problem_id) => {
     let product_info = await pjmain.query(`select REGITEM_NO,REGITEM_CODE,REGITEM_NAME,(case when type1='1' then '单一' when type1='2' then '集合' else '财产' end)+(case when SFSW=1 then '事务类' else '非事务类' end)+'('+type3_name+')' as REGITEM_TYPE,'('+cast(Convert(decimal(18,2),pre_money/10000) as nvarchar)+'万元)('+cast(CPSTART_PERIOD as nvarchar)+'月)' as TERMANDSUM,REGITEM_DP_NAME,REGITEM_OP_NAME,APPLY_DATE,JHBZCS,XMHKLY,BJSYHKSJ,TQFS_ZFSJ,XTCDFY,FY_SP_SJ,RISK_CONTROL,FXKZ_INFO,TJFS_INFO,TZFW_INFO,TZCL_INFO,TZBL_INFO,SFYD,TYPE1,TYPE3,PRE_MONEY,OPER_MANAGER_NAME2 from INTRUSTQLC..QLC_TITEMREGINFO where regitem_id=(select REGITEM_ID 
-                        from INTRUSTQLC..QLC_TITEMPBINFO where problemid='${problem_id}')`,{
+                        from INTRUSTQLC..QLC_TITEMPBINFO where problemid='${problem_id}')`, {
         type: pjmain.QueryTypes.SELECT
     });
     return product_info[0];
@@ -75,7 +75,7 @@ let find_tasks = async (affa_id, node_ids) => {
         node_id in (${node_ids})`, {
         type: pjmain.QueryTypes.SELECT
     });
-    data.forEach(function(element){
+    data.forEach(function (element) {
         json_data[element.node_id] = JSON.parse(element.jsondata);
     });
     return json_data;
@@ -103,13 +103,13 @@ let find_supply_info = async (affa_id) => {
     return data[0];
 }
 let find_regitem_id_by_affaid = async (affa_id) => {
-    let regitem_id = await intrustqlc.query(`select REGITEM_ID from QLC_TITEMPBINFO where PROBLEMID = '${affa_id}'` ,{
+    let regitem_id = await intrustqlc.query(`select REGITEM_ID from QLC_TITEMPBINFO where PROBLEMID = '${affa_id}'`, {
         type: intrustqlc.QueryTypes.SELECT
     });
     return regitem_id[0]['REGITEM_ID'];
 }
 let find_regitem_id_by_taskid = async (task_id) => {
-    let regitem_id = await intrustqlc.query(`select REGITEM_ID from QLC_TITEMPBINFO where PROBLEMID = (select affa_id from PJMAIN..WF_TASK where task_id='${task_id}')` ,{
+    let regitem_id = await intrustqlc.query(`select REGITEM_ID from QLC_TITEMPBINFO where PROBLEMID = (select affa_id from PJMAIN..WF_TASK where task_id='${task_id}')`, {
         type: intrustqlc.QueryTypes.SELECT
     });
     return regitem_id[0]['REGITEM_ID'];
@@ -125,7 +125,7 @@ let find_asst_name = async (ASSET_MONEYS) => {
     return new_datas;
 }
 let find_cb = async (ASSET_ID) => {
-    let datas = await intrustqlc.query(`select CONTRACT_NAME+'-'+cast(ADD_SUM as varchar)+'-'+CUST_NAME cb from QLC_TCONTRACT_SUPPLY where CONTRACT_BH='${ASSET_ID}'`,{
+    let datas = await intrustqlc.query(`select CONTRACT_NAME+'-'+cast(ADD_SUM as varchar)+'-'+CUST_NAME cb from QLC_TCONTRACT_SUPPLY where CONTRACT_BH='${ASSET_ID}'`, {
         type: enfota.QueryTypes.SELECT
     });
     return datas[0];
@@ -144,7 +144,7 @@ let find_cust_name = async (cust_id) => {
     });
     return cust_name[0]['cust_name'];
 }
-let find_apprpvalsela = async (affa_id,regitem_id) => {
+let find_apprpvalsela = async (affa_id, regitem_id) => {
     let seal_type_name = await intrustqlc.query(`select YYXH,FILE_NAME,NUMBER,SEAL_TYPE_NAME,SPECAL_CHAPTER from QLC_APPROVAL_SEAL where 
     problem_id='${affa_id}' and REGITEM_ID=${regitem_id} order by YYXH`, {
         type: intrustqlc.QueryTypes.SELECT
@@ -178,12 +178,12 @@ let find_taskinfo = async (affa_id, node_id) => {
     let data = await pjmain.query(`select A.task_id,A.affa_id,A.flow_id,A.assignto,A.jsondata,A.create_time,A.exec_user,A.exec_time,A.read_time,replace(replace(A.summary,'<p>',''),'</p>','') AS summary, B.full_name from WF_TASK A left join org_user B on A.exec_user=B.user_code where A.tstatus = 2 and A.affa_id = '${affa_id}' and A.node_id = '${node_id}'`, {
         type: pjmain.QueryTypes.SELECT
     });
-    if(data.length>0){
+    if (data.length > 0) {
         console.log(data);
         console.log("-------exec_time-------");
         console.log(data[0]['exec_time']);
-        return data[0];   
-    }else{
+        return data[0];
+    } else {
         return '';
     }
 }
@@ -191,9 +191,9 @@ let find_taskinfonumber = async (affa_id, node_id) => {
     let data = await pjmain.query(`select task_id,affa_id,flow_id,assignto,jsondata,create_time,exec_user,exec_time,read_time,summary,tstatus from WF_TASK where  affa_id = '${affa_id}' and node_id = '${node_id}' `, {
         type: pjmain.QueryTypes.SELECT
     });
-    if(data.length>0){
-        return data[0];   
-    }else{
+    if (data.length > 0) {
+        return data[0];
+    } else {
         return '';
     }
 }
@@ -209,9 +209,9 @@ let find_twarrants_transfer_info = async (affa_id) => {
     let data = await intrustqlc.query(`select REGITEM_NAME,REGITEM_CODE,TRANS_DATE,TRANS_ITEM,REMARK,ZR_MANAGER_NAME,INPUT_DEPT_NAME from QLC_TWARRANTS_TRANSFER where  PROBLEM_ID = '${affa_id}'  `, {
         type: intrustqlc.QueryTypes.SELECT
     });
-    if(data.length>0){
-        return data[0];   
-    }else{
+    if (data.length > 0) {
+        return data[0];
+    } else {
         return '';
     }
 }
@@ -219,11 +219,11 @@ let find_customer_contration_info = async (affa_id) => {
     let data = await intrustqlc.query(`select REGITEM_NAME,CUST_NAME,GRADE_BEFORE,QUOTA_BEFORE,GRADE_NOW,QUOTA_NOW,JZD_NOW,REMARK,REGITEM_MONEY,LJ_MONEY,ZY_MONEY,GRADE_DATE from QLC_TCUSTOMER_CONCENTRATION_DAY where PROBLEM_ID = '${affa_id}' `, {
         type: intrustqlc.QueryTypes.SELECT
     });
-    if(data.length>0){
+    if (data.length > 0) {
         console.log(data);
         console.log("-------find_customer_contration_info-------");
-        return data[0];   
-    }else{
+        return data[0];
+    } else {
         return '';
     }
 }
@@ -238,9 +238,9 @@ let find_file_archive_info = async (affa_id) => {
     let data = await intrustqlc.query(`select REGITEM_NAME,REGITEM_CODE,ARCHIVE_DATE,IF_RECTIFY,IF_RECTIFY_OK,REMARK,INPUT_MAN_NAME,INPUT_DEPT_NAME from QLC_TFILE_ARCHIVE where  PROBLEM_ID = '${affa_id}'  `, {
         type: intrustqlc.QueryTypes.SELECT
     });
-    if(data.length>0){
-        return data[0];   
-    }else{
+    if (data.length > 0) {
+        return data[0];
+    } else {
         return '';
     }
 }
@@ -248,9 +248,9 @@ let find_task_summer_for_huiq = async (affa_id, node_id) => {
     let data = await pjmain.query(`select task_id,affa_id,flow_id,assignto,jsondata,create_time,exec_user,exec_time,read_time,summary,tstatus from WF_TASK where  affa_id = '${affa_id}' and node_id = '${node_id}' and isnull(assignto,'')='' `, {
         type: pjmain.QueryTypes.SELECT
     });
-    if(data.length>0){
-        return data[0];   
-    }else{
+    if (data.length > 0) {
+        return data[0];
+    } else {
         return '';
     }
 }
@@ -259,17 +259,26 @@ let find_next_user_for_huiq = async (user) => {
     let data = await pjmain.query(`select B.dept_name + '-'+A.full_name AS user_name from PJMAIN..org_user A,PJMAIN..org_dept B  where  A.dept_code=B.dept_code and A.user_code = '${user}' `, {
         type: pjmain.QueryTypes.SELECT
     });
-    if(data.length>0){
-        return data[0]['user_name'];   
-    }else{
+    if (data.length > 0) {
+        return data[0]['user_name'];
+    } else {
         return '';
     }
 }
 
-//根据项目ID获取项目信息
-let find_regiteminfo_info_by_regitem_id = async (regitem_id) => {
-    let project_info = await intrustqlc.query(`SELECT 
+//查询预登记-产品信息要素
+let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
+    let data = await dfs.query(`SELECT * FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${regitem_id}' `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if (data.length > 0) {
+        return data[0];
+    } else {
+        //如果第一次没有填写，同步业务系统数据
+        let project_info = await intrustqlc.query(`SELECT 
+                                                    newId() uuid,
                                                     '' bsid,
+                                                    A.REGITEM_ID regitem_id,
                                                     A.PRODUCT_ID productid,
                                                     A.PRODUCT_CODE productcode,
                                                     '31D' xtjgmc,
@@ -304,12 +313,12 @@ let find_regiteminfo_info_by_regitem_id = async (regitem_id) => {
                                                     '' fqcpqs,
                                                     '' wtrjzjly,
                                                     '' sytzrq,
-                                                    '' bgbs,
+                                                    '01' bgbs,
                                                     '' xtzjbgyh,
                                                     ROUND(ISNULL(A.XTBCL,0) * 100,2) xtbcl,
                                                     CASE WHEN A.HS_FLAG = 1 THEN '2' WHEN A.HS_FLAG = 2 THEN '0' ELSE '1' END syrsyllx,
-                                                    A.MAX_RATE syryqsylqj_zd,
-                                                    A.MIN_RATE syryqsylqj_zg,
+                                                    isnull(A.MAX_RATE,0) syryqsylqj_zd,
+                                                    isnull(A.MIN_RATE,0) syryqsylqj_zg,
                                                     CASE WHEN B.TYPE4 = '115703' THEN '0' WHEN B.TYPE4 = '115702' THEN '1' WHEN B.TYPE4 = '115701' THEN '2' WHEN B.TYPE4 = '115704' THEN '3' ELSE '' END xmly,
                                                     CASE WHEN B.GLFS = 1 THEN '0' WHEN B.GLFS = 2 THEN '1' ELSE '' END xmglfs,
                                                     '' xmtjjg,
@@ -355,21 +364,60 @@ let find_regiteminfo_info_by_regitem_id = async (regitem_id) => {
                                                     '' tzgwqk,
                                                     '' tgsfglf
                                                 FROM QLC_TPRODUCT A, QLC_TITEMREGINFO B
-                                                    WHERE A.REGITEM_ID = B.REGITEM_ID AND B.REGITEM_ID = ${regitem_id}`,{
-        type: intrustqlc.QueryTypes.SELECT
-    });
-    return project_info[0];
+                                                    WHERE A.REGITEM_ID = B.REGITEM_ID AND B.REGITEM_ID = ${regitem_id}`, {
+            type: intrustqlc.QueryTypes.SELECT
+        });
+        return project_info[0];
+    }
 }
 
+
+//查询预登记-异地推介补充要素
+let find_app_dfs_zxd_ydjtjd_by_uuid = async (uuid) => {
+    let data = await dfs.query(`SELECT * FROM APP_DFS_ZXD_YDJTJD WHERE uuid = '${uuid}' `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if (data.length > 0) {
+        return data;
+    } else {
+        return "1";
+    }
+}
+
+//保存预登记-产品信息要素
 let insert_app_dfs_zxd_ydjcpxx = async (data) => {
-    await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJCPXX(bsid,productid,productcode,xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,
+    //先删除
+    await dfs.query(`DELETE FROM APP_DFS_ZXD_YDJTJD FROM APP_DFS_ZXD_YDJTJD a, APP_DFS_ZXD_YDJCPXX b WHERE a.uuid = b.uuid and b.regitem_id = '${data.regitem_id}'`);
+    await dfs.query(`DELETE FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${data.regitem_id}'`);
+    //再保存
+    await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJCPXX(uuid,bsid,regitem_id,productid,productcode,xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,
         dyjhbz,xtgn,bgywlx,sfwxffq,qtbgywlx,xtxmmc,nfxclzgmlx,zdgdgmzfw,zggdgmzfw,xtxmzqxlw,zdgdqxzfw,zggdqxzfw,
         yjxtxmgm,zdxtxmgmfw,zgxtxmgmfw,xtxmqxlx,zdxtxmqxfw,zgxtxmqxfw,fqljfxgm,nfxhclsj,fqcpqs,wtrjzjly,sytzrq,bgbs,
         xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,
         yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry,gljylx,qtgljylx,glfqkyglgx,gljymd,gljydj,sctlywdjqk,xmlx,
         qtxmlx,ywlx,qtywlx,xmszd,sfszqq,xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf) values(
-            ${data.bsid},${data.productid},${data.productcode},${data.xtjgmc},${data.zcdz},${data.symjzc},${data.sjmjzc},${data.symxtzzc},${data.sjmfxzb},${data.ydjlx},${data.csxtcclx},${data.ccqxtcfzr},${data.dyjhbz},${data.xtgn},${data.bgywlx},${data.sfwxffq},${data.qtbgywlx},${data.xtxmmc},${data.nfxclzgmlx},${data.zdgdgmzfw},${data.zggdgmzfw},${data.xtxmzqxlw},${data.zdgdqxzfw},${data.zggdqxzfw},${data.yjxtxmgm},${data.zdxtxmgmfw},${data.zgxtxmgmfw},${data.xtxmqxlx},${data.zdxtxmqxfw},${data.zgxtxmqxfw},${data.fqljfxgm},${data.nfxhclsj},${data.fqcpqs},${data.wtrjzjly},${data.sytzrq},${data.bgbs},${data.xtzjbgyh},${data.xtbcl},${data.syrsyllx},${data.syryqsylqj_zd},${data.syryqsylqj_zg},${data.xmly},${data.xmglfs},${data.xmtjjg},${data.jydsmc},${data.jydsxx},${data.xtcctxhyyfs},${data.jyjg},${data.fxkzcs},${data.yjhklyjtcfs},${data.fxyasm},${data.gshfhgyj},${data.xtjlxm},${data.xtjldh},${data.fggjglry},${data.gljylx},${data.qtgljylx},${data.glfqkyglgx},${data.gljymd},${data.gljydj},${data.sctlywdjqk},${data.xmlx},${data.qtxmlx},${data.ywlx},${data.qtywlx},${data.xmszd},${data.sfszqq},${data.xyzjbh},${data.zbjblqk},${data.kfshqkggdzzqk},${data.qtsm},${data.zjly},${data.sfjghxt},${data.yxlhbl},${data.tzfw},${data.tzgwqk},${data.tgsfglf}
-        )`);
+            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.xtjgmc}','${data.zcdz}',${data.symjzc},${data.sjmjzc},${data.symxtzzc},${data.sjmfxzb},'${data.ydjlx}','${data.csxtcclx}','${data.ccqxtcfzr}','${data.dyjhbz}','${data.xtgn}','${data.bgywlx}','${data.sfwxffq}','${data.qtbgywlx}','${data.xtxmmc}','${data.nfxclzgmlx}',${data.zdgdgmzfw},${data.zggdgmzfw},'${data.xtxmzqxlw}','${data.zdgdqxzfw}','${data.zggdqxzfw}','${data.yjxtxmgm}',${data.zdxtxmgmfw},${data.zgxtxmgmfw},'${data.xtxmqxlx}','${data.zdxtxmqxfw}','${data.zgxtxmqxfw}',${data.fqljfxgm},'${data.nfxhclsj}','${data.fqcpqs}','${data.wtrjzjly}','${data.sytzrq}','${data.bgbs}','${data.xtzjbgyh}','${data.xtbcl}','${data.syrsyllx}',${data.syryqsylqj_zd},${data.syryqsylqj_zg},'${data.xmly}','${data.xmglfs}','${data.xmtjjg}','${data.jydsmc}','${data.jydsxx}','${data.xtcctxhyyfs}','${data.jyjg}','${data.fxkzcs}','${data.yjhklyjtcfs}','${data.fxyasm}','${data.gshfhgyj}','${data.xtjlxm}','${data.xtjldh}','${data.fggjglry}','${data.gljylx}','${data.qtgljylx}','${data.glfqkyglgx}','${data.gljymd}','${data.gljydj}','${data.sctlywdjqk}','${data.xmlx}','${data.qtxmlx}','${data.ywlx}','${data.qtywlx}','${data.xmszd}','${data.sfszqq}','${data.xyzjbh}','${data.zbjblqk}','${data.kfshqkggdzzqk}','${data.qtsm}','${data.zjly}','${data.sfjghxt}','${data.yxlhbl}','${data.tzfw}','${data.tzgwqk}','${data.tgsfglf}'
+        )`)
+        .then(function (result) {
+            console.log(result);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+//保存预登记-异地推介补充要素
+let insert_app_dfs_zxd_ydjtjd = async (data) => {
+    //再保存
+    await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJTJD(uuid,bsid,regitem_id,productid,productcode,sfqgtj,tjd,tjd_p,tjd_c,tjd_a,tjjg,tjfl,tjq,jhtjgm,tjfshtjgl,tjfzrmc,tjfzrdh) values(
+            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.sfqgtj}','${data.tjd}','${data.tjd_p}','${data.tjd_c}','${data.tjd_a}','${data.tjjg}','${data.tjfl}','${data.tjq}',${data.jhtjgm},'${data.tjfshtjgl}','${data.tjfzrmc}','${data.tjfzrdh}'
+        )`)
+        .then(function (result) {
+            console.log(result);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 module.exports = {
@@ -380,7 +428,7 @@ module.exports = {
     find_project_info_by_product_id: find_project_info_by_product_id,
     find_project_info_by_problem_id: find_project_info_by_problem_id,
     find_product_info: find_product_info,
-    find_account_info:find_account_info,
+    find_account_info: find_account_info,
     find_bank_name: find_bank_name,
     find_pay_apply: find_pay_apply,
     find_regitem_id_by_affaid: find_regitem_id_by_affaid,
@@ -390,20 +438,22 @@ module.exports = {
     find_bank_name_ta: find_bank_name_ta,
     find_cust_name: find_cust_name,
     find_apprpvalsela: find_apprpvalsela,
-    find_supply_info:find_supply_info,
-    find_affanumber_by_taskid:find_affanumber_by_taskid,
-    find_affanumber_by_affaid:find_affanumber_by_affaid,
-    find_assetname_by_assetid:find_assetname_by_assetid,
-    find_taskinfo:find_taskinfo,
-    find_taskinfonumber:find_taskinfonumber,
-    find_twarrants_transfer_info:find_twarrants_transfer_info,
-    find_twarrants_transfer_list_info:find_twarrants_transfer_list_info,
-    find_file_archive_list_info:find_file_archive_list_info,
-    find_file_archive_info:find_file_archive_info,
-    find_sign_name_by_affaid:find_sign_name_by_affaid,
-    find_customer_contration_info:find_customer_contration_info,
-    find_task_summer_for_huiq:find_task_summer_for_huiq,
-    find_next_user_for_huiq:find_next_user_for_huiq,
-    find_regiteminfo_info_by_regitem_id: find_regiteminfo_info_by_regitem_id,
-    insert_app_dfs_zxd_ydjcpxx: insert_app_dfs_zxd_ydjcpxx
+    find_supply_info: find_supply_info,
+    find_affanumber_by_taskid: find_affanumber_by_taskid,
+    find_affanumber_by_affaid: find_affanumber_by_affaid,
+    find_assetname_by_assetid: find_assetname_by_assetid,
+    find_taskinfo: find_taskinfo,
+    find_taskinfonumber: find_taskinfonumber,
+    find_twarrants_transfer_info: find_twarrants_transfer_info,
+    find_twarrants_transfer_list_info: find_twarrants_transfer_list_info,
+    find_file_archive_list_info: find_file_archive_list_info,
+    find_file_archive_info: find_file_archive_info,
+    find_sign_name_by_affaid: find_sign_name_by_affaid,
+    find_customer_contration_info: find_customer_contration_info,
+    find_task_summer_for_huiq: find_task_summer_for_huiq,
+    find_next_user_for_huiq: find_next_user_for_huiq,
+    find_app_dfs_zxd_ydjcpxx_by_regitem_id: find_app_dfs_zxd_ydjcpxx_by_regitem_id,
+    find_app_dfs_zxd_ydjtjd_by_uuid: find_app_dfs_zxd_ydjtjd_by_uuid,
+    insert_app_dfs_zxd_ydjcpxx: insert_app_dfs_zxd_ydjcpxx,
+    insert_app_dfs_zxd_ydjtjd: insert_app_dfs_zxd_ydjtjd
 }

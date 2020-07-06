@@ -1291,4 +1291,46 @@ module.exports = function (router) {
         let product_info = await d_flow.insert_app_dfs_zxd_ydjtjd(data);
         ctx.response.body = product_info
     });
+
+    //查询初始登记-产品信息要素
+    router.get('/find_app_dfs_zxd_cscpxx_by_regitem_id/:regitem_id', async (ctx, next) => {
+        let regitem_id = ctx.params.regitem_id;
+        let product_info = await d_flow.find_app_dfs_zxd_cscpxx_by_regitem_id(regitem_id);
+        ctx.response.body = product_info
+    });
+
+    //保存初始登记-产品信息要素
+    router.post('/insert_app_dfs_zxd_cscpxx', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.insert_app_dfs_zxd_cscpxx(data);
+        ctx.response.body = product_info
+    });
+
+    //查询终止登记-产品信息要素
+    router.get('/find_app_dfs_zxd_zzcpxx_by_regitem_id/:regitem_id', async (ctx, next) => {
+        let regitem_id = ctx.params.regitem_id;
+        let product_info = await d_flow.find_app_dfs_zxd_zzcpxx_by_regitem_id(regitem_id);
+        ctx.response.body = product_info
+    });
+
+    //保存终止登记-产品信息要素
+    router.post('/insert_app_dfs_zxd_zzcpxx', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.insert_app_dfs_zxd_zzcpxx(data);
+        ctx.response.body = product_info
+    });
+
+    //查询事前报告-产品信息要素
+    router.get('/find_app_dfs_zxd_sqcpxx_regitem_id/:regitem_id', async (ctx, next) => {
+        let regitem_id = ctx.params.regitem_id;
+        let product_info = await d_flow.find_app_dfs_zxd_sqcpxx_regitem_id(regitem_id);
+        ctx.response.body = product_info
+    });
+
+    //保存事前报告-产品信息要素
+    router.post('/insert_app_dfs_zxd_sqcpxx', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.insert_app_dfs_zxd_sqcpxx(data);
+        ctx.response.body = product_info
+    });
 }

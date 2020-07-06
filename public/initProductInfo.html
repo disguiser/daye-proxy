@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base target="_self">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache,must-ridate">
+    <meta http-equiv="expires" content="0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css" />
+</head>
+
+<style  type="text/css">
+    .required {
+        color: red;
+    }       
+</style>
+
+<body>
+    <div style="height: 20px; text-align: right;">
+        <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
+    </div>
+
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active">
+            <a href="#productInfo" data-toggle="tab">
+               产品信息要素
+            </a>
+        </li>	
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="productInfo">
+            <div style="height:390px;overflow-y:auto">
+                <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
+                    <tr>
+                        <td>
+                            <span class="required">*</span>登记类型:
+                        </td>
+                        <td>
+                            <select id="djlx" name="djlx" style="width: 180px;">
+                                <option value="1">初始登记</option>
+                                <option value="2">变更登记</option>
+                                <option value="3">更正登记</option>
+                                <option value="8">初始登记（补办）</option>
+                            </select>							
+                        </td>					
+                        <td>
+                            信托登记系统产品编码 :
+                        </td>
+                        <td>
+                            <input type="text" id="djcpbh" name="djcpbh" style="width: 180px;">
+                        </td>	
+                        <td>
+                            <span class="required">*</span>分期发行标识:
+                        </td>
+                        <td>
+                            <input type="radio" name="sfxtzcp" value="1" />是
+                            <input type="radio" name="sfxtzcp" value="0" />否
+                        </td>						
+					</tr>
+                    <tr>
+                        <td>
+                            三单标识:
+                        </td>
+                        <td>
+                            <input type="radio" name="sdbs" value="1" />是
+                            <input type="radio" name="sdbs" value="0" />否
+                        </td>					
+                        <td>
+                            <span class="required">*</span>受益方式标识:
+                        </td>
+                        <td>
+                            <input type="radio" name="xtsyfs" value="0" />自益
+                            <input type="radio" name="xtsyfs" value="1" />他益
+                            <input type="radio" name="xtsyfs" value="2" />自益+他益
+                            <input type="radio" name="xtsyfs" value="3" />其他							
+                        </td>
+                        <td>
+                            受益方式说明:
+                        </td>
+                        <td>
+                            <input type="text" id="syfssm" name="syfssm" style="width: 180px;">
+                        </td>						
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="required">*</span>TOT 标识:
+                        </td>	
+						<td>
+                            <input type="radio" name="totbs" value="0" />TOT子信托
+                            <input type="radio" name="totbs" value="1" />TOT母信托
+                            <input type="radio" name="totbs" value="2" />否
+						</td>
+                        <td>
+                            关联母信托:
+                        </td>
+                        <td>
+                            <input type="text" id="glmxt" name="glmxt" style="width: 180px;">
+                        </td>
+                        <td>
+                            关联子信托:
+                        </td>
+                        <td>
+                            <input type="text" id="glzxt" name="glzxt" style="width: 180px;">
+                        </td>						
+                    </tr>
+                    <tr>					
+                        <td>
+                            预期募集总金额:
+                        </td>
+                        <td>
+                            <input type="number" id="yqmjzje" name="yqmjzje" style="width: 180px;">(元)
+                        </td>					
+                        <td>
+                            预期募集总份额:
+                        </td>
+                        <td>
+                            <input type="number" id="yqmjzfe" name="yqmjzfe" style="width: 180px;">(份)
+                        </td>
+                        <td>
+                            预期募集总额币种:
+                        </td>	
+						<td>
+							<select id="yqmjzebz" name="yqmjzebz" style="width: 180px;">
+								<option value="CNY">人民币</option>
+								<option value="ADP">安道尔比塞塔</option>
+								<option value="AED">阿联酋迪拉姆</option>
+								<option value="AFA">阿富汗尼</option>
+								<option value="ALL">阿尔尼亚列克</option>
+								<option value="AMD">亚美尼亚达姆</option>
+								<option value="ANG">荷属安的列斯盾</option>
+								<option value="AOA">安哥拉宽扎</option>
+								<option value="ARS">阿根廷比索</option>
+								<option value="ATS">奥地利先令</option>
+								<option value="AUD">澳大利亚元</option>
+								<option value="AWG">阿鲁巴尼盾</option>
+								<option value="AZM">阿塞拜疆马纳特</option>
+								<option value="BBD">巴巴多斯元</option>
+								<option value="BDT">孟加拉国塔卡</option>
+								<option value="BEF">比利时法郎</option>
+								<option value="BGL">保加利亚列弗</option>
+								<option value="BHD">巴林第纳尔</option>
+								<option value="BIF">布隆迪法郎</option>
+								<option value="BMD">百慕大元</option>
+								<option value="BND">文莱元</option>
+								<option value="BOB">玻利维亚瓦诺</option>
+								<option value="BRL">巴西瑞尔</option>
+								<option value="BSD">巴马哈元</option>
+								<option value="BTN">不丹努尔特鲁姆</option>
+								<option value="BWP">博茨瓦纳普拉</option>
+								<option value="BYR">白俄罗斯卢布</option>
+								<option value="BZD">伯利兹元</option>
+								<option value="CAD">加拿大元</option>
+								<option value="CDF">刚果法郎</option>
+								<option value="CHF">瑞士法郎</option>
+								<option value="CLP">智利比索</option>
+								<option value="COP">哥伦比亚比索</option>
+								<option value="CRC">哥斯达黎加科郎</option>
+								<option value="CSK">捷克克朗</option>
+								<option value="CUP">古巴比索</option>
+								<option value="CVE">佛得角埃斯库多</option>
+								<option value="CYP">塞浦路斯镑</option>
+								<option value="DEM">德国马克</option>
+								<option value="DJF">吉布提法郎</option>
+								<option value="DKK">丹麦克朗</option>
+								<option value="DOP">多米尼加比索</option>
+								<option value="DZD">阿尔及利亚第纳</option>
+								<option value="EEK">爱沙尼亚克罗姆</option>
+								<option value="EGP">埃及镑</option>
+								<option value="ERN">厄立特里亚纳克法</option>
+								<option value="ESP">西班牙比塞塔</option>
+								<option value="ETB">埃塞俄比亚比尔</option>
+								<option value="EUR">欧元</option>
+								<option value="FIM">芬兰马克</option>
+								<option value="FJD">斐济元</option>
+								<option value="FRF">法国法郎</option>
+								<option value="GBP">英镑</option>
+								<option value="GEL">格鲁吉亚拉里</option>
+								<option value="GHC">加纳塞地</option>
+								<option value="GIP">直布罗陀镑</option>
+								<option value="GMD">冈比亚达拉西</option>
+								<option value="GNF">几内亚法郎</option>
+								<option value="GRD">希腊德拉马克</option>
+								<option value="GTO">危地马拉格查尔</option>
+								<option value="GWP">几内亚比绍比索</option>
+								<option value="GYD">圭亚那元</option>
+								<option value="HKD">港币</option>
+								<option value="HNL">洪都拉斯伦皮拉</option>
+								<option value="HRK">克罗地亚库纳</option>
+								<option value="HTG">海地古德</option>
+								<option value="HUF">匈牙利福林</option>
+								<option value="IDR">印度尼西亚卢比</option>
+								<option value="IEP">爱尔兰镑</option>
+								<option value="ILS">以色列新谢客尔</option>
+								<option value="INR">印度罗比</option>
+								<option value="IQD">伊拉克地纳尔</option>
+								<option value="IRR">伊朗里亚尔</option>
+								<option value="ISK">冰岛克朗</option>
+								<option value="ITL">意大利里拉</option>
+								<option value="JMD">牙买加元</option>
+								<option value="JOD">约旦第纳尔</option>
+								<option value="JPY">日元</option>
+								<option value="KES">肯尼亚先令</option>
+								<option value="KGS">吉尔吉斯斯坦索姆</option>
+								<option value="KHR">柬埔寨瑞尔</option>
+								<option value="KMF">科摩罗法郎</option>
+								<option value="KPW">朝鲜币</option>
+								<option value="KRW">韩元</option>
+								<option value="KWD">科威特第纳尔</option>
+								<option value="KYD">开曼群岛元</option>
+								<option value="KZT">哈萨克斯坦坚戈</option>
+								<option value="LAK">老挝基普</option>
+								<option value="LKR">斯里兰卡卢比</option>
+								<option value="LRD">利比里亚元</option>
+								<option value="LRP">黎巴嫩镑</option>
+								<option value="LSL">莱索托罗堤</option>
+								<option value="LTL">立陶宛</option>
+								<option value="LUF">卢森堡法郎</option>
+								<option value="LVL">拉脱维亚拉特拉</option>
+								<option value="LYD">利比亚第纳尔</option>
+								<option value="MAD">摩洛哥迪拉姆</option>
+								<option value="MDL">摩尔瓦多列伊</option>
+								<option value="MGF">马达加斯加法郎</option>
+								<option value="MKD">马其顿第纳尔</option>
+								<option value="MMK">缅甸元</option>
+								<option value="MNT">蒙古图格里克</option>
+								<option value="MOP">澳门币</option>
+								<option value="MRO">毛里塔尼亚乌吉亚</option>
+								<option value="MTL">马其他里拉</option>
+								<option value="MUR">毛里求斯卢比</option>
+								<option value="MVR">马尔代夫卢菲亚</option>
+								<option value="MWK">马拉维克瓦查</option>
+								<option value="MXN">墨西哥比索</option>
+								<option value="MYR">马来西亚林吉特</option>
+								<option value="MZM">莫桑比克麦梯卡尔</option>
+								<option value="NAD">纳米比亚元</option>
+								<option value="NGN">尼日利亚奈拉</option>
+								<option value="NIO">尼加拉瓜金科多巴</option>
+								<option value="NLG">荷兰盾</option>
+								<option value="NOK">挪威克朗</option>
+								<option value="NPR">尼泊尔卢比</option>
+								<option value="NZD">新西兰元</option>
+								<option value="OMR">阿曼里亚尔</option>
+								<option value="PAB">巴拿马巴波亚</option>
+								<option value="PEN">秘鲁索尔</option>
+								<option value="PGK">巴布亚新基那</option>
+								<option value="PHP">菲律宾比索</option>
+								<option value="PKR">巴基斯坦卢比</option>
+								<option value="PLN">波兰兹罗提</option>
+								<option value="PTE">葡萄牙埃斯库多</option>
+								<option value="PYG">巴拉圭瓜拉尼</option>
+								<option value="QAR">卡塔尔里亚尔</option>
+								<option value="ROL">罗马尼亚列伊</option>
+								<option value="RUB">俄国卢布</option>
+								<option value="RWF">卢旺达法郎</option>
+								<option value="SAR">沙特里亚尔</option>
+								<option value="SBD">所罗门群岛元</option>
+								<option value="SCR">塞舌尔卢比</option>
+								<option value="SDD">苏丹第纳尔</option>
+								<option value="SEK">瑞典克朗</option>
+								<option value="SGD">新加坡元</option>
+								<option value="SHP">圣赫勒拿镑</option>
+								<option value="SIT">斯洛文尼亚拖拉尔</option>
+								<option value="SKK">斯洛伐克郎</option>
+								<option value="SLL">塞拉利昂</option>
+								<option value="SOS">索马里先令</option>
+								<option value="SRG">苏里南盾</option>
+								<option value="STD">圣多美和普林西比多布拉</option>
+								<option value="SVC">萨尔瓦多科郎</option>
+								<option value="SYP">叙利亚镑</option>
+								<option value="SZL">斯威士兰里兰吉尼</option>
+								<option value="THB">泰铢</option>
+								<option value="TJS">塔吉克斯坦索莫尼</option>
+								<option value="TMM">土库曼斯坦马纳特</option>
+								<option value="TND">突尼斯第纳尔</option>
+								<option value="TOP">汤加邦加</option>
+								<option value="TPE">东帝汶埃斯库多</option>
+								<option value="TRL">土耳其里拉</option>
+								<option value="TTD">特立尼达和多巴哥元</option>
+								<option value="TWD">台湾元</option>
+								<option value="TZS">坦桑尼亚先令</option>
+								<option value="UAH">乌克兰格里夫纳</option>
+								<option value="UGX">乌干达先令</option>
+								<option value="USD">美元</option>
+								<option value="UYU">乌拉圭比索</option>
+								<option value="UZS">乌兹别克斯坦苏姆</option>
+								<option value="VND">越南盾</option>
+								<option value="VUV">瓦努阿图瓦图</option>
+								<option value="WST">萨摩亚塔拉</option>
+								<option value="XAF">中非金融合作法郎</option>
+								<option value="XAG">白银</option>
+								<option value="XAU">黄金</option>
+								<option value="XBB">欧洲货币单位</option>
+								<option value="XCD">东加勒比元</option>
+								<option value="XDR">特别提款权</option>
+								<option value="XOF">西非共同体法郎</option>
+								<option value="YER">也门里亚尔</option>
+								<option value="YUM">南斯拉夫第纳尔</option>
+								<option value="ZAR">南非兰特</option>
+								<option value="ZMK">赞比亚克瓦查</option>
+								<option value="ZWD">津巴布韦元</option>
+							</select>
+						</td>						
+                    </tr>
+                    <tr>						
+                        <td>
+                            主要运用领域:
+                        </td>
+                        <td>
+                            <select id="zyyyly_ctq" name="zyyyly_ctq" style="width: 180px;">
+                                <option value="0">房地产</option>
+                                <option value="1">基础产业</option>
+                                <option value="2">工商企业</option>
+                                <option value="3">偏股型证券投资</option>
+                                <option value="4">偏债型证券投资</option>
+								<option value="5">金融机构</option>
+								<option value="6">其他</option>
+                            </select>
+                        </td>
+                        <td>
+                            主要投向行业:
+                        </td>
+                        <td>
+                            <select id="zytxhy_ctq" name="zytxhy_ctq" style="width: 180px;">
+								<option value="1">农林牧渔业</option>
+								<option value="2">采矿业</option>
+								<option value="3">制造业</option>
+								<option value="4">电力、热力、燃气及水生产和供应业</option>
+								<option value="5">建筑业</option>
+								<option value="6">交通运输、仓储和邮政业</option>
+								<option value="7">信息传输、软件和信息技术服务业</option>
+								<option value="8">批发和零售业</option>
+								<option value="9">住宿和餐饮业</option>
+								<option value="10">金融业</option>
+								<option value="11">房地产业</option>
+								<option value="12">租赁和商务服务业</option>
+								<option value="13">科学研究和技术服务业</option>
+								<option value="14">水利、环境和公共设施管理业</option>
+								<option value="15">居民服务、修理和其他服务业</option>
+								<option value="16">教育</option>
+								<option value="17">卫生和社会工作业</option>
+								<option value="18">文化、体育和娱乐业</option>
+								<option value="19">公共管理、社会保障和社会组织</option>
+								<option value="20">国际组织</option>
+								<option value="21">其他</option>									
+                            </select>
+                        </td>
+                        <td>
+                            财产主要运用方式(资金信托) :
+                        </td>
+                        <td>
+                            <select id="ccglyyfs" name="ccglyyfs" style="width: 180px;">
+                                <option value="a">信托贷款</option>
+                                <option value="b">资产及其收（受）益权（附回购）</option>
+                                <option value="c">资产及其收（受）益权（不附回购）</option>
+                                <option value="d">长期股权投资</option>
+                                <option value="e">债券投资</option>
+								<option value="f">其他债权资产</option>
+								<option value="g">股票投资</option>
+								<option value="h">金融衍生品</option>
+								<option value="i">公募基金</option>
+								<option value="j">代客境外理财QDII</option>
+								<option value="k">实物及其他资产</option>
+                            </select>
+                        </td>						
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="required">*</span>银登中心登记的信贷资产及其收益权转让标识:
+                        </td>
+                        <td>
+                            <input type="radio" name="xdzcjsyq" value="1" />是
+                            <input type="radio" name="xdzcjsyq" value="0" />否
+                        </td>
+                        <td>
+                            <span class="required">*</span>特色业务标识:
+                        </td>
+						<td>
+							<input type="checkbox" id="tsyw" name="tsyw" value="0"   />私募股权投资信托（PE）<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="1"   />基金化房地产信托（REITS）<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="2"   />受托境外理财信托（QDII）<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="3"   />政府与社会资本合作信托（PPP）<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="4"   />产业投资基金（不含PPP）<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="5"   />家族信托<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="6"   />土地流转信托<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="7"   />公益（慈善）信托<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="8"   />消费信托<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="9"   />并购信托<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="a"   />另类投资信托<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="b"   />金融衍生品信托<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="f"   />非特色业务<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="g"   />企业年金<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="h"   />资产支持票据<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="i"   />保险金信托<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="j"   />员工持股信托<br>
+							<input type="checkbox" id="tsyw" name="tsyw" value="k"   />小微金融信托<br>
+                            </select>
+						</td>	
+                        <td>
+                            业务信息说明:
+                        </td>
+                        <td>
+                            <input type="text" id="ywxism" name="ywxism" style="width: 180px;">
+                        </td>							
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="required">*</span>风险项目标识:
+                        </td>
+                        <td>
+                            <input type="radio" name="fxxmbs" value="1" />是
+                            <input type="radio" name="fxxmbs" value="0" />否
+                        </td>
+                        <td>
+                            风险台账标识:
+                        </td>
+                        <td>
+							<input type="radio" id="fxtzbs" name="fxtzbs" value="0" />未入台帐
+							<input type="radio" id="fxtzbs" name="fxtzbs" value="1" />调入台帐
+							<input type="radio" id="fxtzbs" name="fxtzbs" value="2" />调出台帐
+							<input type="radio" id="fxtzbs" name="fxtzbs" value="3" />调出复调回
+                        </td>
+                        <td>
+							风险处置进展:
+                        </td>
+                        <td>
+							<input type="radio" id="fxczjz" name="fxczjz" value="0" />兑付风险未化解
+							<input type="radio" id="fxczjz" name="fxczjz" value="1" />已无兑付风险但实质风险未化解
+							<input type="radio" id="fxczjz" name="fxczjz" value="2" />实质风险已化解
+                        </td>							
+                    </tr>
+                    <tr>
+                        <td>
+                            风险缓释措施:
+                        </td>
+                        <td>
+                            <input type="text" id="fxhscsnew" name="fxhscsnew" style="width: 180px;">
+                        </td>						
+                        <td>
+                            <span class="required">*</span>风险控制措施:
+                        </td>
+                        <td>
+							<input type="checkbox" id="fxhscs" name="fxhscs" value="a"  />抵押
+							<input type="checkbox" id="fxhscs" name="fxhscs" value="b"  />质押
+							<input type="checkbox" id="fxhscs" name="fxhscs" value="c"  />保证
+							<input type="checkbox" id="fxhscs" name="fxhscs" value="d"  />信用
+							<input type="checkbox" id="fxhscs" name="fxhscs" value="f"  />其他
+                        </td>
+                        <td>
+                            风险控制措施变化补充说明:
+                        </td>
+                        <td>
+                            <input type="text" id="fxczcsbhbcsm" name="fxczcsbhbcsm" style="width: 180px;">
+                        </td>						
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="required">*</span>赎回的限制性条件:
+                        </td>
+                        <td>
+                            <input type="text" id="shdxzxtj" name="shdxzxtj" style="width: 180px;">
+                        </td>						
+                        <td>
+                            <span class="required">*</span>推介方式:
+                        </td>
+                        <td>
+							<input type="checkbox" id="tjfs" name="tjfs" value="0" />本公司直销<br>
+							<input type="checkbox" id="tjfs" name="tjfs" value="1" />金融机构推介-银行推介(含代收代付)<br>
+							<input type="checkbox" id="tjfs" name="tjfs" value="2" />金融机构推介-证券公司推介<br>
+							<input type="checkbox" id="tjfs" name="tjfs" value="3" />金融机构推介-保险推介<br>
+							<input type="checkbox" id="tjfs" name="tjfs" value="4" />金融机构推介-其他信托公司推介<br>
+							<input type="checkbox" id="tjfs" name="tjfs" value="5" />金融机构推介-其他金融机构推介<br>
+							<input type="checkbox" id="tjfs" name="tjfs" value="6" />非金融机构推介<br>
+							<input type="checkbox" id="tjfs" name="tjfs" value="7" />其他渠道推介<br>
+                        </td>
+                        <td>
+                            <span class="required">*</span>推介媒介:
+                        </td>
+                        <td>
+							<input type="checkbox" id="tjmj" name="tjmj" value="0" checked />线下<br>
+							<input type="checkbox" id="tjmj" name="tjmj" value="1"  />线上
+                        </td>						
+                    </tr>					
+                    <tr>
+                        <td>
+                            估值模式:
+                        </td>
+                        <td>
+							<input type="radio" id="gzms" name="gzms" value="0" />实际净值
+							<input type="radio" id="gzms" name="gzms" value="1" />万份收益
+							<input type="radio" id="gzms" name="gzms" value="2" />其他
+                        </td>						
+                        <td>
+                            估值层级:
+                        </td>
+                        <td>
+							<input type="radio" id="gzcj" name="gzcj" value="0" />信托产品本层
+							<input type="radio" id="gzcj" name="gzcj" value="1" />信托产品下层
+							<input type="radio" id="gzcj" name="gzcj" value="2" />信托产品上层
+                        </td>
+                        <td>
+                            估值机构:
+                        </td>
+                        <td>
+							<input type="checkbox" id="gzjg" name="gzjg" value="0"  />信托公司
+							<input type="checkbox" id="gzjg" name="gzjg" value="1"  />托管人
+							<input type="checkbox" id="gzjg" name="gzjg" value="2"  />投资顾问
+							<input type="checkbox" id="gzjg" name="gzjg" value="3"  />其他
+                        </td>						
+                    </tr>					
+                    <tr>
+                        <td>
+                            净值评估频度:
+                        </td>
+                        <td>
+							<select id="jzpgpd" name="jzpgpd" style="width: 180px;">
+								<option value="0">工作日</option>
+								<option value="1">自然日</option>
+								<option value="2">周</option>
+								<option value="3">双周</option>
+								<option value="4">旬</option>
+								<option value="5">半月</option>
+								<option value="6">月度</option>
+								<option value="7">季度</option>
+								<option value="8">年度</option>
+								<option value="9">其他频度</option>
+								<option value="a">不定期</option>
+								<option value="b">半年</option>
+								<option value="c">无</option>			
+							</select>	
+                        </td>						
+                        <td>
+                            <span class="required">*</span>境内托管机构:
+                        </td>
+                        <td>
+                            <input type="text" id="jntgjg" name="jntgjg" style="width: 180px;">
+                        </td>
+                        <td>
+                            境外托管代理机构:
+                        </td>
+                        <td>
+                            <input type="text" id="jwtgdljg" name="jwtgdljg" style="width: 180px;">
+                        </td>						
+                    </tr>					
+                    <tr>
+                        <td>
+                            境外托管代理机构国别:
+                        </td>
+                        <td>
+                            <input type="text" id="jwtgdljggb" name="jwtgdljggb" style="width: 180px;">
+                        </td>						
+                        <td>
+                            <span class="required">*</span>投资顾问标识:
+                        </td>
+                        <td>
+                            <input type="radio" name="tzgwbs" value="1" />是
+                            <input type="radio" name="tzgwbs" value="0" />否	
+                        </td>	
+                        <td>
+                            投资顾问编号:
+                        </td>
+                        <td>
+                            <input type="text" id="tzgwbh" name="tzgwbh" style="width: 180px;">
+                        </td>						
+                    </tr>						
+                    <tr>
+                        <td>
+                            净值披露频度:
+                        </td>
+                        <td>
+							<select id="jzplpd" name="jzplpd" style="width: 180px;">
+								<option value="0">工作日</option>
+								<option value="1">自然日</option>
+								<option value="2">周</option>
+								<option value="3">双周</option>
+								<option value="4">旬</option>
+								<option value="5">半月</option>
+								<option value="6">月度</option>
+								<option value="7">季度</option>
+								<option value="8">年度</option>
+								<option value="9">其他频度</option>
+								<option value="a">不定期</option>
+								<option value="b">半年</option>
+								<option value="c">无</option>
+							</select>
+                        </td>						
+                        <td>
+                            <span class="required">*</span>资产管理报告频度:
+                        </td>
+                        <td>
+                            <select id="zcglbgpd" name="zcglbgpd" style="width: 180px;">
+								<option value="0">无</option>
+								<option value="1">日</option>
+								<option value="2">周</option>
+								<option value="3">双周</option>
+								<option value="4">旬</option>
+								<option value="5">半月</option>
+								<option value="6">月度</option>
+								<option value="7">季度</option>
+								<option value="8">年度</option>
+								<option value="9">其他频度</option>
+								<option value="a">不定期</option>
+								<option value="b">半年</option>
+							 </select>		
+                        </td>
+                        <td>
+                            <span class="required">*</span>清算报告披露标识:
+                        </td>
+                        <td>
+                            <input type="radio" name="qsbgplbs" value="1" />是
+                            <input type="radio" name="qsbgplbs" value="0" />否	
+                        </td>						
+                    </tr>					
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/static/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        //初始化数据
+        let ydjData = new Object();
+        $(function () {
+            //获取流程参数
+            let flowid = GetQueryValue('flowid');
+            let itemid = GetQueryValue('itemid');
+            find_app_dfs_zxd_cscpxx_by_regitem_id(flowid, itemid);
+        });
+
+        //查询初始登记-产品信息要素
+        function find_app_dfs_zxd_cscpxx_by_regitem_id(flowid, itemid) {
+            //根据项目ID采集现有信息
+            jQuery.ajax({
+                data: { "flowid": flowid, "itemid": itemid },
+                url: "/node/find_app_dfs_zxd_cscpxx_by_regitem_id/" + itemid,
+                async: false,
+                cache: false,
+                success: function (data) {
+                    ydjData = data;
+
+					let chtsyw = data.tsyw.split(",");
+                    $.each(chtsyw,function(index,value){
+						$("#tsyw").find("input:checkbox[value='"+value+"']").prop('checked',true);
+                    });
+					let chfxhscs = data.fxhscs.split(",");
+                    $.each(chfxhscs,function(index,value){
+						$("#fxhscs").find("input:checkbox[value='"+value+"']").prop('checked',true);
+                    });
+					let chgzjg = data.gzjg.split(",");
+                    $.each(chgzjg,function(index,value){
+						$("#gzjg").find("input:checkbox[value='"+value+"']").prop('checked',true);
+                    });					
+
+					$("input[name='sfxtzcp'][value="+data.sfxtzcp+"]").attr("checked", true);
+					$("input[name='sdbs'][value="+data.sdbs+"]").attr("checked", true);
+					$("input[name='xtsyfs'][value="+data.xtsyfs+"]").attr("checked", true);
+					$("input[name='totbs'][value="+data.totbs+"]").attr("checked", true);
+					$("input[name='xdzcjsyq'][value="+data.xdzcjsyq+"]").attr("checked", true);
+					$("input[name='fxxmbs'][value="+data.fxxmbs+"]").attr("checked", true);
+					$("input[name='fxtzbs'][value="+data.fxtzbs+"]").attr("checked", true);
+					$("input[name='fxczjz'][value="+data.fxczjz+"]").attr("checked", true);
+					$("input[name='tjfs'][value="+data.tjfs+"]").attr("checked", true);
+					$("input[name='tjmj'][value="+data.tjmj+"]").attr("checked", true);
+					$("input[name='gzms'][value="+data.gzms+"]").attr("checked", true);
+					$("input[name='gzcj'][value="+data.gzcj+"]").attr("checked", true);
+					$("input[name='fxczjz'][value="+data.fxczjz+"]").attr("checked", true);
+					$("input[name='tzgwbs'][value="+data.tzgwbs+"]").attr("checked", true);
+					$("input[name='qsbgplbs'][value="+data.qsbgplbs+"]").attr("checked", true);				
+					
+					$("#djlx").val(data.djlx);
+					$("#djcpbh").val(data.djcpbh);
+					$("#syfssm").val(data.syfssm);
+					$("#glmxt").val(data.glmxt);
+					$("#glzxt").val(data.glzxt);
+					$("#yqmjzje").val(data.yqmjzje);
+					$("#yqmjzfe").val(data.yqmjzfe);
+					$("#yqmjzebz").val(data.yqmjzebz);
+					$("#zyyyly_ctq").val(data.zyyyly_ctq);
+					$("#zytxhy_ctq").val(data.zytxhy_ctq);
+					$("#ccglyyfs").val(data.ccglyyfs);
+					$("#fxhscsnew").val(data.fxhscsnew);
+					$("#fxczcsbhbcsm").val(data.fxczcsbhbcsm);
+					$("#shdxzxtj").val(data.shdxzxtj);
+					$("#jzpgpd").val(data.jzpgpd);
+					$("#jntgjg").val(data.jntgjg);
+					$("#jwtgdljg").val(data.jwtgdljg);
+					$("#jwtgdljggb").val(data.jwtgdljggb);
+					$("#tzgwbh").val(data.tzgwbh);
+					$("#jzplpd").val(data.jzplpd);
+					$("#zcglbgpd").val(data.zcglbgpd);
+                }
+            });
+        }
+
+        //初始登记信息保存
+        function onSave() {
+            //产品信息要素
+            let chtsyw = [];
+            let tsyw = $("input:checkbox[name=tsyw]:checked");
+            $.each(tsyw, function(){
+                chtsyw.push($(this).val());
+            });
+            ydjData.tsyw = chtsyw.join(",");
+
+            let chfxhscs = [];
+            let fxhscs = $("input:checkbox[name=fxhscs]:checked");
+            $.each(fxhscs, function(){
+                chfxhscs.push($(this).val());
+            });
+            ydjData.fxhscs = chfxhscs.join(",");
+			
+			ydjData.sfxtzcp = $("input[name='sfxtzcp']:checked").val();
+			ydjData.sdbs = $("input[name='sdbs']:checked").val();
+			ydjData.xtsyfs = $("input[name='xtsyfs']:checked").val();
+			ydjData.totbs = $("input[name='totbs']:checked").val();
+			ydjData.xdzcjsyq = $("input[name='xdzcjsyq']:checked").val();
+			ydjData.fxxmbs = $("input[name='fxxmbs']:checked").val();
+			ydjData.fxtzbs = $("input[name='fxtzbs']:checked").val();
+			ydjData.fxczjz = $("input[name='fxczjz']:checked").val();
+			ydjData.tjfs = $("input[name='tjfs']:checked").val();
+			ydjData.tjmj = $("input[name='tjmj']:checked").val();
+			ydjData.gzms = $("input[name='gzms']:checked").val();
+			ydjData.gzcj = $("input[name='gzcj']:checked").val();
+			ydjData.fxczjz = $("input[name='fxczjz']:checked").val();
+			ydjData.tzgwbs = $("input[name='tzgwbs']:checked").val();
+			ydjData.qsbgplbs = $("input[name='qsbgplbs']:checked").val();	
+
+			ydjData.djlx=$("#djlx").val();
+			ydjData.djcpbh=$("#djcpbh").val();
+			ydjData.syfssm=$("#syfssm").val();
+			ydjData.glmxt=$("#glmxt").val();
+			ydjData.glzxt=$("#glzxt").val();
+			ydjData.yqmjzje=$("#yqmjzje").val();
+			ydjData.yqmjzfe=$("#yqmjzfe").val();
+			ydjData.yqmjzebz=$("#yqmjzebz").val();
+			ydjData.zyyyly_ctq=$("#zyyyly_ctq").val();
+			ydjData.zytxhy_ctq=$("#zytxhy_ctq").val();
+			ydjData.ccglyyfs=$("#ccglyyfs").val();
+			ydjData.fxhscsnew=$("#fxhscsnew").val();
+			ydjData.fxczcsbhbcsm=$("#fxczcsbhbcsm").val();
+			ydjData.shdxzxtj=$("#shdxzxtj").val();
+			ydjData.jzpgpd=$("#jzpgpd").val();
+			ydjData.jntgjg=$("#jntgjg").val();
+			ydjData.jwtgdljg=$("#jwtgdljg").val();
+			ydjData.jwtgdljggb=$("#jwtgdljggb").val();
+			ydjData.tzgwbh=$("#tzgwbh").val();
+			ydjData.jzplpd=$("#jzplpd").val();
+			ydjData.zcglbgpd=$("#zcglbgpd").val();			
+			
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/insert_app_dfs_zxd_cscpxx",
+                //数据，json对象
+                data: ydjData,
+                //请求成功
+                success: function (data) {
+                    alert("保存成功！");
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    alert("保存失败！");
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+        }
+
+        //获取GET参数
+        function GetQueryValue(queryName) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == queryName) { return pair[1]; }
+            }
+            return null;
+        }
+    </script>
+</body>
+
+</html>

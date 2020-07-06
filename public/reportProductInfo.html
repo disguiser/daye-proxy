@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base target="_self">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache,must-ridate">
+    <meta http-equiv="expires" content="0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css" />
+</head>
+
+<style  type="text/css">
+    .required {
+        color: red;
+    }       
+</style>
+
+<body>
+    <div style="height: 20px; text-align: right;">
+        <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
+    </div>
+
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active">
+            <a href="#productInfo" data-toggle="tab">
+               产品信息要素
+            </a>
+        </li>	
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="productInfo">
+            <div style="height:390px;overflow-y:auto">
+                <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
+                    <tr>
+                        <td>
+                            <span class="required">*</span>是否关联交易:
+                        </td>
+                        <td>
+                            <input type="radio" name="sfgljy" value="1" />是
+                            <input type="radio" name="sfgljy" value="0" />否
+                        </td>
+					</tr>
+					<tr>
+                        <td>
+                            <span class="required">*</span>事前报告事项原因:
+                        </td>
+                        <td>
+							<textarea cols="100" rows="5" id="sqbgyy" name="sqbgyy" style="width:400px;"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/static/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+        //初始化数据
+        let ydjData = new Object();
+        $(function () {
+            //获取流程参数
+            let flowid = GetQueryValue('flowid');
+            let itemid = GetQueryValue('itemid');
+            find_app_dfs_zxd_sqcpxx_regitem_id(flowid, itemid);
+        });
+
+        //查询预登记-产品信息要素
+        function find_app_dfs_zxd_sqcpxx_regitem_id(flowid, itemid) {
+            //根据项目ID采集现有信息
+            jQuery.ajax({
+                data: { "flowid": flowid, "itemid": itemid },
+                url: "/node/find_app_dfs_zxd_sqcpxx_regitem_id/" + itemid,
+                async: false,
+                cache: false,
+                success: function (data) {
+                    ydjData = data;
+                    if (data.sfgljy == "1") {
+                        $("input[name='sfgljy'][value=1]").attr("checked", true);
+                    } else {
+                        $("input[name='sfgljy'][value=0]").attr("checked", true);
+                    }
+                    $("#sqbgyy").val(data.sqbgyy);
+                }
+            });
+        }
+
+        //事前报告信息保存
+        function onSave() {
+            //产品信息要素
+            ydjData.sfwxffq = $("input[name='sfgljy']:checked").val();
+            ydjData.qtbgywlx = $("#sqbgyy").val();
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/insert_app_dfs_zxd_sqcpxx",
+                //数据，json对象
+                data: ydjData,
+                //请求成功
+                success: function (data) {
+                    alert("保存成功！");
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    alert("保存失败！");
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+        }
+
+        //获取GET参数
+        function GetQueryValue(queryName) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == queryName) { return pair[1]; }
+            }
+            return null;
+        }
+    </script>
+</body>
+
+</html>

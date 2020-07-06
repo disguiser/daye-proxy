@@ -9,9 +9,14 @@
     <meta http-equiv="cache-control" content="no-cache,must-ridate">
     <meta http-equiv="expires" content="0">
     <title></title>
-    <link rel="stylesheet" type="text/css"
-        href="http://localhost:8081/static/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css" />
 </head>
+
+<style  type="text/css">
+    .required {
+        color: red;
+    }       
+</style>
 
 <body>
     <div style="height: 20px; text-align: right;">
@@ -29,7 +34,7 @@
             <a href="#sitePromotion" data-toggle="tab">
                 异地推介补充要素
             </a>
-        </li>
+        </li>	
     </ul>
 
     <div id="myTabContent" class="tab-content">
@@ -38,7 +43,7 @@
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
                     <tr>
                         <td>
-                            预登记类型:
+                            <span class="required">*</span>预登记类型:
                         </td>
                         <td colspan="3">
                             <select id="ydjlx" name="ydjlx" style="width: 180px;">
@@ -54,7 +59,7 @@
                             <input type="radio" name="ccqxtcfzr" value="1" />是
                             <input type="radio" name="ccqxtcfzr" value="0" />否
                         </td>
-                        <td style="width: 20%;">报告业务类型</td>
+                        <td style="width: 20%;"><span class="required">*</span>报告业务类型</td>
                         <td style="width: 30%;">
                             <input type="checkbox" id="bgywlx0" name="bgywlx" value="0" />信托业务关联交易报告<br>
                             <input type="checkbox" id="bgywlx1" name="bgywlx" value="1" />房地产信托业务<br>
@@ -81,14 +86,14 @@
                     </tr>
                     <tr>
                         <td>
-                            拟发行或成立总规模类型:
+                            <span class="required">*</span>拟发行或成立总规模类型:
                         </td>
                         <td>
                             <input type="radio" name="nfxclzgmlx" value="1" />固定规模
                             <input type="radio" name="nfxclzgmlx" value="0" />非固定规模
                         </td>
                         <td>
-                            拟发行或成立规模类型:
+                            <span class="required">*</span>拟发行或成立规模类型:
                         </td>
                         <td>
                             <input type="radio" name="yjxtxmgm" value="1" />固定规模
@@ -103,7 +108,7 @@
                             <input type="text" id="fqcpqs" name="fqcpqs" style="width: 180px;">
                         </td>
                         <td>
-                            委托人及财产来源:
+                            <span class="required">*</span>委托人及财产来源:
                         </td>
                         <td>
                             <input type="text" id="wtrjzjly" name="wtrjzjly" style="width: 180px;">
@@ -117,7 +122,7 @@
                             <input type="text" id="sytzrq" name="sytzrq" style="width: 180px;">
                         </td>
                         <td>
-                            保管标识:
+                            <span class="required">*</span>保管标识:
                         </td>
                         <td>
                             <input type="radio" name="bgbs" value="00" />保管制
@@ -154,7 +159,7 @@
                     </tr>
                     <tr>
                         <td>
-                            交易结构:
+                            <span class="required">*</span>交易结构:
                         </td>
                         <td>
                             <input type="text" id="jyjg" name="jyjg" style="width: 180px;">
@@ -168,13 +173,13 @@
                     </tr>
                     <tr>
                         <td>
-                            风险预案说明:
+                            <span class="required">*</span>风险预案说明:
                         </td>
                         <td>
                             <input type="text" id="fxyasm" name="fxyasm" style="width: 180px;">
                         </td>
                         <td>
-                            公司合法合规意见:
+                            <span class="required">*</span>公司合法合规意见:
                         </td>
                         <td>
                             <input type="text" id="gshfhgyj" name="gshfhgyj" style="width: 180px;">
@@ -358,8 +363,8 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="http://localhost:8081/static/plugins/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="http://localhost:8081/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         //全局变量   
         var q = 1;

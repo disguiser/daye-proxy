@@ -277,7 +277,7 @@ let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
         //如果第一次没有填写，同步业务系统数据
         let project_info = await intrustqlc.query(`SELECT 
                                                     newId() uuid,
-                                                    '' bsid,
+                                                    0 bsid,
                                                     A.REGITEM_ID regitem_id,
                                                     A.PRODUCT_ID productid,
                                                     A.PRODUCT_CODE productcode,
@@ -371,7 +371,6 @@ let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
     }
 }
 
-
 //查询预登记-异地推介补充要素
 let find_app_dfs_zxd_ydjtjd_by_uuid = async (uuid) => {
     let data = await dfs.query(`SELECT * FROM APP_DFS_ZXD_YDJTJD WHERE uuid = '${uuid}' `, {
@@ -420,6 +419,240 @@ let insert_app_dfs_zxd_ydjtjd = async (data) => {
         });
 }
 
+//查询初始登记-产品信息要素
+let find_app_dfs_zxd_cscpxx_by_regitem_id = async (regitem_id) => {
+    let data = await dfs.query(`SELECT * FROM APP_DFS_ZXD_CSCPXX WHERE regitem_id = '${regitem_id}' `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if (data.length > 0) {
+        return data[0];
+    } else {
+        //如果第一次没有填写，同步业务系统数据
+        let project_info = await intrustqlc.query(`SELECT 
+        newId() uuid,
+        0 bsid,
+        A.REGITEM_ID regitem_id,
+        A.PRODUCT_ID productid,
+        A.PRODUCT_CODE productcode,
+        '1' djlx,
+        '31D' xtjgmc,
+        A.PRODUCT_NAME cpqc,
+        '' djcpbh,
+        A.PRODUCT_CODE gscpbh,
+        '0' sfxtzcp,
+        '' sdbs,
+        '' fqzcpnbbh,
+        CASE WHEN A.TYPE3 = '113801' THEN '0' WHEN A.TYPE3 = '113802' THEN '1' WHEN A.TYPE3 = '113803' THEN '2' ELSE '' END xtccxz,
+        CASE WHEN A.TYPE1 = 1 THEN '0' WHEN A.TYPE1 = 2 THEN '1' ELSE '' END dyjhbz,
+        CASE WHEN A.TYPE3 = '113802' OR A.TYPE3 = '113803' THEN '0' ELSE '' END ccqxtcfzr,
+        CASE WHEN B.GLFS = 1 THEN '0' WHEN B.GLFS = 2 THEN '1' ELSE '' END stzz,
+        CASE WHEN A.GNFL = '114301' THEN '0' WHEN A.GNFL = '114302' THEN '1' WHEN A.GNFL = '114303' THEN '2' ELSE '' END xtgn,
+        CASE WHEN A.HS_FLAG = 1 THEN '2' WHEN A.HS_FLAG = 2 THEN '0' ELSE '1' END yxfs,
+        CASE WHEN B.OPEN_FLAG = 1 THEN '1'WHEN B.OPEN_FLAG = 2 THEN '0' ELSE '' END kffbbs,
+        CASE WHEN B.XTMD = 2 THEN '0' WHEN B.XTMD = 3 THEN '1' ELSE '0' END xtsyfs,
+        '' syfssm,
+        '2' jghbs,
+        '' jghyxlhbl,
+        '0' zjcbs,
+        B.SFTOT totbs,
+        B.MXTXMBM glmxt,
+        '' glzxt,
+        isnull(A.CL_MONEY,0) csmjje,
+        isnull(A.CL_AMOUNT,0) csmjfe,
+        'CNY' zjjsbz,
+        0 yqmjzje,
+        0 yqmjzfe,
+        'CNY' yqmjzebz,
+        '' zyyyly_ctq,
+        '' zytxhy_ctq,
+        '' ccglyyfs,
+        CASE WHEN B.TYPE5 = '114101' THEN 'a' WHEN B.TYPE5 = '114102' THEN 'b' WHEN B.TYPE5 = '114104' THEN 'c' WHEN B.TYPE5 = '114105' THEN 'd' WHEN B.TYPE5 = '114103' THEN 'e' WHEN B.TYPE5 = '114107' THEN 'f' ELSE '' END ccglyyfs_ccq,
+        '0' xdzcjsyq,
+        '0' zczqhbs,
+        'f' tsyw,
+        '' ywxism,
+        CASE WHEN A.HS_FLAG = 1 THEN '2' WHEN A.HS_FLAG = 2 THEN '0' ELSE '1' END syllx,
+        isnull(A.MAX_RATE,0) zdyqsyl,
+        CAST(ROUND(A.MIN_RATE*100,2) AS NVARCHAR(30)) zgyqsyl,
+        CASE WHEN A.TYPE1 = 1 THEN '0' WHEN A.TYPE1 = 2 THEN '1' ELSE '' END xtbclx,
+        ROUND(ISNULL(A.XTBCL,0) * 100,2) xtbcl,
+        0 xtbc,
+        '' htydbcsm,
+        CASE WHEN A.RISK_RANK = 3 THEN '0' ELSE '1' END fxxmbs,
+        '' fxtzbs,
+        '' fxczjz,
+        '' fxhscsnew,
+        '' fxhscs,
+        '' fxczcsbhbcsm,
+        CASE WHEN A.CPSTART_QXUNIT = 0 THEN '1' ELSE '0' END sfgdqxcp,
+        A.CPSTART_DATE xtcpsjclrq,
+        A.CPEND_DATE cpjhdqr,
+        CASE WHEN B.KFPD = 1 THEN '0' WHEN B.KFPD = 2 THEN '1' WHEN B.KFPD = 3 THEN '5' WHEN B.KFPD = 4 THEN '6' WHEN B.KFPD = 5 THEN '7' WHEN B.KFPD = 6 THEN '8' WHEN B.KFPD = 7 THEN '' WHEN B.KFPD = 8 THEN '3' WHEN B.KFPD = 0 THEN '9' ELSE '' END kfpd,
+        '' shdxzxtj,
+        '' ktqshbs,
+        '' tjfs,
+        '' tjmj,
+        '0' ydtjbs,
+        CASE WHEN B.TYPE4 = '115703' THEN '0' WHEN B.TYPE4 = '115702' THEN '1' WHEN B.TYPE4 = '115701' THEN '2' WHEN B.TYPE4 = '115704' THEN '3' ELSE '' END xmtjf,
+        CASE WHEN B.SFZQTZ = 1 THEN '0' ELSE '1' END sfgz,
+        '' gzms,
+        '' gzcj,
+        '' gzjg,
+        '' jzpgpd,
+        '' jntgjg,
+        '' jwtgdljg,
+        '' jwtgdljggb,
+        '' tzgwbs,
+        '' tzgwbh,
+        '' grjgbs,
+        CASE WHEN ISNULL(B.GLJY,'') <> '' THEN '1' ELSE '0' END gljybs,
+        '' gljylx,
+        '' gljybcsm,
+        '' gllx,
+        '' gljymd,
+        '' gljydj,
+        '' jzplpd,
+        '7' zcglbgpd,
+        '1' qsbgplbs,
+        B.DEPT_NAME xtcpssbm,
+        B.ADMIN_MANAGER_NAME xtjlxm,
+        '' fggjglry,
+        '' lxdh
+        FROM QLC_TPRODUCT A, QLC_TITEMREGINFO B
+         WHERE A.REGITEM_ID = B.REGITEM_ID AND B.REGITEM_ID = ${regitem_id}`, {
+            type: intrustqlc.QueryTypes.SELECT
+        });
+        return project_info[0];
+    }
+}
+
+//保存初始登记-产品信息要素
+let insert_app_dfs_zxd_cscpxx = async (data) => {
+    //先删除
+    await dfs.query(`DELETE FROM APP_DFS_ZXD_CSCPXX WHERE regitem_id = '${data.regitem_id}'`);
+    //再保存
+    await dfs.query(`INSERT INTO APP_DFS_ZXD_CSCPXX(uuid,bsid,regitem_id,productid,productcode,djlx,xtjgmc,cpqc,djcpbh,gscpbh,sfxtzcp,sdbs,fqzcpnbbh,xtccxz,
+        dyjhbz,ccqxtcfzr,stzz,xtgn,yxfs,kffbbs,xtsyfs,syfssm,jghbs,jghyxlhbl,zjcbs,totbs,glmxt,glzxt,
+        csmjje,csmjfe,zjjsbz,yqmjzje,yqmjzfe,yqmjzebz,zyyyly_ctq,zytxhy_ctq,ccglyyfs,ccglyyfs_ccq,xdzcjsyq,
+        zczqhbs,tsyw,ywxism,syllx,zdyqsyl,zgyqsyl,xtbclx,xtbcl,xtbc,htydbcsm,fxxmbs,fxtzbs,fxczjz,fxhscsnew,
+        fxhscs,fxczcsbhbcsm,sfgdqxcp,xtcpsjclrq,cpjhdqr,kfpd,shdxzxtj,ktqshbs,tjfs,tjmj,ydtjbs,xmtjf,sfgz,
+        gzms,gzcj,gzjg,jzpgpd,jntgjg,jwtgdljg,jwtgdljggb,tzgwbs,tzgwbh,grjgbs,gljybs,gljylx,gljybcsm,gllx,
+        gljymd,gljydj,jzplpd,zcglbgpd,qsbgplbs,xtcpssbm,xtjlxm,fggjglry,lxdh) values(
+            '${data.uuid}',${data.bsid},${data.regitem_id},${data.productid},'${data.productcode}','${data.djlx}','${data.xtjgmc}','${data.cpqc}','${data.djcpbh}','${data.gscpbh}','${data.sfxtzcp}','${data.sdbs}','${data.fqzcpnbbh}','${data.xtccxz}','${data.dyjhbz}','${data.ccqxtcfzr}','${data.stzz}','${data.xtgn}','${data.yxfs}','${data.kffbbs}','${data.xtsyfs}','${data.syfssm}','${data.jghbs}','${data.jghyxlhbl}','${data.zjcbs}','${data.totbs}','${data.glmxt}','${data.glzxt}',${data.csmjje},${data.csmjfe},'${data.zjjsbz}',${data.yqmjzje},${data.yqmjzfe},'${data.yqmjzebz}','${data.zyyyly_ctq}','${data.zytxhy_ctq}','${data.ccglyyfs}','${data.ccglyyfs_ccq}','${data.xdzcjsyq}','${data.zczqhbs}','${data.tsyw}','${data.ywxism}','${data.syllx}',${data.zdyqsyl},'${data.zgyqsyl}','${data.xtbclx}',${data.xtbcl},${data.xtbc},'${data.htydbcsm}','${data.fxxmbs}','${data.fxtzbs}','${data.fxczjz}','${data.fxhscsnew}','${data.fxhscs}','${data.fxczcsbhbcsm}','${data.sfgdqxcp}','${data.xtcpsjclrq}','${data.cpjhdqr}','${data.kfpd}','${data.shdxzxtj}','${data.ktqshbs}','${data.tjfs}','${data.tjmj}','${data.ydtjbs}','${data.xmtjf}','${data.sfgz}','${data.gzms}','${data.gzcj}','${data.gzjg}','${data.jzpgpd}','${data.jntgjg}','${data.jwtgdljg}','${data.jwtgdljggb}','${data.tzgwbs}','${data.tzgwbh}','${data.grjgbs}','${data.gljybs}','${data.gljylx}','${data.gljybcsm}','${data.gllx}','${data.gljymd}','${data.gljydj}','${data.jzplpd}','${data.zcglbgpd}','${data.qsbgplbs}','${data.xtcpssbm}','${data.xtjlxm}','${data.fggjglry}','${data.lxdh}'
+        )`)
+        .then(function (result) {
+            console.log(result);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+//查询终止登记-产品信息要素
+let find_app_dfs_zxd_zzcpxx_by_regitem_id = async (regitem_id) => {
+    let data = await dfs.query(`SELECT * FROM APP_DFS_ZXD_ZZCPXX WHERE regitem_id = '${regitem_id}' `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if (data.length > 0) {
+        return data[0];
+    } else {
+        //如果第一次没有填写，同步业务系统数据
+        let project_info = await intrustqlc.query(`SELECT 
+        newId() uuid,
+        0 bsid,
+        A.REGITEM_ID regitem_id,
+        A.PRODUCT_ID productid,
+        A.PRODUCT_CODE productcode,
+        '31D' xtjgmc,
+        '' djcpbh,
+        A.PRODUCT_NAME cpqc,
+        '' qsrq,
+        '' sfaydrqqs,
+        0 ssxtje,
+        0 xtbjljgfe,
+        0 xtsyljfpe,
+        0 tgljgdbc,
+        0 tgljyjbc,
+        0 strljgdbc,
+        0 strljyjbc,
+        0 sjxtbcl,
+        0 xtfyze,
+        0 xtfyl,
+        0 xtbgfl
+        FROM QLC_TPRODUCT A, QLC_TITEMREGINFO B
+         WHERE A.REGITEM_ID = B.REGITEM_ID AND B.REGITEM_ID = ${regitem_id}`, {
+            type: intrustqlc.QueryTypes.SELECT
+        });
+        return project_info[0];
+    }
+}
+
+//保存终止登记-产品信息要素
+let insert_app_dfs_zxd_zzcpxx = async (data) => {
+    //先删除
+    await dfs.query(`DELETE FROM APP_DFS_ZXD_ZZCPXX WHERE regitem_id = '${data.regitem_id}'`);
+    //再保存
+    await dfs.query(`INSERT INTO APP_DFS_ZXD_ZZCPXX(uuid,bsid,regitem_id,productid,productcode,xtjgmc,djcpbh,cpqc,qsrq,sfaydrqqs,ssxtje,xtbjljgfe,xtsyljfpe,tgljgdbc,
+        tgljyjbc,strljgdbc,strljyjbc,sjxtbcl,xtfyze,xtfyl,xtbgfl) values(
+            '${data.uuid}',${data.bsid},${data.regitem_id},${data.productid},'${data.productcode}','${data.xtjgmc}','${data.djcpbh}','${data.cpqc}','${data.qsrq}','${data.sfaydrqqs}',${data.ssxtje},${data.xtbjljgfe},${data.xtsyljfpe},${data.tgljgdbc},${data.tgljyjbc},${data.strljgdbc},${data.strljyjbc},${data.sjxtbcl},${data.xtfyze},${data.xtfyl},${data.xtbgfl}
+        )`)
+        .then(function (result) {
+            console.log(result);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+//查询事前报告-产品信息要素
+let find_app_dfs_zxd_sqcpxx_regitem_id = async (regitem_id) => {
+    let data = await dfs.query(`SELECT * FROM APP_DFS_ZXD_SQCPXX WHERE regitem_id = '${regitem_id}' `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if (data.length > 0) {
+        return data[0];
+    } else {
+        //如果第一次没有填写，同步业务系统数据
+        let project_info = await intrustqlc.query(`SELECT 
+        newId() uuid,
+        0 bsid,
+        A.REGITEM_ID regitem_id,
+        A.PRODUCT_ID productid,
+        A.PRODUCT_CODE productcode,
+        '31D' xtjgmc,
+        A.PRODUCT_NAME xtxmmc,
+        '' djcpbh,
+        CASE WHEN A.TYPE3 = '113801' THEN '0' WHEN A.TYPE3 = '113802' THEN '1' WHEN A.TYPE3 = '113803' THEN '2' ELSE '' END csxtcclx,
+        CASE WHEN A.TYPE1 = 1 THEN '0' WHEN A.TYPE1 = 2 THEN '1' ELSE '' END dyjhbz,
+        '' sfgljy,
+        '' sqbgyy,
+        B.ADMIN_MANAGER_NAME xtjlxm,
+        '' xtjldh,
+        '' fggjglry
+        FROM QLC_TPRODUCT A, QLC_TITEMREGINFO B
+         WHERE A.REGITEM_ID = B.REGITEM_ID AND B.REGITEM_ID = ${regitem_id}`, {
+            type: intrustqlc.QueryTypes.SELECT
+        });
+        return project_info[0];
+    }
+}
+
+//保存事前报告-产品信息要素
+let insert_app_dfs_zxd_sqcpxx = async (data) => {
+    //先删除
+    await dfs.query(`DELETE FROM APP_DFS_ZXD_SQCPXX WHERE regitem_id = '${data.regitem_id}'`);
+    //再保存
+    await dfs.query(`INSERT INTO APP_DFS_ZXD_SQCPXX(uuid,bsid,regitem_id,productid,productcode,xtjgmc,xtxmmc,djcpbh,csxtcclx,dyjhbz,sfgljy,sqbgyy,xtjlxm,xtjldh,fggjglry) values(
+            '${data.uuid}',${data.bsid},${data.regitem_id},${data.productid},'${data.productcode}','${data.xtjgmc}','${data.xtxmmc}','${data.djcpbh}','${data.csxtcclx}','${data.dyjhbz}','${data.sfgljy}','${data.sqbgyy}','${data.xtjlxm}','${data.xtjldh}','${data.fggjglry}'
+        )`)
+        .then(function (result) {
+            console.log(result);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
@@ -455,5 +688,11 @@ module.exports = {
     find_app_dfs_zxd_ydjcpxx_by_regitem_id: find_app_dfs_zxd_ydjcpxx_by_regitem_id,
     find_app_dfs_zxd_ydjtjd_by_uuid: find_app_dfs_zxd_ydjtjd_by_uuid,
     insert_app_dfs_zxd_ydjcpxx: insert_app_dfs_zxd_ydjcpxx,
-    insert_app_dfs_zxd_ydjtjd: insert_app_dfs_zxd_ydjtjd
+    insert_app_dfs_zxd_ydjtjd: insert_app_dfs_zxd_ydjtjd,
+    find_app_dfs_zxd_cscpxx_by_regitem_id: find_app_dfs_zxd_cscpxx_by_regitem_id,
+    insert_app_dfs_zxd_cscpxx: insert_app_dfs_zxd_cscpxx,
+    find_app_dfs_zxd_zzcpxx_by_regitem_id: find_app_dfs_zxd_zzcpxx_by_regitem_id,
+    insert_app_dfs_zxd_zzcpxx: insert_app_dfs_zxd_zzcpxx,
+    find_app_dfs_zxd_sqcpxx_regitem_id: find_app_dfs_zxd_sqcpxx_regitem_id,
+    insert_app_dfs_zxd_sqcpxx: insert_app_dfs_zxd_sqcpxx
 }

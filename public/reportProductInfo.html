@@ -93,8 +93,8 @@
         //事前报告信息保存
         function onSave() {
             //产品信息要素
-            ydjData.sfwxffq = $("input[name='sfgljy']:checked").val();
-            ydjData.qtbgywlx = $("#sqbgyy").val();
+            ydjData.sfgljy = $("input[name='sfgljy']:checked").val();
+            ydjData.sqbgyy = $("#sqbgyy").val();
             jQuery.ajax({
                 //请求方式
                 type: "POST",

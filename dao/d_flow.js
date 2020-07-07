@@ -440,7 +440,7 @@ let find_app_dfs_zxd_cscpxx_by_regitem_id = async (regitem_id) => {
         '' djcpbh,
         A.PRODUCT_CODE gscpbh,
         '0' sfxtzcp,
-        '' sdbs,
+        '0' sdbs,
         '' fqzcpnbbh,
         CASE WHEN A.TYPE3 = '113801' THEN '0' WHEN A.TYPE3 = '113802' THEN '1' WHEN A.TYPE3 = '113803' THEN '2' ELSE '' END xtccxz,
         CASE WHEN A.TYPE1 = 1 THEN '0' WHEN A.TYPE1 = 2 THEN '1' ELSE '' END dyjhbz,
@@ -578,7 +578,13 @@ let find_app_dfs_zxd_zzcpxx_by_regitem_id = async (regitem_id) => {
         0 sjxtbcl,
         0 xtfyze,
         0 xtfyl,
-        0 xtbgfl
+        0 xtbgfl,
+        0 sjsy,
+        0 sjsyl,
+        0 sshje,
+        0 shsje,
+        0 pfje,
+        '' ywxxsm
         FROM QLC_TPRODUCT A, QLC_TITEMREGINFO B
          WHERE A.REGITEM_ID = B.REGITEM_ID AND B.REGITEM_ID = ${regitem_id}`, {
             type: intrustqlc.QueryTypes.SELECT
@@ -593,8 +599,8 @@ let insert_app_dfs_zxd_zzcpxx = async (data) => {
     await dfs.query(`DELETE FROM APP_DFS_ZXD_ZZCPXX WHERE regitem_id = '${data.regitem_id}'`);
     //再保存
     await dfs.query(`INSERT INTO APP_DFS_ZXD_ZZCPXX(uuid,bsid,regitem_id,productid,productcode,xtjgmc,djcpbh,cpqc,qsrq,sfaydrqqs,ssxtje,xtbjljgfe,xtsyljfpe,tgljgdbc,
-        tgljyjbc,strljgdbc,strljyjbc,sjxtbcl,xtfyze,xtfyl,xtbgfl) values(
-            '${data.uuid}',${data.bsid},${data.regitem_id},${data.productid},'${data.productcode}','${data.xtjgmc}','${data.djcpbh}','${data.cpqc}','${data.qsrq}','${data.sfaydrqqs}',${data.ssxtje},${data.xtbjljgfe},${data.xtsyljfpe},${data.tgljgdbc},${data.tgljyjbc},${data.strljgdbc},${data.strljyjbc},${data.sjxtbcl},${data.xtfyze},${data.xtfyl},${data.xtbgfl}
+        tgljyjbc,strljgdbc,strljyjbc,sjxtbcl,xtfyze,xtfyl,xtbgfl,sjsy,sjsyl,sshje,shsje,pfje,ywxxsm) values(
+            '${data.uuid}',${data.bsid},${data.regitem_id},${data.productid},'${data.productcode}','${data.xtjgmc}','${data.djcpbh}','${data.cpqc}','${data.qsrq}','${data.sfaydrqqs}',${data.ssxtje},${data.xtbjljgfe},${data.xtsyljfpe},${data.tgljgdbc},${data.tgljyjbc},${data.strljgdbc},${data.strljyjbc},${data.sjxtbcl},${data.xtfyze},${data.xtfyl},${data.xtbgfl},${data.sjsy},${data.sjsyl},${data.sshje},${data.shsje},${data.pfje},'${data.ywxxsm}'
         )`)
         .then(function (result) {
             console.log(result);

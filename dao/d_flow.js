@@ -659,6 +659,42 @@ let insert_app_dfs_zxd_sqcpxx = async (data) => {
         });
 }
 
+//查询预登记-产品信息要素-详情
+let query_app_dfs_zxd_ydjcpxx = async (regitem_id) => {
+    let project_info = await dfs.query(`exec sp_query_app_dfs_zxd_ydjcpxx 0,'',0,'${regitem_id}',0  `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    return project_info[0];
+}
+
+//查询预登记-异地推介补充要素-详情
+let query_app_dfs_zxd_ydjtjd = async (uuid) => {
+    let data = await dfs.query(`exec sp_query_app_dfs_zxd_ydjtjd '${uuid}' `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if (data.length > 0) {
+        return data;
+    } else {
+        return "1";
+    }
+}
+
+//查询终止登记-产品信息-详情
+let query_app_dfs_zxd_zzcpxx = async (regitem_id) => {
+    let project_info = await dfs.query(`exec sp_query_app_dfs_zxd_zzcpxx 0,'',0,'${regitem_id}',0  `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    return project_info[0];
+}
+
+//查询事前登记-产品信息-详情
+let query_app_dfs_zxd_sqcpxx = async (regitem_id) => {
+    let project_info = await dfs.query(`exec sp_query_app_dfs_zxd_sqcpxx 0,'',0,'${regitem_id}',0  `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    return project_info[0];
+}
+
 module.exports = {
     find_affar: find_affar,
     find_affar_by_taskid: find_affar_by_taskid,
@@ -700,5 +736,9 @@ module.exports = {
     find_app_dfs_zxd_zzcpxx_by_regitem_id: find_app_dfs_zxd_zzcpxx_by_regitem_id,
     insert_app_dfs_zxd_zzcpxx: insert_app_dfs_zxd_zzcpxx,
     find_app_dfs_zxd_sqcpxx_regitem_id: find_app_dfs_zxd_sqcpxx_regitem_id,
-    insert_app_dfs_zxd_sqcpxx: insert_app_dfs_zxd_sqcpxx
+    insert_app_dfs_zxd_sqcpxx: insert_app_dfs_zxd_sqcpxx,
+    query_app_dfs_zxd_ydjcpxx: query_app_dfs_zxd_ydjcpxx,
+    query_app_dfs_zxd_ydjtjd: query_app_dfs_zxd_ydjtjd,
+    query_app_dfs_zxd_zzcpxx: query_app_dfs_zxd_zzcpxx,
+    query_app_dfs_zxd_sqcpxx: query_app_dfs_zxd_sqcpxx
 }

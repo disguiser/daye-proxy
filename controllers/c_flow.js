@@ -1333,4 +1333,32 @@ module.exports = function (router) {
         let product_info = await d_flow.insert_app_dfs_zxd_sqcpxx(data);
         ctx.response.body = product_info
     });
+
+    //查询预登记-产品信息要素-详情
+    router.get('/query_app_dfs_zxd_ydjcpxx/:regitem_id', async (ctx, next) => {
+        let regitem_id = ctx.params.regitem_id;
+        let product_info = await d_flow.query_app_dfs_zxd_ydjcpxx(regitem_id);
+        ctx.response.body = product_info
+    });
+
+    //查询预登记-异地推介补充要素-详情
+    router.get('/query_app_dfs_zxd_ydjtjd/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.query_app_dfs_zxd_ydjtjd(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询终止登记-产品信息-详情
+    router.get('/query_app_dfs_zxd_zzcpxx/:regitem_id', async (ctx, next) => {
+        let regitem_id = ctx.params.regitem_id;
+        let product_info = await d_flow.query_app_dfs_zxd_zzcpxx(regitem_id);
+        ctx.response.body = product_info
+    });
+
+    //查询事前登记-产品信息-详情
+    router.get('/query_app_dfs_zxd_sqcpxx/:regitem_id', async (ctx, next) => {
+        let regitem_id = ctx.params.regitem_id;
+        let product_info = await d_flow.query_app_dfs_zxd_sqcpxx(regitem_id);
+        ctx.response.body = product_info
+    });
 }

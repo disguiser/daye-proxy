@@ -660,18 +660,18 @@
             //获取流程参数
             let flowid = GetQueryValue('flowid');
             let itemid = GetQueryValue('itemid');
-            query_app_dfs_zxd_ydjcpxx(flowid, itemid);
+            let taskid = GetQueryValue('taskid');
+            query_app_dfs_zxd_ydjcpxx(taskid);
         });
 
         //查询预登记-产品信息要素
-        function query_app_dfs_zxd_ydjcpxx(flowid, itemid) {
+        function query_app_dfs_zxd_ydjcpxx(taskid) {
             //根据项目ID采集现有信息
             jQuery.ajax({
-                data: { "flowid": flowid, "itemid": itemid },
-                url: "/node/query_app_dfs_zxd_ydjcpxx/" + itemid,
+                url: "/node/query_app_dfs_zxd_ydjcpxx/" + taskid,
                 async: false,
                 cache: false,
-                success: function (data) {
+                success: function (data) {console.log(data.symjzc);
                     $("#symjzc").html(data.symjzc);
                     $("#sjmjzc").html(data.sjmjzc);
                     $("#symxtzzc").html(data.symxtzzc);

@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base target="_self">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache,must-ridate">
+    <meta http-equiv="expires" content="0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css" />
+</head>
+<body>
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active">
+            <a href="#initInfo1" data-toggle="tab">
+                产品基本要素
+            </a>
+        </li>
+        <li>
+            <a href="#initInfo2" data-toggle="tab">
+                交易对手要素
+            </a>
+		</li>
+		<li>
+            <a href="#initInfo2" data-toggle="tab">
+                受益权结构要素集合
+            </a>
+		</li>	
+		<li>
+            <a href="#initInfo3" data-toggle="tab">
+                信托合同要素集合
+            </a>
+		</li>	
+		<li>
+            <a href="#initInfo4" data-toggle="tab">
+                银行资金账号要素集合
+            </a>
+		</li>	
+		<li>
+            <a href="#initInfo5" data-toggle="tab">
+                证券类账户要素集合
+            </a>
+        </li>	
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="initInfo1">
+            <div style="height:390px;overflow-y:auto">
+                <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
+                    <tr>
+                        <td style="width: 20%;">
+                            登记类型:
+                        </td>
+                        <td style="width: 30%;">
+                            <span id="djlx"></span>
+                        </td>
+                        <td style="width: 20%;">
+                            信托产品名称:
+                        </td>
+                        <td style="width: 30%;">
+                            <span id="cpqc"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            信托登记系统产品编码:
+                        </td>
+                        <td>
+                            <span id="djcpbh"></span>
+                        </td>
+                        <td>
+                            信托产品内部编号:
+                        </td>
+                        <td>
+                            <span id="gscpbh"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            分期发行标识:
+                        </td>
+                        <td>
+                            <span id="sfxtzcp"></span>
+                        </td>
+                        <td>
+                            三单标识:
+                        </td>
+                        <td>
+                            <span id="sdbs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            第一期产品信托登记系统产品编码:
+                        </td>
+                        <td>
+                            <span id="fqzcpnbbh"></span>
+                        </td>
+                        <td>
+                            信托财产性质标识:
+                        </td>
+                        <td>
+                            <span id="xtccxz"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            单一集合标识:
+                        </td>
+                        <td>
+                            <span id="dyjhbz"></span>
+                        </td>
+                        <td>
+                            财产权信托进行受益权拆分转让或者对外发行受益权标识:
+                        </td>
+                        <td>
+                            <span id="ccqxtcfzr"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            受托职责标识:
+                        </td>
+                        <td>
+                            <span id="stzz"></span>
+                        </td>
+                        <td>
+                            信托功能标识:
+                        </td>
+                        <td>
+                            <span id="xtgn"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            运行方式标识:
+                        </td>
+                        <td>
+                            <span id="yxfs"></span>
+                        </td>
+                        <td>
+                            开放/封闭标识:
+                        </td>
+                        <td>
+                            <span id="kffbbs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            受益方式标识:
+                        </td>
+                        <td>
+                            <span id="xtsyfs"></span>
+                        </td>
+                        <td>
+                            受益方式说明:
+                        </td>
+                        <td>
+                            <span id="syfssm"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            结构化标识:
+                        </td>
+                        <td>
+                            <span id="jghbs"></span>
+                        </td>
+                        <td>
+                            结构化优先劣后比例:
+                        </td>
+                        <td>
+                            <span id="jghyxlhbl"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            非标资金池标识:
+                        </td>
+                        <td>
+                            <span id="zjcbs"></span>
+                        </td>
+                        <td>
+                            TOT 标识:
+                        </td>
+                        <td>
+                            <span id="totbs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            关联母信托:
+                        </td>
+                        <td>
+                            <span id="glmxt"></span>
+                        </td>
+                        <td>
+                            关联子信托:
+                        </td>
+                        <td>
+                            <span id="glzxt"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            初始募集金额:
+                        </td>
+                        <td>
+                            <span id="csmjje"></span>
+                        </td>
+                        <td>
+                            初始募集份额:
+                        </td>
+                        <td>
+                            <span id="csmjfe"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            初始募集币种:
+                        </td>
+                        <td>
+                            <span id="zjjsbz"></span>
+                        </td>
+                        <td>
+                            预期募集总金额:
+                        </td>
+                        <td>
+                            <span id="yqmjzje"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            预期募集总份额:
+                        </td>
+                        <td>
+                            <span id="yqmjzfe"></span>
+                        </td>
+                        <td>
+                            预期募集总额币种:
+                        </td>
+                        <td>
+                            <span id="yqmjzebz"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            主要运用领域:
+                        </td>
+                        <td>
+                            <span id="zyyyly_ctq"></span>
+                        </td>
+                        <td>
+                            主要投向行业:
+                        </td>
+                        <td>
+                            <span id="zytxhy_ctq"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            财产主要运用方式(资金信托):
+                        </td>
+                        <td>
+                            <span id="ccglyyfs"></span>
+                        </td>
+                        <td>
+                            财产主要运用方式(财产权信托):
+                        </td>
+                        <td>
+                            <span id="ccglyyfs_ccq"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            银登中心登记的信贷资产及其收益权转让标识:
+                        </td>
+                        <td>
+                            <span id="xdzcjsyq"></span>
+                        </td>
+                        <td>
+                            资产证券化标识:
+                        </td>
+                        <td>
+                            <span id="zczqhbs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            特色业务标识:
+                        </td>
+                        <td>
+                            <span id="tsyw"></span>
+                        </td>
+                        <td>
+                            业务信息说明:
+                        </td>
+                        <td>
+                            <span id="ywxism"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            收益率类型:
+                        </td>
+                        <td>
+                            <span id="syllx"></span>
+                        </td>
+                        <td>
+                            基准收益率(下限):
+                        </td>
+                        <td>
+                            <span id="zdyqsyl"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            基准收益率(上限):
+                        </td>
+                        <td>
+                            <span id="zgyqsyl"></span>
+                        </td>
+                        <td>
+                            信托报酬类型:
+                        </td>
+                        <td>
+                            <span id="xtbclx"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            合同约定的信托报酬率（固定费率）:
+                        </td>
+                        <td>
+                            <span id="xtbcl"></span>
+                        </td>
+                        <td>
+                            合同约定的信托报酬率（固定金额）:
+                        </td>
+                        <td>
+                            <span id="xtbc"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            信托报酬说明:
+                        </td>
+                        <td>
+                            <span id="htydbcsm"></span>
+                        </td>
+                        <td>
+                            风险项目标识:
+                        </td>
+                        <td>
+                            <span id="fxxmbs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            风险台账标识:
+                        </td>
+                        <td>
+                            <span id="fxtzbs"></span>
+                        </td>
+                        <td>
+                            风险处置进展:
+                        </td>
+                        <td>
+                            <span id="fxczjz"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            风险缓释措施:
+                        </td>
+                        <td>
+                            <span id="fxhscsnew"></span>
+                        </td>
+                        <td>
+                            风险控制措施:
+                        </td>
+                        <td>
+                            <span id="fxhscs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            风险控制措施变化补充说明:
+                        </td>
+                        <td>
+                            <span id="fxczcsbhbcsm"></span>
+                        </td>
+                        <td>
+                            固定期限标识:
+                        </td>
+                        <td>
+                            <span id="sfgdqxcp"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            信托产品成立日期:
+                        </td>
+                        <td>
+                            <span id="xtcpsjclrq"></span>
+                        </td>
+                        <td>
+                            信托产品计划到期日:
+                        </td>
+                        <td>
+                            <span id="cpjhdqr"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            开放式产品开放频度:
+                        </td>
+                        <td>
+                            <span id="kfpd"></span>
+                        </td>
+                        <td>
+                            赎回的限制性条件:
+                        </td>
+                        <td>
+                            <span id="shdxzxtj"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            委托人可提前赎回标识:
+                        </td>
+                        <td>
+                            <span id="ktqshbs"></span>
+                        </td>
+                        <td>
+                            推介方式:
+                        </td>
+                        <td>
+                            <span id="tjfs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            推介媒介:
+                        </td>
+                        <td>
+                            <span id="tjmj"></span>
+                        </td>
+                        <td>
+                            异地推介标识:
+                        </td>
+                        <td>
+                            <span id="ydtjbs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            项目推荐方:
+                        </td>
+                        <td>
+                            <span id="xmtjf"></span>
+                        </td>
+                        <td>
+                            是否估值:
+                        </td>
+                        <td>
+                            <span id="sfgz"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            估值模式:
+                        </td>
+                        <td>
+                            <span id="gzms"></span>
+                        </td>
+                        <td>
+                            估值层级:
+                        </td>
+                        <td>
+                            <span id="gzcj"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            估值机构:
+                        </td>
+                        <td>
+                            <span id="gzjg"></span>
+                        </td>
+                        <td>
+                            净值评估频度:
+                        </td>
+                        <td>
+                            <span id="jzpgpd"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            境内托管机构:
+                        </td>
+                        <td>
+                            <span id="jntgjg"></span>
+                        </td>
+                        <td>
+                            境外托管代理机构:
+                        </td>
+                        <td>
+                            <span id="jwtgdljg"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            境外托管代理机构国别:
+                        </td>
+                        <td>
+                            <span id="jwtgdljggb"></span>
+                        </td>
+                        <td>
+                            投资顾问标识:
+                        </td>
+                        <td>
+                            <span id="tzgwbs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            投资顾问编号:
+                        </td>
+                        <td>
+                            <span id="tzgwbh"></span>
+                        </td>
+                        <td>
+                            交易对手个人/机构标识:
+                        </td>
+                        <td>
+                            <span id="grjgbs"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            关联交易标识:
+                        </td>
+                        <td>
+                            <span id="gljybs"></span>
+                        </td>
+                        <td>
+                            关联交易类型:
+                        </td>
+                        <td>
+                            <span id="gljylx"></span>
+                        </td>
+					</tr>
+					
+
+
+
+					<tr>
+                        <td>
+                            关联交易补充说明:
+                        </td>
+                        <td>
+                            <span id="gljybcsm"></span>
+                        </td>
+                        <td>
+                            关联方类型:
+                        </td>
+                        <td>
+                            <span id="gllx"></span>
+                        </td>
+					</tr>
+					<tr>
+                        <td>
+                            关联交易目的:
+                        </td>
+                        <td>
+                            <span id="gljymd"></span>
+                        </td>
+                        <td>
+                            关联交易定价:
+                        </td>
+                        <td>
+                            <span id="gljydj"></span>
+                        </td>
+					</tr>
+					<tr>
+                        <td>
+                            净值披露频度:
+                        </td>
+                        <td>
+                            <span id="jzplpd"></span>
+                        </td>
+                        <td>
+                            资产管理报告频度:
+                        </td>
+                        <td>
+                            <span id="zcglbgpd"></span>
+                        </td>
+					</tr>
+					<tr>
+                        <td>
+                            清算报告披露标识:
+                        </td>
+                        <td>
+                            <span id="qsbgplbs"></span>
+                        </td>
+                        <td>
+                            信托产品所属部门:
+                        </td>
+                        <td>
+                            <span id="xtcpssbm"></span>
+                        </td>
+					</tr>
+					<tr>
+                        <td>
+                            信托经理姓名:
+                        </td>
+                        <td>
+                            <span id="xtjlxm"></span>
+                        </td>
+                        <td>
+                            分管高级管理人员姓名:
+                        </td>
+                        <td>
+                            <span id="fggjglry"></span>
+                        </td>
+					</tr>
+					<tr>
+                        <td>
+                            联系电话:
+                        </td>
+                        <td colspan="3">
+                            <span id="lxdh"></span>
+                        </td>
+					</tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="initInfo2">
+            <div style="height:390px;overflow-y:auto">
+                <div id="csjyds">
+                    
+                </div>
+                <div style="height: 10px;"></div>
+            </div>
+		</div>
+		<div class="tab-pane fade" id="initInfo3">
+            <div style="height:390px;overflow-y:auto">
+                <div id="syqjg">
+                    
+                </div>
+                <div style="height: 10px;"></div>
+            </div>
+		</div>
+		<div class="tab-pane fade" id="initInfo4">
+            <div style="height:390px;overflow-y:auto">
+                <div id="xtht">
+                    
+                </div>
+                <div style="height: 10px;"></div>
+            </div>
+		</div>
+		<div class="tab-pane fade" id="initInfo5">
+            <div style="height:390px;overflow-y:auto">
+                <div id="yhzjzh">
+                    
+                </div>
+                <div style="height: 10px;"></div>
+            </div>
+		</div>
+		<div class="tab-pane fade" id="initInfo6">
+            <div style="height:390px;overflow-y:auto">
+                <div id="zqlzh">
+                    
+                </div>
+                <div style="height: 10px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/static/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        //初始化数据
+        let ydjData = new Object();
+        $(function () {
+            //获取流程参数
+            let flowid = GetQueryValue('flowid');
+            let itemid = GetQueryValue('itemid');
+            query_app_dfs_zxd_cscpxx(flowid, itemid);
+        });
+
+        //查询初始登记-产品信息要素-详情
+        function query_app_dfs_zxd_cscpxx(flowid, itemid) {
+            //根据项目ID采集现有信息
+            jQuery.ajax({
+                data: { "flowid": flowid, "itemid": itemid },
+                url: "/node/query_app_dfs_zxd_cscpxx/" + itemid,
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $("#djlx").html(data.djlx);
+					$("#cpqc").html(data.cpqc);
+					$("#djcpbh").html(data.djcpbh);
+					$("#gscpbh").html(data.gscpbh);
+					$("#sfxtzcp").html(data.sfxtzcp);
+					$("#sdbs").html(data.sdbs);
+					$("#fqzcpnbbh").html(data.fqzcpnbbh);
+					$("#xtccxz").html(data.xtccxz);
+					$("#dyjhbz").html(data.dyjhbz);
+					$("#ccqxtcfzr").html(data.ccqxtcfzr);
+					$("#stzz").html(data.stzz);
+					$("#xtgn").html(data.xtgn);
+					$("#yxfs").html(data.yxfs);
+					$("#kffbbs").html(data.kffbbs);
+					$("#xtsyfs").html(data.xtsyfs);
+					$("#syfssm").html(data.syfssm);
+					$("#jghbs").html(data.jghbs);
+					$("#jghyxlhbl").html(data.jghyxlhbl);
+					$("#zjcbs").html(data.zjcbs);
+					$("#totbs").html(data.totbs);
+					$("#glmxt").html(data.glmxt);
+					$("#glzxt").html(data.glzxt);
+					$("#csmjje").html(data.csmjje);
+					$("#csmjfe").html(data.csmjfe);
+					$("#zjjsbz").html(data.zjjsbz);
+					$("#yqmjzje").html(data.yqmjzje);
+					$("#yqmjzfe").html(data.yqmjzfe);
+					$("#yqmjzebz").html(data.yqmjzebz);
+					$("#zyyyly_ctq").html(data.zyyyly_ctq);
+					$("#zytxhy_ctq").html(data.zytxhy_ctq);
+					$("#ccglyyfs").html(data.ccglyyfs);
+					$("#ccglyyfs_ccq").html(data.ccglyyfs_ccq);
+					$("#xdzcjsyq").html(data.xdzcjsyq);
+					$("#zczqhbs").html(data.zczqhbs);
+					$("#tsyw").html(data.tsyw);
+					$("#ywxism").html(data.ywxism);
+					$("#syllx").html(data.syllx);
+					$("#zdyqsyl").html(data.zdyqsyl);
+					$("#zgyqsyl").html(data.zgyqsyl);
+					$("#xtbclx").html(data.xtbclx);
+					$("#xtbcl").html(data.xtbcl);
+					$("#xtbc").html(data.xtbc);
+					$("#htydbcsm").html(data.htydbcsm);
+					$("#fxxmbs").html(data.fxxmbs);
+					$("#fxtzbs").html(data.fxtzbs);
+					$("#fxczjz").html(data.fxczjz);
+					$("#fxhscsnew").html(data.fxhscsnew);
+					$("#fxhscs").html(data.fxhscs);
+					$("#fxczcsbhbcsm").html(data.fxczcsbhbcsm);
+					$("#sfgdqxcp").html(data.sfgdqxcp);
+					$("#xtcpsjclrq").html(data.xtcpsjclrq);
+					$("#cpjhdqr").html(data.cpjhdqr);
+					$("#kfpd").html(data.kfpd);
+					$("#shdxzxtj").html(data.shdxzxtj);
+					$("#ktqshbs").html(data.ktqshbs);
+					$("#tjfs").html(data.tjfs);
+					$("#tjmj").html(data.tjmj);
+					$("#ydtjbs").html(data.ydtjbs);
+					$("#xmtjf").html(data.xmtjf);
+					$("#sfgz").html(data.sfgz);
+					$("#gzms").html(data.gzms);
+					$("#gzcj").html(data.gzcj);
+					$("#gzjg").html(data.gzjg);
+					$("#jzpgpd").html(data.jzpgpd);
+					$("#jntgjg").html(data.jntgjg);
+					$("#jwtgdljg").html(data.jwtgdljg);
+					$("#jwtgdljggb").html(data.jwtgdljggb);
+					$("#tzgwbs").html(data.tzgwbs);
+					$("#tzgwbh").html(data.tzgwbh);
+					$("#grjgbs").html(data.grjgbs);
+					$("#gljybs").html(data.gljybs);
+					$("#gljylx").html(data.gljylx);
+					$("#gljybcsm").html(data.gljybcsm);
+					$("#gllx").html(data.gllx);
+					$("#gljymd").html(data.gljymd);
+					$("#gljydj").html(data.gljydj);
+					$("#jzplpd").html(data.jzplpd);
+					$("#zcglbgpd").html(data.zcglbgpd);
+					$("#qsbgplbs").html(data.qsbgplbs);
+					$("#xtcpssbm").html(data.xtcpssbm);
+					$("#xtjlxm").html(data.xtjlxm);
+					$("#fggjglry").html(data.fggjglry);
+					$("#lxdh").html(data.lxdh);
+
+					query_app_dfs_zxd_csjyds(data.uuid);
+					
+					query_app_dfs_zxd_cssyq(data.uuid);
+
+					query_app_dfs_zxd_csxtht(data.uuid);
+
+					query_app_dfs_zxd_yhzjzh(data.uuid);
+
+					query_app_dfs_zxd_cszqzh(data.uuid);
+                }
+            });
+		}
+
+        //查询初始登记-初始交易对手-详情
+        function query_app_dfs_zxd_csjyds(uuid) {
+            jQuery.ajax({
+                data: { "uuid": uuid },
+                url: "/node/query_app_dfs_zxd_csjyds/" + uuid,
+                async: false,
+                cache: false,
+                success: function (data) {
+                    if (data != "" && data.length != 1) {
+                        $.each(data,function(index,item) {
+                            addCsjyds(item.jydsjgzzjgdm,item.jydsjglx,item.jydsjgzclb);
+                        });
+                    }
+                    
+                }
+            });
+		}
+		
+		//添加交易对手
+        function addCsjyds(jydsjgzzjgdm,jydsjglx,jydsjgzclb) {
+            let str = `<div><div style="height: 10px;"></div>
+                    <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
+                        style="width: 100%;">
+                        <tr>
+                            <td style="width: 15%;">
+                                交易对手机构统一社会信用代码:
+                            </td>
+                            <td style="width: 18%;">
+                                `+ jydsjgzzjgdm + `
+                            </td>
+                            <td style="width: 15%;">
+                                交易对手机构类型
+                            </td>
+                            <td style="width: 18%;">
+                                `+ jydsjglx +`
+							</td>
+							<td style="width: 15%;">
+                                交易对手机构注册类别
+                            </td>
+                            <td style="width: 18%;">
+                                `+ jydsjgzclb +`
+                            </td>
+                        </tr>
+                    </table></div>`;
+            $("#csjyds").append(str);
+        }
+
+		//查询初始登记-初始受益权结构-详情
+		function query_app_dfs_zxd_cssyq(uuid) {
+            jQuery.ajax({
+                data: { "uuid": uuid },
+                url: "/node/query_app_dfs_zxd_cssyq/" + uuid,
+                async: false,
+                cache: false,
+                success: function (data) {
+                    if (data != "" && data.length != 1) {
+                        $.each(data,function(index,item) {
+                            addSyqjg(item.syqxh,item.syqdm,item.syqlx,item.fpsx,item.syqsyllx,item.syqyqsyl,item.yqsylsm,item.fhfs,item.fpfs,item.fppl);
+                        });
+                    }
+                    
+                }
+            });
+		}
+		
+		//添加受益权结构
+        function addSyqjg(syqxh,syqdm,syqlx,fpsx,syqsyllx,syqyqsyl,yqsylsm,fhfs,fpfs,fppl) {
+            let str = `<div><div style="height: 10px;"></div>
+                    <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
+                        style="width: 100%;">
+                        <tr>
+                            <td style="width: 20%;">
+                                受益权序号:
+                            </td>
+                            <td style="width: 30%;">
+                                `+ syqxh + `
+                            </td>
+                            <td style="width: 20%;">
+                                受益权代码
+                            </td>
+                            <td style="width: 30%;">
+                                `+ syqdm +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                受益权类型:
+                            </td>
+                            <td>
+                                `+ syqlx + `
+                            </td>
+                            <td>
+                                分配顺序
+                            </td>
+                            <td>
+                                `+ fpsx +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                受益权收益率类型:
+                            </td>
+                            <td>
+                                `+ syqsyllx + `
+                            </td>
+                            <td>
+                                受益权收益率 
+                            </td>
+                            <td>
+                                `+ syqyqsyl  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                收益率说明:
+                            </td>
+                            <td>
+                                `+ yqsylsm + `
+                            </td>
+                            <td>
+                                分红方式
+                            </td>
+                            <td>
+                                `+ fhfs  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                分配方式:
+                            </td>
+                            <td>
+                                `+ fpfs + `
+                            </td>
+                            <td>
+                                分配频率
+                            </td>
+                            <td>
+                                `+ fppl  +`
+							</td>
+                        </tr>
+                    </table></div>`;
+            $("#syqjg").append(str);
+		}
+		
+		//查询初始登记-初始信托合同-详情
+		function query_app_dfs_zxd_csxtht(uuid) {
+            jQuery.ajax({
+                data: { "uuid": uuid },
+                url: "/node/query_app_dfs_zxd_csxtht/" + uuid,
+                async: false,
+                cache: false,
+                success: function (data) {
+                    if (data != "" && data.length != 1) {
+                        $.each(data,function(index,item) {
+                            addXtht(item.zytabs,item.xthtbh,item.htjz,item.wtrqc,item.wtrlx,item.lxxq_wtr,item.wtrzjlx,item.wtrzjhm,item.htcszje,item.htcszfe,item.xtccxz,item.zjjsbz,item.wtzjje,item.wtccdyje,item.wtcccclx,item.syrxh,item.syrmc,item.syrlx,item.lxxq_syr,item.syrzjlx,item.syrzjhm,item.syqdm,item.sfkssyqzh_syr,item.syqzhbm_syr,item.syqcsfe,item.syqcsje,item.syqqsr,item.syqjhdqr,item.syryxlhbs,item.qksm);
+                        });
+                    }
+                    
+                }
+            });
+		}
+		
+		//添加信托合同
+        function addXtht(zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm) {
+            let str = `<div><div style="height: 10px;"></div>
+                    <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
+                        style="width: 100%;">
+                        <tr>
+                            <td style="width: 15%;">
+                                受益方式标识:
+                            </td>
+                            <td style="width: 18%;">
+                                `+ zytabs + `
+                            </td>
+                            <td style="width: 15%;">
+                                信托合同编号
+                            </td>
+                            <td style="width: 18%;">
+                                `+ xthtbh +`
+							</td>
+							<td style="width: 15%;">
+                                合同介质
+                            </td>
+                            <td style="width: 18%;">
+                                `+ htjz +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                委托人全称:
+                            </td>
+                            <td>
+                                `+ wtrqc + `
+                            </td>
+                            <td>
+                                委托人类型
+                            </td>
+                            <td>
+                                `+ wtrlx +`
+							</td>
+							<td>
+                                委托人类型详情
+                            </td>
+                            <td>
+                                `+ lxxq_wtr +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                委托人证件类型:
+                            </td>
+                            <td>
+                                `+ wtrzjlx + `
+                            </td>
+                            <td>
+                                委托人证件号码 
+                            </td>
+                            <td>
+                                `+ wtrzjhm  +`
+							</td>
+							<td>
+                                合同初始金额 
+                            </td>
+                            <td>
+                                `+ htcszje  +`
+							</td>
+						</tr>
+						<tr>
+							<td>
+                                合同初始份额:
+                            </td>
+                            <td>
+                                `+ htcszfe + `
+                            </td>
+                            <td>
+                                信托财产性质（交付资产类型）:
+                            </td>
+                            <td>
+                                `+ xtccxz + `
+                            </td>
+                            <td>
+                                资金结算币种
+                            </td>
+                            <td>
+                                `+ zjjsbz  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                初始委托资金金额:
+                            </td>
+                            <td>
+                                `+ wtzjje + `
+                            </td>
+                            <td>
+                                初始委托财产对应金额
+                            </td>
+                            <td>
+                                `+ wtccdyje  +`
+							</td>
+							<td>
+                                初始委托财产类型
+                            </td>
+                            <td>
+                                `+ wtcccclx  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                受益人序号:
+                            </td>
+                            <td>
+                                `+ syrxh + `
+                            </td>
+                            <td>
+                                受益人全称
+                            </td>
+                            <td>
+                                `+ syrmc  +`
+							</td>
+							<td>
+                                受益人类型
+                            </td>
+                            <td>
+                                `+ syrlx  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                受益人类型详情:
+                            </td>
+                            <td>
+                                `+ lxxq_syr + `
+                            </td>
+                            <td>
+                                受益人证件类型
+                            </td>
+                            <td>
+                                `+ syrzjlx  +`
+							</td>
+							<td>
+                                受益人证件号码
+                            </td>
+                            <td>
+                                `+ syrzjhm  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                受益权代码:
+                            </td>
+                            <td>
+                                `+ syqdm + `
+                            </td>
+                            <td>
+                                是否在中国信登开设信托受益权账户标识（预留字段，暂时隐藏）
+                            </td>
+                            <td>
+                                `+ sfkssyqzh_syr  +`
+							</td>
+							<td>
+                                信托受益权账户编码（预留字段，暂时隐藏）
+                            </td>
+                            <td>
+                                `+ syqzhbm_syr  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                受益权初始份额:
+                            </td>
+                            <td>
+                                `+ syqcsfe + `
+                            </td>
+                            <td>
+                                受益权初始金额
+                            </td>
+                            <td>
+                                `+ syqcsje  +`
+							</td>
+							<td>
+                                受益权起始日
+                            </td>
+                            <td>
+                                `+ syqqsr  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                受益权计划到期日:
+                            </td>
+                            <td>
+                                `+ syqjhdqr + `
+                            </td>
+                            <td>
+                                受益人优先劣后标识
+                            </td>
+                            <td>
+                                `+ syryxlhbs  +`
+							</td>
+							<td>
+                                情况说明
+                            </td>
+                            <td>
+                                `+ qksm  +`
+							</td>
+						</tr>
+                    </table></div>`;
+            $("#xtht").append(str);
+		}
+		
+		//查询初始登记-初始银行资金账户-详情
+		function query_app_dfs_zxd_yhzjzh(uuid) {
+            jQuery.ajax({
+                data: { "uuid": uuid },
+                url: "/node/query_app_dfs_zxd_yhzjzh/" + uuid,
+                async: false,
+                cache: false,
+                success: function (data) {
+                    if (data != "" && data.length != 1) {
+                        $.each(data,function(index,item) {
+                            addYhzjzh(item.yxzhlx,item.yxzhhm,item.yxzhkhyxzxqc,item.yxzhkhxqc,item.yxzhzh,item.bz,item.khrq);
+                        });
+                    }
+                    
+                }
+            });
+		}
+		
+		//添加银行资金账户
+        function addYhzjzh(yxzhlx,yxzhhm,yxzhkhyxzxqc,yxzhkhxqc,yxzhzh,bz,khrq) {
+            let str = `<div><div style="height: 10px;"></div>
+                    <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
+                        style="width: 100%;">
+                        <tr>
+                            <td style="width: 20%;">
+                                银行账户类型:
+                            </td>
+                            <td style="width: 30%;">
+                                `+ yxzhlx + `
+                            </td>
+                            <td style="width: 20%;">
+                                银行账户户名
+                            </td>
+                            <td style="width: 30%;">
+                                `+ yxzhhm +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                银行账户开户银行总行全称:
+                            </td>
+                            <td>
+                                `+ yxzhkhyxzxqc + `
+                            </td>
+                            <td>
+                                银行账户开户行全称
+                            </td>
+                            <td>
+                                `+ yxzhkhxqc +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                银行账户账号:
+                            </td>
+                            <td>
+                                `+ yxzhzh + `
+                            </td>
+                            <td>
+                                币种 
+                            </td>
+                            <td>
+                                `+ bz  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                开户日期:
+                            </td>
+                            <td colspan="3">
+                                `+ khrq + `
+                            </td>
+						</tr>
+                    </table></div>`;
+            $("#yhzjzh").append(str);
+		}
+
+		//查询初始登记-初始证券类账户-详情
+		function query_app_dfs_zxd_cszqzh(uuid) {
+            jQuery.ajax({
+                data: { "uuid": uuid },
+                url: "/node/query_app_dfs_zxd_cszqzh/" + uuid,
+                async: false,
+                cache: false,
+                success: function (data) {
+                    if (data != "" && data.length != 1) {
+                        $.each(data,function(index,item) {
+                            addZqlzh(item.sfklzqzh,item.zqzjzhzh,item.zqgsmc,item.zqgskhyyb,item.zqjyxtlx,item.wgzqjyxtcs,item.zqzjzhkhrq,item.sfklqhjyzjzh,item.qhjyzjzhhm,item.qhjyzjzhzh,item.gzqhjybm_tj,item.gzqhjybm_tqbz,item.gzqhjybm_tl,item.qhgsqc,item.khyyb,item.qhjyzhkhrq,item.sfklyxjjyzhzh,item.zqzhhu_sqs,item.zqzhzh_sqs,item.sfdvpjs_sqs,item.yhjzqzhkhrq_sqs,item.zqzhhu_zzd,item.zqzhzh_zzd,item.sfdvpjs_zzd,item.yhjzqzhkhrq_zzd);
+                        });
+                    }
+                    
+                }
+            });
+		}
+		
+		//添加证券类账户
+        function addZqlzh(sfklzqzh,zqzjzhzh,zqgsmc,zqgskhyyb,zqjyxtlx,wgzqjyxtcs,zqzjzhkhrq,sfklqhjyzjzh,qhjyzjzhhm,qhjyzjzhzh,gzqhjybm_tj,gzqhjybm_tqbz,gzqhjybm_tl,qhgsqc,khyyb,qhjyzhkhrq,sfklyxjjyzhzh,zqzhhu_sqs,zqzhzh_sqs,sfdvpjs_sqs,yhjzqzhkhrq_sqs,zqzhhu_zzd,zqzhzh_zzd,sfdvpjs_zzd,yhjzqzhkhrq_zzd) {
+            let str = `<div><div style="height: 10px;"></div>
+                    <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
+                        style="width: 100%;">
+                        <tr>
+                            <td style="width: 15%;">
+                                是否开立证券资金账户:
+                            </td>
+                            <td style="width: 18%;">
+                                `+ sfklzqzh + `
+                            </td>
+                            <td style="width: 15%;">
+                                证券资金账户账号
+                            </td>
+                            <td style="width: 18%;">
+                                `+ zqzjzhzh +`
+							</td>
+							<td style="width: 15%;">
+                                证券公司名称
+                            </td>
+                            <td style="width: 18%;">
+                                `+ zqgsmc +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                证券公司开户营业部:
+                            </td>
+                            <td>
+                                `+ zqgskhyyb + `
+                            </td>
+                            <td>
+                                证券交易系统类型
+                            </td>
+                            <td>
+                                `+ zqjyxtlx +`
+							</td>
+							<td>
+                                外购证券交易系统厂商
+                            </td>
+                            <td>
+                                `+ wgzqjyxtcs +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                证券资金账户开户日期:
+                            </td>
+                            <td>
+                                `+ zqzjzhkhrq + `
+                            </td>
+                            <td>
+                                是否开立期货交易资金账户 
+                            </td>
+                            <td>
+                                `+ sfklqhjyzjzh  +`
+							</td>
+							<td>
+                                期货交易资金账户户名 
+                            </td>
+                            <td>
+                                `+ qhjyzjzhhm  +`
+							</td>
+						</tr>
+						<tr>
+							<td>
+                                期货交易资金账户账号:
+                            </td>
+                            <td>
+                                `+ qhjyzjzhzh + `
+                            </td>
+                            <td>
+                                股指期货交易编码（投机）:
+                            </td>
+                            <td>
+                                `+ gzqhjybm_tj + `
+                            </td>
+                            <td>
+                                股指期货交易编码（套期保值）
+                            </td>
+                            <td>
+                                `+ gzqhjybm_tqbz  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                股指期货交易编码（套利）:
+                            </td>
+                            <td>
+                                `+ gzqhjybm_tl + `
+                            </td>
+                            <td>
+                                期货公司全称
+                            </td>
+                            <td>
+                                `+ qhgsqc  +`
+							</td>
+							<td>
+                                开户营业部
+                            </td>
+                            <td>
+                                `+ khyyb  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                期货交易资金账户开户日期:
+                            </td>
+                            <td>
+                                `+ qhjyzhkhrq + `
+                            </td>
+                            <td>
+                                上海交易所是否开立银行间交易账户
+                            </td>
+                            <td>
+                                `+ sfklyxjjyzhzh  +`
+							</td>
+							<td>
+                                银行间债券市场账户（上海清算所）户名
+                            </td>
+                            <td>
+                                `+ zqzhhu_sqs  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                银行间债券市场账户（上海清算所）账号:
+                            </td>
+                            <td>
+                                `+ zqzhzh_sqs + `
+                            </td>
+                            <td>
+                                是否开立
+                            </td>
+                            <td>
+                                `+ sfdvpjs_sqs  +`
+							</td>
+							<td>
+                                开户日期
+                            </td>
+                            <td>
+                                `+ yhjzqzhkhrq_sqs  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                银行间债券市场账户（中债登）户名:
+                            </td>
+                            <td>
+                                `+ zqzhhu_zzd + `
+                            </td>
+                            <td>
+                                银行间债券市场账户（中债登）账号
+                            </td>
+                            <td>
+                                `+ zqzhzh_zzd  +`
+							</td>
+							<td>
+                                中信登是否开立
+                            </td>
+                            <td>
+                                `+ sfdvpjs_zzd  +`
+							</td>
+						</tr>
+						<tr>
+                            <td>
+                                中信登开户日期:
+                            </td>
+                            <td colspan="5">
+                                `+ yhjzqzhkhrq_zzd + `
+                            </td>
+						</tr>
+                    </table></div>`;
+            $("#zqlzh").append(str);
+		}
+
+        //获取GET参数
+        function GetQueryValue(queryName) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == queryName) { return pair[1]; }
+            }
+            return null;
+        }
+    </script>
+</body>
+
+</html>

@@ -12,10 +12,10 @@
     <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css" />
 </head>
 
-<style  type="text/css">
+<style type="text/css">
     .required {
         color: red;
-    }       
+    }
 </style>
 
 <body>
@@ -34,7 +34,7 @@
             <a href="#sitePromotion" data-toggle="tab">
                 异地推介补充要素
             </a>
-        </li>	
+        </li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
@@ -64,7 +64,8 @@
                             <input type="checkbox" id="bgywlx0" name="bgywlx" value="0" />信托业务关联交易报告<br>
                             <input type="checkbox" id="bgywlx1" name="bgywlx" value="1" />房地产信托业务<br>
                             <input type="checkbox" id="bgywlx2" name="bgywlx" value="2" />异地推介<br>
-                            <input type="checkbox" id="bgywlx3" name="bgywlx" value="3" />商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问<br>
+                            <input type="checkbox" id="bgywlx3" name="bgywlx"
+                                value="3" />商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问<br>
                             <input type="checkbox" id="bgywlx4" name="bgywlx" value="4" />其他
                         </td>
                     </tr>
@@ -353,7 +354,7 @@
         <div class="tab-pane fade" id="sitePromotion">
             <div style="height:390px;overflow-y:auto">
                 <div id="tjd">
-                    
+
                 </div>
                 <div style="height: 10px;"></div>
                 <div
@@ -369,7 +370,7 @@
         //全局变量   
         var q = 1;
         //添加异地推介补充
-        function addSitePromotion(sfqgtj,tjd,tjd_p,tjd_c,tjd_a,tjjg,tjfl,tjq,jhtjgm,tjfshtjgl,tjfzrmc,tjfzrdh) {
+        function addSitePromotion(sfqgtj, tjd, tjd_p, tjd_c, tjd_a, tjjg, tjfl, tjq, jhtjgm, tjfshtjgl, tjfzrmc, tjfzrdh) {
             let str = `<div id="ydtjdiv` + q + `"><div style="height: 10px;"></div>
                     <div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
                     <a href="#" onclick="delSitePromotion(`+ q + `);"><font color="#FF0000">点击删除下面一条异地推介补充要素</font></a></div>
@@ -399,49 +400,15 @@
                                 推介地-省:
                             </td>
                             <td style="width: 30%;">
-                                <select id="tjd_p`+ q + `" name="tjd_p` + q + `" style="width: 180px;">
-                                    <option value="001001">北京</option>
-                                    <option value="001024">重庆</option>
-                                    <option value="001026">福建</option>
-                                    <option value="001010">甘肃</option>
-                                    <option value="001027">广东</option>
-                                    <option value="001028">广西</option>
-                                    <option value="001029">贵州</option>
-                                    <option value="001031">海南</option>
-                                    <option value="001004">河北</option>
-                                    <option value="001008">河南</option>
-                                    <option value="001007">黑龙江</option>
-                                    <option value="001023">湖北</option>
-                                    <option value="001022">湖南</option>
-                                    <option value="001006">吉林</option>
-                                    <option value="001018">江苏</option>
-                                    <option value="001019">安徽</option>
-                                    <option value="001021">江西</option>
-                                    <option value="001005">辽宁</option>
-                                    <option value="001003">内蒙古</option>
-                                    <option value="001011">宁夏</option>
-                                    <option value="001012">青海</option>
-                                    <option value="001015">山东</option>
-                                    <option value="001014">山西</option>
-                                    <option value="001009">陕西</option>
-                                    <option value="001017">上海</option>
-                                    <option value="001025">四川</option>
-                                    <option value="001002">天津</option>
-                                    <option value="001016">西藏</option>
-                                    <option value="001013">新疆</option>
-                                    <option value="001030">云南</option>
-                                    <option value="001020">浙江</option>
-                                    <option value="001033">中国澳门</option>
-                                    <option value="001034">中国台湾</option>
-                                    <option value="001032">中国香港</option>
-                                    <option value="001000">其他</option>
+                                <select id="tjd_p`+ q + `" name="tjd_p` + q + `" style="width: 180px;" onclick="chTjdP(` + q + `, `+tjd_c+`)">
+                                    
                                 </select>
                             </td>
                             <td style="width: 20%;">
                                 推介地-城市
                             </td>
                             <td style="width: 30%;">
-                                <select id="tjd_c`+ q + `" name="tjd_c` + q + `" value="`+tjd_c+`" style="width: 180px;">
+                                <select id="tjd_c`+ q + `" name="tjd_c` + q + `" value="` + tjd_c + `" style="width: 180px;">
 
                                 </select>
                             </td>
@@ -451,7 +418,7 @@
                                 推介地-地址:
                             </td>
                             <td colspan="3">
-                                <input type="text" id="tjd_a`+ q + `" name="tjd_a` + q + `" value="`+tjd_a+`" style="width: 300px;">
+                                <input type="text" id="tjd_a`+ q + `" name="tjd_a` + q + `" value="` + tjd_a + `" style="width: 300px;">
                             </td>
                         </tr>
                         <tr>
@@ -459,13 +426,13 @@
                                 推介机构:
                             </td>
                             <td>
-                                <input type="text" id="tjjg`+ q + `" name="tjjg` + q + `" value="`+tjjg+`" style="width: 180px;">
+                                <input type="text" id="tjjg`+ q + `" name="tjjg` + q + `" value="` + tjjg + `" style="width: 180px;">
                             </td>
                             <td>
                                 推介费率:
                             </td>
                             <td>
-                                <input type="text" id="tjfl`+ q + `" name="tjfl` + q + `" value="`+tjfl+`" style="width: 180px;">
+                                <input type="text" id="tjfl`+ q + `" name="tjfl` + q + `" value="` + tjfl + `" style="width: 180px;">
                             </td>
                         </tr>
                         <tr>
@@ -473,13 +440,13 @@
                                 推介期:
                             </td>
                             <td>
-                                <input type="text" id="tjq`+ q + `" name="tjq` + q + `" value="`+tjq+`" style="width: 180px;">
+                                <input type="text" id="tjq`+ q + `" name="tjq` + q + `" value="` + tjq + `" style="width: 180px;">
                             </td>
                             <td>
                                 计划推介规模:
                             </td>
                             <td>
-                                <input type="text" id="jhtjgm`+ q + `" name="jhtjgm` + q + `" value="`+jhtjgm+`" style="width: 180px;">（万元）
+                                <input type="text" id="jhtjgm`+ q + `" name="jhtjgm` + q + `" value="` + jhtjgm + `" style="width: 180px;">（万元）
                             </td>
                         </tr>
                         <tr>
@@ -487,13 +454,13 @@
                                 推介方式和推介管理:
                             </td>
                             <td>
-                                <input type="text" id="tjfshtjgl`+ q + `" name="tjfshtjgl` + q + `" value="`+tjfshtjgl+`" style="width: 180px;">
+                                <input type="text" id="tjfshtjgl`+ q + `" name="tjfshtjgl` + q + `" value="` + tjfshtjgl + `" style="width: 180px;">
                             </td>
                             <td>
                                 推介负责人名称:
                             </td>
                             <td>
-                                <input type="text" id="tjfzrmc`+ q + `" name="tjfzrmc` + q + `" value="`+tjfzrmc+`" style="width: 180px;">
+                                <input type="text" id="tjfzrmc`+ q + `" name="tjfzrmc` + q + `" value="` + tjfzrmc + `" style="width: 180px;">
                             </td>
                         </tr>
                         <tr>
@@ -501,17 +468,69 @@
                                 推介负责人电话:
                             </td>
                             <td colspan="3">
-                                <input type="text" id="tjfzrdh`+ q + `" name="tjfzrdh` + q + `" value="`+tjfzrdh+`" style="width: 180px;">
+                                <input type="text" id="tjfzrdh`+ q + `" name="tjfzrdh` + q + `" value="` + tjfzrdh + `" style="width: 180px;">
                             </td>
                         </tr>
                     </table></div>`;
             $("#tjd").append(str);
+            $(":radio[name='sfqgtj"+q+"'][value='" + sfqgtj + "']").prop("checked", "checked");
+
+            //初始化推介地-省
+            inittjd_p(q, tjd_p, tjd_c);
+
             q++;
         }
 
         //删除异地推介补充
         function delSitePromotion(no) {
             $("#ydtjdiv" + no).remove();
+        }
+
+        //初始化推介地-省
+        function inittjd_p(no, tjd_p_val, tjd_c_val) {
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/query_app_dfs_scode_content",
+                //数据，json对象
+                data: { "region_code": "Before019", "item_code": "" },
+                success: function (data) {
+                    if (data != "" && data.length != 1) {
+                        $.each(data, function (index, item) {
+                            if (item.ITEM_CODE == tjd_p_val) {
+                                $("#tjd_p" + no).append("<option value='" + item.ITEM_CODE + "' selected>" + item.ITEM_NAME + "</option>");
+                                chTjdP(no, tjd_c_val);
+                            } else
+                                $("#tjd_p" + no).append("<option value='" + item.ITEM_CODE + "'>" + item.ITEM_NAME + "</option>");
+                        });
+                    }
+                }
+            });
+        }
+
+        //选择推介地-省获得推介地-城市
+        function chTjdP(no, tjd_c_val) {
+            let tjd_p = $("#tjd_p" + no).val();
+            $("#tjd_c" + no).empty();
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/query_app_dfs_scode_content",
+                //数据，json对象
+                data: { "region_code": "Before020", "item_code": tjd_p },
+                success: function (data) {
+                    if (data != "") {
+                        $.each(data, function (index, item) {
+                            if (item.ITEM_CODE == tjd_c_val)
+                                $("#tjd_c" + no).append("<option value='" + item.ITEM_CODE + "' selected>" + item.ITEM_NAME + "</option>");
+                            else
+                                $("#tjd_c" + no).append("<option value='" + item.ITEM_CODE + "'>" + item.ITEM_NAME + "</option>");
+                        });
+                    }
+                }
+            });
         }
 
         //初始化数据
@@ -539,17 +558,17 @@
                         $("input[name='ccqxtcfzr'][value=0]").attr("checked", true);
                     }
                     let arr = data.bgywlx.split(",");
-                    $.each(arr,function(index,value){
+                    $.each(arr, function (index, value) {
                         if (value == "0") {
-                            $("#bgywlx0").attr("checked","checked");
+                            $("#bgywlx0").attr("checked", "checked");
                         } else if (value == "1") {
-                            $("#bgywlx1").attr("checked","checked");
+                            $("#bgywlx1").attr("checked", "checked");
                         } else if (value == "2") {
-                            $("#bgywlx2").attr("checked","checked");
+                            $("#bgywlx2").attr("checked", "checked");
                         } else if (value == "3") {
-                            $("#bgywlx3").attr("checked","checked");
+                            $("#bgywlx3").attr("checked", "checked");
                         } else if (value == "4") {
-                            $("#bgywlx4").attr("checked","checked");
+                            $("#bgywlx4").attr("checked", "checked");
                         }
                     });
                     if (data.sfwxffq == "1") {
@@ -632,11 +651,10 @@
                 cache: false,
                 success: function (data) {
                     if (data != "" && data.length != 1) {
-                        $.each(data,function(index,item) {
-                            addSitePromotion(item.sfqgtj,item.tjd,item.tjd_p,item.tjd_c,item.tjd_a,item.tjjg,item.tjfl,item.tjq,item.jhtjgm,item.tjfshtjgl,item.tjfzrmc,item.tjfzrdh);
+                        $.each(data, function (index, item) {
+                            addSitePromotion(item.sfqgtj, item.tjd, item.tjd_p, item.tjd_c, item.tjd_a, item.tjjg, item.tjfl, item.tjq, item.jhtjgm, item.tjfshtjgl, item.tjfzrmc, item.tjfzrdh);
                         });
                     }
-                    
                 }
             });
         }
@@ -648,7 +666,7 @@
             ydjData.ccqxtcfzr = $("input[name='ccqxtcfzr']:checked").val();
             let chbgywlxs = [];
             let bgywlxs = $("input:checkbox[name=bgywlx]:checked");
-            $.each(bgywlxs, function(){
+            $.each(bgywlxs, function () {
                 chbgywlxs.push($(this).val());
             });
             ydjData.bgywlx = chbgywlxs.join(",");
@@ -714,6 +732,7 @@
             //异地推介补充要素
             $("input[name^='tjdNo']").each(function name(params) {
                 let no = $(this).val();
+                console.log(no);
                 let tjdNos = new Object();
                 tjdNos.uuid = ydjData.uuid;
                 tjdNos.bsid = ydjData.bsid;

@@ -39,6 +39,7 @@ $(function(){
                     <button type="button" onclick="chYdj('/node/preProductInfo.html','预登记')">预登记</button>
                     <button type="button" onclick="chYdj('/node/preProductInfoDetail.html','预登记详情')">预登记详情</button>
                     <button type="button" onclick="chYdj('/node/initProductInfo.html','初始登记')">初始登记</button>
+                    <button type="button" onclick="chYdj('/node/initProductInfoDetail.html','初始登记详情')">初始登记详情</button>
                     <button type="button" onclick="chYdj('/node/finishProductInfo.html','终止登记')">终止登记</button>
                     <button type="button" onclick="chYdj('/node/finishProductInfoDetail.html','终止登记详情')">终止登记详情</button>
                     <button type="button" onclick="chYdj('/node/reportProductInfo.html','事前报告登记')">事前报告登记</button>

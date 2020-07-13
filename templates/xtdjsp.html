@@ -1,3 +1,31 @@
-<div>
-	<input type="text" name="GLFQKYGLGX" style='width:150px;height:20px;text-align:left;' value="" >
-</div>
+<div class="row-fluid">
+        <div class="span12">
+            <div id="div_c8659880539611e68c9bb888e335e00a" class="control-group">
+                <label class="control-label"><span
+                        class="required">*</span>信托登记要素</label>
+                <div class="controls" id="divVal_c8659880539611e68c9bb888e335e00a">&nbsp;
+                    <button type="button" onclick="chYdj('/node/preProductInfoDetail.html','预登记详情')">预登记详情</button>
+					<button type="button" onclick="chYdj('/node/ProductInfoDetail.html','初始登记登记详情')">初始登记详情</button>
+                    <button type="button" onclick="chYdj('/node/finishProductInfoDetail.html','终止登记详情')">终止登记详情</button>
+                    <button type="button" onclick="chYdj('/node/reportProductInfoDetail.html','事前报告登记详情')">事前报告登记详情</button>
+                    <div id="mdldiv_frame" class="modal container hide fade" tabindex="-1" role="dialog" aria-labelledby="myModal_frameContainer" aria-hidden="true">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h3 id="modal_frameContainer_title"></h3>
+                        </div>
+                        <div class="modal-body">
+                            <iframe src="" id="modalFrameContainer" name="modalFrameContainer" seamless="" frameborder="0" height="468" width="100%"></iframe>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                    function chYdj(url,title) {
+                        let query = location.href.substr(location.href.indexOf('?') + 1)
+                        jQuery('#modal_frameContainer_title').html(title);
+                        jQuery('#modalFrameContainer').attr('src',url + '?' + query);
+                        jQuery('#mdldiv_frame').modal('show');
+                    }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>

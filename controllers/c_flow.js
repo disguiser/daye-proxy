@@ -1361,4 +1361,53 @@ module.exports = function (router) {
         let product_info = await d_flow.query_app_dfs_zxd_sqcpxx(regitem_id);
         ctx.response.body = product_info
     });
+
+    //查询初始登记-产品信息要素-详情
+    router.get('/query_app_dfs_zxd_cscpxx/:regitem_id', async (ctx, next) => {
+        let regitem_id = ctx.params.regitem_id;
+        let product_info = await d_flow.query_app_dfs_zxd_cscpxx(regitem_id);
+        ctx.response.body = product_info
+    });
+
+    //查询初始登记-初始交易对手-详情
+    router.get('/query_app_dfs_zxd_csjyds/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.query_app_dfs_zxd_csjyds(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询初始登记-初始受益权结构-详情
+    router.get('/query_app_dfs_zxd_cssyq/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.query_app_dfs_zxd_cssyq(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询初始登记-初始信托合同-详情
+    router.get('/query_app_dfs_zxd_csxtht/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.query_app_dfs_zxd_csxtht(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询初始登记-初始银行资金账户-详情
+    router.get('/query_app_dfs_zxd_yhzjzh/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.query_app_dfs_zxd_yhzjzh(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询初始登记-初始证券类账户-详情
+    router.get('/query_app_dfs_zxd_cszqzh/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.query_app_dfs_zxd_cszqzh(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询数据字典
+    router.post('/query_app_dfs_scode_content', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.query_app_dfs_scode_content(data);
+        ctx.response.body = product_info
+    });
 }

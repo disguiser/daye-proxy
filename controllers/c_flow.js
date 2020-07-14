@@ -1299,10 +1299,80 @@ module.exports = function (router) {
         ctx.response.body = product_info
     });
 
+    //查询预登记-交易对手要素
+    router.get('/find_app_dfs_zxd_csjyds_by_uuid/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.find_app_dfs_zxd_csjyds_by_uuid(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询预登记-受益权结构要素集合
+    router.get('/find_app_dfs_zxd_cssyq_by_uuid/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.find_app_dfs_zxd_cssyq_by_uuid(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询预登记-信托合同要素集合
+    router.get('/find_app_dfs_zxd_csxtht_by_uuid/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.find_app_dfs_zxd_csxtht_by_uuid(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询预登记-银行资金账户要素集合
+    router.get('/find_app_dfs_zxd_yhzjzh_by_uuid/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.find_app_dfs_zxd_yhzjzh_by_uuid(uuid);
+        ctx.response.body = product_info
+    });
+
+    //查询预登记-证券类账户要素集合
+    router.get('/find_app_dfs_zxd_cszqzh_by_uuid/:uuid', async (ctx, next) => {
+        let uuid = ctx.params.uuid;
+        let product_info = await d_flow.find_app_dfs_zxd_cszqzh_by_uuid(uuid);
+        ctx.response.body = product_info
+    });
+
     //保存初始登记-产品信息要素
     router.post('/insert_app_dfs_zxd_cscpxx', async (ctx, next) => {
         let data = ctx.request.body;
         let product_info = await d_flow.insert_app_dfs_zxd_cscpxx(data);
+        ctx.response.body = product_info
+    });
+
+    //保存预登记-交易对手要素
+    router.post('/insert_app_dfs_zxd_csjyds', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.insert_app_dfs_zxd_csjyds(data);
+        ctx.response.body = product_info
+    });
+
+    //保存预登记-受益权结构要素集合
+    router.post('/insert_app_dfs_zxd_cssyq', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.insert_app_dfs_zxd_cssyq(data);
+        ctx.response.body = product_info
+    });
+
+    //保存预登记-信托合同要素集合
+    router.post('/insert_app_dfs_zxd_csxtht', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.insert_app_dfs_zxd_csxtht(data);
+        ctx.response.body = product_info
+    });
+
+    //保存预登记-银行资金账户要素集合
+    router.post('/insert_app_dfs_zxd_yhzjzh', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.insert_app_dfs_zxd_yhzjzh(data);
+        ctx.response.body = product_info
+    });
+
+    //保存预登记-证券类账户要素集合
+    router.post('/insert_app_dfs_zxd_cszqzh', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.insert_app_dfs_zxd_cszqzh(data);
         ctx.response.body = product_info
     });
 

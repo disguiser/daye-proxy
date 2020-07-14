@@ -36,6 +36,20 @@
             <div style="height:390px;overflow-y:auto">
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
                     <tr>
+                        <td style="width: 20%;">
+                            <span class="required">*</span>信托登记系统产品编码 :
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="text" id="djcpbh" name="djcpbh" style="width: 180px;">
+                        </td>					
+                        <td style="width: 20%;">
+                            <span class="required">*</span>信托产品名称:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="text" id="cpqc" name="cpqc" style="width: 180px;">
+                        </td>
+					</tr>
+                    <tr>
                         <td>
                             <span class="required">*</span>清算日期 :
                         </td>
@@ -198,6 +212,8 @@
                 cache: false,
                 success: function (data) {
                     ydjData = data;
+                    $("#djcpbh").val(data.djcpbh);
+                    $("#cpqc").val(data.cpqc);
                     if (data.sfaydrqqs == "1") {
                         $("input[name='sfaydrqqs'][value=1]").attr("checked", true);
                     } else {
@@ -229,7 +245,9 @@
         function onSave() {
             //产品信息要素
             ydjData.sfaydrqqs = $("input[name='sfaydrqqs']:checked").val();
-			ydjData.qsrq=$("#qsrq").val();
+            ydjData.djcpbh=$("#djcpbh").val();
+            ydjData.cpqc=$("#cpqc").val();
+            ydjData.qsrq=$("#qsrq").val();
 			ydjData.ssxtje=$("#ssxtje").val();
 			ydjData.xtbjljgfe=$("#xtbjljgfe").val();
 			ydjData.xtsyljfpe=$("#xtsyljfpe").val();

@@ -36,10 +36,45 @@
             <div style="height:390px;overflow-y:auto">
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
                     <tr>
+                        <td style="width: 20%;">
+                            <span class="required">*</span>信托产品名称:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="text" id="xtxmmc" name="xtxmmc" style="width: 180px;">
+                        </td>					
+                        <td style="width: 20%;">
+                            <span class="required">*</span>信托登记系统产品编码:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="text" id="djcpbh" name="djcpbh" style="width: 180px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="required">*</span>信托财产性质标识:
+                        </td>
+                        <td>
+                            <select id="csxtcclx" name="csxtcclx" style="width: 180px;">
+                                <option value="0">资金</option>
+                                <option value="1">财产权</option>
+                                <option value="2">混合</option>
+                            </select>
+                        </td>					
+                        <td>
+                            <span class="required">*</span>单一集合标识:
+                        </td>
+                        <td>
+                            <select id="dyjhbz" name="dyjhbz" style="width: 180px;">
+                                <option value="0">单一</option>
+                                <option value="1">集合</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>
                             <span class="required">*</span>是否关联交易:
                         </td>
-                        <td>
+                        <td colspan="3">
                             <input type="radio" name="sfgljy" value="1" />是
                             <input type="radio" name="sfgljy" value="0" />否
                         </td>
@@ -48,8 +83,30 @@
                         <td>
                             <span class="required">*</span>事前报告事项原因:
                         </td>
-                        <td>
+                        <td colspan="3">
 							<textarea cols="100" rows="5" id="sqbgyy" name="sqbgyy" style="width:400px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            信托经理姓名:
+                        </td>
+                        <td>
+                            <input type="text" id="xtjlxm" name="xtjlxm" style="width: 180px;">
+                        </td>					
+                        <td>
+                            信托经理电话:
+                        </td>
+                        <td>
+                            <input type="text" id="xtjldh" name="xtjldh" style="width: 180px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            分管高级管理人员姓名:
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="fggjglry" name="fggjglry" style="width: 180px;">
                         </td>
                     </tr>
                 </table>
@@ -86,6 +143,14 @@
                         $("input[name='sfgljy'][value=0]").attr("checked", true);
                     }
                     $("#sqbgyy").val(data.sqbgyy);
+                    
+                    $("#xtxmmc").val(data.xtxmmc);
+                    $("#djcpbh").val(data.djcpbh);
+                    $("#csxtcclx").val(data.csxtcclx);
+                    $("#dyjhbz").val(data.dyjhbz);
+                    $("#xtjlxm").val(data.xtjlxm);
+                    $("#xtjldh").val(data.xtjldh);
+                    $("#fggjglry").val(data.fggjglry);
                 }
             });
         }
@@ -95,6 +160,14 @@
             //产品信息要素
             ydjData.sfgljy = $("input[name='sfgljy']:checked").val();
             ydjData.sqbgyy = $("#sqbgyy").val();
+            
+            ydjData.xtxmmc=$("#xtxmmc").val();
+            ydjData.djcpbh=$("#djcpbh").val();
+            ydjData.csxtcclx=$("#csxtcclx").val();
+            ydjData.dyjhbz=$("#dyjhbz").val();
+            ydjData.xtjlxm=$("#xtjlxm").val();
+            ydjData.xtjldh=$("#xtjldh").val();
+            ydjData.fggjglry=$("#fggjglry").val();
             jQuery.ajax({
                 //请求方式
                 type: "POST",

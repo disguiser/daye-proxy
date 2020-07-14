@@ -270,7 +270,7 @@ let find_next_user_for_huiq = async (user) => {
 let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
     let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,
 				 xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,dyjhbz, 
-				 xtgn,bgywlx,sfwxffq,qtbgywlx,xtxmmc,nfxclzgmlx,zdgdgmzfw,zggdgmzfw,xtxmzqxlw,zdgdqxzfw,zggdqxzfw, 
+				 xtgn,bgywlx,sfwxffq,qtbgywlx,xtxmmc,nfxclzgmlx,zdgdgmzfw,zggdgmzfw,xtxmzqxlx,zdgdqxzfw,zggdqxzfw, 
 				 yjxtxmgm,zdxtxmgmfw,zgxtxmgmfw,xtxmqxlx,zdxtxmqxfw,zgxtxmqxfw,fqljfxgm,nfxhclsj,fqcpqs,
 				 wtrjzjly,sytzrq,bgbs,xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,
 				 jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry, 
@@ -306,7 +306,7 @@ let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
                                                     '1' nfxclzgmlx,
                                                     A.PRODUCT_MONEY / 10000 zdgdgmzfw,
                                                     0 zggdgmzfw,
-                                                    CASE WHEN A.CPSTART_QXUNIT = 0 THEN '1' ELSE '0' END xtxmzqxlw,
+                                                    CASE WHEN A.CPSTART_QXUNIT = 0 THEN '1' ELSE '0' END xtxmzqxlx,
                                                     CASE WHEN A.CPSTART_QXUNIT = 3 THEN CAST(A.CPSTART_PERIOD AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 4 THEN CAST(A.CPSTART_PERIOD/3 AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 5 THEN CAST(A.CPSTART_PERIOD/12 AS NVARCHAR(10)) ELSE '' END zdgdqxzfw,
                                                     '' zggdqxzfw,
                                                     '1' yjxtxmgm,
@@ -393,38 +393,89 @@ let find_app_dfs_zxd_ydjtjd_by_uuid = async (uuid) => {
 
 //保存预登记-产品信息要素
 let insert_app_dfs_zxd_ydjcpxx = async (data) => {
-    //先删除
-    await dfs.query(`DELETE FROM APP_DFS_ZXD_YDJTJD FROM APP_DFS_ZXD_YDJTJD a, APP_DFS_ZXD_YDJCPXX b WHERE a.relation_uuid = b.relation_uuid and b.regitem_id = '${data.regitem_id}' and isnull(b.TASK_STATE,'0')='0'`);
-    await dfs.query(`DELETE FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${data.regitem_id}' and isnull(TASK_STATE,'0')='0'`);
-    //再保存
-    await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJCPXX(relation_uuid,task_code,regitem_id,product_id,product_code,xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,
-        dyjhbz,xtgn,bgywlx,sfwxffq,qtbgywlx,xtxmmc,nfxclzgmlx,zdgdgmzfw,zggdgmzfw,xtxmzqxlw,zdgdqxzfw,zggdqxzfw,
-        yjxtxmgm,zdxtxmgmfw,zgxtxmgmfw,xtxmqxlx,zdxtxmqxfw,zgxtxmqxfw,fqljfxgm,nfxhclsj,fqcpqs,wtrjzjly,sytzrq,bgbs,
-        xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,
-        yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry,gljylx,qtgljylx,glfqkyglgx,gljymd,gljydj,sctlywdjqk,xmlx,
-        qtxmlx,ywlx,qtywlx,xmszd,sfszqq,xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf) values(
-            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.xtjgmc}','${data.zcdz}',${data.symjzc},${data.sjmjzc},${data.symxtzzc},${data.sjmfxzb},'${data.ydjlx}','${data.csxtcclx}','${data.ccqxtcfzr}','${data.dyjhbz}','${data.xtgn}','${data.bgywlx}','${data.sfwxffq}','${data.qtbgywlx}','${data.xtxmmc}','${data.nfxclzgmlx}',${data.zdgdgmzfw},${data.zggdgmzfw},'${data.xtxmzqxlw}','${data.zdgdqxzfw}','${data.zggdqxzfw}','${data.yjxtxmgm}',${data.zdxtxmgmfw},${data.zgxtxmgmfw},'${data.xtxmqxlx}','${data.zdxtxmqxfw}','${data.zgxtxmqxfw}',${data.fqljfxgm},'${data.nfxhclsj}','${data.fqcpqs}','${data.wtrjzjly}','${data.sytzrq}','${data.bgbs}','${data.xtzjbgyh}','${data.xtbcl}','${data.syrsyllx}',${data.syryqsylqj_zd},${data.syryqsylqj_zg},'${data.xmly}','${data.xmglfs}','${data.xmtjjg}','${data.jydsmc}','${data.jydsxx}','${data.xtcctxhyyfs}','${data.jyjg}','${data.fxkzcs}','${data.yjhklyjtcfs}','${data.fxyasm}','${data.gshfhgyj}','${data.xtjlxm}','${data.xtjldh}','${data.fggjglry}','${data.gljylx}','${data.qtgljylx}','${data.glfqkyglgx}','${data.gljymd}','${data.gljydj}','${data.sctlywdjqk}','${data.xmlx}','${data.qtxmlx}','${data.ywlx}','${data.qtywlx}','${data.xmszd}','${data.sfszqq}','${data.xyzjbh}','${data.zbjblqk}','${data.kfshqkggdzzqk}','${data.qtsm}','${data.zjly}','${data.sfjghxt}','${data.yxlhbl}','${data.tzfw}','${data.tzgwqk}','${data.tgsfglf}'
-        )`)
-        .then(function (result) {
-            console.log(result);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+	//字段非必输项空值处理
+	if(typeof(data.sfwxffq)=="undefined") data.sfwxffq = '';
+	if(typeof(data.sfszqq)=="undefined") data.sfszqq = '';
+	if(typeof(data.sfjghxt)=="undefined") data.sfjghxt = '';
+	if(typeof(data.tgsfglf)=="undefined") data.tgsfglf = '';
+	if(data.zdgdgmzfw=='') data.zdgdgmzfw=null;
+	if(data.zggdgmzfw=='') data.zggdgmzfw=null;
+	if(data.zdxtxmgmfw=='') data.zdxtxmgmfw=null;
+	if(data.zgxtxmgmfw=='') data.zgxtxmgmfw=null;
+	if(data.fqljfxgm=='') data.fqljfxgm=null;
+	if(data.syryqsylqj_zd=='') data.syryqsylqj_zd=null;
+	if(data.syryqsylqj_zg=='') data.syryqsylqj_zg=null;
+    let record = await dfs.query(`SELECT id FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${data.regitem_id}' and isnull(TASK_STATE,'0')='0'`, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if (record.length > 0) {
+        //后续更新操作
+		await dfs.query(`update APP_DFS_ZXD_YDJCPXX set xtjgmc='${data.xtjgmc}',zcdz='${data.zcdz}',symjzc=${data.symjzc},sjmjzc=${data.sjmjzc},symxtzzc=${data.symxtzzc},sjmfxzb=${data.sjmfxzb},ydjlx='${data.ydjlx}',
+				csxtcclx='${data.csxtcclx}',ccqxtcfzr='${data.ccqxtcfzr}',dyjhbz='${data.dyjhbz}',xtgn='${data.xtgn}',bgywlx='${data.bgywlx}',sfwxffq='${data.sfwxffq}',
+				qtbgywlx='${data.qtbgywlx}',xtxmmc='${data.xtxmmc}',nfxclzgmlx='${data.nfxclzgmlx}',zdgdgmzfw=${data.zdgdgmzfw},zggdgmzfw=${data.zggdgmzfw},xtxmzqxlx='${data.xtxmzqxlx}',
+				zdgdqxzfw='${data.zdgdqxzfw}',zggdqxzfw='${data.zggdqxzfw}',yjxtxmgm='${data.yjxtxmgm}',zdxtxmgmfw=${data.zdxtxmgmfw},zgxtxmgmfw=${data.zgxtxmgmfw},xtxmqxlx='${data.xtxmqxlx}',
+				zdxtxmqxfw='${data.zdxtxmqxfw}',zgxtxmqxfw='${data.zgxtxmqxfw}',fqljfxgm=${data.fqljfxgm},nfxhclsj='${data.nfxhclsj}',fqcpqs='${data.fqcpqs}',wtrjzjly='${data.wtrjzjly}',
+				sytzrq='${data.sytzrq}',bgbs='${data.bgbs}',xtzjbgyh='${data.xtzjbgyh}',xtbcl='${data.xtbcl}',syrsyllx='${data.syrsyllx}',syryqsylqj_zd=${data.syryqsylqj_zd},
+				syryqsylqj_zg=${data.syryqsylqj_zg},xmly='${data.xmly}',xmglfs='${data.xmglfs}',xmtjjg='${data.xmtjjg}',jydsmc='${data.jydsmc}',jydsxx='${data.jydsxx}',
+				xtcctxhyyfs='${data.xtcctxhyyfs}',jyjg='${data.jyjg}',fxkzcs='${data.fxkzcs}',yjhklyjtcfs='${data.yjhklyjtcfs}',fxyasm='${data.fxyasm}',gshfhgyj='${data.gshfhgyj}',
+				xtjlxm='${data.xtjlxm}',xtjldh='${data.xtjldh}',fggjglry='${data.fggjglry}',gljylx='${data.gljylx}',qtgljylx='${data.qtgljylx}',glfqkyglgx='${data.glfqkyglgx}',
+				gljymd='${data.gljymd}',gljydj='${data.gljydj}',sctlywdjqk='${data.sctlywdjqk}',xmlx='${data.xmlx}',qtxmlx='${data.qtxmlx}',ywlx='${data.ywlx}',qtywlx='${data.qtywlx}',
+				xmszd='${data.xmszd}',sfszqq='${data.sfszqq}',xyzjbh='${data.xyzjbh}',zbjblqk='${data.zbjblqk}',kfshqkggdzzqk='${data.kfshqkggdzzqk}',qtsm='${data.qtsm}',zjly='${data.zjly}',
+				sfjghxt='${data.sfjghxt}',yxlhbl='${data.yxlhbl}',tzfw='${data.tzfw}',tzgwqk='${data.tzgwqk}',tgsfglf='${data.tgsfglf}'		
+				where ID = '${record[0].id}'`)
+			.then(function (result) {
+				console.log(result);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});		
+    } else {
+		//首次插入操作
+		await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJCPXX(relation_uuid,task_code,regitem_id,product_id,product_code,xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,
+			dyjhbz,xtgn,bgywlx,sfwxffq,qtbgywlx,xtxmmc,nfxclzgmlx,zdgdgmzfw,zggdgmzfw,xtxmzqxlx,zdgdqxzfw,zggdqxzfw,
+			yjxtxmgm,zdxtxmgmfw,zgxtxmgmfw,xtxmqxlx,zdxtxmqxfw,zgxtxmqxfw,fqljfxgm,nfxhclsj,fqcpqs,wtrjzjly,sytzrq,bgbs,
+			xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,
+			yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry,gljylx,qtgljylx,glfqkyglgx,gljymd,gljydj,sctlywdjqk,xmlx,
+			qtxmlx,ywlx,qtywlx,xmszd,sfszqq,xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf) values(
+				'${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.xtjgmc}','${data.zcdz}',${data.symjzc},${data.sjmjzc},${data.symxtzzc},${data.sjmfxzb},'${data.ydjlx}','${data.csxtcclx}','${data.ccqxtcfzr}','${data.dyjhbz}','${data.xtgn}','${data.bgywlx}','${data.sfwxffq}','${data.qtbgywlx}','${data.xtxmmc}','${data.nfxclzgmlx}',${data.zdgdgmzfw},${data.zggdgmzfw},'${data.xtxmzqxlx}','${data.zdgdqxzfw}','${data.zggdqxzfw}','${data.yjxtxmgm}',${data.zdxtxmgmfw},${data.zgxtxmgmfw},'${data.xtxmqxlx}','${data.zdxtxmqxfw}','${data.zgxtxmqxfw}',${data.fqljfxgm},'${data.nfxhclsj}','${data.fqcpqs}','${data.wtrjzjly}','${data.sytzrq}','${data.bgbs}','${data.xtzjbgyh}','${data.xtbcl}','${data.syrsyllx}',${data.syryqsylqj_zd},${data.syryqsylqj_zg},'${data.xmly}','${data.xmglfs}','${data.xmtjjg}','${data.jydsmc}','${data.jydsxx}','${data.xtcctxhyyfs}','${data.jyjg}','${data.fxkzcs}','${data.yjhklyjtcfs}','${data.fxyasm}','${data.gshfhgyj}','${data.xtjlxm}','${data.xtjldh}','${data.fggjglry}','${data.gljylx}','${data.qtgljylx}','${data.glfqkyglgx}','${data.gljymd}','${data.gljydj}','${data.sctlywdjqk}','${data.xmlx}','${data.qtxmlx}','${data.ywlx}','${data.qtywlx}','${data.xmszd}','${data.sfszqq}','${data.xyzjbh}','${data.zbjblqk}','${data.kfshqkggdzzqk}','${data.qtsm}','${data.zjly}','${data.sfjghxt}','${data.yxlhbl}','${data.tzfw}','${data.tzgwqk}','${data.tgsfglf}'
+			)`)
+			.then(function (result) {
+				console.log(result);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
 }
 
 //保存预登记-异地推介补充要素
 let insert_app_dfs_zxd_ydjtjd = async (data) => {
-    //再保存
-    await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJTJD(relation_uuid,task_code,regitem_id,product_id,product_code,sfqgtj,tjd,tjd_p,tjd_c,tjd_a,tjjg,tjfl,tjq,jhtjgm,tjfshtjgl,tjfzrmc,tjfzrdh) values(
-            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.sfqgtj}','${data.tjd}','${data.tjd_p}','${data.tjd_c}','${data.tjd_a}','${data.tjjg}','${data.tjfl}','${data.tjq}',${data.jhtjgm},'${data.tjfshtjgl}','${data.tjfzrmc}','${data.tjfzrdh}'
-        )`)
-        .then(function (result) {
-            console.log(result);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    let record = await dfs.query(`SELECT id FROM APP_DFS_ZXD_YDJTJD WHERE relation_uuid = (select relation_uuid from APP_DFS_ZXD_YDJCPXX where regitem_id='${data.regitem_id}' and isnull(TASK_STATE,'0')='0')`, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    if (record.length > 0) {
+		//后续更新操作
+		await dfs.query(`update APP_DFS_ZXD_YDJTJD set sfqgtj='${data.sfqgtj}',tjd='${data.tjd}',tjd_p='${data.tjd_p}',tjd_c='${data.tjd_c}',tjd_a='${data.tjd_a}',
+				tjjg='${data.tjjg}',tjfl='${data.tjfl}',tjq='${data.tjq}',jhtjgm=${data.jhtjgm},tjfshtjgl='${data.tjfshtjgl}',tjfzrmc='${data.tjfzrmc}',tjfzrdh='${data.tjfzrdh}'
+				where ID = '${record[0].id}'`)
+			.then(function (result) {
+				console.log(result);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}else{
+		//首次插入操作
+		await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJTJD(relation_uuid,task_code,regitem_id,product_id,product_code,sfqgtj,tjd,tjd_p,tjd_c,tjd_a,tjjg,tjfl,tjq,jhtjgm,tjfshtjgl,tjfzrmc,tjfzrdh) values(
+				'${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.sfqgtj}','${data.tjd}','${data.tjd_p}','${data.tjd_c}','${data.tjd_a}','${data.tjjg}','${data.tjfl}','${data.tjq}',${data.jhtjgm},'${data.tjfshtjgl}','${data.tjfzrmc}','${data.tjfzrdh}'
+			)`)
+			.then(function (result) {
+				console.log(result);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});		
+	}
 }
 
 //查询初始登记-产品信息要素

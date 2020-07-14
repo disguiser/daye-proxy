@@ -36,21 +36,21 @@ $(function(){
                 <label class="control-label"><span
                         class="required">*</span>信托登记要素</label>
                 <div class="controls" id="divVal_c8659880539611e68c9bb888e335e00a">
-                    <button type="button" onclick="chYdj('/node/preProductInfo.html','预登记')">预登记</button>
-                    <button type="button" onclick="chYdj('/node/preProductInfoDetail.html','预登记详情')">预登记详情</button>
-                    <button type="button" onclick="chYdj('/node/initProductInfo.html','初始登记')">初始登记</button>
-                    <button type="button" onclick="chYdj('/node/initProductInfoDetail.html','初始登记详情')">初始登记详情</button>
+                    <button type="button" onclick="chYdj('/node/preProductInfo.html','预登记')">预登记</button> 
+                   <!-- <button type="button" onclick="chYdj('/node/preProductInfoDetail.html','预登记详情')">预登记详情</button> -->
+                    <button type="button" onclick="chYdj('/node/initProductInfo.html','初始变更更正登记')">初始变更更正登记</button>
+                   <!-- <button type="button" onclick="chYdj('/node/initProductInfoDetail.html','初始登记详情')">初始登记详情</button> -->
                     <button type="button" onclick="chYdj('/node/finishProductInfo.html','终止登记')">终止登记</button>
-                    <button type="button" onclick="chYdj('/node/finishProductInfoDetail.html','终止登记详情')">终止登记详情</button>
+                  <!--  <button type="button" onclick="chYdj('/node/finishProductInfoDetail.html','终止登记详情')">终止登记详情</button> -->
                     <button type="button" onclick="chYdj('/node/reportProductInfo.html','事前报告登记')">事前报告登记</button>
-                    <button type="button" onclick="chYdj('/node/reportProductInfoDetail.html','事前报告登记详情')">事前报告登记详情</button>
+                  <!--  <button type="button" onclick="chYdj('/node/reportProductInfoDetail.html','事前报告登记详情')">事前报告登记详情</button> -->
                     <div id="mdldiv_frame" class="modal container hide fade" tabindex="-1" role="dialog" aria-labelledby="myModal_frameContainer" aria-hidden="true">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                             <h3 id="modal_frameContainer_title"></h3>
                         </div>
                         <div class="modal-body">
-                            <iframe src="" id="modalFrameContainer" name="modalFrameContainer" seamless="" frameborder="0" height="468" width="100%"></iframe>
+                            <iframe src="" id="modalFrameContainer" name="modalFrameContainer" seamless="" frameborder="0" height="900" width="100%"></iframe>
                         </div>
 						<!--
                         <div class="modal-footer">

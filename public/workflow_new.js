@@ -50,7 +50,7 @@ $(function(){
                             <h3 id="modal_frameContainer_title"></h3>
                         </div>
                         <div class="modal-body">
-                            <iframe src="" id="modalFrameContainer" name="modalFrameContainer" seamless="" frameborder="0" height="900" width="100%"></iframe>
+                            <iframe src="" id="modalFrameContainer" name="modalFrameContainer" seamless="" frameborder="0" height="700" width="100%"></iframe>
                         </div>
 						<!--
                         <div class="modal-footer">

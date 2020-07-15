@@ -801,7 +801,7 @@
                             </select>
                         </td>
                         <td>
-                            资产管理报告频度:
+                            <span class="required">*</span>资产管理报告频度:
                         </td>
                         <td>
                             <select id="zcglbgpd" name="zcglbgpd" style="width: 180px;">
@@ -822,14 +822,14 @@
 					</tr>
 					<tr>
                         <td>
-                            清算报告披露标识:
+                            <span class="required">*</span>清算报告披露标识:
                         </td>
                         <td>
                             <input type="radio" name="qsbgplbs" value="0" />否
                             <input type="radio" name="qsbgplbs" value="1" />是
                         </td>
                         <td>
-                            信托产品所属部门:
+                            <span class="required">*</span>信托产品所属部门:
                         </td>
                         <td>
                             <input type="text" id="xtcpssbm" name="xtcpssbm" style="width: 180px;">
@@ -837,13 +837,13 @@
 					</tr>
 					<tr>
                         <td>
-                            信托经理姓名:
+                            <span class="required">*</span>信托经理姓名:
                         </td>
                         <td>
                             <input type="text" id="xtjlxm" name="xtjlxm" style="width: 180px;">
                         </td>
                         <td>
-                            分管高级管理人员姓名:
+                            <span class="required">*</span>分管高级管理人员姓名:
                         </td>
                         <td>
                             <input type="text" id="fggjglry" name="fggjglry" style="width: 180px;">
@@ -851,7 +851,7 @@
 					</tr>
 					<tr>
                         <td>
-                            联系电话:
+                            <span class="required">*</span>联系电话:
                         </td>
                         <td colspan="3">
                             <input type="text" id="lxdh" name="lxdh" style="width: 180px;">
@@ -1030,7 +1030,7 @@
                         $("#tjfs"+value).attr("checked", "checked");
                     });
                     let tjmj = data.tjmj.split(",");
-                    $.each(tjfs, function (index, value) {
+                    $.each(tjmj, function (index, value) {
                         $("#tjmj"+value).attr("checked", "checked");
                     });
                     $("input[name='ydtjbs'][value="+data.ydtjbs+"]").attr("checked", true);
@@ -1086,9 +1086,512 @@
                 }
             });
         }
+		//设置text,textarea和select对应值
+		function setFormValue(name,value){
+			$('#'+name).val(value);
+		}
+		
+		//设置Radio对应值
+		function setRadioValue(name,value){
+			if(value==""){
+				$("input[name="+name+"]").prop("checked",false);
+			}else{
+				$("input[name="+name+"][value="+value+"]").attr("checked", true);
+			}
+		}
+		
+		//设置Box对应值
+		function setBoxValue(name,content){	
+			if(content.indexOf('No,')>=0)
+			{
+				content=content.replace('No,','');
+				let returnValue = content.split(",");
+				$.each(returnValue, function (index, value) {
+					$("#"+name+value).attr("checked",false)
+				});
+			}else{
+				let returnValue = content.split(",");
+				$.each(returnValue, function (index, value) {
+					$("#"+name+value).attr("checked",true)
+				});			
+			}
+		}
+		
+		//获取text,textarea和select对应值
+		function getFormValue(name){
+			let value = $('#'+name).val();
+			return value;
+		}
+		
+		//获取Radio对应值
+		function getRadioValue(name){
+			let value = $("input[name="+name+"]:checked").val();
+			return value;
+		}
+		
+		//获取Box对应值
+		function getBoxValue(name){
+			let value = $("input:checkbox[name="+name+"]:checked");
+            let chvalue = [];
+            $.each(value, function () {
+                chvalue.push($(this).val());
+            });
+            value = chvalue.join(",");
+			return value;
+		}
+		
+		//日期格式化处理
+		Date.prototype.Format = function(fmt)  
+		{ 
+			var o = {  
+				"M+" : this.getMonth()+1,         //月份  
+				"d+" : this.getDate(),          //日  
+				"h+" : this.getHours(),          //小时  
+				"m+" : this.getMinutes(),         //分  
+				"s+" : this.getSeconds(),         //秒  
+				"q+" : Math.floor((this.getMonth()+3)/3), //季度  
+				"S" : this.getMilliseconds()       //毫秒  
+			};  
+			if(/(y+)/.test(fmt))  
+				fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));  
+			for(var k in o)  
+				if(new RegExp("("+ k +")").test(fmt))  
+			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));  
+			return fmt;  
+		}
 
+		//字段必输项+内容大小限制校验
+		function checkInfo(name,content,flag,type){
+			if(type=='text') value = getFormValue(name);
+			else if(type=='box') value = getBoxValue(name);
+			else if(type=='radio') value = getRadioValue(name);
+			else value = getFormValue(name);
+			if(flag=="required")
+			{
+				if(typeof(value)=="undefined" || value==null  || value==''){
+					alert("字段["+content+"]为必填项!");
+					$("input[name="+name+"]").focus();
+					return 1;
+				}
+			}else if(flag=="length"){
+				if(!(typeof(value)=="undefined" || value==null  || value=='') && value.length>type){
+					alert("字段["+content+"]内容超过最大限制!");
+					$("input[name="+name+"]").focus();
+					return 1;
+				}			
+			}else if(flag=="number"){
+				if(!(typeof(value)=="undefined" || value==null  || value=='')){
+					var typeValue=type.split(",");
+					if(value.indexOf(".")<0) value=value+'.00';
+					var contentValue=value.split(".");
+					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
+						alert("字段["+content+"]内容超过最大限制!");
+						$("input[name="+name+"]").focus();
+						return 1;
+					}					
+				}			
+			}
+			return 0;
+		}
+		
+		//保存之前逻辑性校验
+		function logicCheck(){
+			//信托登记系统产品编码控制
+			var djlx=getFormValue('djlx');
+			var djcpbh=getFormValue('djcpbh');
+			if(djlx!="8" && (typeof(djcpbh)=="undefined" || djcpbh==null  || djcpbh=='')){
+				alert("[登记类型]选择【初始登记】或【变更登记】或【更正登记】时,[信托登记系统产品编码]为必填项!");
+				$("input[name=djcpbh]").focus();
+				return false;
+			}			
+			if(djlx=="8") setFormValue('djcpbh','');
+			//三单标识+第一期产品信托登记系统产品编码控制
+			var sfxtzcp=getRadioValue('sfxtzcp');
+			var sdbs=getRadioValue('sdbs');
+			var fqzcpnbbh=getFormValue('fqzcpnbbh');
+			if(sfxtzcp =="1" && (typeof(sdbs)=="undefined" || sdbs==null  || sdbs=='')){
+				alert("[分期发行标识]选择【是】时,[三单标识]为必填项!");
+				$("input[name=sdbs]").focus();
+				return false;
+			}
+			if(sfxtzcp =="1" && (typeof(fqzcpnbbh)=="undefined" || fqzcpnbbh==null  || fqzcpnbbh=='')){
+				alert("[分期发行标识]选择【是】时,[第一期产品信托登记系统产品编码]为必填项!");
+				$("input[name=fqzcpnbbh]").focus();
+				return false;
+			}
+			if(sfxtzcp =="0"){
+				setRadioValue('sdbs','');
+				setFormValue('fqzcpnbbh','');
+			}
+			//财产权信托进行受益权拆分转让或者对外发行受益权标识控制
+			var xtccxz=getFormValue('xtccxz');
+			var ccqxtcfzr=getRadioValue('ccqxtcfzr');
+			if((xtccxz=="1" || xtccxz=="2") && (typeof(ccqxtcfzr)=="undefined" || ccqxtcfzr==null  || ccqxtcfzr==''))
+			{
+				alert("当[信托财产性质标识]勾选【财产权】或【混合】时,字段[财产权信托进行受益权拆分转让或者对外发行受益权标识]为必填项!");
+				$("input[name=ccqxtcfzr]").focus();
+				return false;
+			}
+			if(xtccxz=="0") setRadioValue('ccqxtcfzr','');
+			//受益方式说明控制
+			var xtsyfs=getFormValue('xtsyfs');
+			var syfssm=getFormValue('syfssm');
+			if(xtsyfs=="3" && (typeof(syfssm)=="undefined" || syfssm==null  || syfssm==''))
+			{
+				alert("当[受益方式标识]选择【其他】时,字段[受益方式说明]为必填项!");
+				$("input[name=syfssm]").focus();
+				return false;
+			}
+			//结构化优先劣后比例控制
+			var jghbs=getFormValue('jghbs');
+			var jghyxlhbl=getFormValue('jghyxlhbl');
+			if((jghbs=="0" || jghbs=="1") && (typeof(jghyxlhbl)=="undefined" || jghyxlhbl==null  || jghyxlhbl==''))
+			{
+				alert("当[结构化标识]勾选【单账户结构化】或【多账户结构化（伞形信托）】时,字段[结构化优先劣后比例]为必填项!");
+				$("input[name=jghyxlhbl]").focus();
+				return false;
+			}
+			if(jghbs=="2") setFormValue('jghyxlhbl','');
+			//关联母信托+关联子信托控制
+			var totbs=getFormValue('totbs');
+			var glmxt=getFormValue('glmxt');
+			var glzxt=getFormValue('glzxt');
+			if(totbs=="2" && (typeof(glmxt)=="undefined" || glmxt==null  || glmxt ==''))
+			{
+				alert("当[TOT标识]勾选【TOT子信托】时,字段[关联母信托]为必填项,应填写母信托登记系统产品编码!");
+				$("input[name=glmxt]").focus();
+				return false;
+			}
+			if(totbs=="1" && (typeof(glzxt)=="undefined" || glzxt==null  || glzxt ==''))
+			{
+				alert("当[TOT标识]勾选【TOT母信托】时,字段[关联子信托]为必填项,应填写子信托登记系统产品编码!");
+				$("input[name=glzxt]").focus();
+				return false;
+			}		
+			if(totbs=="0" || totbs=="1") setFormValue('glmxt','');
+			if(totbs=="0") setFormValue('glzxt','');			
+			//预期募集总金额+预期募集总份额+预期募集总额币种
+			var yqmjzje=getFormValue('yqmjzje');
+			var yqmjzfe=getFormValue('yqmjzfe');
+			var yqmjzebz=getFormValue('yqmjzebz');
+			if(sfxtzcp=="1" && sdbs=="0" && (typeof(yqmjzje)=="undefined"  || yqmjzje==null  || yqmjzje =='')){
+				alert("当[分期发行标识]勾选【是】且[三单标识]勾选【否】时,字段[预期募集总金额]为必填项!");
+				$("input[name=yqmjzje]").focus();
+				return false;			
+			}
+			if(sfxtzcp=="1" && sdbs=="0" && (typeof(yqmjzfe)=="undefined"  || yqmjzfe==null  || yqmjzfe =='')){
+				alert("当[分期发行标识]勾选【是】且[三单标识]勾选【否】时,字段[预期募集总份额]为必填项!");
+				$("input[name=yqmjzfe]").focus();
+				return false;			
+			}
+			if(sfxtzcp=="1" && sdbs=="0" && (typeof(yqmjzebz)=="undefined"  || yqmjzebz==null  || yqmjzebz =='')){
+				alert("当[分期发行标识]勾选【是】且[三单标识]勾选【否】时,字段[预期募集总额币种]为必填项!");
+				$("input[name=yqmjzebz]").focus();
+				return false;			
+			}
+			//财产主要运用方式(资金信托)+财产主要运用方式(财产权信托)
+			var ccglyyfs=getFormValue('ccglyyfs');
+			var ccglyyfs_ccq=getFormValue('ccglyyfs_ccq');
+			if((xtccxz=="0" || xtccxz=="2") && (typeof(ccglyyfs)=="undefined" || ccglyyfs==null  || ccglyyfs ==''))
+			{
+				alert("当[信托财产性质]勾选【资金】或【混合】时,字段[财产主要运用方式(资金信托)]为必填项!");
+				$("input[name=ccglyyfs]").focus();
+				return false;
+			}
+			if(xtccxz=="1") setFormValue('ccglyyfs','');
+			if((xtccxz=="1" || xtccxz=="2") && (typeof(ccglyyfs_ccq)=="undefined" || ccglyyfs_ccq==null  || ccglyyfs_ccq==''))
+			{
+				alert("当[信托财产性质]勾选【财产权】或【混合】时,字段[财产主要运用方式(财产权信托)]为必填项!");
+				$("input[name=ccglyyfs_ccq]").focus();
+				return false;
+			}
+			if(xtccxz=="0") setFormValue('ccglyyfs_ccq','');
+			//基准收益率(下限)+基准收益率 (上限)
+			var syllx=getFormValue('syllx');
+			var zdyqsyl=getFormValue('zdyqsyl');
+			if((syllx=="0" || syllx=="1") && (typeof(zdyqsyl)=="undefined" || zdyqsyl==null  || zdyqsyl==''))
+			{
+				alert("[收益率类型]选择【基准收益率】或者【基准+浮动】时,字段[基准收益率(下限)]为必填项!");
+				$("input[name=zdyqsyl]").focus();
+				return false;
+			}	
+			if(syllx=="2" || syllx=="3") setFormValue('zdyqsyl','');
+			//合同约定的信托报酬率（固定费率）+合同约定的信托报酬率（固定金额）
+			var xtbclx=getFormValue('xtbclx');
+			var xtbcl=getFormValue('xtbcl');
+			var xtbc=getFormValue('xtbc');
+			if((xtbclx=="0" || xtbclx=="1") && (typeof(xtbcl)=="undefined" || xtbcl==null  || xtbcl=='') && (typeof(xtbc)=="undefined" || xtbc==null  || xtbc==''))
+			{
+				alert("[信托报酬类型]选择【固定】或者【固定+浮动】时,字段[合同约定的信托报酬率（固定费率）]和[合同约定的信托报酬率（固定金额）]中至少有一项为必填项!");
+				$("input[name=xtbcl]").focus();
+				return false;
+			}	
+			if(syllx=="2" || syllx=="3"){
+				setFormValue('xtbcl','');	
+				setFormValue('xtbc','');	
+			}
+			//风险台账标识+风险处置进展+风险缓释措施
+			var fxxmbs=getRadioValue('fxxmbs');
+			var fxtzbs=getFormValue('fxtzbs');
+			var fxczjz=getFormValue('fxczjz');
+			var fxhscsnew=getFormValue('fxhscsnew');
+			if(fxxmbs=="1" && (typeof(fxtzbs)=="undefined" || fxtzbs==null  || fxtzbs==''))
+			{
+				alert("当[风险台账标识]勾选【是】时,字段[风险台账标识]为必填项!");
+				$("input[name=fxtzbs]").focus();
+				return false;
+			}
+			if(fxxmbs=="1" && (typeof(fxczjz)=="undefined" || fxczjz==null  || fxczjz==''))
+			{
+				alert("当[风险台账标识]勾选【是】时,字段[风险处置进展]为必填项!");
+				$("input[name=fxczjz]").focus();
+				return false;
+			}
+			if(fxxmbs=="1" && (typeof(fxhscsnew)=="undefined" || fxhscsnew==null  || fxhscsnew==''))
+			{
+				alert("当[风险台账标识]勾选【是】时,字段[风险缓释措施]为必填项!");
+				$("input[name=fxhscsnew]").focus();
+				return false;
+			}		
+			if(fxxmbs=="0"){
+				setFormValue('fxtzbs','');		
+				setFormValue('fxczjz','');	
+				setFormValue('fxhscsnew','');	
+			}
+			//开放式产品开放频度
+			var kffbbs=getFormValue('kffbbs');
+			var kfpd=getFormValue('kfpd');
+			if((kffbbs=="1") && (typeof(kfpd)=="undefined" || kfpd==null  || kfpd==''))
+			{
+				alert("当[开放/封闭标识]勾选【开放式】时,字段[开放式产品开放频度]为必填项!");
+				$("input[name=kfpd]").focus();
+				return false;
+			}	
+			if(kffbbs=="0") getFormValue('kfpd','');	
+			//是否估值
+			var yxfs=getFormValue('yxfs');
+			var sfgz=getRadioValue('sfgz');
+			var gzms=getFormValue('gzms');
+			var gzcj=getFormValue('gzcj');
+			var gzjg=getFormValue('gzjg');
+			var jzpgpd=getFormValue('jzpgpd');
+			if(yxfs=="0" && (typeof(sfgz)=="undefined" || sfgz==null  || sfgz==''))
+			{
+				alert("当[运行方式标识]勾选【净值型】时,字段[是否估值]为必填项!");
+				$("input[name=sfgz]").focus();
+				return false;
+			}
+			if(sfgz=="1" && (typeof(gzms)=="undefined" || gzms==null  || gzms==''))
+			{
+				alert("当[是否估值]勾选【是】时,字段[估值模式]为必填项!");
+				$("input[name=gzms]").focus();
+				return false;
+			}
+			if(sfgz=="1" && (typeof(gzcj)=="undefined" || gzcj==null  || gzcj==''))
+			{
+				alert("当[是否估值]勾选【是】时,字段[估值层级]为必填项!");
+				$("input[name=gzcj]").focus();
+				return false;
+			}
+			if(sfgz=="1" && (typeof(gzjg)=="undefined" || gzjg==null  || gzjg==''))
+			{
+				alert("当[是否估值]勾选【是】时,字段[估值机构]为必填项!");
+				$("input[name=gzjg]").focus();
+				return false;
+			}
+			if(sfgz=="1" && (typeof(jzpgpd)=="undefined" || jzpgpd==null  || jzpgpd==''))
+			{
+				alert("当[是否估值]勾选【是】时,字段[净值评估频度]为必填项!");
+				$("input[name=jzpgpd]").focus();
+				return false;
+			}
+			if(sfgz=="0"){
+				setFormValue('gzms','');
+				setFormValue('gzcj','');
+				setBoxValue('gzjg','');
+			}
+			//投资顾问编号
+			var tzgwbs=getRadioValue('tzgwbs');
+			var tzgwbh=getFormValue('tzgwbh');
+			if(tzgwbs=="1" && (typeof(tzgwbh)=="undefined" || tzgwbh==null  || tzgwbh==''))
+			{
+				alert("当[投资顾问标识]勾选【是】时,字段[投资顾问编号]为必填项，投资顾问为机构的，填写投资顾问机构的统一社会信用代码!");
+				$("input[name=tzgwbh]").focus();
+				return false;
+			}	
+			if(tzgwbs=="0") setFormValue('tzgwbh','');
+			//交易对手个人/机构标识
+			var xtgn=getFormValue('xtgn');
+			var grjgbs=getBoxValue('grjgbs');
+			if(xtgn=="1" && (typeof(grjgbs)=="undefined" || grjgbs==null  || grjgbs==''))
+			{
+				alert("当[信托功能标识]勾选【融资类】时,字段[交易对手个人/机构标识]为必填项!");
+				$("input[name=grjgbs]").focus();
+				return false;
+			}
+			//净值披露频度
+			var jzplpd=getFormValue('jzplpd');
+			if(yxfs=="0" && (typeof(jzplpd)=="undefined" || jzplpd==null  || jzplpd==''))
+			{
+				alert("当[运行方式标识]勾选【净值型】时,字段[净值披露频度]为必填项!");
+				$("input[name=jzplpd]").focus();
+				return false;
+			}
+			//关联交易类型
+			var gljybs=getRadioValue('gljybs');
+			var gljylx=getBoxValue('gljylx');
+			var gljybcsm=getFormValue('gljybcsm');
+			var gllx=getBoxValue('gllx');
+			var gljymd=getFormValue('gljymd');
+			var gljydj=getFormValue('gljydj');
+			if(gljybs=='1' && (typeof(gljylx)=="undefined" || gljylx==null  || gljylx=='')){
+				alert("[关联交易标识]选择【是】时,[关联交易类型]为必填项!");
+				$("input[name=gljylx]").focus();
+				return false;
+			}
+			if(gljybs=='1' && gljylx.indexOf('4')>=0 && (typeof(gljybcsm)=="undefined" || gljybcsm==null  || gljybcsm=='')){
+				alert("[关联交易标识]选择【是】且[关联交易类型]选择【其他关联交易】时,[关联交易补充说明]为必填项!");
+				$("input[name=gljylx]").focus();
+				return false;
+			}
+			if(gljybs=='1' && (typeof(gllx)=="undefined" || gllx==null  || gllx=='')){
+				alert("[关联交易标识]选择【是】时,[关联方类型]为必填项!");
+				$("input[name=gllx]").focus();
+				return false;
+			}
+			if(gljybs=='1' && (typeof(gljymd)=="undefined" || gljymd==null  || gljymd=='')){
+				alert("[关联交易标识]选择【是】时,[关联交易目的]为必填项!");
+				$("input[name=gljymd]").focus();
+				return false;
+			}	
+			if(gljybs=='1' && (typeof(gljydj)=="undefined" || gljydj==null  || gljydj=='')){
+				alert("[关联交易标识]选择【是】时,[关联交易定价]为必填项!");
+				$("input[name=gljydj]").focus();
+				return false;
+			}				
+			if(gljybs=='0'){
+				setBoxValue('gljylx','');
+				setBoxValue('gllx','');
+				setFormValue('gljymd','');
+				setFormValue('gljydj','');
+			}				
+			return true;
+		}		
+
+		//字段必输项+内容大小限制校验
+		function checkInfo(name,content,flag,type){
+			if(type=='text') value = getFormValue(name);
+			else if(type=='box') value = getBoxValue(name);
+			else if(type=='radio') value = getRadioValue(name);
+			else value = getFormValue(name);
+			if(flag=="required")
+			{
+				if(typeof(value)=="undefined" || value==null  || value==''){
+					alert("字段["+content+"]为必填项!");
+					$("input[name="+name+"]").focus();
+					return 1;
+				}
+			}else if(flag=="length"){
+				if(!(typeof(value)=="undefined" || value==null  || value=='') && value.length>type){
+					alert("字段["+content+"]内容超过最大限制!");
+					$("input[name="+name+"]").focus();
+					return 1;
+				}			
+			}else if(flag=="number"){
+				if(!(typeof(value)=="undefined" || value==null  || value=='')){
+					var typeValue=type.split(",");
+					if(value.indexOf(".")<0) value=value+'.00';
+					var contentValue=value.split(".");
+					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
+						alert("字段["+content+"]内容超过最大限制!");
+						$("input[name="+name+"]").focus();
+						return 1;
+					}					
+				}			
+			}
+			return 0;
+		}		
+		
+		//保存之前必输项校验
+		function requiredCheck(){
+			var returnValue=checkInfo('cpqc','信托产品名称','required','text');
+			returnValue=returnValue+checkInfo('gscpbh','信托产品内部编号','required','text');
+			returnValue=returnValue+checkInfo('tsyw','特色业务标识','required','box');	
+			returnValue=returnValue+checkInfo('fxhscs','风险控制措施','required','box');
+			returnValue=returnValue+checkInfo('tjfs','推介方式','required','box');
+			returnValue=returnValue+checkInfo('tjmj','推介媒介','required','box');						
+			returnValue=returnValue+checkInfo('csmjje','初始募集金额','required','text');
+			returnValue=returnValue+checkInfo('csmjfe','初始募集份额','required','text');
+			returnValue=returnValue+checkInfo('htydbcsm','信托报酬说明','required','text');
+			returnValue=returnValue+checkInfo('xtcpsjclrq','信托产品成立日期','required','text');
+			returnValue=returnValue+checkInfo('cpjhdqr','信托产品计划到期日','required','text');
+			returnValue=returnValue+checkInfo('shdxzxtj','赎回的限制性条件','required','text');
+			returnValue=returnValue+checkInfo('jntgjg','境内托管机构','required','text');
+			returnValue=returnValue+checkInfo('xtcpssbm','信托产品所属部门','required','text');
+			returnValue=returnValue+checkInfo('xtjlxm','信托经理姓名','required','text');
+			returnValue=returnValue+checkInfo('fggjglry','分管高级管理人员姓名','required','text');
+			returnValue=returnValue+checkInfo('lxdh','联系电话','required','text');
+			//校验不通过
+			if(returnValue>0) return false;
+			
+			return true;
+		}				
+		
+		//保存之前内容大小限制校验
+		function sizeCheck(){		
+			var returnValue=checkInfo('csmjje','初始募集金额','number','16,2');
+			returnValue=returnValue+checkInfo('csmjfe','初始募集份额','number','16,2');
+			returnValue=returnValue+checkInfo('yqmjzje','预期募集总金额','number','16,2');
+			returnValue=returnValue+checkInfo('yqmjzfe','预期募集总份额','number','16,2');
+			returnValue=returnValue+checkInfo('zdyqsyl','基准收益率(下限) ','number','8,6');
+			returnValue=returnValue+checkInfo('xtbcl','合同约定的信托报酬率（固定费率）','number','8,6');
+			returnValue=returnValue+checkInfo('xtbc','合同约定的信托报酬率（固定金额）','number','16,2');
+			returnValue=returnValue+checkInfo('cpqc','信托产品名称','length','50');
+			returnValue=returnValue+checkInfo('djcpbh','信托登记系统产品编码','length','50');
+			returnValue=returnValue+checkInfo('gscpbh','信托产品内部编号','length','50');
+			returnValue=returnValue+checkInfo('syfssm','受益方式说明','length','200');
+			returnValue=returnValue+checkInfo('jghyxlhbl','结构化优先劣后比例','length','50');
+			returnValue=returnValue+checkInfo('glmxt','关联母信托','length','1000');
+			returnValue=returnValue+checkInfo('glzxt','关联子信托','length','1000');
+			returnValue=returnValue+checkInfo('ywxism','业务信息说明','length','1000');
+			returnValue=returnValue+checkInfo('zgyqsyl','基准收益率 (上限) ','length','200');
+			returnValue=returnValue+checkInfo('htydbcsm','信托报酬说明','length','200');
+			returnValue=returnValue+checkInfo('fxczcsbhbcsm','风险控制措施变化补充说明','length','500');
+			returnValue=returnValue+checkInfo('xtcpsjclrq','信托产品成立日期','length','10');
+			returnValue=returnValue+checkInfo('cpjhdqr','信托产品计划到期日','length','10');
+			returnValue=returnValue+checkInfo('shdxzxtj','赎回的限制性条件','length','200');
+			returnValue=returnValue+checkInfo('jntgjg','境内托管机构','length','50');
+			returnValue=returnValue+checkInfo('jwtgdljg','境外托管代理机构','length','50');
+			returnValue=returnValue+checkInfo('jwtgdljggb','境外托管代理机构国别','length','50');
+			returnValue=returnValue+checkInfo('tzgwbh','投资顾问编号','length','50');
+			returnValue=returnValue+checkInfo('gljybcsm','关联交易补充说明','length','1000');
+			returnValue=returnValue+checkInfo('gljymd','关联交易目的','length','1000');
+			returnValue=returnValue+checkInfo('gljydj','关联交易定价','length','1000');
+			returnValue=returnValue+checkInfo('xtcpssbm','信托产品所属部门','length','50');
+			returnValue=returnValue+checkInfo('xtjlxm','信托经理姓名','length','50');
+			returnValue=returnValue+checkInfo('fggjglry','分管高级管理人员姓名','length','50');
+			returnValue=returnValue+checkInfo('lxdh','联系电话','length','50');
+
+			//校验不通过
+			if(returnValue>0) return false;
+			
+			return true;
+		}	
+		
         //初始登记信息保存
         function onSave() {
+			//保存之前必输项校验
+			if(!requiredCheck()){
+				return false;	
+			}		
+			//监管报送逻辑校验
+			if(!logicCheck()){
+				return false;	
+			}
+			//监管报送内容大小限制校验
+			if(!sizeCheck()){
+				return false;	
+			}			
             //产品信息要素
             ydjData.djlx = $("#djlx").val();
             //ydjData.xtjgmc = $("#xtjgmc").val();

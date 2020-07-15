@@ -275,106 +275,30 @@ let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
 				 wtrjzjly,sytzrq,bgbs,xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,
 				 jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry, 
 				 gljylx,qtgljylx,glfqkyglgx,gljymd,gljydj,sctlywdjqk,xmlx,qtxmlx,ywlx,qtywlx,xmszd,sfszqq, 
-				 xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf	FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${regitem_id}' `, {
+				 xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf	FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'0')='0'`, {
         type: pjmain.QueryTypes.SELECT
     });
     if (data.length > 0) {
         return data[0];
     } else {
-        //如果第一次没有填写，同步业务系统数据
-        let project_info = await intrustqlc.query(`SELECT 
-                                                    newId() uuid,
-                                                    0 bsid,
-                                                    A.REGITEM_ID regitem_id,
-                                                    A.PRODUCT_ID productid,
-                                                    A.PRODUCT_CODE productcode,
-                                                    '31D' xtjgmc,
-                                                    '广州市花都区高晟广场2栋11层' zcdz,
-                                                    0 symjzc,
-                                                    0 sjmjzc,
-                                                    0 symxtzzc,
-                                                    0 sjmfxzb,
-                                                    '0' ydjlx,
-                                                    CASE WHEN A.TYPE3 = '113801' THEN '0' WHEN A.TYPE3 = '113802' THEN '1' WHEN A.TYPE3 = '113803' THEN '2' ELSE '' END csxtcclx,
-                                                    CASE WHEN A.TYPE3 = '113802' OR A.TYPE3 = '113803' THEN '0' ELSE '0' END ccqxtcfzr,
-                                                    CASE WHEN A.TYPE1 = 1 THEN '0' WHEN A.TYPE1 = 2 THEN '1' ELSE '' END dyjhbz,
-                                                    CASE WHEN A.GNFL = '114301' THEN '0' WHEN A.GNFL = '114302' THEN '1' WHEN A.GNFL = '114303' THEN '2' ELSE '' END xtgn,
-                                                    '0' bgywlx,
-                                                    '0' sfwxffq,
-                                                    '' qtbgywlx,
-                                                    A.PRODUCT_NAME xtxmmc,
-                                                    '1' nfxclzgmlx,
-                                                    A.PRODUCT_MONEY / 10000 zdgdgmzfw,
-                                                    0 zggdgmzfw,
-                                                    CASE WHEN A.CPSTART_QXUNIT = 0 THEN '1' ELSE '0' END xtxmzqxlx,
-                                                    CASE WHEN A.CPSTART_QXUNIT = 3 THEN CAST(A.CPSTART_PERIOD AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 4 THEN CAST(A.CPSTART_PERIOD/3 AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 5 THEN CAST(A.CPSTART_PERIOD/12 AS NVARCHAR(10)) ELSE '' END zdgdqxzfw,
-                                                    '' zggdqxzfw,
-                                                    '1' yjxtxmgm,
-                                                    A.PRODUCT_MONEY / 10000 zdxtxmgmfw,
-                                                    0 zgxtxmgmfw,
-                                                    CASE WHEN A.CPSTART_QXUNIT = 0 THEN '1' ELSE '0' END xtxmqxlx,
-                                                    CASE WHEN A.CPSTART_QXUNIT = 3 THEN CAST(A.CPSTART_PERIOD AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 4 THEN CAST(A.CPSTART_PERIOD/3 AS NVARCHAR(10)) WHEN A.CPSTART_QXUNIT = 5 THEN CAST(A.CPSTART_PERIOD/12 AS NVARCHAR(10)) ELSE '' END zdxtxmqxfw,
-                                                    '' zgxtxmqxfw,
-                                                    0 fqljfxgm,
-                                                    null nfxhclsj,
-                                                    '' fqcpqs,
-                                                    '' wtrjzjly,
-                                                    '' sytzrq,
-                                                    '01' bgbs,
-                                                    '' xtzjbgyh,
-                                                    ROUND(ISNULL(A.XTBCL,0) * 100,2) xtbcl,
-                                                    CASE WHEN A.HS_FLAG = 1 THEN '2' WHEN A.HS_FLAG = 2 THEN '0' ELSE '1' END syrsyllx,
-                                                    isnull(A.MAX_RATE,0) syryqsylqj_zd,
-                                                    isnull(A.MIN_RATE,0) syryqsylqj_zg,
-                                                    CASE WHEN B.TYPE4 = '115703' THEN '0' WHEN B.TYPE4 = '115702' THEN '1' WHEN B.TYPE4 = '115701' THEN '2' WHEN B.TYPE4 = '115704' THEN '3' ELSE '' END xmly,
-                                                    CASE WHEN B.GLFS = 1 THEN '0' WHEN B.GLFS = 2 THEN '1' ELSE '' END xmglfs,
-                                                    '' xmtjjg,
-                                                    '' jydsmc,
-                                                    '' jydsxx,
-                                                    B.TYPE5_NAME xtcctxhyyfs,
-                                                    '' jyjg,
-                                                    '' fxkzcs,
-                                                    CASE WHEN B.YJHKLY = 0 THEN '经营性现金流'
-                                                        WHEN B.YJHKLY = 1 THEN '房地产销售收入'
-                                                        WHEN B.YJHKLY = 2 THEN '信托资产转让或出售变现'
-                                                        WHEN B.YJHKLY = 3 THEN '土地出让收入'
-                                                        WHEN B.YJHKLY = 4 THEN '专项费用返还'
-                                                        WHEN B.YJHKLY = 5 THEN '专项税收返还'
-                                                        WHEN B.YJHKLY = 6 THEN 'BOT或类似收入'
-                                                        WHEN B.YJHKLY = 7 THEN '财政兜底'
-                                                        WHEN B.YJHKLY = 8 THEN '其他' ELSE '' END yjhklyjtcfs,
-                                                    '' fxyasm,
-                                                    '' gshfhgyj,
-                                                    B.ADMIN_MANAGER_NAME xtjlxm,
-                                                    '' xtjldh,
-                                                    '' fggjglry,
-                                                    '' gljylx,
-                                                    '' qtgljylx,
-                                                    '' glfqkyglgx,
-                                                    '' gljymd,
-                                                    '' gljydj,
-                                                    '' sctlywdjqk,
-                                                    '' xmlx,
-                                                    '' qtxmlx,
-                                                    '' ywlx,
-                                                    '' qtywlx,
-                                                    '' xmszd,
-                                                    '0' sfszqq,
-                                                    '' xyzjbh,
-                                                    '' zbjblqk,
-                                                    '' kfshqkggdzzqk,
-                                                    '' qtsm,
-                                                    '' zjly,
-                                                    '0' sfjghxt,
-                                                    '' yxlhbl,
-                                                    '' tzfw,
-                                                    '' tzgwqk,
-                                                    '0' tgsfglf
-                                                FROM QLC_TPRODUCT A, QLC_TITEMREGINFO B
-                                                    WHERE A.REGITEM_ID = B.REGITEM_ID AND B.REGITEM_ID = ${regitem_id}`, {
-            type: intrustqlc.QueryTypes.SELECT
+        //先采集
+        await dfs.query(`exec SP_CHANGE_PRE_REGISTRATION_01 ${regitem_id} `);
+        //再返回
+        let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,
+                        xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,dyjhbz, 
+                        xtgn,bgywlx,sfwxffq,qtbgywlx,xtxmmc,nfxclzgmlx,zdgdgmzfw,zggdgmzfw,xtxmzqxlx,zdgdqxzfw,zggdqxzfw, 
+                        yjxtxmgm,zdxtxmgmfw,zgxtxmgmfw,xtxmqxlx,zdxtxmqxfw,zgxtxmqxfw,fqljfxgm,nfxhclsj,fqcpqs,
+                        wtrjzjly,sytzrq,bgbs,xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,
+                        jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry, 
+                        gljylx,qtgljylx,glfqkyglgx,gljymd,gljydj,sctlywdjqk,xmlx,qtxmlx,ywlx,qtywlx,xmszd,sfszqq, 
+                        xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf	FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'0')='0'`, {
+            type: pjmain.QueryTypes.SELECT
         });
-        return project_info[0];
+        if (data.length > 0) {
+            return data[0];
+        } else {
+            return new Object();
+        }
     }
 }
 
@@ -393,24 +317,24 @@ let find_app_dfs_zxd_ydjtjd_by_uuid = async (uuid) => {
 
 //保存预登记-产品信息要素
 let insert_app_dfs_zxd_ydjcpxx = async (data) => {
-	//字段非必输项空值处理
-	if(typeof(data.sfwxffq)=="undefined") data.sfwxffq = '';
-	if(typeof(data.sfszqq)=="undefined") data.sfszqq = '';
-	if(typeof(data.sfjghxt)=="undefined") data.sfjghxt = '';
-	if(typeof(data.tgsfglf)=="undefined") data.tgsfglf = '';
-	if(data.zdgdgmzfw=='') data.zdgdgmzfw=null;
-	if(data.zggdgmzfw=='') data.zggdgmzfw=null;
-	if(data.zdxtxmgmfw=='') data.zdxtxmgmfw=null;
-	if(data.zgxtxmgmfw=='') data.zgxtxmgmfw=null;
-	if(data.fqljfxgm=='') data.fqljfxgm=null;
-	if(data.syryqsylqj_zd=='') data.syryqsylqj_zd=null;
-	if(data.syryqsylqj_zg=='') data.syryqsylqj_zg=null;
+    //字段非必输项空值处理
+    if (typeof (data.sfwxffq) == "undefined") data.sfwxffq = '';
+    if (typeof (data.sfszqq) == "undefined") data.sfszqq = '';
+    if (typeof (data.sfjghxt) == "undefined") data.sfjghxt = '';
+    if (typeof (data.tgsfglf) == "undefined") data.tgsfglf = '';
+    if (data.zdgdgmzfw == '') data.zdgdgmzfw = null;
+    if (data.zggdgmzfw == '') data.zggdgmzfw = null;
+    if (data.zdxtxmgmfw == '') data.zdxtxmgmfw = null;
+    if (data.zgxtxmgmfw == '') data.zgxtxmgmfw = null;
+    if (data.fqljfxgm == '') data.fqljfxgm = null;
+    if (data.syryqsylqj_zd == '') data.syryqsylqj_zd = null;
+    if (data.syryqsylqj_zg == '') data.syryqsylqj_zg = null;
     let record = await dfs.query(`SELECT id FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${data.regitem_id}' and isnull(TASK_STATE,'0')='0'`, {
         type: pjmain.QueryTypes.SELECT
     });
     if (record.length > 0) {
         //后续更新操作
-		await dfs.query(`update APP_DFS_ZXD_YDJCPXX set xtjgmc='${data.xtjgmc}',zcdz='${data.zcdz}',symjzc=${data.symjzc},sjmjzc=${data.sjmjzc},symxtzzc=${data.symxtzzc},sjmfxzb=${data.sjmfxzb},ydjlx='${data.ydjlx}',
+        await dfs.query(`update APP_DFS_ZXD_YDJCPXX set xtjgmc='${data.xtjgmc}',zcdz='${data.zcdz}',symjzc=${data.symjzc},sjmjzc=${data.sjmjzc},symxtzzc=${data.symxtzzc},sjmfxzb=${data.sjmfxzb},ydjlx='${data.ydjlx}',
 				csxtcclx='${data.csxtcclx}',ccqxtcfzr='${data.ccqxtcfzr}',dyjhbz='${data.dyjhbz}',xtgn='${data.xtgn}',bgywlx='${data.bgywlx}',sfwxffq='${data.sfwxffq}',
 				qtbgywlx='${data.qtbgywlx}',xtxmmc='${data.xtxmmc}',nfxclzgmlx='${data.nfxclzgmlx}',zdgdgmzfw=${data.zdgdgmzfw},zggdgmzfw=${data.zggdgmzfw},xtxmzqxlx='${data.xtxmzqxlx}',
 				zdgdqxzfw='${data.zdgdqxzfw}',zggdqxzfw='${data.zggdqxzfw}',yjxtxmgm='${data.yjxtxmgm}',zdxtxmgmfw=${data.zdxtxmgmfw},zgxtxmgmfw=${data.zgxtxmgmfw},xtxmqxlx='${data.xtxmqxlx}',
@@ -423,15 +347,15 @@ let insert_app_dfs_zxd_ydjcpxx = async (data) => {
 				xmszd='${data.xmszd}',sfszqq='${data.sfszqq}',xyzjbh='${data.xyzjbh}',zbjblqk='${data.zbjblqk}',kfshqkggdzzqk='${data.kfshqkggdzzqk}',qtsm='${data.qtsm}',zjly='${data.zjly}',
 				sfjghxt='${data.sfjghxt}',yxlhbl='${data.yxlhbl}',tzfw='${data.tzfw}',tzgwqk='${data.tzgwqk}',tgsfglf='${data.tgsfglf}'		
 				where ID = '${record[0].id}'`)
-			.then(function (result) {
-				console.log(result);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});		
+            .then(function (result) {
+                console.log(result);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     } else {
-		//首次插入操作
-		await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJCPXX(relation_uuid,task_code,regitem_id,product_id,product_code,xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,
+        //首次插入操作
+        await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJCPXX(relation_uuid,task_code,regitem_id,product_id,product_code,xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,
 			dyjhbz,xtgn,bgywlx,sfwxffq,qtbgywlx,xtxmmc,nfxclzgmlx,zdgdgmzfw,zggdgmzfw,xtxmzqxlx,zdgdqxzfw,zggdqxzfw,
 			yjxtxmgm,zdxtxmgmfw,zgxtxmgmfw,xtxmqxlx,zdxtxmqxfw,zgxtxmqxfw,fqljfxgm,nfxhclsj,fqcpqs,wtrjzjly,sytzrq,bgbs,
 			xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,
@@ -439,43 +363,29 @@ let insert_app_dfs_zxd_ydjcpxx = async (data) => {
 			qtxmlx,ywlx,qtywlx,xmszd,sfszqq,xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf) values(
 				'${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.xtjgmc}','${data.zcdz}',${data.symjzc},${data.sjmjzc},${data.symxtzzc},${data.sjmfxzb},'${data.ydjlx}','${data.csxtcclx}','${data.ccqxtcfzr}','${data.dyjhbz}','${data.xtgn}','${data.bgywlx}','${data.sfwxffq}','${data.qtbgywlx}','${data.xtxmmc}','${data.nfxclzgmlx}',${data.zdgdgmzfw},${data.zggdgmzfw},'${data.xtxmzqxlx}','${data.zdgdqxzfw}','${data.zggdqxzfw}','${data.yjxtxmgm}',${data.zdxtxmgmfw},${data.zgxtxmgmfw},'${data.xtxmqxlx}','${data.zdxtxmqxfw}','${data.zgxtxmqxfw}',${data.fqljfxgm},'${data.nfxhclsj}','${data.fqcpqs}','${data.wtrjzjly}','${data.sytzrq}','${data.bgbs}','${data.xtzjbgyh}','${data.xtbcl}','${data.syrsyllx}',${data.syryqsylqj_zd},${data.syryqsylqj_zg},'${data.xmly}','${data.xmglfs}','${data.xmtjjg}','${data.jydsmc}','${data.jydsxx}','${data.xtcctxhyyfs}','${data.jyjg}','${data.fxkzcs}','${data.yjhklyjtcfs}','${data.fxyasm}','${data.gshfhgyj}','${data.xtjlxm}','${data.xtjldh}','${data.fggjglry}','${data.gljylx}','${data.qtgljylx}','${data.glfqkyglgx}','${data.gljymd}','${data.gljydj}','${data.sctlywdjqk}','${data.xmlx}','${data.qtxmlx}','${data.ywlx}','${data.qtywlx}','${data.xmszd}','${data.sfszqq}','${data.xyzjbh}','${data.zbjblqk}','${data.kfshqkggdzzqk}','${data.qtsm}','${data.zjly}','${data.sfjghxt}','${data.yxlhbl}','${data.tzfw}','${data.tzgwqk}','${data.tgsfglf}'
 			)`)
-			.then(function (result) {
-				console.log(result);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	}
+            .then(function (result) {
+                console.log(result);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 //保存预登记-异地推介补充要素
 let insert_app_dfs_zxd_ydjtjd = async (data) => {
-    let record = await dfs.query(`SELECT id FROM APP_DFS_ZXD_YDJTJD WHERE relation_uuid = (select relation_uuid from APP_DFS_ZXD_YDJCPXX where regitem_id='${data.regitem_id}' and isnull(TASK_STATE,'0')='0')`, {
-        type: pjmain.QueryTypes.SELECT
-    });
-    if (record.length > 0) {
-		//后续更新操作
-		await dfs.query(`update APP_DFS_ZXD_YDJTJD set sfqgtj='${data.sfqgtj}',tjd='${data.tjd}',tjd_p='${data.tjd_p}',tjd_c='${data.tjd_c}',tjd_a='${data.tjd_a}',
-				tjjg='${data.tjjg}',tjfl='${data.tjfl}',tjq='${data.tjq}',jhtjgm=${data.jhtjgm},tjfshtjgl='${data.tjfshtjgl}',tjfzrmc='${data.tjfzrmc}',tjfzrdh='${data.tjfzrdh}'
-				where ID = '${record[0].id}'`)
-			.then(function (result) {
-				console.log(result);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	}else{
-		//首次插入操作
-		await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJTJD(relation_uuid,task_code,regitem_id,product_id,product_code,sfqgtj,tjd,tjd_p,tjd_c,tjd_a,tjjg,tjfl,tjq,jhtjgm,tjfshtjgl,tjfzrmc,tjfzrdh) values(
-				'${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.sfqgtj}','${data.tjd}','${data.tjd_p}','${data.tjd_c}','${data.tjd_a}','${data.tjjg}','${data.tjfl}','${data.tjq}',${data.jhtjgm},'${data.tjfshtjgl}','${data.tjfzrmc}','${data.tjfzrdh}'
-			)`)
-			.then(function (result) {
-				console.log(result);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});		
-	}
+	if(typeof(data.sfqgtj)=="undefined") data.sfqgtj = '';
+    await dfs.query(`DELETE FROM APP_DFS_ZXD_YDJTJD WHERE relation_uuid = (select relation_uuid from APP_DFS_ZXD_YDJCPXX where regitem_id='${data.regitem_id}' and isnull(TASK_STATE,'0')='0')`);
+	//首次插入操作
+	await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJTJD(relation_uuid,task_code,regitem_id,product_id,product_code,sfqgtj,tjd,tjd_p,tjd_c,tjd_a,tjjg,tjfl,tjq,jhtjgm,tjfshtjgl,tjfzrmc,tjfzrdh) values(
+		'${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.sfqgtj}','${data.tjd}','${data.tjd_p}','${data.tjd_c}','${data.tjd_a}','${data.tjjg}','${data.tjfl}','${data.tjq}',${data.jhtjgm},'${data.tjfshtjgl}','${data.tjfzrmc}','${data.tjfzrdh}'
+	)`)
+	.then(function (result) {
+		console.log(result);
+	})
+	.catch(function (error) {
+		console.log(error);
+	});		
 }
 
 //查询初始登记-产品信息要素
@@ -487,108 +397,30 @@ let find_app_dfs_zxd_cscpxx_by_regitem_id = async (regitem_id) => {
 				 xtbclx, xtbcl, xtbc, htydbcsm, fxxmbs, fxtzbs, fxczjz, fxhscsnew, fxhscs, fxczcsbhbcsm, sfgdqxcp, xtcpsjclrq, cpjhdqr,
 				 kfpd, shdxzxtj, ktqshbs, tjfs, tjmj, ydtjbs, xmtjf, sfgz, gzms, gzcj, gzjg, jzpgpd, jntgjg, jwtgdljg, jwtgdljggb, tzgwbs,
 				 tzgwbh, grjgbs, gljybs, gljylx, gljybcsm, gllx, gljymd, gljydj, jzplpd, zcglbgpd, qsbgplbs, xtcpssbm, xtjlxm, fggjglry, lxdh
-				FROM APP_DFS_ZXD_CSCPXX WHERE regitem_id = '${regitem_id}' `, {
+				FROM APP_DFS_ZXD_CSCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'0')='0'`, {
         type: pjmain.QueryTypes.SELECT
     });
     if (data.length > 0) {
         return data[0];
     } else {
-        //如果第一次没有填写，同步业务系统数据
-        let project_info = await intrustqlc.query(`SELECT 
-        newId() uuid,
-        0 bsid,
-        A.REGITEM_ID regitem_id,
-        A.PRODUCT_ID productid,
-        A.PRODUCT_CODE productcode,
-        '1' djlx,
-        '31D' xtjgmc,
-        A.PRODUCT_NAME cpqc,
-        '' djcpbh,
-        A.PRODUCT_CODE gscpbh,
-        '0' sfxtzcp,
-        '0' sdbs,
-        '' fqzcpnbbh,
-        CASE WHEN A.TYPE3 = '113801' THEN '0' WHEN A.TYPE3 = '113802' THEN '1' WHEN A.TYPE3 = '113803' THEN '2' ELSE '' END xtccxz,
-        CASE WHEN A.TYPE1 = 1 THEN '0' WHEN A.TYPE1 = 2 THEN '1' ELSE '' END dyjhbz,
-        CASE WHEN A.TYPE3 = '113802' OR A.TYPE3 = '113803' THEN '0' ELSE '0' END ccqxtcfzr,
-        CASE WHEN B.GLFS = 1 THEN '0' WHEN B.GLFS = 2 THEN '1' ELSE '' END stzz,
-        CASE WHEN A.GNFL = '114301' THEN '0' WHEN A.GNFL = '114302' THEN '1' WHEN A.GNFL = '114303' THEN '2' ELSE '' END xtgn,
-        CASE WHEN A.HS_FLAG = 1 THEN '2' WHEN A.HS_FLAG = 2 THEN '0' ELSE '1' END yxfs,
-        CASE WHEN B.OPEN_FLAG = 1 THEN '1'WHEN B.OPEN_FLAG = 2 THEN '0' ELSE '' END kffbbs,
-        CASE WHEN B.XTMD = 2 THEN '0' WHEN B.XTMD = 3 THEN '1' ELSE '0' END xtsyfs,
-        '' syfssm,
-        '2' jghbs,
-        '' jghyxlhbl,
-        '0' zjcbs,
-        B.SFTOT totbs,
-        B.MXTXMBM glmxt,
-        '' glzxt,
-        isnull(A.CL_MONEY,0) csmjje,
-        isnull(A.CL_AMOUNT,0) csmjfe,
-        'CNY' zjjsbz,
-        0 yqmjzje,
-        0 yqmjzfe,
-        'CNY' yqmjzebz,
-        '' zyyyly_ctq,
-        '' zytxhy_ctq,
-        '' ccglyyfs,
-        CASE WHEN B.TYPE5 = '114101' THEN 'a' WHEN B.TYPE5 = '114102' THEN 'b' WHEN B.TYPE5 = '114104' THEN 'c' WHEN B.TYPE5 = '114105' THEN 'd' WHEN B.TYPE5 = '114103' THEN 'e' WHEN B.TYPE5 = '114107' THEN 'f' ELSE '' END ccglyyfs_ccq,
-        '0' xdzcjsyq,
-        '0' zczqhbs,
-        'f' tsyw,
-        '' ywxism,
-        CASE WHEN A.HS_FLAG = 1 THEN '2' WHEN A.HS_FLAG = 2 THEN '0' ELSE '1' END syllx,
-        isnull(A.MAX_RATE,0) zdyqsyl,
-        CAST(ROUND(A.MIN_RATE*100,2) AS NVARCHAR(30)) zgyqsyl,
-        CASE WHEN A.TYPE1 = 1 THEN '0' WHEN A.TYPE1 = 2 THEN '1' ELSE '' END xtbclx,
-        ROUND(ISNULL(A.XTBCL,0) * 100,2) xtbcl,
-        0 xtbc,
-        '' htydbcsm,
-        CASE WHEN A.RISK_RANK = 3 THEN '0' ELSE '1' END fxxmbs,
-        '' fxtzbs,
-        '' fxczjz,
-        '' fxhscsnew,
-        '' fxhscs,
-        '' fxczcsbhbcsm,
-        CASE WHEN A.CPSTART_QXUNIT = 0 THEN '1' ELSE '0' END sfgdqxcp,
-        A.CPSTART_DATE xtcpsjclrq,
-        A.CPEND_DATE cpjhdqr,
-        CASE WHEN B.KFPD = 1 THEN '0' WHEN B.KFPD = 2 THEN '1' WHEN B.KFPD = 3 THEN '5' WHEN B.KFPD = 4 THEN '6' WHEN B.KFPD = 5 THEN '7' WHEN B.KFPD = 6 THEN '8' WHEN B.KFPD = 7 THEN '' WHEN B.KFPD = 8 THEN '3' WHEN B.KFPD = 0 THEN '9' ELSE '' END kfpd,
-        '' shdxzxtj,
-        '0' ktqshbs,
-        '' tjfs,
-        '0' tjmj,
-        '0' ydtjbs,
-        CASE WHEN B.TYPE4 = '115703' THEN '0' WHEN B.TYPE4 = '115702' THEN '1' WHEN B.TYPE4 = '115701' THEN '2' WHEN B.TYPE4 = '115704' THEN '3' ELSE '' END xmtjf,
-        CASE WHEN B.SFZQTZ = 1 THEN '0' ELSE '1' END sfgz,
-        '' gzms,
-        '' gzcj,
-        '' gzjg,
-        '' jzpgpd,
-        '' jntgjg,
-        '' jwtgdljg,
-        '' jwtgdljggb,
-        '0' tzgwbs,
-        '' tzgwbh,
-        '0' grjgbs,
-        CASE WHEN ISNULL(B.GLJY,'') <> '' THEN '1' ELSE '0' END gljybs,
-        '' gljylx,
-        '' gljybcsm,
-        '' gllx,
-        '' gljymd,
-        '' gljydj,
-        '' jzplpd,
-        '7' zcglbgpd,
-        '1' qsbgplbs,
-        B.DEPT_NAME xtcpssbm,
-        B.ADMIN_MANAGER_NAME xtjlxm,
-        '' fggjglry,
-        '' lxdh
-        FROM QLC_TPRODUCT A, QLC_TITEMREGINFO B
-         WHERE A.REGITEM_ID = B.REGITEM_ID AND B.REGITEM_ID = ${regitem_id}`, {
-            type: intrustqlc.QueryTypes.SELECT
+        //先采集
+        await dfs.query(`exec SP_CHANGE_CS_BG_GZ_02 ${regitem_id} `);
+        //再返回
+        let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,
+					djlx, xtjgmc, cpqc, djcpbh, gscpbh, sfxtzcp, sdbs, fqzcpnbbh, xtccxz, dyjhbz, ccqxtcfzr, stzz, xtgn,
+				 yxfs, kffbbs, xtsyfs, syfssm, jghbs, jghyxlhbl, zjcbs, totbs, glmxt, glzxt, csmjje, csmjfe, zjjsbz, yqmjzje, yqmjzfe,
+				 yqmjzebz, zyyyly_ctq, zytxhy_ctq, ccglyyfs, ccglyyfs_ccq, xdzcjsyq, zczqhbs, tsyw, ywxism, syllx, zdyqsyl, zgyqsyl,
+				 xtbclx, xtbcl, xtbc, htydbcsm, fxxmbs, fxtzbs, fxczjz, fxhscsnew, fxhscs, fxczcsbhbcsm, sfgdqxcp, xtcpsjclrq, cpjhdqr,
+				 kfpd, shdxzxtj, ktqshbs, tjfs, tjmj, ydtjbs, xmtjf, sfgz, gzms, gzcj, gzjg, jzpgpd, jntgjg, jwtgdljg, jwtgdljggb, tzgwbs,
+				 tzgwbh, grjgbs, gljybs, gljylx, gljybcsm, gllx, gljymd, gljydj, jzplpd, zcglbgpd, qsbgplbs, xtcpssbm, xtjlxm, fggjglry, lxdh
+				FROM APP_DFS_ZXD_CSCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'0')='0'`, {
+            type: pjmain.QueryTypes.SELECT
         });
-        return project_info[0];
+        if (data.length > 0) {
+            return data[0];
+        } else {
+            return new Object();
+        }
     }
 }
 
@@ -654,6 +486,19 @@ let find_app_dfs_zxd_cszqzh_by_uuid = async (uuid) => {
 
 //保存初始登记-产品信息要素
 let insert_app_dfs_zxd_cscpxx = async (data) => {
+    //字段非必输项空值处理
+	if(typeof(data.sdbs)=="undefined") data.sdbs = '';
+	if(typeof(data.ccqxtcfzr)=="undefined") data.ccqxtcfzr = '';
+	if(typeof(data.sfgz)=="undefined") data.sfgz = '';
+	if(typeof(data.gljylx)=="undefined") data.gljylx = '';
+	if(typeof(data.gllx)=="undefined") data.gllx = '';
+	if(data.csmjje=='') data.csmjje=null;
+	if(data.csmjfe=='') data.csmjfe=null;
+	if(data.yqmjzje=='') data.yqmjzje=null;
+	if(data.yqmjzfe=='') data.yqmjzfe=null;
+	if(data.zdyqsyl=='') data.zdyqsyl=null;
+	if(data.xtbcl=='') data.xtbcl=null;
+	if(data.xtbc=='') data.xtbc=null;	
     //先删除
     await dfs.query(`DELETE FROM APP_DFS_ZXD_CSJYDS FROM APP_DFS_ZXD_CSJYDS a, APP_DFS_ZXD_CSCPXX b WHERE a.relation_uuid = b.relation_uuid and b.regitem_id = '${data.regitem_id}' and isnull(b.TASK_STATE,'0')='0'`);
     await dfs.query(`DELETE FROM APP_DFS_ZXD_CSSYQ FROM APP_DFS_ZXD_CSSYQ a, APP_DFS_ZXD_CSCPXX b WHERE a.relation_uuid = b.relation_uuid and b.regitem_id = '${data.regitem_id}' and isnull(b.TASK_STATE,'0')='0'`);
@@ -661,7 +506,7 @@ let insert_app_dfs_zxd_cscpxx = async (data) => {
     await dfs.query(`DELETE FROM APP_DFS_ZXD_YHZJZH FROM APP_DFS_ZXD_YHZJZH a, APP_DFS_ZXD_CSCPXX b WHERE a.relation_uuid = b.relation_uuid and b.regitem_id = '${data.regitem_id}' and isnull(b.TASK_STATE,'0')='0'`);
     await dfs.query(`DELETE FROM APP_DFS_ZXD_CSZQZH FROM APP_DFS_ZXD_CSZQZH a, APP_DFS_ZXD_CSCPXX b WHERE a.relation_uuid = b.relation_uuid and b.regitem_id = '${data.regitem_id}' and isnull(b.TASK_STATE,'0')='0'`);
     await dfs.query(`DELETE FROM APP_DFS_ZXD_CSCPXX WHERE regitem_id = '${data.regitem_id}' and isnull(TASK_STATE,'0')='0'`);
-    
+
     //再保存
     await dfs.query(`INSERT INTO APP_DFS_ZXD_CSCPXX(relation_uuid,task_code,regitem_id,product_id,product_code,djlx,xtjgmc,cpqc,djcpbh,gscpbh,sfxtzcp,sdbs,fqzcpnbbh,xtccxz,
         dyjhbz,ccqxtcfzr,stzz,xtgn,yxfs,kffbbs,xtsyfs,syfssm,jghbs,jghyxlhbl,zjcbs,totbs,glmxt,glzxt,
@@ -873,7 +718,7 @@ let query_app_dfs_zxd_ydjcpxx = async (regitem_id) => {
     });
     if (task_info.length > 0) {
         let affa_id = task_info[0].affa_id;
-        let project_info = await dfs.query(`exec sp_query_app_dfs_zxd_ydjcpxx '`+affa_id+`'  `, {
+        let project_info = await dfs.query(`exec sp_query_app_dfs_zxd_ydjcpxx '` + affa_id + `'  `, {
             type: pjmain.QueryTypes.SELECT
         });
         return project_info[0];

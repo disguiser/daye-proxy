@@ -39,7 +39,7 @@
 
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade in active" id="productInfo">
-            <div style="height:390px;overflow-y:auto">
+            <div style="height:620px;overflow-y:auto">
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
                     <tr>
                         <td style="width: 20%;">
@@ -613,7 +613,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="sitePromotion">
-            <div style="height:390px;overflow-y:auto">
+            <div style="height:620px;overflow-y:auto">
                 <div id="tjd">
 
                 </div>
@@ -632,6 +632,13 @@
         var q = 1;
         //添加异地推介补充
         function addSitePromotion(sfqgtj, tjd, tjd_p, tjd_c, tjd_a, tjjg, tjfl, tjq, jhtjgm, tjfshtjgl, tjfzrmc, tjfzrdh) {
+			//当报告业务类型选择“异地推介”时
+			//bgywlx = getBoxValue('bgywlx');
+			//if(bgywlx.indexOf('2')<0)
+			//{
+			//	alert("[产品信息要素.报告业务类型]选择【异地推介】时,字段[异地推介补充要素]为必填项!");
+			//	return false;
+			//}
             let str = `<div id="ydtjdiv` + q + `"><div style="height: 10px;"></div>
                     <div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
                     <a href="#" onclick="delSitePromotion(`+ q + `);"><font color="#FF0000">点击删除下面一条异地推介补充要素</font></a></div>
@@ -743,7 +750,7 @@
         }
 
         //删除异地推介补充
-        function delSitePromotion(no) {
+        function delSitePromotion(no) {			
             $("#ydtjdiv" + no).remove();
         }
 
@@ -908,7 +915,7 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    if (data != "" && data.length != 1) {
+                    if (data != "" && data.length != 0) {
                         $.each(data, function (index, item) {
                             addSitePromotion(item.sfqgtj, item.tjd, item.tjd_p, item.tjd_c, item.tjd_a, item.tjjg, item.tjfl, item.tjq, item.jhtjgm, item.tjfshtjgl, item.tjfzrmc, item.tjfzrdh);
                         });
@@ -989,90 +996,10 @@
 				if(new RegExp("("+ k +")").test(fmt))  
 			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));  
 			return fmt;  
-		}			
+		}
 
-		//字段必输项+内容大小限制校验
-		function checkInfo(name,content,flag,type){
-			if(type=='text') value = getFormValue(name);
-			else if(type=='box') value = getBoxValue(name);
-			else if(type=='radio') value = getRadioValue(name);
-			if(flag=="required")
-			{
-				if(typeof(value)=="undefined" || value.length==0  || value.length==''){
-					alert("字段["+content+"]为必填项!");
-					$("input[name="+name+"]").focus();
-					return false;
-				}
-			}else if(flag=="length"){
-				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='') && value.length>type){
-					alert("字段["+content+"]内容超过最大限制!");
-					$("input[name="+name+"]").focus();
-					return false;
-				}			
-			}
-		}		
-		
-		//保存之前必输项校验
-		function requiredCheck(){
-			checkInfo('symjzc','上月末净资产（万 元）','required','text');
-			checkInfo('sjmjzc','上季末净资本（万 元）','required','text');
-			checkInfo('symxtzzc','上月末信托总资产（万元）','required','text');
-			checkInfo('sjmfxzb','上季末风险资本（万元）','required','text');
-			checkInfo('ydjlx','预登记类型','required','text');
-			checkInfo('csxtcclx','信托财产性质标识','required','text');
-			checkInfo('dyjhbz','单一集合标识','required','text');
-			checkInfo('xtgn','信托功能标识','required','text');
-			checkInfo('bgywlx','报告业务类型','required','box');
-			checkInfo('xtxmmc','信托产品名称','required','text');
-			checkInfo('nfxclzgmlx','拟发行或成立总规模类型','required','text');
-			checkInfo('xtxmzqxlx','信托产品总期限类型','required','text');
-			checkInfo('yjxtxmgm','拟发行或成立规模类型','required','text');
-			checkInfo('xtxmqxlx','信托产品期限类型','required','text');
-			checkInfo('wtrjzjly','委托人及财产来源','required','text');
-			checkInfo('bgbs','保管标识','required','text');
-			checkInfo('xtbcl','信托报酬率','required','text');
-			checkInfo('syrsyllx','信托合同收益率类型','required','text');
-			checkInfo('xmly','项目来源','required','text');
-			checkInfo('xmglfs','信托财产管理方式','required','text');
-			checkInfo('xtcctxhyyfs','信托财产投向和运用方式','required','text');
-			checkInfo('jyjg','交易结构','required','text');
-			checkInfo('fxkzcs','采取风控措施及风险提示信息','required','text');
-			checkInfo('fxyasm','风险预案说明','required','text');
-			checkInfo('gshfhgyj','公司合法合规意见','required','text');
-			checkInfo('xtjlxm','信托经理姓名','required','text');
-			checkInfo('xtjldh','信托经理电话','required','text');
-			checkInfo('fggjglry','分管高级管理人员姓名','required','text');			
-			
-			return true;
-		}				
-		
 		//保存之前逻辑性校验
 		function logicCheck(){
-			//上月末净资产（万 元）+上季末净资本（万 元）+上月末信托总资产（万元）+上季末风险资本（万元）
-            symjzc = getFormValue("symjzc");
-            sjmjzc = getFormValue("sjmjzc");
-            symxtzzc = getFormValue("symxtzzc");
-            sjmfxzb = getFormValue("sjmfxzb");
-			if(!(typeof(symjzc)=="undefined" || symjzc.length==0  || symjzc.length=='') && (parseFloat(symjzc) <= 10000 || parseFloat(symjzc)>=100000000)){
-			    alert("字段[上月末净资产（万 元）]对应值必须大于【1亿】,必须小于【1万亿】!");
-				$("input[name=symjzc]").focus();
-				return false;
-			}
-			if(!(typeof(sjmjzc)=="undefined" || sjmjzc.length==0  || sjmjzc.length=='') && (parseFloat(sjmjzc)<=10000 || parseFloat(sjmjzc)>=100000000)){
-			    alert("字段[上季末净资本（万 元）]对应值必须大于【1亿】,必须小于【1万亿】!");
-				$("input[name=sjmjzc]").focus();
-				return false;
-			}
-			if(!(typeof(symxtzzc)=="undefined" || symxtzzc.length==0  || symxtzzc.length=='') && (parseFloat(symxtzzc)<=10000 || parseFloat(symxtzzc)>=900000000)){
-			    alert("字段[上月末信托总资产（万元）]对应值必须大于【1亿】,必须小于【9万亿】!");
-				$("input[name=symxtzzc]").focus();
-				return false;
-			}
-			if(!(typeof(sjmfxzb)=="undefined" || sjmfxzb.length==0  || sjmfxzb.length=='') && (parseFloat(sjmfxzb)<=10000 || parseFloat(sjmfxzb)>=100000000)){
-			    alert("字段[上季末风险资本（万元）]对应值必须大于【1亿】,必须小于【1万亿】!");
-				$("input[name=sjmfxzb]").focus();
-				return false;
-			}
 			//财产权信托进行受益权拆分转让或者对外发行受益权标识
 			csxtcclx = getFormValue('csxtcclx');
 			ccqxtcfzr = getRadioValue('ccqxtcfzr');
@@ -1198,7 +1125,7 @@
 				alert("[信托产品总期限类型]选择【固定期限】时,[固定期限总范围（月）的上限]不为空时,[固定期限范围（月）的上限]不能为空!");
 				return false;
 			}			
-			if(xtxmzqxlx=="1"){
+			if(xtxmqxlx=="1"){
 				setFormValue('zdxtxmqxfw','');	
 				setFormValue('zgxtxmqxfw','');	
 			}
@@ -1254,6 +1181,11 @@
 				alert("[信托合同收益率类型]选择【基准收益率】或者【基准+浮动】时,字段[信托合同约定基准收益率范围（上限）]和[信托合同约定基准收益率范围（下限）]中至少有一项为必填项!");
 				return false;
 			}
+			if(parseFloat(syryqsylqj_zg)>parseFloat(syryqsylqj_zd) && !(typeof(syryqsylqj_zd)=="undefined" || syryqsylqj_zd.length==0  || syryqsylqj_zd.length=='') && !(typeof(syryqsylqj_zg)=="undefined" || syryqsylqj_zg.length==0  || syryqsylqj_zg.length==''))
+			{
+				alert("[信托合同约定基准收益率范围（上限）]不小于[信托合同约定基准收益率范围（下限）]!");
+				return false;
+			}			
 			//项目推荐机构
 			var xmly=getFormValue('xmly');
 			var xmtjjg=getFormValue('xmtjjg');
@@ -1434,45 +1366,133 @@
 			}
 			
 			return true;
-		}
+		}		
+
+		//字段必输项+内容大小限制校验
+		function checkInfo(name,content,flag,type){
+			if(type=='text') value = getFormValue(name);
+			else if(type=='box') value = getBoxValue(name);
+			else if(type=='radio') value = getRadioValue(name);
+			else value = getFormValue(name);
+			if(flag=="required")
+			{
+				if(typeof(value)=="undefined" || value.length==0  || value.length==''){
+					alert("字段["+content+"]为必填项!");
+					$("input[name="+name+"]").focus();
+					return 1;
+				}
+			}else if(flag=="length"){
+				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='') && value.length>type){
+					alert("字段["+content+"]内容超过最大限制!");
+					$("input[name="+name+"]").focus();
+					return 1;
+				}			
+			}else if(flag=="number"){
+				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='')){
+					var typeValue=type.split(",");
+					if(value.indexOf(".")<0) value=value+'.00';
+					var contentValue=value.split(".");
+					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
+						alert("字段["+content+"]内容超过最大限制!");
+						$("input[name="+name+"]").focus();
+						return 1;
+					}					
+				}			
+			}
+			return 0;
+		}		
+		
+		//保存之前必输项校验
+		function requiredCheck(){
+			var returnValue=checkInfo('symjzc','上月末净资产（万 元）','required','text');
+			returnValue=returnValue+checkInfo('sjmjzc','上季末净资本（万 元）','required','text');
+			returnValue=returnValue+checkInfo('symxtzzc','上月末信托总资产（万元）','required','text');
+			returnValue=returnValue+checkInfo('sjmfxzb','上季末风险资本（万元）','required','text');
+			returnValue=returnValue+checkInfo('ydjlx','预登记类型','required','text');
+			returnValue=returnValue+checkInfo('csxtcclx','信托财产性质标识','required','text');
+			returnValue=returnValue+checkInfo('dyjhbz','单一集合标识','required','text');
+			returnValue=returnValue+checkInfo('xtgn','信托功能标识','required','text');
+			returnValue=returnValue+checkInfo('bgywlx','报告业务类型','required','box');
+			returnValue=returnValue+checkInfo('xtxmmc','信托产品名称','required','text');
+			returnValue=returnValue+checkInfo('nfxclzgmlx','拟发行或成立总规模类型','required','text');
+			returnValue=returnValue+checkInfo('xtxmzqxlx','信托产品总期限类型','required','text');
+			returnValue=returnValue+checkInfo('yjxtxmgm','拟发行或成立规模类型','required','text');
+			returnValue=returnValue+checkInfo('xtxmqxlx','信托产品期限类型','required','text');
+			returnValue=returnValue+checkInfo('wtrjzjly','委托人及财产来源','required','text');
+			returnValue=returnValue+checkInfo('bgbs','保管标识','required','text');
+			returnValue=returnValue+checkInfo('xtbcl','信托报酬率','required','text');
+			returnValue=returnValue+checkInfo('syrsyllx','信托合同收益率类型','required','text');
+			returnValue=returnValue+checkInfo('xmly','项目来源','required','text');
+			returnValue=returnValue+checkInfo('xmglfs','信托财产管理方式','required','text');
+			returnValue=returnValue+checkInfo('xtcctxhyyfs','信托财产投向和运用方式','required','text');
+			returnValue=returnValue+checkInfo('jyjg','交易结构','required','text');
+			returnValue=returnValue+checkInfo('fxkzcs','采取风控措施及风险提示信息','required','text');
+			returnValue=returnValue+checkInfo('fxyasm','风险预案说明','required','text');
+			returnValue=returnValue+checkInfo('gshfhgyj','公司合法合规意见','required','text');
+			returnValue=returnValue+checkInfo('xtjlxm','信托经理姓名','required','text');
+			returnValue=returnValue+checkInfo('xtjldh','信托经理电话','required','text');
+			returnValue=returnValue+checkInfo('fggjglry','分管高级管理人员姓名','required','text');
+			//校验不通过
+			if(returnValue>0) return false;
+			
+			return true;
+		}				
 		
 		//保存之前内容大小限制校验
 		function sizeCheck(){		
-			checkInfo('qtbgywlx','上月末净资产（万 元）','length','50');
-			checkInfo('xtxmmc','上季末净资本（万 元）','length','50');
-			checkInfo('fqcpqs','上月末信托总资产（万元）','length','50');
-			checkInfo('wtrjzjly','上季末风险资本（万元）','length','1000');
-			checkInfo('sytzrq','适宜投资人群','length','1000');
-			checkInfo('xtzjbgyh','保管方信息','length','50');
-			checkInfo('xtbcl','信托报酬率','length','200');
-			checkInfo('xmtjjg','项目推荐机构','length','50');
-			checkInfo('jydsmc','交易对手名称','length','300');
-			checkInfo('jydsxx','交易对手信息','length','1000');
-			checkInfo('xtcctxhyyfs','信托财产投向和运用方式','length','200');
-			checkInfo('jyjg','交易结构','length','1000');
-			checkInfo('fxkzcs','采取风控措施及风险提示信息','length','1500');
-			checkInfo('yjhklyjtcfs','预计还款来源/信托退出方式','length','200');
-			checkInfo('fxyasm','风险预案说明','length','1000');
-			checkInfo('gshfhgyj','公司合法合规意见','length','1500');
-			checkInfo('xtjlxm','信托经理姓名','length','50');
-			checkInfo('xtjldh','信托经理电话','length','50');
-			checkInfo('fggjglry','分管高级管理人员姓名','length','50');
-			checkInfo('qtgljylx','关联交易补充说明','length','1000');
-			checkInfo('glfqkyglgx','关联方情况与关联关系','length','1000');
-			checkInfo('gljymd','关联交易目的','length','1000');
-			checkInfo('gljydj','关联交易定价','length','1000');
-			checkInfo('sctlywdjqk','市场同类业务定价情况','length','1000');
-			checkInfo('qtxmlx','其他项目类型','length','128');
-			checkInfo('qtywlx','其他业务类型','length','128');
-			checkInfo('xmszd','项目所在地','length','100');
-			checkInfo('xyzjbh','现有证照编号','length','1000');	
-			checkInfo('zbjblqk','资本金比例情况','length','200');	
-			checkInfo('kfshqkggdzzqk','开发商或其控股股东资质情况','length','1000');
-			checkInfo('qtsm','其他说明','length','1000');
-			checkInfo('zjly','资金来源','length','200');
-			checkInfo('yxlhbl','优先劣后比例','length','50');
-			checkInfo('tzfw','投资范围','length','200');	
-			checkInfo('tzgwqk','投资顾问情况','length','200');				
+			var returnValue=checkInfo('symjzc','上月末净资产（万 元）','number','15,6');
+			returnValue=returnValue+checkInfo('sjmjzc','上季末净资本（万 元）','number','15,6');
+			returnValue=returnValue+checkInfo('symxtzzc','上月末信托总资产（万元）','number','20,6');
+			returnValue=returnValue+checkInfo('sjmfxzb','上季末风险资本（万元）','number','15,6');
+			returnValue=returnValue+=checkInfo('zdgdgmzfw','固定规模总范围（万元）（下限）','number','15,6');
+			returnValue=returnValue+checkInfo('zggdgmzfw','固定规模总范围（万元）（上限）','number','15,6');
+			returnValue=returnValue+checkInfo('zdxtxmgmfw','固定规模范围（万元）（下限）','number','15,6');
+			returnValue=returnValue+checkInfo('zgxtxmgmfw','固定规模范围（万元）（上限）','number','15,6');
+			returnValue=returnValue+checkInfo('fqljfxgm','分期累计发行（成立）规模（万元）','number','15,6');
+			returnValue=returnValue+checkInfo('syryqsylqj_zd','信托合同约定基准收益率范围（上限）','number','8,6');
+			returnValue=returnValue+checkInfo('syryqsylqj_zg','信托合同约定基准收益率范围（下限）','number','8,6');
+			returnValue=returnValue+checkInfo('qtbgywlx','其他报告业务类型','length','50');
+			returnValue=returnValue+checkInfo('xtxmmc','信托产品名称','length','50');
+			returnValue=returnValue+checkInfo('zdgdqxzfw','固定期限总范围（月）（下限）','length','4');
+			returnValue=returnValue+checkInfo('zggdqxzfw','固定期限总范围（月）（上限）','length','4');
+			returnValue=returnValue+checkInfo('zdxtxmqxfw','固定期限范围（月）（下限）','length','4');
+			returnValue=returnValue+checkInfo('zgxtxmqxfw','固定期限范围（月）（上限）','length','4');
+			returnValue=returnValue+checkInfo('nfxhclsj','拟发行或成立时间','length','10');
+			returnValue=returnValue+checkInfo('fqcpqs','分期产品期数','length','50');
+			returnValue=returnValue+checkInfo('wtrjzjly','委托人及财产来源','length','1000');
+			returnValue=returnValue+checkInfo('sytzrq','适宜投资人群','length','1000');
+			returnValue=returnValue+checkInfo('xtzjbgyh','保管方信息','length','50');
+			returnValue=returnValue+checkInfo('xtbcl','信托报酬率','length','200');
+			returnValue=returnValue+checkInfo('xmtjjg','项目推荐机构','length','50');
+			returnValue=returnValue+checkInfo('jydsmc','交易对手名称','length','300');
+			returnValue=returnValue+checkInfo('jydsxx','交易对手信息','length','1000');
+			returnValue=returnValue+checkInfo('xtcctxhyyfs','信托财产投向和运用方式','length','200');
+			returnValue=returnValue+checkInfo('jyjg','交易结构','length','1000');
+			returnValue=returnValue+checkInfo('fxkzcs','采取风控措施及风险提示信息','length','1500');
+			returnValue=returnValue+checkInfo('yjhklyjtcfs','预计还款来源/信托退出方式','length','200');
+			returnValue=returnValue+checkInfo('fxyasm','风险预案说明','length','1000');
+			returnValue=returnValue+checkInfo('gshfhgyj','公司合法合规意见','length','1500');
+			returnValue=returnValue+checkInfo('xtjlxm','信托经理姓名','length','50');
+			returnValue=returnValue+checkInfo('xtjldh','信托经理电话','length','50');
+			returnValue=returnValue+checkInfo('fggjglry','分管高级管理人员姓名','length','50');
+			returnValue=returnValue+checkInfo('qtgljylx','关联交易补充说明','length','1000');
+			returnValue=returnValue+checkInfo('glfqkyglgx','关联方情况与关联关系','length','1000');
+			returnValue=returnValue+checkInfo('gljymd','关联交易目的','length','1000');
+			returnValue=returnValue+checkInfo('gljydj','关联交易定价','length','1000');
+			returnValue=returnValue+checkInfo('sctlywdjqk','市场同类业务定价情况','length','1000');
+			returnValue=returnValue+checkInfo('qtxmlx','其他项目类型','length','128');
+			returnValue=returnValue+checkInfo('qtywlx','其他业务类型','length','128');
+			returnValue=returnValue+checkInfo('xmszd','项目所在地','length','100');
+			returnValue=returnValue+checkInfo('xyzjbh','现有证照编号','length','1000');	
+			returnValue=returnValue+checkInfo('zbjblqk','资本金比例情况','length','200');	
+			returnValue=returnValue+checkInfo('kfshqkggdzzqk','开发商或其控股股东资质情况','length','1000');
+			returnValue=returnValue+checkInfo('qtsm','其他说明','length','1000');
+			returnValue=returnValue+checkInfo('zjly','资金来源','length','200');
+			returnValue=returnValue+checkInfo('yxlhbl','优先劣后比例','length','50');
+			returnValue=returnValue+checkInfo('tzfw','投资范围','length','200');	
+			returnValue=returnValue+checkInfo('tzgwqk','投资顾问情况','length','200');
+			//校验不通过
+			if(returnValue>0) return false;
 			
 			return true;
 		}	
@@ -1590,8 +1610,9 @@
                 data: ydjData,
                 //请求成功
                 success: function (data) {
-                    saveYdtj(ydjData);
-                    alert("保存成功！");
+                    if(saveYdtj(ydjData)){
+						alert("保存成功！");
+					}
                 },
                 //请求失败，包含具体的错误信息
                 error: function (e) {
@@ -1602,10 +1623,74 @@
             });
         }
 
+		//异地推介补充要素校验
+		function ydtjCheck(no) {
+			//保存之前必输项校验
+			var returnValue=checkInfo('sfqgtj'+no,'是否全国推介','required','radio');
+			returnValue=returnValue+checkInfo('tjjg'+no,'推介机构','required','text');
+			returnValue=returnValue+checkInfo('tjfl'+no,'推介费率','required','text');
+			returnValue=returnValue+checkInfo('tjq'+no,'推介期','required','text');
+			returnValue=returnValue+checkInfo('jhtjgm'+no,'计划推介规模（万元）','required','text');
+			returnValue=returnValue+checkInfo('tjfshtjgl'+no,'推介方式和推介管理','required','text');
+			returnValue=returnValue+checkInfo('tjfzrmc'+no,'推介负责人名称','required','text');
+			returnValue=returnValue+checkInfo('tjfzrdh'+no,'推介负责人电话','required','text');
+			//监管报送内容大小限制校验
+			returnValue=returnValue+checkInfo('tjd_a'+no,'推介地-地址','length','50');
+			returnValue=returnValue+checkInfo('tjjg'+no,'推介机构','length','64');
+			returnValue=returnValue+checkInfo('tjfl'+no,'推介费率','length','50');
+			returnValue=returnValue+checkInfo('tjq'+no,'推介期','length','64');
+			returnValue=returnValue+checkInfo('jhtjgm'+no,'计划推介规模（万元）','number','15,6');
+			returnValue=returnValue+checkInfo('tjfshtjgl'+no,'推介方式和推介管理','length','256');
+			returnValue=returnValue+checkInfo('tjfzrmc'+no,'推介负责人名称','length','64');
+			returnValue=returnValue+checkInfo('tjfzrdh'+no,'推介负责人电话','length','64');					
+			//校验不通过
+			if(returnValue>0) return false;			
+			//监管报送逻辑校验,推介地国家+省份+城市+地点控制
+			var sfqgtj=getRadioValue('sfqgtj'+no);
+			var tjd=getFormValue('tjd'+no);
+			var tjd_p=getFormValue('tjd_p'+no);
+			var tjd_c=getFormValue('tjd_c'+no);
+			var tjd_a=getFormValue('tjd_a'+no);
+			if(sfqgtj =="1" && (typeof(tjd)=="undefined" || tjd.length==0  || tjd.length=='')){
+				alert("[是否全国推介]选择【是】时,[推介地]为必填项!");
+				return false;
+			}
+			if(sfqgtj =="1" && (typeof(tjd_p)=="undefined" || tjd_p.length==0  || tjd_p.length=='')){
+				alert("[是否全国推介]选择【是】时,[推介地-省]为必填项!");
+				return false;
+			}
+			if(sfqgtj =="1" && (typeof(tjd_c)=="undefined" || tjd_c.length==0  || tjd_c.length=='')){
+				alert("[是否全国推介]选择【是】时,[推介地-城市]为必填项!");
+				return false;
+			}
+			if(sfqgtj =="1" && (typeof(tjd_a)=="undefined" || tjd_a.length==0  || tjd_a.length=='')){
+				alert("[是否全国推介]选择【是】时,[推介地-地址]为必填项!");
+				return false;
+			}	
+			if(sfqgtj =="0"){
+				setFormValue('tjd'+no,'');
+				setFormValue('tjd_p'+no,'');
+				setFormValue('tjd_c'+no,'');
+				setFormValue('tjd_a'+no,'');
+			}			
+			return true;
+		}
+		
         function saveYdtj(ydjData) {
+			//当报告业务类型选择“异地推介”时
+			//bgywlx = getBoxValue('bgywlx');
+			//if(bgywlx.indexOf('2')<0)
+			//{
+			//	alert("[产品信息要素.报告业务类型]选择【异地推介】时,字段[异地推介补充要素]为必填项!");
+			//	return true;
+			//}				
             //异地推介补充要素
             $("input[name^='tjdNo']").each(function name(params) {
                 let no = $(this).val();
+				//异地推介补充要素校验
+				//if(!ydtjCheck(no)){
+				//	return false;	
+				//}
                 console.log(no);
                 let tjdNos = new Object();
                 tjdNos.uuid = ydjData.uuid;
@@ -1644,6 +1729,7 @@
                     }
                 });
             });
+			return true;
         }
 
         //获取GET参数

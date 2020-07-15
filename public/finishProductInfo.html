@@ -240,9 +240,170 @@
                 }
             });
         }
+		
+		//设置text,textarea和select对应值
+		function setFormValue(name,value){
+			$('#'+name).val(value);
+		}
+		
+		//设置Radio对应值
+		function setRadioValue(name,value){
+			if(value==""){
+				$("input[name="+name+"]").prop("checked",false);
+			}else{
+				$("input[name="+name+"][value="+value+"]").attr("checked", true);
+			}
+		}
+		
+		//设置Box对应值
+		function setBoxValue(name,content){	
+			if(content.indexOf('No,')>=0)
+			{
+				content=content.replace('No,','');
+				let returnValue = content.split(",");
+				$.each(returnValue, function (index, value) {
+					$("#"+name+value).attr("checked",false)
+				});
+			}else{
+				let returnValue = content.split(",");
+				$.each(returnValue, function (index, value) {
+					$("#"+name+value).attr("checked",true)
+				});			
+			}
+		}
+		
+		//获取text,textarea和select对应值
+		function getFormValue(name){
+			let value = $('#'+name).val();
+			return value;
+		}
+		
+		//获取Radio对应值
+		function getRadioValue(name){
+			let value = $("input[name="+name+"]:checked").val();
+			return value;
+		}
+		
+		//获取Box对应值
+		function getBoxValue(name){
+			let value = $("input:checkbox[name="+name+"]:checked");
+            let chvalue = [];
+            $.each(value, function () {
+                chvalue.push($(this).val());
+            });
+            value = chvalue.join(",");
+			return value;
+		}
+		
+		//日期格式化处理
+		Date.prototype.Format = function(fmt)  
+		{ 
+			var o = {  
+				"M+" : this.getMonth()+1,         //月份  
+				"d+" : this.getDate(),          //日  
+				"h+" : this.getHours(),          //小时  
+				"m+" : this.getMinutes(),         //分  
+				"s+" : this.getSeconds(),         //秒  
+				"q+" : Math.floor((this.getMonth()+3)/3), //季度  
+				"S" : this.getMilliseconds()       //毫秒  
+			};  
+			if(/(y+)/.test(fmt))  
+				fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));  
+			for(var k in o)  
+				if(new RegExp("("+ k +")").test(fmt))  
+			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));  
+			return fmt;  
+		}
 
-        //事前报告信息保存
+		//字段必输项+内容大小限制校验
+		function checkInfo(name,content,flag,type){
+			if(type=='text') value = getFormValue(name);
+			else if(type=='box') value = getBoxValue(name);
+			else if(type=='radio') value = getRadioValue(name);
+			else value = getFormValue(name);
+			if(flag=="required")
+			{
+				if(typeof(value)=="undefined" || value.length==0  || value.length==''){
+					alert("字段["+content+"]为必填项!");
+					$("input[name="+name+"]").focus();
+					return 1;
+				}
+			}else if(flag=="length"){
+				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='') && value.length>type){
+					alert("字段["+content+"]内容超过最大限制!");
+					$("input[name="+name+"]").focus();
+					return 1;
+				}			
+			}else if(flag=="number"){
+				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='')){
+					var typeValue=type.split(",");
+					if(value.indexOf(".")<0) value=value+'.00';
+					var contentValue=value.split(".");
+					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
+						alert("字段["+content+"]内容超过最大限制!");
+						$("input[name="+name+"]").focus();
+						return 1;
+					}					
+				}			
+			}
+			return 0;
+		}		
+		//保存之前必输项校验
+		function logicCheck(){
+			//保存之前必输项校验
+			var returnValue=checkInfo('djcpbh','信托登记系统产品编码','required','text');
+			returnValue=returnValue+checkInfo('cpqc','信托产品名称','required','text');
+			returnValue=returnValue+checkInfo('sfaydrqqs','是否按约定日期清算','required','radio');
+			returnValue=returnValue+checkInfo('qsrq','清算日期','required','text');
+			returnValue=returnValue+checkInfo('ssxtje','实收信托金额','required','text');
+			returnValue=returnValue+checkInfo('xtbjljgfe','信托本金累计给付额','required','text');
+			returnValue=returnValue+checkInfo('xtsyljfpe','信托收益累计分配额','required','text');
+			returnValue=returnValue+checkInfo('strljgdbc','受托人累计固定报酬','required','text');
+			returnValue=returnValue+checkInfo('strljyjbc','受托人累计业绩报酬','required','text');
+			returnValue=returnValue+checkInfo('sjxtbcl','实际信托报酬率','required','text');
+			returnValue=returnValue+checkInfo('xtfyze','信托费用总额','required','text');
+			returnValue=returnValue+checkInfo('xtfyl','信托费用率','required','text');
+			returnValue=returnValue+checkInfo('xtbgfl','信托保管费率','required','text');
+			returnValue=returnValue+checkInfo('sjsy','实际收益','required','text');
+			returnValue=returnValue+checkInfo('sjsyl','实际收益率','required','text');
+			//监管报送内容大小限制校验
+			returnValue=returnValue+checkInfo('djcpbh','信托登记系统产品编码','length','50');
+			returnValue=returnValue+checkInfo('cpqc','信托产品名称','length','50');
+			returnValue=returnValue+checkInfo('qsrq','清算日期','length','50');
+			returnValue=returnValue+checkInfo('ssxtje','实收信托金额','number','16,2');
+			returnValue=returnValue+checkInfo('xtbjljgfe','信托本金累计给付额','number','16,2');
+			returnValue=returnValue+checkInfo('xtsyljfpe','信托收益累计分配额','number','16,2');
+			returnValue=returnValue+checkInfo('strljgdbc','受托人累计固定报酬','number','16,2');
+			returnValue=returnValue+checkInfo('strljyjbc','受托人累计业绩报酬','number','16,2');
+			returnValue=returnValue+checkInfo('sjxtbcl','实际信托报酬率','number','8,6');
+			returnValue=returnValue+checkInfo('xtfyze','信托费用总额','number','16,2');
+			returnValue=returnValue+checkInfo('xtfyl','信托费用率','number','8,6');
+			returnValue=returnValue+checkInfo('xtbgfl','信托保管费率','number','8,6');
+			returnValue=returnValue+checkInfo('sjsy','实际收益','number','16,2');
+			returnValue=returnValue+checkInfo('sjsyl','实际收益率','number','8,6');
+			returnValue=returnValue+checkInfo('tgljgdbc','投资顾问等累计固定报酬','number','16,2');
+			returnValue=returnValue+checkInfo('tgljyjbc','投资顾问等累计业绩报酬','number','16,2');
+			returnValue=returnValue+checkInfo('sshje','损失金额','number','16,2');
+			returnValue=returnValue+checkInfo('shsje','涉诉金额','number','16,2');
+			returnValue=returnValue+checkInfo('pfje','赔付金额','number','16,2');
+			returnValue=returnValue+checkInfo('ywxxsm','业务信息说明','length','1000');
+			
+			//校验不通过
+			if(returnValue>0) return false;			
+			var qsrq=getFormValue('qsrq');
+			var today = new Date().Format("yyyy-MM-dd");
+			if(qsrq > '<%=ConfigUtil.getToday("","Today")%>'){
+				alert("[清算日期]必须小于今天!");
+				return false;
+			}
+			return true;
+		}
+        //产品终止登记信息保存
         function onSave() {
+			//保存校验
+			if(!logicCheck()){
+				return false;	
+			}		
             //产品信息要素
             ydjData.sfaydrqqs = $("input[name='sfaydrqqs']:checked").val();
             ydjData.djcpbh=$("#djcpbh").val();

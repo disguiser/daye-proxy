@@ -714,11 +714,19 @@ let insert_app_dfs_zxd_sqcpxx = async (data) => {
 //查询预登记-产品信息要素-详情
 let query_app_dfs_zxd_ydjcpxx = async (regitem_id) => {
     //根据节点ID获取事务ID
-    let task_info = await pjmain.query(`select affa_id from pjmain..wf_task where task_id = '${regitem_id}'  `, {
-        type: pjmain.QueryTypes.SELECT
-    });
-    if (task_info.length > 0) {
-        let affa_id = task_info[0].affa_id;
+    let affa_id = "";
+    let arr = regitem_id.split("@@");
+    affa_id = arr[1];
+    if (arr[0] == "2") {
+        let task_info = await pjmain.query(`select affa_id from pjmain..wf_task where task_id = '` + affa_id + `'  `, {
+            type: pjmain.QueryTypes.SELECT
+        });
+        if (task_info.length > 0) {
+            affa_id = task_info[0].affa_id;
+        }
+    }
+    
+    if (affa_id != "") {
         let project_info = await dfs.query(`exec sp_query_app_dfs_zxd_ydjcpxx '` + affa_id + `'  `, {
             type: pjmain.QueryTypes.SELECT
         });

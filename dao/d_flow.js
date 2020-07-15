@@ -322,6 +322,7 @@ let insert_app_dfs_zxd_ydjcpxx = async (data) => {
     if (typeof (data.sfszqq) == "undefined") data.sfszqq = '';
     if (typeof (data.sfjghxt) == "undefined") data.sfjghxt = '';
     if (typeof (data.tgsfglf) == "undefined") data.tgsfglf = '';
+    if (typeof (data.ccqxtcfzr) == "undefined") data.ccqxtcfzr = '';
     if (data.zdgdgmzfw == '') data.zdgdgmzfw = null;
     if (data.zggdgmzfw == '') data.zggdgmzfw = null;
     if (data.zdxtxmgmfw == '') data.zdxtxmgmfw = null;

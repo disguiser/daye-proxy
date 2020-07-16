@@ -661,6 +661,9 @@ let find_app_dfs_zxd_zzcpxx_by_regitem_id = async (regitem_id) => {
 
 //保存终止登记-产品信息要素
 let insert_app_dfs_zxd_zzcpxx = async (data) => {
+	if(data.sshje=='') data.sshje=null;
+	if(data.shsje=='') data.shsje=null;
+	if(data.pfje=='') data.pfje=null;	
     //先删除
     await dfs.query(`DELETE FROM APP_DFS_ZXD_ZZCPXX WHERE regitem_id = '${data.regitem_id}' and isnull(TASK_STATE,'')=''`);
     //再保存

@@ -9,6 +9,7 @@ const proxy_flow_show = require('./proxy/proxy_flow_show.js');
 const proxy_flow_select = require('./proxy/proxy_flow_select.js');
 const proxy_obj_new = require('./proxy/proxy_obj_new.js');
 const proxy_flow_dealwith = require('./proxy/proxy_flow_dealwith.js');
+const proxy_flow_zxd = require('./proxy/proxy_flow_zxd.js');
 const harmon = require('./utils/harmon');
 const app = require('connect')();
 const config = require('./config').proxy;
@@ -73,6 +74,11 @@ app.use('/x/workflow/dealwith', async (req, res, next) => {
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
+  // 信托登记审批流程 只有发起人撤回才有编辑内容的权限,所以判断url里存在的nextnode即可,无需查询flow_id
+  if(['EA24B73C2E9142719FAFF460F4097AEA'].indexOf(parsed.nextnode) >= 0) {
+    let harmonBinary = harmon([], proxy_flow_zxd, true);
+    harmonBinary(req, res);
+  }  
   next();
 });
 

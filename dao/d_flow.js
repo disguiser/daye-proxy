@@ -682,7 +682,7 @@ let find_app_dfs_zxd_sqcpxx_regitem_id = async (regitem_id) => {
     let arr = regitem_id.split("@@");
     regitem_id = arr[1];
     if (arr[0] == "2") {
-        let task_info = await pjmain.query(`select b.regitem_id from pjmain..wf_task a,intrustqlc..qlc_titempbinfo b where a.affa_id=b.problemid and a.task_id = '` + regitem_id + `'  `, {
+        let task_info = await pjmain.query(`select b.regitem_id from pjmain..wf_task a,intrustqlc..qlc_titempbinfo b where a.affa_id=b.problemid and a.task_id = '` + regitem_id + `' and isnull(TASK_STATE,'')=''`, {
             type: pjmain.QueryTypes.SELECT
         });
         if (task_info.length > 0) {
@@ -702,7 +702,7 @@ let find_app_dfs_zxd_sqcpxx_regitem_id = async (regitem_id) => {
         //再返回
         let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, problem_id,
                         xtjgmc, xtxmmc, djcpbh, csxtcclx, dyjhbz, sfgljy, sqbgyy, xtjlxm, xtjldh, fggjglry, remark, input_time, input_user, input_dept, update_time
-                        FROM APP_DFS_ZXD_SQCPXX WHERE regitem_id = '${regitem_id}' `, {
+                        FROM APP_DFS_ZXD_SQCPXX WHERE regitem_id = '${regitem_id}' and isnull(TASK_STATE,'')=''`, {
             type: pjmain.QueryTypes.SELECT
         });
         if (data.length > 0) {

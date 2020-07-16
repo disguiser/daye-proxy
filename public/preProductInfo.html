@@ -441,6 +441,7 @@
                             <input type="text" id="fggjglry" name="fggjglry" style="width: 320px;">
                         </td>
                     </tr>
+					<tr> <td colspan=3><b> 当[报告业务类型]选择【信托业务关联交易报告】必填要素:</b><td></tr>
                     <tr>
                         <td>
                             关联交易类型:
@@ -487,6 +488,7 @@
                             <input type="text" id="sctlywdjqk" name="sctlywdjqk" style="width: 320px;">
                         </td>
                     </tr>
+					<tr> <td colspan=3><b> 当[报告业务类型]选择【房地产信托业务】必填要素:</b><td></tr>
                     <tr>
                         <td>
                             项目类型:
@@ -564,7 +566,8 @@
                         <td>
                             <input type="text" id="qtsm" name="qtsm" style="width: 320px;">
                         </td>
-                    </tr>
+                    </tr>	
+					<tr> <td colspan=3><b> 当[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】必填要素:</b><td></tr>
                     <tr>
                         <td>
                             资金来源:
@@ -807,6 +810,12 @@
             //获取流程参数
             let flowid = GetQueryValue('flowid');
             let itemid = GetQueryValue('itemid');
+			let taskid = GetQueryValue('taskid');
+            if (taskid == null) {
+                itemid = "1@@"+itemid;
+            } else {
+                itemid = "2@@"+taskid;
+            }
             find_regiteminfo_info_by_regitem_id(flowid, itemid);
         });
 
@@ -1006,6 +1015,7 @@
 			if((csxtcclx=="1" || csxtcclx=="2") && (typeof(ccqxtcfzr)=="undefined" || ccqxtcfzr.length==0  || ccqxtcfzr.length==""))
 			{
 				alert("当[信托财产性质标识]勾选【财产权】或【混合】时,字段[财产权信托进行受益权拆分转让或者对外发行受益权标识]为必填项!");
+				$("input[name=ccqxtcfzr]").focus();
 				return false;
 			}
 			//是否为新发分期控制
@@ -1015,6 +1025,7 @@
 			if(ydjlx=="6" && bgywlx.indexOf('2')>=0 && (typeof(sfwxffq)=="undefined" || sfwxffq.length==0  || sfwxffq.length==""))
 			{
 				alert("[预登记类型]选择【补充预登记】且[报告业务类型]选择【异地推介】时,字段[是否为新发分期]为必填项!");
+				$("input[name=sfwxffq]").focus();
 				return false;
 			}
 			if(!(ydjlx=="6" && bgywlx.indexOf('2')>=0)){
@@ -1025,6 +1036,7 @@
 			if(bgywlx.indexOf('4')>=0 && (typeof(qtbgywlx)=="undefined" || qtbgywlx.length==0  || qtbgywlx.length==""))
 			{
 				alert("[报告业务类型]选择【其他】时,字段[其他报告业务类型]为必填项!");
+				$("input[name=qtbgywlx]").focus();
 				return false;
 			}
 			//拟发行或成立总规模类型+固定规模总范围（万元）（下限）+固定规模总范围（万元）（上限）
@@ -1034,11 +1046,13 @@
 			if(nfxclzgmlx=="1" && (typeof(zdgdgmzfw)=="undefined" || zdgdgmzfw.length==0  || zdgdgmzfw.length=='') && (typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw.length==''))
 			{
 				alert("[拟发行或成立总规模类型]选择【固定规模】时,字段[固定规模总范围（万元）（下限）]和[固定规模总范围（万元）（上限）]中至少有一项为必填项!");
+				$("input[name=zdgdgmzfw]").focus();
 				return false;
 			}
 			if(nfxclzgmlx=="1" && parseFloat(zdgdgmzfw)>parseFloat(zggdgmzfw) && !(typeof(zdgdgmzfw)=="undefined" || zdgdgmzfw.length==0  || zdgdgmzfw.length=='') && !(typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw.length==''))
 			{
 				alert("[拟发行或成立总规模类型]选择【固定规模】时,[固定规模总范围（万元）的下限]不能大于[固定规模总范围（万元）的上限]!");
+				$("input[name=zdgdgmzfw]").focus();
 				return false;
 			}		
 			if(nfxclzgmlx=="0"){
@@ -1052,11 +1066,13 @@
 			if(xtxmzqxlx=="0" && (typeof(zdgdqxzfw)=="undefined" || zdgdqxzfw.length==0  || zdgdqxzfw.length=='') && (typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw.length==''))
 			{
 				alert("[信托产品总期限类型]选择【固定期限】时,字段[固定期限总范围（月）（下限）]和[固定期限总范围（月）（上限）]中至少有一项为必填项!");
+				$("input[name=zdgdqxzfw]").focus();
 				return false;
 			}
 			if(xtxmzqxlx=="0" && parseFloat(zdgdqxzfw)>parseFloat(zggdqxzfw) && !(typeof(zdgdqxzfw)=="undefined" || zdgdqxzfw.length==0  || zdgdqxzfw.length=='') && !(typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw.length==''))
 			{
 				alert("[信托产品总期限类型]选择【固定期限】时,[固定期限总范围（月）的下限]不能大于[固定期限总范围（月）的上限]!");
+				$("input[name=zdgdqxzfw]").focus();
 				return false;
 			}		
 			if(xtxmzqxlx=="1"){
@@ -1070,26 +1086,31 @@
 			if(nfxclzgmlx=="1" && yjxtxmgm!="1")
 			{
 				alert("[拟发行或成立总规模类型 ]选择【固定规模】时,[拟发行或成立规模类型]也需要选择【固定规模】!");
+				$("input[name=yjxtxmgm]").focus();
 				return false;
 			}		
 			if(yjxtxmgm=="1" && (typeof(zdxtxmgmfw)=="undefined" || zdxtxmgmfw.length==0  || zdxtxmgmfw.length=='') && (typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw.length==''))
 			{
 				alert("[拟发行或成立规模类型]选择【固定规模】时,字段[固定规模范围（万元）（下限）]和[固定规模范围（万元）（上限）]中至少有一项为必填项!");
+				$("input[name=zgxtxmgmfw]").focus();
 				return false;
 			}
 			if(yjxtxmgm=="1" && parseFloat(zdxtxmgmfw)>parseFloat(zgxtxmgmfw) && !(typeof(zdxtxmgmfw)=="undefined" || zdxtxmgmfw.length==0  || zdxtxmgmfw.length=='') && !(typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw.length==''))
 			{
 				alert("[拟发行或成立规模类型选择【固定规模】时,[固定规模范围（万元）的下限]不能大于[固定规模范围（万元）的上限]!");
+				$("input[name=zdxtxmgmfw]").focus();
 				return false;
 			}			
 			if(nfxclzgmlx=="1" && parseFloat(zgxtxmgmfw)>parseFloat(zggdgmzfw) && !(typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw.length=='') && !(typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw.length==''))
 			{
 				alert("[拟发行或成立总规模类型]选择【固定规模】时,[固定规模总范围（万元）的上限]不能小于[固定规模范围（万元）的上限]!");
+				$("input[name=zggdgmzfw]").focus();
 				return false;
 			}	
 			if(nfxclzgmlx=="1" && !(typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw.length=='') && (typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw.length==''))
 			{
 				alert("[拟发行或成立总规模类型]选择【固定规模】时,[固定规模总范围（万元）的上限]不为空时,[固定规模范围（万元）的上限]不能为空!");
+				$("input[name=zgxtxmgmfw]").focus();
 				return false;
 			}		
 			if(yjxtxmgm=="0"){
@@ -1103,26 +1124,31 @@
 			if(xtxmzqxlx=="0" && xtxmqxlx!="0")
 			{
 				alert("[信托产品总期限类型]选择【固定期限】时,[信托产品期限类型]也需要选择【固定期限】!");
+				$("input[name=xtxmqxlx]").focus();
 				return false;
 			}		
 			if(xtxmqxlx=="0" && (typeof(zdxtxmqxfw)=="undefined" || zdxtxmqxfw.length==0  || zdxtxmqxfw.length=='') && (typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw.length==''))
 			{
 				alert("[信托产品期限类型]选择【固定期限】时,字段[固定期限范围（月）（下限）]和[固定期限范围（月）（上限）]中至少有一项为必填项!");
+				$("input[name=zgxtxmqxfw]").focus();
 				return false;
 			}
 			if(xtxmqxlx=="0" && parseFloat(zdxtxmqxfw)>parseFloat(zgxtxmqxfw) && !(typeof(zdxtxmqxfw)=="undefined" || zdxtxmqxfw.length==0  || zdxtxmqxfw.length=='') && !(typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw.length==''))
 			{
 				alert("[信托产品期限类型]选择【固定期限】时,[固定期限范围（月）的下限]不能大于[固定期限范围（月）的上限]!");
+				$("input[name=zdxtxmqxfw]").focus();
 				return false;
 			}			
 			if(xtxmqxlx=="0" && parseFloat(zgxtxmqxfw)>parseFloat(zggdqxzfw) && !(typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw.length=='') && !(typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw.length==''))
 			{
 				alert("[信托产品总期限类型]选择【固定期限】时,[固定期限总范围（月）的上限]不小于[固定期限范围（月）的上限]!");
+				$("input[name=zggdqxzfw]").focus();
 				return false;
 			}	
 			if(xtxmqxlx=="0" && !(typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw.length=='') && (typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw.length==''))
 			{
 				alert("[信托产品总期限类型]选择【固定期限】时,[固定期限总范围（月）的上限]不为空时,[固定期限范围（月）的上限]不能为空!");
+				$("input[name=zgxtxmqxfw]").focus();
 				return false;
 			}			
 			if(xtxmqxlx=="1"){
@@ -1135,19 +1161,23 @@
 			var fqcpqs=getFormValue('fqcpqs');
 			if(ydjlx=="6" && !(bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(fqljfxgm)=="undefined" || fqljfxgm.length==0  || fqljfxgm.length=='')){
 				alert("[预登记类型]选择【补充预登记】,除去[报告业务类型]选择【异地推介】，[是否新发分期]选择【否】,[分期累计发行（成立）规模（万元）]为必填项!");
+				$("input[name=fqljfxgm]").focus();
 				return false;
 			}
 			if(!(ydjlx=="6" && bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj.length=='')){
 				alert("除去[预登记类型]选择【补充预登记】,[报告业务类型]选择【异地推介】，[是否新发分期]选择【否】,[拟发行或成立时间]为必填项!");
+				$("input[name=nfxhclsj]").focus();
 				return false;
 			}
 			var today = new Date().Format("yyyy-MM-dd");
 			if(!(typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj.length=='') && nfxhclsj <= today){
 				alert("[拟发行或成立时间]必须大于今天!");
+				$("input[name=nfxhclsj]").focus();
 				return false;
 			}
 			if(ydjlx=="6" && !(bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(fqcpqs)=="undefined" || fqcpqs.length==0  || fqcpqs.length=='')){
 				alert("[预登记类型]选择【补充预登记】,除去[报告业务类型]选择【异地推介】，[是否新发分期]选择【否】,[分期产品期数]为必填项!");
+				$("input[name=fqcpqs]").focus();
 				return false;
 			}		
 			if(ydjlx=="6" && bgywlx.indexOf('2')>=0 && sfwxffq=="0"){
@@ -1160,6 +1190,7 @@
 			var sytzrq=getFormValue('sytzrq');
 			if(dyjhbz=="1" && (typeof(sytzrq)=="undefined" || sytzrq.length==0  || sytzrq.length=='')){
 				alert("[单一集合标识 ]选择【集合】,字段[适宜投资人群]为必填项!");
+				$("input[name=sytzrq]").focus();
 				return false;
 			}
 			//保管方信息
@@ -1167,6 +1198,7 @@
 			var xtzjbgyh=getFormValue('xtzjbgyh');
 			if(bgbs=="00" && (typeof(xtzjbgyh)=="undefined" || xtzjbgyh.length==0  || xtzjbgyh.length=='')){
 				alert("[保管标识 ]选择【保管制】,字段[保管方信息]为必填项!");
+				$("input[name=xtzjbgyh]").focus();
 				return false;
 			}
 			if(bgbs=="01"){
@@ -1179,11 +1211,13 @@
 			if((syrsyllx=="0" || syrsyllx=="1") && (typeof(syryqsylqj_zd)=="undefined" || syryqsylqj_zd.length==0  || syryqsylqj_zd.length=='') && (typeof(syryqsylqj_zg)=="undefined" || syryqsylqj_zg.length==0  || syryqsylqj_zg.length==''))
 			{
 				alert("[信托合同收益率类型]选择【基准收益率】或者【基准+浮动】时,字段[信托合同约定基准收益率范围（上限）]和[信托合同约定基准收益率范围（下限）]中至少有一项为必填项!");
+				$("input[name=syryqsylqj_zd]").focus();
 				return false;
 			}
 			if(parseFloat(syryqsylqj_zg)>parseFloat(syryqsylqj_zd) && !(typeof(syryqsylqj_zd)=="undefined" || syryqsylqj_zd.length==0  || syryqsylqj_zd.length=='') && !(typeof(syryqsylqj_zg)=="undefined" || syryqsylqj_zg.length==0  || syryqsylqj_zg.length==''))
 			{
 				alert("[信托合同约定基准收益率范围（上限）]不小于[信托合同约定基准收益率范围（下限）]!");
+				$("input[name=xmtjjg]").focus();
 				return false;
 			}			
 			//项目推荐机构
@@ -1191,6 +1225,7 @@
 			var xmtjjg=getFormValue('xmtjjg');
 			if((xmly=="1" || xmly=="2" || xmly=="3") && (typeof(xmtjjg)=="undefined" || xmtjjg.length==0  || xmtjjg.length=='')){
 				alert("[项目来源]选择【银行推荐】、【其他机构推荐】和【其他】,字段[项目推荐机构]为必填项!");
+				$("input[name=xmtjjg]").focus();
 				return false;
 			}	
 			if(xmly=="0"){
@@ -1203,21 +1238,25 @@
 			if(xtgn=="1" && (typeof(jydsmc)=="undefined" || jydsmc.length==0  || jydsmc.length==''))
 			{
 				alert("[信托功能标识]选择【融资类】时,字段[交易对手名称]为必填项!");
+				$("input[name=jydsmc]").focus();
 				return false;
 			}	
 			if(xtgn=="1" && (typeof(jydsxx)=="undefined" || jydsxx.length==0  || jydsxx.length==''))
 			{
 				alert("[信托功能标识]选择【融资类】时,字段[交易对手信息]中为必填项!");
+				$("input[name=jydsxx]").focus();
 				return false;
 			}
 			if(xtgn!="1" && (typeof(jydsmc)=="undefined" || jydsmc.length==0  || jydsmc.length=='') && !(typeof(jydsxx)=="undefined" || jydsxx.length==0  || jydsxx.length==''))
 			{
 				alert("[信托功能标识]选择【投资类】或【事务管理】时,字段[交易对手名称]和[交易对手信息]同时为必填项或是非必填项!");
+				$("input[name=jydsmc]").focus();
 				return false;
 			}
 			if(xtgn!="1" && !(typeof(jydsmc)=="undefined" || jydsmc.length==0  || jydsmc.length=='') && (typeof(jydsxx)=="undefined" || jydsxx.length==0  || jydsxx.length==''))
 			{
 				alert("[信托功能标识]选择【投资类】或【事务管理】时,字段[交易对手名称]和[交易对手信息]同时为必填项或是非必填项!");
+				$("input[name=jydsxx]").focus();
 				return false;
 			}	
 			//预计还款来源/信托退出方式控制
@@ -1225,6 +1264,7 @@
 			if(xtgn=="1" && (typeof(yjhklyjtcfs)=="undefined" || yjhklyjtcfs.length==0  || yjhklyjtcfs.length==''))
 			{
 				alert("[信托功能标识]选择【融资类】时,字段[预计还款来源/信托退出方式]中为必填项!");
+				$("input[name=gljylx]").focus();
 				return false;
 			}
 			//关联交易类型
@@ -1236,26 +1276,32 @@
 			var sctlywdjqk=getFormValue('sctlywdjqk');
 			if(bgywlx.indexOf('0')>=0 && (typeof(gljylx)=="undefined" || gljylx.length==0  || gljylx.length=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[关联交易类型]为必填项!");
+				$("input[name=gljylx]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('0')>=0 && gljylx.indexOf('4')>=0 && (typeof(qtgljylx)=="undefined" || qtgljylx.length==0  || qtgljylx.length=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】且[关联交易类型]选择【其他关联交易】时,[关联交易补充说明]为必填项!");
+				$("input[name=gljylx]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('0')>=0 && (typeof(glfqkyglgx)=="undefined" || glfqkyglgx.length==0  || glfqkyglgx.length=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[关联方情况与关联关系]为必填项!");
+				$("input[name=glfqkyglgx]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('0')>=0 && (typeof(gljymd)=="undefined" || gljymd.length==0  || gljymd.length=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[关联交易目的]为必填项!");
+				$("input[name=gljymd]").focus();
 				return false;
 			}	
 			if(bgywlx.indexOf('0')>=0 && (typeof(gljydj)=="undefined" || gljydj.length==0  || gljydj.length=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[关联交易定价]为必填项!");
+				$("input[name=gljydj]").focus();
 				return false;
 			}	
 			if(bgywlx.indexOf('0')>=0 && (typeof(sctlywdjqk)=="undefined" || sctlywdjqk.length==0  || sctlywdjqk.length=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[市场同类业务定价情况]为必填项!");
+				$("input[name=sctlywdjqk]").focus();
 				return false;
 			}			
 			if(bgywlx.indexOf('0')<0){
@@ -1278,38 +1324,47 @@
 			var kfshqkggdzzqk=getFormValue('kfshqkggdzzqk');
 			if(bgywlx.indexOf('1')>=0 && (typeof(xmlx)=="undefined" || xmlx.length==0  || xmlx.length=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[项目类型]为必填项!");
+				$("input[name=xmlx]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('1')>=0 && xmlx.indexOf('3')>=0 && (typeof(qtxmlx)=="undefined" || qtxmlx.length==0  || qtxmlx.length=='')){
 				alert("[报告业务类型]选择【房地产信托业务】且[项目类型]选择【其他】时,[其他项目类型]为必填项!");
+				$("input[name=qtxmlx]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('1')>=0 && (typeof(ywlx)=="undefined" || ywlx.length==0  || ywlx.length=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[业务类型]为必填项!");
+				$("input[name=ywlx]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('1')>=0 && ywlx=='2' && (typeof(qtywlx)=="undefined" || qtywlx.length==0  || qtywlx.length=='')){
 				alert("[报告业务类型]选择【房地产信托业务】且[业务类型]选择【其他】时,[其他业务类型]为必填项!");
+				$("input[name=qtywlx]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('1')>=0 && (typeof(xmszd)=="undefined" || xmszd.length==0  || xmszd.length=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[项目所在地]为必填项!");
+				$("input[name=xmszd]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('1')>=0 && (typeof(sfszqq)=="undefined" || sfszqq.length==0  || sfszqq.length=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[是否四证齐全]为必填项!");
+				$("input[name=sfszqq]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('1')>=0 && (typeof(xyzjbh)=="undefined" || xyzjbh.length==0  || xyzjbh.length=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[现有证照编号]为必填项!");
+				$("input[name=xyzjbh]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('1')>=0 && (typeof(zbjblqk)=="undefined" || zbjblqk.length==0  || zbjblqk.length=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[资本金比例情况]为必填项!");
+				$("input[name=zbjblqk]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('1')>=0 && (typeof(kfshqkggdzzqk)=="undefined" || kfshqkggdzzqk.length==0  || kfshqkggdzzqk.length=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[开发商或其控股股东资质情况]为必填项!");
+				$("input[name=kfshqkggdzzqk]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('1')<0){
@@ -1332,26 +1387,32 @@
 			var tgsfglf=getRadioValue('tgsfglf');
 			if(bgywlx.indexOf('3')>=0 && (typeof(zjly)=="undefined" || zjly.length==0  || zjly.length=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[资金来源]为必填项!");
+				$("input[name=zjly]").focus();
 				return false;
 			}		
 			if(bgywlx.indexOf('3')>=0 && (typeof(sfjghxt)=="undefined" || sfjghxt.length==0  || sfjghxt.length=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[是否结构化信托]为必填项!");
+				$("input[name=sfjghxt]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('3')>=0 && sfjghxt=="1" && (typeof(yxlhbl)=="undefined" || yxlhbl.length==0  || yxlhbl.length=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】且[是否结构化信托]选【是】时,[优先劣后比例]为必填项!");
+				$("input[name=yxlhbl]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('3')>=0 && (typeof(tzfw)=="undefined" || tzfw.length==0  || tzfw.length=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[投资范围]为必填项!");
+				$("input[name=tzfw]").focus();
 				return false;
 			}		
 			if(bgywlx.indexOf('3')>=0 && (typeof(tzgwqk)=="undefined" || tzgwqk.length==0  || tzgwqk.length=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[投资顾问情况]为必填项!");
+				$("input[name=tzgwqk]").focus();
 				return false;
 			}
 			if(bgywlx.indexOf('3')>=0 && (typeof(tgsfglf)=="undefined" || tgsfglf.length==0  || tgsfglf.length=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[投资顾问是否信托公司关联方]为必填项!");
+				$("input[name=tgsfglf]").focus();
 				return false;
 			}	
 			if(bgywlx.indexOf('3')<0){

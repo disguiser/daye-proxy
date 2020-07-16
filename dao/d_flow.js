@@ -268,6 +268,17 @@ let find_next_user_for_huiq = async (user) => {
 
 //查询预登记-产品信息要素
 let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
+    //根据节点ID获取事务ID
+    let arr = regitem_id.split("@@");
+    regitem_id = arr[1];
+    if (arr[0] == "2") {
+        let task_info = await pjmain.query(`select b.regitem_id from pjmain..wf_task a,intrustqlc..qlc_titempbinfo b where a.affa_id=b.problemid and a.task_id = '` + regitem_id + `'  `, {
+            type: pjmain.QueryTypes.SELECT
+        });
+        if (task_info.length > 0) {
+            regitem_id = task_info[0].regitem_id;
+        }
+    }
     let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,
 				 xtjgmc,zcdz,symjzc,sjmjzc,symxtzzc,sjmfxzb,ydjlx,csxtcclx,ccqxtcfzr,dyjhbz, 
 				 xtgn,bgywlx,sfwxffq,qtbgywlx,xtxmmc,nfxclzgmlx,zdgdgmzfw,zggdgmzfw,xtxmzqxlx,zdgdqxzfw,zggdqxzfw, 
@@ -391,6 +402,17 @@ let insert_app_dfs_zxd_ydjtjd = async (data) => {
 
 //查询初始登记-产品信息要素
 let find_app_dfs_zxd_cscpxx_by_regitem_id = async (regitem_id) => {
+    //根据节点ID获取事务ID
+    let arr = regitem_id.split("@@");
+    regitem_id = arr[1];
+    if (arr[0] == "2") {
+        let task_info = await pjmain.query(`select b.regitem_id from pjmain..wf_task a,intrustqlc..qlc_titempbinfo b where a.affa_id=b.problemid and a.task_id = '` + regitem_id + `'  `, {
+            type: pjmain.QueryTypes.SELECT
+        });
+        if (task_info.length > 0) {
+            regitem_id = task_info[0].regitem_id;
+        }
+    }
     let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,
 					djlx, xtjgmc, cpqc, djcpbh, gscpbh, sfxtzcp, sdbs, fqzcpnbbh, xtccxz, dyjhbz, ccqxtcfzr, stzz, xtgn,
 				 yxfs, kffbbs, xtsyfs, syfssm, jghbs, jghyxlhbl, zjcbs, totbs, glmxt, glzxt, csmjje, csmjfe, zjjsbz, yqmjzje, yqmjzfe,

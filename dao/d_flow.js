@@ -433,7 +433,7 @@ let find_app_dfs_zxd_csjyds_by_uuid = async (uuid) => {
     if (data.length > 0) {
         return data;
     } else {
-        return "1";
+        return new Object();
     }
 }
 
@@ -445,7 +445,7 @@ let find_app_dfs_zxd_cssyq_by_uuid = async (uuid) => {
     if (data.length > 0) {
         return data;
     } else {
-        return "1";
+        return new Object();
     }
 }
 
@@ -516,7 +516,7 @@ let insert_app_dfs_zxd_cscpxx = async (data) => {
         fxhscs,fxczcsbhbcsm,sfgdqxcp,xtcpsjclrq,cpjhdqr,kfpd,shdxzxtj,ktqshbs,tjfs,tjmj,ydtjbs,xmtjf,sfgz,
         gzms,gzcj,gzjg,jzpgpd,jntgjg,jwtgdljg,jwtgdljggb,tzgwbs,tzgwbh,grjgbs,gljybs,gljylx,gljybcsm,gllx,
         gljymd,gljydj,jzplpd,zcglbgpd,qsbgplbs,xtcpssbm,xtjlxm,fggjglry,lxdh) values(
-            '${data.uuid}',${data.bsid},${data.regitem_id},${data.productid},'${data.productcode}','${data.djlx}','${data.xtjgmc}','${data.cpqc}','${data.djcpbh}','${data.gscpbh}','${data.sfxtzcp}','${data.sdbs}','${data.fqzcpnbbh}','${data.xtccxz}','${data.dyjhbz}','${data.ccqxtcfzr}','${data.stzz}','${data.xtgn}','${data.yxfs}','${data.kffbbs}','${data.xtsyfs}','${data.syfssm}','${data.jghbs}','${data.jghyxlhbl}','${data.zjcbs}','${data.totbs}','${data.glmxt}','${data.glzxt}',${data.csmjje},${data.csmjfe},'${data.zjjsbz}',${data.yqmjzje},${data.yqmjzfe},'${data.yqmjzebz}','${data.zyyyly_ctq}','${data.zytxhy_ctq}','${data.ccglyyfs}','${data.ccglyyfs_ccq}','${data.xdzcjsyq}','${data.zczqhbs}','${data.tsyw}','${data.ywxism}','${data.syllx}',${data.zdyqsyl},'${data.zgyqsyl}','${data.xtbclx}',${data.xtbcl},${data.xtbc},'${data.htydbcsm}','${data.fxxmbs}','${data.fxtzbs}','${data.fxczjz}','${data.fxhscsnew}','${data.fxhscs}','${data.fxczcsbhbcsm}','${data.sfgdqxcp}','${data.xtcpsjclrq}','${data.cpjhdqr}','${data.kfpd}','${data.shdxzxtj}','${data.ktqshbs}','${data.tjfs}','${data.tjmj}','${data.ydtjbs}','${data.xmtjf}','${data.sfgz}','${data.gzms}','${data.gzcj}','${data.gzjg}','${data.jzpgpd}','${data.jntgjg}','${data.jwtgdljg}','${data.jwtgdljggb}','${data.tzgwbs}','${data.tzgwbh}','${data.grjgbs}','${data.gljybs}','${data.gljylx}','${data.gljybcsm}','${data.gllx}','${data.gljymd}','${data.gljydj}','${data.jzplpd}','${data.zcglbgpd}','${data.qsbgplbs}','${data.xtcpssbm}','${data.xtjlxm}','${data.fggjglry}','${data.lxdh}'
+            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.djlx}','${data.xtjgmc}','${data.cpqc}','${data.djcpbh}','${data.gscpbh}','${data.sfxtzcp}','${data.sdbs}','${data.fqzcpnbbh}','${data.xtccxz}','${data.dyjhbz}','${data.ccqxtcfzr}','${data.stzz}','${data.xtgn}','${data.yxfs}','${data.kffbbs}','${data.xtsyfs}','${data.syfssm}','${data.jghbs}','${data.jghyxlhbl}','${data.zjcbs}','${data.totbs}','${data.glmxt}','${data.glzxt}',${data.csmjje},${data.csmjfe},'${data.zjjsbz}',${data.yqmjzje},${data.yqmjzfe},'${data.yqmjzebz}','${data.zyyyly_ctq}','${data.zytxhy_ctq}','${data.ccglyyfs}','${data.ccglyyfs_ccq}','${data.xdzcjsyq}','${data.zczqhbs}','${data.tsyw}','${data.ywxism}','${data.syllx}',${data.zdyqsyl},'${data.zgyqsyl}','${data.xtbclx}',${data.xtbcl},${data.xtbc},'${data.htydbcsm}','${data.fxxmbs}','${data.fxtzbs}','${data.fxczjz}','${data.fxhscsnew}','${data.fxhscs}','${data.fxczcsbhbcsm}','${data.sfgdqxcp}','${data.xtcpsjclrq}','${data.cpjhdqr}','${data.kfpd}','${data.shdxzxtj}','${data.ktqshbs}','${data.tjfs}','${data.tjmj}','${data.ydtjbs}','${data.xmtjf}','${data.sfgz}','${data.gzms}','${data.gzcj}','${data.gzjg}','${data.jzpgpd}','${data.jntgjg}','${data.jwtgdljg}','${data.jwtgdljggb}','${data.tzgwbs}','${data.tzgwbh}','${data.grjgbs}','${data.gljybs}','${data.gljylx}','${data.gljybcsm}','${data.gllx}','${data.gljymd}','${data.gljydj}','${data.jzplpd}','${data.zcglbgpd}','${data.qsbgplbs}','${data.xtcpssbm}','${data.xtjlxm}','${data.fggjglry}','${data.lxdh}'
         )`)
         .then(function (result) {
             console.log(result);
@@ -766,10 +766,27 @@ let query_app_dfs_zxd_sqcpxx = async (regitem_id) => {
 
 //查询初始登记-产品信息要素-详情
 let query_app_dfs_zxd_cscpxx = async (regitem_id) => {
-    let project_info = await dfs.query(`exec sp_query_app_dfs_zxd_cscpxx 0,'',0,'${regitem_id}',0  `, {
-        type: pjmain.QueryTypes.SELECT
-    });
-    return project_info[0];
+    //根据节点ID获取事务ID
+    let affa_id = "";
+    let arr = regitem_id.split("@@");
+    affa_id = arr[1];
+    if (arr[0] == "2") {
+        let task_info = await pjmain.query(`select affa_id from pjmain..wf_task where task_id = '` + affa_id + `'  `, {
+            type: pjmain.QueryTypes.SELECT
+        });
+        if (task_info.length > 0) {
+            affa_id = task_info[0].affa_id;
+        }
+    }
+    
+    if (affa_id != "") {
+        let project_info = await dfs.query(`exec sp_query_app_dfs_zxd_cscpxx '` + affa_id + `'  `, {
+            type: pjmain.QueryTypes.SELECT
+        });
+        return project_info[0];
+    } else {
+        return new Object();
+    }
 }
 
 //查询初始登记-初始交易对手-详情
@@ -780,7 +797,7 @@ let query_app_dfs_zxd_csjyds = async (uuid) => {
     if (data.length > 0) {
         return data;
     } else {
-        return "1";
+        return new Object();
     }
 }
 
@@ -792,7 +809,7 @@ let query_app_dfs_zxd_cssyq = async (uuid) => {
     if (data.length > 0) {
         return data;
     } else {
-        return "1";
+        return new Object();
     }
 }
 
@@ -804,7 +821,7 @@ let query_app_dfs_zxd_csxtht = async (uuid) => {
     if (data.length > 0) {
         return data;
     } else {
-        return "1";
+        return new Object();
     }
 }
 
@@ -816,7 +833,7 @@ let query_app_dfs_zxd_yhzjzh = async (uuid) => {
     if (data.length > 0) {
         return data;
     } else {
-        return "1";
+        return new Object();
     }
 }
 
@@ -828,7 +845,7 @@ let query_app_dfs_zxd_cszqzh = async (uuid) => {
     if (data.length > 0) {
         return data;
     } else {
-        return "1";
+        return new Object();
     }
 }
 

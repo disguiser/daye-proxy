@@ -47,7 +47,7 @@
 
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade in active" id="initInfo1">
-            <div style="height:390px;overflow-y:auto">
+            <div style="height:640px;overflow-y:auto">
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
                     <tr>
                         <td style="width: 20%;">
@@ -639,7 +639,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="initInfo2">
-            <div style="height:390px;overflow-y:auto">
+            <div style="height:640px;overflow-y:auto">
                 <div id="csjyds">
                     
                 </div>
@@ -647,7 +647,7 @@
             </div>
 		</div>
 		<div class="tab-pane fade" id="initInfo3">
-            <div style="height:390px;overflow-y:auto">
+            <div style="height:640px;overflow-y:auto">
                 <div id="syqjg">
                     
                 </div>
@@ -655,7 +655,7 @@
             </div>
 		</div>
 		<div class="tab-pane fade" id="initInfo4">
-            <div style="height:390px;overflow-y:auto">
+            <div style="height:640px;overflow-y:auto">
                 <div id="xtht">
                     
                 </div>
@@ -663,7 +663,7 @@
             </div>
 		</div>
 		<div class="tab-pane fade" id="initInfo5">
-            <div style="height:390px;overflow-y:auto">
+            <div style="height:640px;overflow-y:auto">
                 <div id="yhzjzh">
                     
                 </div>
@@ -671,7 +671,7 @@
             </div>
 		</div>
 		<div class="tab-pane fade" id="initInfo6">
-            <div style="height:390px;overflow-y:auto">
+            <div style="height:640px;overflow-y:auto">
                 <div id="zqlzh">
                     
                 </div>
@@ -689,15 +689,21 @@
             //获取流程参数
             let flowid = GetQueryValue('flowid');
             let itemid = GetQueryValue('itemid');
-            query_app_dfs_zxd_cscpxx(flowid, itemid);
+            let taskid = GetQueryValue('taskid');
+            let affa_id = GetQueryValue('affaid');
+            if (taskid == null) {
+                taskid = "1@@"+affa_id;
+            } else {
+                taskid = "2@@"+taskid;
+            }
+            query_app_dfs_zxd_cscpxx(taskid);
         });
 
         //查询初始登记-产品信息要素-详情
-        function query_app_dfs_zxd_cscpxx(flowid, itemid) {
+        function query_app_dfs_zxd_cscpxx(taskid) {
             //根据项目ID采集现有信息
             jQuery.ajax({
-                data: { "flowid": flowid, "itemid": itemid },
-                url: "/node/query_app_dfs_zxd_cscpxx/" + itemid,
+                url: "/node/query_app_dfs_zxd_cscpxx/" + taskid,
                 async: false,
                 cache: false,
                 success: function (data) {
@@ -806,7 +812,7 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    if (data != "" && data.length != 1) {
+                    if (typeof(data.length) != "undefined") {
                         $.each(data,function(index,item) {
                             addCsjyds(item.jydsjgzzjgdm,item.jydsjglx,item.jydsjgzclb);
                         });
@@ -853,7 +859,7 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    if (data != "" && data.length != 1) {
+                    if (typeof(data.length) != "undefined") {
                         $.each(data,function(index,item) {
                             addSyqjg(item.syqxh,item.syqdm,item.syqlx,item.fpsx,item.syqsyllx,item.syqyqsyl,item.yqsylsm,item.fhfs,item.fpfs,item.fppl);
                         });
@@ -950,7 +956,7 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    if (data != "" && data.length != 1) {
+                    if (typeof(data.length) != "undefined") {
                         $.each(data,function(index,item) {
                             addXtht(item.zytabs,item.xthtbh,item.htjz,item.wtrqc,item.wtrlx,item.lxxq_wtr,item.wtrzjlx,item.wtrzjhm,item.htcszje,item.htcszfe,item.xtccxz,item.zjjsbz,item.wtzjje,item.wtccdyje,item.wtcccclx,item.syrxh,item.syrmc,item.syrlx,item.lxxq_syr,item.syrzjlx,item.syrzjhm,item.syqdm,item.sfkssyqzh_syr,item.syqzhbm_syr,item.syqcsfe,item.syqcsje,item.syqqsr,item.syqjhdqr,item.syryxlhbs,item.qksm);
                         });
@@ -1177,7 +1183,7 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    if (data != "" && data.length != 1) {
+                    if (typeof(data.length) != "undefined") {
                         $.each(data,function(index,item) {
                             addYhzjzh(item.yxzhlx,item.yxzhhm,item.yxzhkhyxzxqc,item.yxzhkhxqc,item.yxzhzh,item.bz,item.khrq);
                         });
@@ -1254,7 +1260,7 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    if (data != "" && data.length != 1) {
+                    if (typeof(data.length) != "undefined") {
                         $.each(data,function(index,item) {
                             addZqlzh(item.sfklzqzh,item.zqzjzhzh,item.zqgsmc,item.zqgskhyyb,item.zqjyxtlx,item.wgzqjyxtcs,item.zqzjzhkhrq,item.sfklqhjyzjzh,item.qhjyzjzhhm,item.qhjyzjzhzh,item.gzqhjybm_tj,item.gzqhjybm_tqbz,item.gzqhjybm_tl,item.qhgsqc,item.khyyb,item.qhjyzhkhrq,item.sfklyxjjyzhzh,item.zqzhhu_sqs,item.zqzhzh_sqs,item.sfdvpjs_sqs,item.yhjzqzhkhrq_sqs,item.zqzhhu_zzd,item.zqzhzh_zzd,item.sfdvpjs_zzd,item.yhjzqzhkhrq_zzd);
                         });

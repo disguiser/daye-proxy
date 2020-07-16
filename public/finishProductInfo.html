@@ -33,7 +33,7 @@
 
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade in active" id="productInfo">
-            <div style="height:390px;overflow-y:auto">
+            <div style="height:620px;overflow-y:auto">
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
                     <tr>
                         <td style="width: 20%;">
@@ -180,8 +180,8 @@
                         <td>
                             业务信息说明:
                         </td>
-                        <td>
-							<textarea cols="100" rows="5" id="ywxxsm" name="ywxxsm" style="width:400px;"></textarea>
+                        <td colspan="3">
+							<textarea cols="200" rows="5" id="ywxxsm" name="ywxxsm" style="width:400px;"></textarea>
                         </td>
                     </tr>
                 </table>
@@ -199,6 +199,12 @@
             //获取流程参数
             let flowid = GetQueryValue('flowid');
             let itemid = GetQueryValue('itemid');
+			let taskid = GetQueryValue('taskid');
+            if (taskid == null) {
+                itemid = "1@@"+itemid;
+            } else {
+                itemid = "2@@"+taskid;
+            }
             find_app_dfs_zxd_zzcpxx_by_regitem_id(flowid, itemid);
         });
 
@@ -315,7 +321,7 @@
 			return fmt;  
 		}
 
-		//字段必输项+内容大小限制校验
+        //字段必输项+内容大小限制校验
 		function checkInfo(name,content,flag,type){
 			if(type=='text') value = getFormValue(name);
 			else if(type=='box') value = getBoxValue(name);
@@ -326,13 +332,13 @@
 				if(typeof(value)=="undefined" || value.length==0  || value.length==''){
 					alert("字段["+content+"]为必填项!");
 					$("input[name="+name+"]").focus();
-					return 1;
+					return false;
 				}
 			}else if(flag=="length"){
 				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='') && value.length>type){
 					alert("字段["+content+"]内容超过最大限制!");
 					$("input[name="+name+"]").focus();
-					return 1;
+					return false;
 				}			
 			}else if(flag=="number"){
 				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='')){
@@ -342,12 +348,60 @@
 					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
 						alert("字段["+content+"]内容超过最大限制!");
 						$("input[name="+name+"]").focus();
-						return 1;
+						return false;
 					}					
 				}			
 			}
-			return 0;
+			return true;
 		}		
+		//保存之前必输项校验
+		function logicCheck(){
+			if(!('djcpbh','信托登记系统产品编码','required','text')) return false;
+			if(!checkInfo('cpqc','信托产品名称','required','text')) return false;
+			if(!checkInfo('sfaydrqqs','是否按约定日期清算','required','radio')) return false;
+			if(!checkInfo('qsrq','清算日期','required','text')) return false;
+			if(!checkInfo('ssxtje','实收信托金额','required','text')) return false;
+			if(!checkInfo('xtbjljgfe','信托本金累计给付额','required','text')) return false;
+			if(!checkInfo('xtsyljfpe','信托收益累计分配额','required','text')) return false;
+			if(!checkInfo('strljgdbc','受托人累计固定报酬','required','text')) return false;
+			if(!checkInfo('strljyjbc','受托人累计业绩报酬','required','text')) return false;
+			if(!checkInfo('sjxtbcl','实际信托报酬率','required','text')) return false;
+			if(!checkInfo('xtfyze','信托费用总额','required','text')) return false;
+			if(!checkInfo('xtfyl','信托费用率','required','text')) return false;
+			if(!checkInfo('xtbgfl','信托保管费率','required','text')) return false;
+			if(!checkInfo('sjsy','实际收益','required','text')) return false;
+			if(!checkInfo('sjsyl','实际收益率','required','text')) return false;
+			//监管报送内容大小限制校验
+			if(!checkInfo('djcpbh','信托登记系统产品编码','length','50')) return false;
+			if(!checkInfo('cpqc','信托产品名称','length','50')) return false;
+			if(!checkInfo('qsrq','清算日期','length','50')) return false;
+			if(!checkInfo('ssxtje','实收信托金额','number','16,2')) return false;
+			if(!checkInfo('xtbjljgfe','信托本金累计给付额','number','16,2')) return false;
+			if(!checkInfo('xtsyljfpe','信托收益累计分配额','number','16,2')) return false;
+			if(!checkInfo('strljgdbc','受托人累计固定报酬','number','16,2')) return false;
+			if(!checkInfo('strljyjbc','受托人累计业绩报酬','number','16,2')) return false;
+			if(!checkInfo('sjxtbcl','实际信托报酬率','number','8,6')) return false;
+			if(!checkInfo('xtfyze','信托费用总额','number','16,2')) return false;
+			if(!checkInfo('xtfyl','信托费用率','number','8,6')) return false;
+			if(!checkInfo('xtbgfl','信托保管费率','number','8,6')) return false;
+			if(!checkInfo('sjsy','实际收益','number','16,2')) return false;
+			if(!checkInfo('sjsyl','实际收益率','number','8,6')) return false;
+			if(!checkInfo('tgljgdbc','投资顾问等累计固定报酬','number','16,2')) return false;
+			if(!checkInfo('tgljyjbc','投资顾问等累计业绩报酬','number','16,2')) return false;
+			if(!checkInfo('sshje','损失金额','number','16,2')) return false;
+			if(!checkInfo('shsje','涉诉金额','number','16,2')) return false;
+			if(!checkInfo('pfje','赔付金额','number','16,2')) return false;
+			if(!checkInfo('ywxxsm','业务信息说明','length','1000')) return false;
+					
+			var qsrq=getFormValue('qsrq');
+			var today = new Date().Format("yyyy-MM-dd");
+			if(qsrq > '<%=ConfigUtil.getToday("","Today")%>'){
+				alert("[清算日期]必须小于今天!");
+				return false;
+			}
+			return true;
+		}
+        
 		//保存之前必输项校验
 		function logicCheck(){
 			//保存之前必输项校验
@@ -397,7 +451,8 @@
 				return false;
 			}
 			return true;
-		}
+        }
+        
         //产品终止登记信息保存
         function onSave() {
 			//保存校验

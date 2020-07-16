@@ -187,15 +187,21 @@
             //获取流程参数
             let flowid = GetQueryValue('flowid');
             let itemid = GetQueryValue('itemid');
-            query_app_dfs_zxd_zzcpxx(flowid, itemid);
+            let taskid = GetQueryValue('taskid');
+            let affa_id = GetQueryValue('affaid');
+            if (taskid == null) {
+                taskid = "1@@"+affa_id;
+            } else {
+                taskid = "2@@"+taskid;
+            }
+            query_app_dfs_zxd_zzcpxx(taskid);
         });
 
         //查询终止登记-产品信息-详情
-        function query_app_dfs_zxd_zzcpxx(flowid, itemid) {
+        function query_app_dfs_zxd_zzcpxx(taskid) {
             //根据项目ID采集现有信息
             jQuery.ajax({
-                data: { "flowid": flowid, "itemid": itemid },
-                url: "/node/query_app_dfs_zxd_zzcpxx/" + itemid,
+                url: "/node/query_app_dfs_zxd_zzcpxx/" + taskid,
                 async: false,
                 cache: false,
                 success: function (data) {

@@ -124,6 +124,12 @@
             //获取流程参数
             let flowid = GetQueryValue('flowid');
             let itemid = GetQueryValue('itemid');
+			let taskid = GetQueryValue('taskid');
+            if (taskid == null) {
+                itemid = "1@@"+itemid;
+            } else {
+                itemid = "2@@"+taskid;
+            }
             find_app_dfs_zxd_sqcpxx_regitem_id(flowid, itemid);
         });
 
@@ -228,7 +234,8 @@
 			return fmt;  
 		}
 
-		//字段必输项+内容大小限制校验
+        
+        //字段必输项+内容大小限制校验
 		function checkInfo(name,content,flag,type){
 			if(type=='text') value = getFormValue(name);
 			else if(type=='box') value = getBoxValue(name);
@@ -239,13 +246,13 @@
 				if(typeof(value)=="undefined" || value.length==0  || value.length==''){
 					alert("字段["+content+"]为必填项!");
 					$("input[name="+name+"]").focus();
-					return 1;
+					return false;
 				}
 			}else if(flag=="length"){
 				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='') && value.length>type){
 					alert("字段["+content+"]内容超过最大限制!");
 					$("input[name="+name+"]").focus();
-					return 1;
+					return false;
 				}			
 			}else if(flag=="number"){
 				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='')){
@@ -255,34 +262,32 @@
 					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
 						alert("字段["+content+"]内容超过最大限制!");
 						$("input[name="+name+"]").focus();
-						return 1;
+						return false;
 					}					
 				}			
 			}
-			return 0;
-		}		
+			return true;
+		}			
 		//保存之前必输项校验
 		function logicCheck(){
-			var returnValue=checkInfo('xtxmmc','信托产品名称','required','text');
-			returnValue=returnValue+checkInfo('djcpbh','信托登记系统产品编码','required','text');
-			returnValue=returnValue+checkInfo('csxtcclx','信托财产性质标识','required','text');
-			returnValue=returnValue+checkInfo('dyjhbz','单一集合标识','required','text');
-			returnValue=returnValue+checkInfo('sfgljy','是否关联交易','required','radio');
-			returnValue=returnValue+checkInfo('sqbgyy','事前报告事项原因','required','text');
-			returnValue=returnValue+checkInfo('xtjlxm','信托经理姓名','required','text');
-			returnValue=returnValue+checkInfo('xtjldh','信托经理电话','required','text');
-			returnValue=returnValue+checkInfo('fggjglry','分管高级管理人员姓名','required','text');
-			//监管报送内容大小限制校验
-			returnValue=returnValue+checkInfo('xtxmmc','信托登记系统产品编码','length','50');
-			returnValue=returnValue+checkInfo('djcpbh','信托产品名称','length','50');
-			returnValue=returnValue+checkInfo('sqbgyy','事前报告事项原因','length','3000');
-			returnValue=returnValue+checkInfo('xtjlxm','信托经理姓名','length','50');
-			returnValue=returnValue+checkInfo('xtjldh','信托经理电话','length','50');
-			returnValue=returnValue+checkInfo('fggjglry','分管高级管理人员姓名','length','50');
-			//校验不通过
-			if(returnValue>0) return false;
+			if(!checkInfo('xtxmmc','信托产品名称','required','text')) return false;
+			if(!checkInfo('djcpbh','信托登记系统产品编码','required','text')) return false;
+			if(!checkInfo('csxtcclx','信托财产性质标识','required','text')) return false;
+			if(!checkInfo('dyjhbz','单一集合标识','required','text')) return false;
+			if(!checkInfo('sfgljy','是否关联交易','required','radio')) return false;
+			if(!checkInfo('sqbgyy','事前报告事项原因','required','text')) return false;
+			if(!checkInfo('xtjlxm','信托经理姓名','required','text')) return false;
+			if(!checkInfo('xtjldh','信托经理电话','required','text')) return false;
+			if(!checkInfo('fggjglry','分管高级管理人员姓名','required','text')) return false;
+			if(!checkInfo('xtxmmc','信托登记系统产品编码','length','50')) return false;
+			if(!checkInfo('djcpbh','信托产品名称','length','50')) return false;
+			if(!checkInfo('sqbgyy','事前报告事项原因','length','3000')) return false;
+			if(!checkInfo('xtjlxm','信托经理姓名','length','50')) return false;
+			if(!checkInfo('xtjldh','信托经理电话','length','50')) return false;
+			if(!checkInfo('fggjglry','分管高级管理人员姓名','length','50')) return false;
 			return true;
 		}
+        
         //事前报告信息保存
         function onSave() {
 			//保存校验

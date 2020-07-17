@@ -866,9 +866,9 @@
                     
                 </div>
                 <div style="height: 10px;"></div>
-                <div
+                <!-- <div
                     style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
-                    <a href="#" onclick="addJydsys('','','');">点击更多交易对手</a></div>
+                    <a href="#" onclick="addJydsys('','','');">点击更多交易对手</a></div> -->
             </div>
 		</div>
 		<div class="tab-pane fade" id="initInfo3">
@@ -1770,8 +1770,8 @@
         var q = 1;
         function addJydsys(jydsjgzzjgdm, jydsjglx, jydsjgzclb) {
             let str = `<div id="jydsysDiv` + q + `"><div style="height: 10px;"></div>
-                    <div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
-                    <a href="#" onclick="delJydsys(`+ q + `);"><font color="#FF0000">点击删除下面一条交易对手要素</font></a></div>
+                    <!--<div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
+                    <a href="#" onclick="delJydsys(`+ q + `);"><font color="#FF0000">点击删除下面一条交易对手要素</font></a></div>-->
                     <input type="hidden" name="jydsysNo`+ q + `" value="` + q + `">
                     <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
                         style="width: 100%;">
@@ -2089,7 +2089,7 @@
         function addXtht(zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm) {
             let str = `<div id="xthtDiv` + w + `"><div style="height: 10px;"></div>
                     <div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
-                    <a href="#" onclick="delSyqjg(`+ w + `);"><font color="#FF0000">点击删除下面一条信托合同要素集合</font></a></div>
+                    <a href="#" onclick="delXtht(`+ w + `);"><font color="#FF0000">点击删除下面一条信托合同要素集合</font></a></div>
                     <input type="hidden" name="xthtNo`+ w + `" value="` + w + `">
                     <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
                         style="width: 100%;">
@@ -2468,7 +2468,7 @@
         }
 
         //删除信托合同要素集合
-        function delSyqjg(no) {
+        function delXtht(no) {
             $("#xthtDiv" + no).remove();
         }
         ///////////////////信托合同///////////////////

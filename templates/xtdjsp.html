@@ -1,13 +1,12 @@
 <div class="row-fluid">
-        <div class="span12">
             <div id="div_c8659880539611e68c9bb888e335e00a" class="control-group">
                 <label class="control-label"><span
                         class="required">*</span>信托登记要素</label>
                 <div class="controls" id="divVal_c8659880539611e68c9bb888e335e00a">&nbsp;
-                    <button type="button" onclick="chYdj('/node/preProductInfoDetail.html','预登记详情')">预登记详情</button>
-					<button type="button" onclick="chYdj('/node/initProductInfoDetail.html','初始变更更正登记详情')">初始变更更正登记详情</button>
-                    <button type="button" onclick="chYdj('/node/finishProductInfoDetail.html','终止登记详情')">终止登记详情</button>
-                    <button type="button" onclick="chYdj('/node/reportProductInfoDetail.html','事前报告登记详情')">事前报告登记详情</button>
+                    <button type="button" id="buttonzxd1" disabled="disabled" onclick="chYdj('/node/preProductInfoDetail.html','预登记详情')">预登记详情</button>
+					<button type="button" id="buttonzxd2" disabled="disabled" onclick="chYdj('/node/initProductInfoDetail.html','初始变更更正登记详情')">初始变更更正登记详情</button>
+                    <button type="button" id="buttonzxd3" disabled="disabled" onclick="chYdj('/node/finishProductInfoDetail.html','终止登记详情')">终止登记详情</button>
+                    <button type="button" id="buttonzxd4" disabled="disabled" onclick="chYdj('/node/reportProductInfoDetail.html','事前报告登记详情')">事前报告登记详情</button>
                     <div id="mdldiv_frame" class="modal container hide fade" tabindex="-1" role="dialog" aria-labelledby="myModal_frameContainer" aria-hidden="true">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -24,6 +23,31 @@
                         jQuery('#modalFrameContainer').attr('src',url + '?' + query);
                         jQuery('#mdldiv_frame').modal('show');
                     }
+					//根据登记类型控制按钮是否可用
+					if($(document).attr("title").indexOf("预登记")>=0){
+						document.getElementById('buttonzxd1').disabled=false;
+                    }else if($(document).attr("title").indexOf("重新申请预登记")>=0){
+						document.getElementById('buttonzxd1').disabled=false;
+                    }else if($(document).attr("title").indexOf("补充预登记")>=0){
+						document.getElementById('buttonzxd1').disabled=false;
+                    }else if($(document).attr("title").indexOf("初始登记")>=0){
+						document.getElementById('buttonzxd2').disabled=false;						
+                    }else if($(document).attr("title").indexOf("变更登记") >=0){
+						document.getElementById('buttonzxd2').disabled=false;						
+                    }else if($(document).attr("title").indexOf("更正登记") >=0){
+						document.getElementById('buttonzxd2').disabled=false;
+                    }else if($(document).attr("title").indexOf("终止登记") >=0){
+						document.getElementById('buttonzxd3').disabled=false;						
+                    }else if($(document).attr("title").indexOf("初始登记（补办）") >=0){
+						document.getElementById('buttonzxd2').disabled=false;
+                    }else if($(document).attr("title").indexOf("事前报告") >=0){
+						document.getElementById('buttonzxd4').disabled=false;
+                    }else {
+                        document.getElementById('buttonzxd1').disabled=false;
+						document.getElementById('buttonzxd2').disabled=false;
+						document.getElementById('buttonzxd3').disabled=false;
+						document.getElementById('buttonzxd4').disabled=false;
+                    }					
                     </script>
                 </div>
             </div>

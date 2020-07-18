@@ -35,10 +35,10 @@ $(function(){
             <div id="div_c8659880539611e68c9bb888e335e00a" class="control-group">
                 <label class="control-label"><span class="required">*</span>信托登记要素</label>
                 <div class="controls" id="divVal_c8659880539611e68c9bb888e335e00a">
-                    <button type="button" onclick="chYdj('/node/preProductInfo.html','预登记')">预登记</button> 
-                    <button type="button" onclick="chYdj('/node/initProductInfo.html','初始变更更正登记')">初始变更更正登记</button>
-                    <button type="button" onclick="chYdj('/node/finishProductInfo.html','终止登记')">终止登记</button>
-                    <button type="button" onclick="chYdj('/node/reportProductInfo.html','事前报告登记')">事前报告登记</button>
+                    <button type="button" id="buttonzxd1" disabled="disabled" onclick="chYdj('/node/preProductInfo.html','预登记')">预登记</button> 
+                    <button type="button" id="buttonzxd2" disabled="disabled" onclick="chYdj('/node/initProductInfo.html','初始变更更正登记')">初始变更更正登记</button>
+                    <button type="button" id="buttonzxd3" disabled="disabled" onclick="chYdj('/node/finishProductInfo.html','终止登记')">终止登记</button>
+                    <button type="button" id="buttonzxd4" disabled="disabled" onclick="chYdj('/node/reportProductInfo.html','事前报告登记')">事前报告登记</button>
 					<span>&nbsp;&nbsp;<font color=red size=3>注意:信托登记四种类型,每个审批流程只能够提交一种登记类型.</font></span>
                     <div id="mdldiv_frame" class="modal container hide fade" tabindex="-1" role="dialog" aria-labelledby="myModal_frameContainer" aria-hidden="true">
                         <div class="modal-header">

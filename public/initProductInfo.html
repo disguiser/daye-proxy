@@ -1990,9 +1990,11 @@
             
             $("#syqlx"+e).val(syqlx);
             $("#syqsyllx"+e).val(syqsyllx);
+            console.log("==fhfs=="+fhfs);
             let fhfss = fhfs.split(",");
             $.each(fhfss, function (index, value) {
-                $("#fhfs"+e+""+value).attr("checked", "checked");
+                if (value != "")
+                    $("#fhfs"+e+""+value).attr("checked", "checked");
             });
             $("#fpfs"+e).val(fpfs);
             $("#fppl"+e).val(fppl);
@@ -2020,7 +2022,12 @@
                 tjdNos.productcode = ydjData.productcode;
                 tjdNos.zytabs=$("#zytabs" + no).val();
                 tjdNos.xthtbh=$("#xthtbh" + no).val();
-                tjdNos.htjz=$("#htjz" + no).val();
+                let htjzs = $("input:checkbox[name='htjz"+no+"']:checked");
+                let chhtjzs = [];
+                $.each(htjzs, function () {
+                    chhtjzs.push($(this).val());
+                });
+                tjdNos.htjz = chhtjzs.join(",");
                 tjdNos.wtrqc=$("#wtrqc" + no).val();
                 tjdNos.wtrlx=$("#wtrlx" + no).val();
                 tjdNos.lxxq_wtr=$("#lxxq_wtr" + no).val();
@@ -2116,10 +2123,8 @@
                                 <span class="required">*</span>合同介质:
                             </td>
                             <td style="width: 21%;">
-                                <select id="htjz`+ w + `" name="htjz` + w + `" style="width: 180px;">
-                                    <option value="0">电子</option>
-                                    <option value="1">纸质</option>
-                                </select>
+                                <input type="checkbox" id="htjz`+ w + `0" name="htjz`+ w + `" value="0" />电子<br>
+                                <input type="checkbox" id="htjz`+ w + `1" name="htjz`+ w + `" value="1" />自纸质
                             </td>
                         </tr>
                         <tr>
@@ -2454,7 +2459,11 @@
             $("#xthtInfo").append(str);
             
             $("#zytabs"+w).val(zytabs);
-            $("#htjz"+w).val(htjz);
+            let htjzs = htjz.split(",");
+            $.each(htjzs, function (index, value) {
+                if (value != "")
+                    $("#htjz"+w+""+value).attr("checked", "checked");
+            });
             $("#wtrlx"+w).val(wtrlx);
             $("#lxxq_wtr"+w).val(lxxq_wtr);
             $("#wtrzjlx"+w).val(wtrzjlx);

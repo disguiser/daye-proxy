@@ -1883,9 +1883,25 @@
         //添加受益权结构要素集合
         var e = 1;
         function addSyqjg(syqxh,syqdm,syqlx,fpsx,syqsyllx,syqyqsyl,yqsylsm,fhfs,fpfs,fppl) {
+            let syqlx_name = "";
+            if (syqlx == "0") {
+               syqlx_name = "普通"
+            } else if (syqlx == "1") {
+                syqlx_name = "优先"
+            } else if (syqlx == "2") {
+                syqlx_name = "中间"
+            } else if (syqlx == "3") {
+                syqlx_name = "劣后"
+            } else {
+                syqlx_name = "";
+            }
+
             let str = `<div id="syqjgDiv` + e + `"><div style="height: 10px;"></div>
                     <!--<div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
                     <a href="#" onclick="delSyqjg(`+ e + `);"><font color="#FF0000">点击删除下面一条受益权结构要素集合</font></a></div>-->
+                    <div style="width: 100%; height: 30px; text-align: left; line-height: 30px; background-color: #C0C0C0;">
+                    `+ e + `、` + syqlx_name + `（` + syqyqsyl +`）
+                    </div>
                     <input type="hidden" name="syqjgNo`+ e + `" value="` + e + `">
                     <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
                         style="width: 100%;">
@@ -2099,6 +2115,9 @@
             let str = `<div id="xthtDiv` + w + `"><div style="height: 10px;"></div>
                     <!--<div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
                     <a href="#" onclick="delXtht(`+ w + `);"><font color="#FF0000">点击删除下面一条信托合同要素集合</font></a></div>-->
+                    <div style="width: 100%; height: 30px; text-align: left; line-height: 30px; background-color: #C0C0C0;">
+                    `+ w + `、` + xthtbh + `（` + wtrqc +`）
+                    </div>
                     <input type="hidden" name="xthtNo`+ w + `" value="` + w + `">
                     <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
                         style="width: 100%;">

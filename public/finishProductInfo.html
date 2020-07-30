@@ -20,6 +20,7 @@
 
 <body>
     <div style="height: 20px; text-align: right;">
+	    <button type="button" onclick="javascript:inputContent();">填 报 说 明</button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
     </div>
 
@@ -28,13 +29,14 @@
             <a href="#productInfo" data-toggle="tab">
                产品信息要素
             </a>
-        </li>	
+        </li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade in active" id="productInfo">
             <div style="height:620px;overflow-y:auto">
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
+				<tr> <td colspan=3><b>下面所有数据都以信托项目清算报告披露数据为准:</b><td></tr>
                     <tr>
                         <td style="width: 20%;">
                             <span class="required">*</span>信托登记系统产品编码 :
@@ -181,7 +183,7 @@
                             业务信息说明:
                         </td>
                         <td colspan="3">
-							<textarea cols="200" rows="5" id="ywxxsm" name="ywxxsm" style="width:400px;"></textarea>
+							<textarea cols="200" rows="3" id="ywxxsm" name="ywxxsm" style="width:400px;"></textarea>
                         </td>
                     </tr>
                 </table>
@@ -460,6 +462,10 @@
             }
             return null;
         }
+		//预登记填报说明
+        function inputContent(){
+			window.open('/node/tianbao.html?type=3','_blank','');
+		}		
     </script>
 </body>
 

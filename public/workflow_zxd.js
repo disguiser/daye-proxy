@@ -2,8 +2,11 @@
 $(function(){
     //flowid = parseUrlParams().flowid;
 	setTimeout(function(){ 
-		console.log($('#formContainer_c1c6f1266eb68a4f90c51cb63d94f92defadc0ed'));
-		$('#formContainer_c1c6f1266eb68a4f90c51cb63d94f92defadc0ed').append(`
+		console.log($('#formContainer_c1c6f1266eb68a4f90c51cb63d94f92defadc0ed').length);
+		console.log($(".form-horizontal").children('hr').length);
+		const flag1=$('#formContainer_c1c6f1266eb68a4f90c51cb63d94f92defadc0ed').length;
+		const flag2=$(".form-horizontal").children('hr').length;
+		const html = `
 			<div class="row-fluid">
 			<div class="span12">
 				<div id="div_c8659880539611e68c9bb888e335e00a" class="control-group">
@@ -59,6 +62,8 @@ $(function(){
 				</div>
 			</div>
 		</div>
-			`)
+			`
+		if(flag1>0) $('#formContainer_c1c6f1266eb68a4f90c51cb63d94f92defadc0ed').append(html)
+		if(flag1==0 && flag2>0) $(".form-horizontal").children('hr').append(html)
 	}, 1000);
 });

@@ -20,6 +20,7 @@
 
 <body>
     <div style="height: 20px; text-align: right;">
+	    <button type="button" onclick="javascript:inputContent();">填 报 说 明</button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
     </div>
 
@@ -335,6 +336,10 @@
             }
             return null;
         }
+		//事前报告填报说明
+        function inputContent(){
+			window.open('/node/tianbao.html?type=4','_blank','');
+		}		
     </script>
 </body>
 

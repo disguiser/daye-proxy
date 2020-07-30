@@ -75,7 +75,7 @@ app.use('/x/workflow/dealwith', async (req, res, next) => {
     harmonBinary(req, res);
   }
   // 信托登记审批流程 只有发起人撤回才有编辑内容的权限,所以判断url里存在的nextnode即可,无需查询flow_id
-  if(['EA24B73C2E9142719FAFF460F4097AEA'].indexOf(parsed.nextnode) >= 0) {
+  if(['EA24B73C2E9142719FAFF460F4097AEA','VEEB53E5BABF4FAF927A24112BC718D7','BF47974D6FA34DB0AFF8D658B5CF4F2C','CAB6DB36ACCC43E7BDBEEEC0CE2D0318','X644307B0B24442290B4A6BAED269009'].indexOf(parsed.nextnode) >= 0) {
     let harmonBinary = harmon([], proxy_flow_zxd, true);
     harmonBinary(req, res);
   }  

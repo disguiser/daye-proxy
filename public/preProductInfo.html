@@ -20,37 +20,34 @@
 
 <body>
     <div style="height: 20px; text-align: right;">
+		<button type="button" onclick="javascript:inputContent();">填 报 说 明</button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
     </div>
 
     <ul id="myTab" class="nav nav-tabs">
         <li class="active">
             <a href="#productInfo" data-toggle="tab">
-                基本信息
+                产品基本信息要素
             </a>
         </li>
-
-        <li>
-            <a href="#sitePromotion" data-toggle="tab">
-                异地推介
-            </a>
-        </li>
-
         <li>
             <a href="#gljyInfo" data-toggle="tab">
-                关联交易
+                关联交易要素
             </a>
         </li>
-
         <li>
             <a href="#fdcInfo" data-toggle="tab">
-                房地产
+                房地产要素
             </a>
         </li>
-
+        <li>
+            <a href="#sitePromotion" data-toggle="tab">
+                异地推介要素
+            </a>
+        </li>
         <li>
             <a href="#tzgwInfo" data-toggle="tab">
-                投资顾问
+                投资顾问要素
             </a>
         </li>
     </ul>
@@ -383,62 +380,6 @@
                             <input type="text" id="xmtjjg" name="xmtjjg" style="width: 320px;">
                         </td>
                         <td>
-                            交易对手名称:
-                        </td>
-                        <td>
-                            <input type="text" id="jydsmc" name="jydsmc" style="width: 320px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            交易对手信息:
-                        </td>
-                        <td>
-                            <input type="text" id="jydsxx" name="jydsxx" style="width: 320px;">
-                        </td>
-                        <td>
-                            <span class="required">*</span>信托财产投向和运用方式:
-                        </td>
-                        <td>
-                            <input type="text" id="xtcctxhyyfs" name="xtcctxhyyfs" style="width: 320px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="required">*</span>交易结构:
-                        </td>
-                        <td>
-                            <input type="text" id="jyjg" name="jyjg" style="width: 320px;">
-                        </td>
-                        <td>
-                            <span class="required">*</span>采取风控措施及风险提示信息:
-                        </td>
-                        <td>
-                            <input type="text" id="fxkzcs" name="fxkzcs" style="width: 320px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            预计还款来源/信托退出方式:
-                        </td>
-                        <td>
-                            <input type="text" id="yjhklyjtcfs" name="yjhklyjtcfs" style="width: 320px;">
-                        </td>
-                        <td>
-                            <span class="required">*</span>风险预案说明:
-                        </td>
-                        <td>
-                            <input type="text" id="fxyasm" name="fxyasm" style="width: 320px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="required">*</span>公司合法合规意见:
-                        </td>
-                        <td>
-                            <input type="text" id="gshfhgyj" name="gshfhgyj" style="width: 320px;">
-                        </td>
-                        <td>
                             <span class="required">*</span>信托经理姓名:
                         </td>
                         <td>
@@ -457,6 +398,63 @@
                         </td>
                         <td>
                             <input type="text" id="fggjglry" name="fggjglry" style="width: 320px;">
+                        </td>
+                    </tr>						
+                    <tr> <td colspan=4><b> 当本项目类型为【事务类】下面8个要素内容从[信托项目签报申报表]获取,当本项目类型为【非事务类】下面8个要素内容从[信托项目立项申报表]获取:</b><td></tr>
+                    <tr>						
+                        <td>
+                            交易对手名称(只需填写融资方):
+                        </td>
+                        <td>
+                            <input type="text" id="jydsmc" name="jydsmc" style="width: 320px;">
+                        </td>
+                        <td>
+                            交易对手信息:
+                        </td>
+                        <td>
+                            <input type="text" id="jydsxx" name="jydsxx" style="width: 320px;">
+                        </td>
+                    </tr>
+                    <tr>						
+                        <td>
+                            <span class="required">*</span>信托财产投向和运用方式:
+                        </td>
+                        <td>
+                            <input type="text" id="xtcctxhyyfs" name="xtcctxhyyfs" style="width: 320px;">
+                        </td>
+                        <td>
+                            <span class="required">*</span>交易结构:
+                        </td>
+                        <td>
+                            <input type="text" id="jyjg" name="jyjg" style="width: 320px;">
+                        </td>
+                    </tr>
+                    <tr>						
+                        <td>
+                            <span class="required">*</span>采取风控措施及风险提示信息:
+                        </td>
+                        <td>
+                            <input type="text" id="fxkzcs" name="fxkzcs" style="width: 320px;">
+                        </td>
+                        <td>
+                            预计还款来源/信托退出方式:
+                        </td>
+                        <td>
+                            <input type="text" id="yjhklyjtcfs" name="yjhklyjtcfs" style="width: 320px;">
+                        </td>
+                    </tr>
+                    <tr>						
+                        <td>
+                            <span class="required">*</span>风险预案说明:
+                        </td>
+                        <td>
+                            <input type="text" id="fxyasm" name="fxyasm" style="width: 320px;">
+                        </td>
+                        <td>
+                            <span class="required">*</span>公司合法合规意见:
+                        </td>
+                        <td>
+                            <input type="text" id="gshfhgyj" name="gshfhgyj" style="width: 320px;">
                         </td>
                     </tr>
                 </table>
@@ -1841,6 +1839,10 @@
             }
             return null;
         }
+		//预登记填报说明
+        function inputContent(){
+			window.open('/node/tianbao.html?type=1','_blank','');
+		}		
     </script>
 </body>
 

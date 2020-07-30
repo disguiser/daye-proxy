@@ -20,6 +20,7 @@
 
 <body>
     <div style="height: 20px; text-align: right;">
+	    <button type="button" onclick="javascript:inputContent();">填 报 说 明</button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
     </div>
 
@@ -713,6 +714,7 @@
                     <tr>
                         <td>
                             投资顾问编号:
+							<br>(投顾为机构的，填写投顾机构的统一社会信用代码)
                         </td>
                         <td>
                             <input type="text" id="tzgwbh" name="tzgwbh" style="width: 320px;">
@@ -2966,6 +2968,10 @@
             }
             return null;
         }
+		//初始登记填报说明
+        function inputContent(){
+			window.open('/node/tianbao.html?type=2','_blank','');
+		}		
     </script>
 </body>
 

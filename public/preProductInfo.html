@@ -137,6 +137,7 @@
                         </td>
                         <td>
                             <span class="required">*</span>报告业务类型:
+							<br>提示【如存在银行代销情形时请选择异地推介，如存在固有、关联方或公司管理的信托产品认购情形时请选择信托业务关联交易报告】
                         </td>
                         <td>
                             <input type="checkbox" id="bgywlx0" name="bgywlx" value="0" />信托业务关联交易报告<br>
@@ -165,6 +166,7 @@
                     <tr>
                         <td>
                             <span class="required">*</span>信托产品名称:
+							<br>提示【与信托合同产品名称保持一致】
                         </td>
                         <td>
                             <input type="text" id="xtxmmc" name="xtxmmc" style="width: 320px;">
@@ -320,12 +322,14 @@
                     <tr>
                         <td>
                             <span class="required">*</span>信托报酬率:
+							<br>提示【如非固定，请填写浮动基准并按照拟成立产品合同中实际约定情况进行文本说明】
                         </td>
                         <td>
-                            <input type="number" id="xtbcl" name="xtbcl" style="width: 320px;">
+                            <input type="text" id="xtbcl" name="xtbcl" style="width: 320px;">
                         </td>
                         <td>
                             <span class="required">*</span>信托合同收益率类型:
+							<br>提示【不建议选其他，若选其他时，请在“交易结构”中描述信托合同约定的收益情况】
                         </td>
                         <td>
                             <select id="syrsyllx" name="syrsyllx" style="width: 320px;">
@@ -400,10 +404,11 @@
                             <input type="text" id="fggjglry" name="fggjglry" style="width: 320px;">
                         </td>
                     </tr>						
-                    <tr> <td colspan=4><b> 当本项目类型为【事务类】下面8个要素内容从[信托项目签报申报表]获取,当本项目类型为【非事务类】下面8个要素内容从[信托项目立项申报表]获取:</b><td></tr>
+                    <tr> <td colspan=4><b> 提示【当本项目类型为【事务类】下面8个要素内容从[信托项目签报申报表]获取,当本项目类型为【非事务类】下面8个要素内容从[信托项目立项申报表]获取】:</b><td></tr>
                     <tr>						
                         <td>
-                            交易对手名称(只需填写融资方):
+                            交易对手名称
+							<br>提示【只需填写融资方】:
                         </td>
                         <td>
                             <input type="text" id="jydsmc" name="jydsmc" style="width: 320px;">
@@ -592,6 +597,7 @@
                     <tr>
                         <td>
                             开发商或其控股股东资质情况:
+							<br>提示【明确资质持有人及其关系】
                         </td>
                         <td>
                             <input type="text" id="kfshqkggdzzqk" name="kfshqkggdzzqk" style="width: 320px;">
@@ -654,6 +660,7 @@
                             <input type="radio" name="tgsfglf" value="1" />是
                         </td>
                     </tr>
+					<tr><input type="hidden" id="workdate" name="workdate" style="width: 320px;"></tr>
                 </table>
             </div>
         </div>
@@ -748,7 +755,7 @@
                                 计划推介规模:
                             </td>
                             <td>
-                                <input type="text" id="jhtjgm`+ q + `" name="jhtjgm` + q + `" value="` + jhtjgm + `" style="width: 320px;">（万元）
+                                <input type="number" id="jhtjgm`+ q + `" name="jhtjgm` + q + `" value="` + jhtjgm + `" style="width: 250px;">（万元）
                             </td>
                         </tr>
                         <tr>
@@ -949,6 +956,7 @@
                     $("#yxlhbl").val(data.yxlhbl);
                     $("#tzfw").val(data.tzfw);
                     $("#tzgwqk").val(data.tzgwqk);
+					$("#workdate").val(data.workdate);
                     $("input[name='tgsfglf'][value="+data.tgsfglf+"]").attr("checked", true);
 
                     find_app_dfs_zxd_ydjtjd_by_uuid(data.uuid);
@@ -1209,12 +1217,18 @@
 				$("input[name=nfxhclsj]").focus();
 				return false;
 			}
-			var today = new Date().Format("yyyy-MM-dd");
-			if(!(typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj.length=='') && nfxhclsj <= today){
-				alert("[拟发行或成立时间]必须大于今天!");
+			var dyjhbz=getFormValue('dyjhbz');
+			var today=getFormValue('workdate');
+			if(dyjhbz=="1" && !(typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj.length=='') && nfxhclsj <= today){
+				alert("[单一集合标识 ]选择【集合】,[拟发行或成立时间]需大于T+5工作日!");
 				$("input[name=nfxhclsj]").focus();
 				return false;
 			}
+			if(dyjhbz=="0" && !(typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj.length=='') && nfxhclsj <= today){
+				alert("[单一集合标识 ]选择【单一】,[拟发行或成立时间]需大于T+2工作日!");
+				$("input[name=nfxhclsj]").focus();
+				return false;
+			}			
 			if(ydjlx=="6" && !(bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(fqcpqs)=="undefined" || fqcpqs.length==0  || fqcpqs.length=='')){
 				alert("[预登记类型]选择【补充预登记】,除去[报告业务类型]选择【异地推介】，[是否新发分期]选择【否】,[分期产品期数]为必填项!");
 				$("input[name=fqcpqs]").focus();
@@ -1226,7 +1240,6 @@
 				setFormValue('fqcpqs','');
 			}			
 			//适宜投资人群
-			var dyjhbz=getFormValue('dyjhbz');
 			var sytzrq=getFormValue('sytzrq');
 			if(dyjhbz=="1" && (typeof(sytzrq)=="undefined" || sytzrq.length==0  || sytzrq.length=='')){
 				alert("[单一集合标识 ]选择【集合】,字段[适宜投资人群]为必填项!");

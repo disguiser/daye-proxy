@@ -15,15 +15,33 @@
     <ul id="myTab" class="nav nav-tabs">
         <li class="active">
             <a href="#productInfo" data-toggle="tab">
-                产品信息要素
+                基本信息
             </a>
         </li>
 
         <li>
             <a href="#sitePromotion" data-toggle="tab">
-                异地推介补充要素
+                异地推介
             </a>
-        </li>	
+        </li>
+        
+        <li>
+            <a href="#gljyInfo" data-toggle="tab">
+                关联交易
+            </a>
+        </li>
+
+        <li>
+            <a href="#fdcInfo" data-toggle="tab">
+                房地产
+            </a>
+        </li>
+
+        <li>
+            <a href="#tzgwInfo" data-toggle="tab">
+                投资顾问
+            </a>
+        </li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
@@ -380,6 +398,20 @@
                             <span id="fggjglry"></span>
                         </td>
                     </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="sitePromotion">
+            <div style="height:640px;overflow-y:auto">
+                <div id="tjd">
+                    
+                </div>
+                <div style="height: 10px;"></div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="gljyInfo">
+            <div style="height:620px;overflow-y:auto">
+                <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
                     <tr>
                         <td>
                             关联交易类型:
@@ -422,6 +454,12 @@
                             <span id="sctlywdjqk"></span>
                         </td>
                     </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="fdcInfo">
+            <div style="height:620px;overflow-y:auto">
+                <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
                     <tr>
                         <td>
                             项目类型:
@@ -492,6 +530,12 @@
                             <span id="qtsm"></span>
                         </td>
                     </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tzgwInfo">
+            <div style="height:620px;overflow-y:auto">
+                <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
                     <tr>
                         <td>
                             资金来源:
@@ -537,14 +581,6 @@
                 </table>
             </div>
         </div>
-        <div class="tab-pane fade" id="sitePromotion">
-            <div style="height:640px;overflow-y:auto">
-                <div id="tjd">
-                    
-                </div>
-                <div style="height: 10px;"></div>
-            </div>
-        </div>
     </div>
 
     <script type="text/javascript" src="/static/plugins/jquery-1.10.2.min.js"></script>
@@ -554,7 +590,7 @@
         var q = 1;
         //添加异地推介补充
         function addSitePromotion(sfqgtj,tjd,tjd_p,tjd_c,tjd_a,tjjg,tjfl,tjq,jhtjgm,tjfshtjgl,tjfzrmc,tjfzrdh) {
-            let str = `<div id="ydtjdiv` + q + `"><div style="height: 10px;"></div>                    
+            let str = `<div id="ydtjdiv` + q + `">
                     <input type="hidden" name="tjdNo`+ q + `" value="` + q + `">
                     <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
                         style="width: 100%;">

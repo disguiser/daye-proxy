@@ -15,32 +15,32 @@
     <ul id="myTab" class="nav nav-tabs">
         <li class="active">
             <a href="#initInfo1" data-toggle="tab">
-                产品基本要素
+                基本信息
             </a>
         </li>
         <li>
             <a href="#initInfo2" data-toggle="tab">
-                交易对手要素
+                交易对手
             </a>
 		</li>
 		<li>
             <a href="#initInfo3" data-toggle="tab">
-                受益权结构要素集合
+                受益权结构
             </a>
 		</li>	
-		<li>
+		<li style="display: none;">
             <a href="#initInfo4" data-toggle="tab">
-                信托合同要素集合
+                信托合同
             </a>
 		</li>	
 		<li>
             <a href="#initInfo5" data-toggle="tab">
-                银行资金账号要素集合
+                银行资金账户
             </a>
 		</li>	
 		<li>
             <a href="#initInfo6" data-toggle="tab">
-                证券类账户要素集合
+                证券类账户
             </a>
         </li>	
     </ul>
@@ -654,7 +654,7 @@
                 <div style="height: 10px;"></div>
             </div>
 		</div>
-		<div class="tab-pane fade" id="initInfo4">
+		<div class="tab-pane fade" id="initInfo4" style="display: none;">
             <div style="height:640px;overflow-y:auto">
                 <div id="xtht">
                     
@@ -795,7 +795,7 @@
 					
 					query_app_dfs_zxd_cssyq(data.uuid);
 
-					query_app_dfs_zxd_csxtht(data.uuid);
+					//query_app_dfs_zxd_csxtht(data.uuid); 20200728根据需求取消
 
 					query_app_dfs_zxd_yhzjzh(data.uuid);
 

@@ -26,32 +26,32 @@
     <ul id="myTab" class="nav nav-tabs">
         <li class="active">
             <a href="#initInfo1" data-toggle="tab">
-                产品基本要素
+                基本信息
             </a>
         </li>
         <li>
             <a href="#initInfo2" data-toggle="tab">
-                交易对手要素
+                交易对手
             </a>
 		</li>
 		<li>
             <a href="#initInfo3" data-toggle="tab">
-                受益权结构要素集合
+                受益权结构
             </a>
 		</li>	
-		<li>
+		<li style="display: none;">
             <a href="#initInfo4" data-toggle="tab">
-                信托合同要素集合
+                信托合同
             </a>
 		</li>	
 		<li>
             <a href="#initInfo5" data-toggle="tab">
-                银行资金账号要素集合
+                银行资金账户
             </a>
 		</li>	
 		<li>
             <a href="#initInfo6" data-toggle="tab">
-                证券类账户要素集合
+                证券类账户
             </a>
         </li>	
     </ul>
@@ -882,7 +882,7 @@
                     <a href="#" onclick="addSyqjg(0,'','',0,'',0,'','','','');">点击更多受益权结构</a></div> -->
             </div>
 		</div>
-		<div class="tab-pane fade" id="initInfo4">
+		<div class="tab-pane fade" id="initInfo4" style="display: none;">
             <div style="height:620px;overflow-y:auto">
                 <div id="xthtInfo">
                     
@@ -1081,8 +1081,8 @@
                     //受益权结构
                     find_app_dfs_zxd_cssyq_by_uuid(data.uuid);
 
-                    //信托合同
-                    find_app_dfs_zxd_csxtht_by_uuid(data.uuid);
+                    //信托合同 20200728根据需求取消
+                    //find_app_dfs_zxd_csxtht_by_uuid(data.uuid);
 
                     //银行资金账户
                     find_app_dfs_zxd_yhzjzh_by_uuid(data.uuid);
@@ -1702,7 +1702,7 @@
                 success: function (data) {
                     saveJydsys(ydjData);
                     saveSyqjg(ydjData);
-                    saveXtht(ydjData);
+                    //saveXtht(ydjData); 20200728根据需求取消
                     saveYhzjzh(ydjData);
                     saveZqlzh(ydjData);
                     alert("保存成功！");
@@ -1900,7 +1900,7 @@
                     <!--<div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
                     <a href="#" onclick="delSyqjg(`+ e + `);"><font color="#FF0000">点击删除下面一条受益权结构要素集合</font></a></div>-->
                     <div style="width: 100%; height: 30px; text-align: left; line-height: 30px; background-color: #C0C0C0;">
-                    `+ e + `、` + syqlx_name + `（` + syqyqsyl +`）
+                    `+ e + `、` + syqlx_name + `（` + syqyqsyl +`%）
                     </div>
                     <input type="hidden" name="syqjgNo`+ e + `" value="` + e + `">
                     <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"

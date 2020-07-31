@@ -40,7 +40,7 @@
                 受益权结构
             </a>
 		</li>	
-		<li style="display: none;">
+		<li>
             <a href="#initInfo4" data-toggle="tab">
                 信托合同
             </a>
@@ -884,7 +884,7 @@
                     <a href="#" onclick="addSyqjg(0,'','',0,'',0,'','','','');">点击更多受益权结构</a></div> -->
             </div>
 		</div>
-		<div class="tab-pane fade" id="initInfo4" style="display: none;">
+		<div class="tab-pane fade" id="initInfo4">
             <div style="height:620px;overflow-y:auto">
                 <div id="xthtInfo">
                     
@@ -1084,7 +1084,7 @@
                     find_app_dfs_zxd_cssyq_by_uuid(data.uuid);
 
                     //信托合同 20200728根据需求取消
-                    //find_app_dfs_zxd_csxtht_by_uuid(data.uuid);
+                    find_app_dfs_zxd_csxtht_by_uuid(data.uuid);
 
                     //银行资金账户
                     find_app_dfs_zxd_yhzjzh_by_uuid(data.uuid);
@@ -2790,9 +2790,11 @@
                             <td>
                                 开户日期:
                             </td>
-                            <td>
+                            <td  colspan="5">
                                 <input type="date" id="zqzjzhkhrq`+ t + `" name="zqzjzhkhrq` + t + `" value="` + zqzjzhkhrq + `" style="width: 180px;">
                             </td>
+                        </tr>
+                        <tr>
                             <td>
                                 <span class="required">*</span>是否开立期货交易资金账户:
                             </td>
@@ -2806,14 +2808,14 @@
                             <td>
                                 <input type="text" id="qhjyzjzhhm`+ t + `" name="qhjyzjzhhm` + t + `" value="` + qhjyzjzhhm + `" style="width: 180px;">
                             </td>
-                        </tr>
-                        <tr>
                             <td>
                                 期货交易资金账户账号:
                             </td>
                             <td>
                                 <input type="text" id="qhjyzjzhzh`+ t + `" name="qhjyzjzhzh` + t + `" value="` + qhjyzjzhzh + `" style="width: 180px;">
                             </td>
+                        </tr>
+                        <tr>
                             <td>
                                 股指期货交易编码（投机）:
                             </td>
@@ -2826,14 +2828,14 @@
                             <td>
                                 <input type="text" id="gzqhjybm_tqbz`+ t + `" name="gzqhjybm_tqbz` + t + `" value="` + gzqhjybm_tqbz + `" style="width: 180px;">
                             </td>
-                        </tr>
-                        <tr>
                             <td>
                                 股指期货交易编码（套利）:
                             </td>
                             <td>
                                 <input type="text" id="gzqhjybm_tl`+ t + `" name="gzqhjybm_tl` + t + `" value="` + gzqhjybm_tl + `" style="width: 180px;">
                             </td>
+                        </tr>
+                        <tr>
                             <td>
                                 期货公司全称:
                             </td>
@@ -2846,8 +2848,6 @@
                             <td>
                                 <input type="text" id="khyyb`+ t + `" name="khyyb` + t + `" value="` + khyyb + `" style="width: 180px;">
                             </td>
-                        </tr>
-                        <tr>
                             <td>
                                 开户日期:
                             </td>
@@ -2859,10 +2859,12 @@
                             <td>
                                 <span class="required">*</span>是否开立银行间交易账户:
                             </td>
-                            <td>
+                            <td colspan="5">
                                 <input type="radio" name="sfklyxjjyzhzh`+ t + `" value="0" />否
                                 <input type="radio" name="sfklyxjjyzhzh`+ t + `" value="1" />是
                             </td>
+                        </tr>
+                        <tr>
                             <td>
                                 银行间债券市场账户（上海清算所）户名:
                             </td>
@@ -2875,8 +2877,6 @@
                             <td>
                                 <input type="text" id="zqzhzh_sqs`+ t + `" name="zqzhzh_sqs` + t + `" value="` + zqzhzh_sqs + `" style="width: 180px;">
                             </td>
-                        </tr>
-                        <tr>
                             <td>
                                 是否开立 DVP 资金结算账户:
                             </td>
@@ -2884,10 +2884,12 @@
                                 <input type="radio" name="sfdvpjs_sqs`+ t + `" value="0" />否
                                 <input type="radio" name="sfdvpjs_sqs`+ t + `" value="1" />是
                             </td>
+                        </tr>
+                        <tr>
                             <td>
                                 开户日期:
                             </td>
-                            <td colspan="3">
+                            <td colspan="5">
                                 <input type="date" id="yhjzqzhkhrq_sqs`+ t + `" name="yhjzqzhkhrq_sqs` + t + `" value="` + yhjzqzhkhrq_sqs + `" style="width: 180px;">
                             </td>
                         </tr>
@@ -2901,11 +2903,9 @@
                             <td>
                                 银行间债券市场账户（中债登）账号:
                             </td>
-                            <td colspan="3">
+                            <td>
                                 <input type="text" id="zqzhzh_zzd`+ t + `" name="zqzhzh_zzd` + t + `" value="` + zqzhzh_zzd + `" style="width: 180px;">
                             </td>
-                        </tr>
-                        <tr>
                             <td>
                                 是否开立 DVP 资金结算账户:
                             </td>
@@ -2913,10 +2913,12 @@
                                 <input type="radio" name="sfdvpjs_zzd`+ t + `" value="0" />否
                                 <input type="radio" name="sfdvpjs_zzd`+ t + `" value="1" />是
                             </td>
+                        </tr>
+                        <tr>
                             <td>
                                 开户日期:
                             </td>
-                            <td colspan="3">
+                            <td colspan="5">
                                 <input type="date" id="yhjzqzhkhrq_zzd`+ t + `" name="yhjzqzhkhrq_zzd` + t + `" value="` + yhjzqzhkhrq_zzd + `" style="width: 180px;">
                             </td>
                         </tr>

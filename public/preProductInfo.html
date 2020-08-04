@@ -99,7 +99,7 @@
                             <span class="required">*</span>信托财产性质标识:
                         </td>
                         <td>
-                            <select id="csxtcclx" name="csxtcclx" style="width: 320px;">
+                            <select id="csxtcclx" name="csxtcclx" style="width: 320px;" disabled="disabled">
                                 <option value="0">资金</option>
                                 <option value="1">财产权</option>
                                 <option value="2">混合</option>
@@ -118,7 +118,7 @@
                             <span class="required">*</span>单一集合标识:
                         </td>
                         <td>
-                            <select id="dyjhbz" name="dyjhbz" style="width: 320px;">
+                            <select id="dyjhbz" name="dyjhbz" style="width: 320px;" disabled="disabled">
                                 <option value="0">单一</option>
                                 <option value="1">集合</option>
                             </select>
@@ -129,7 +129,7 @@
                             <span class="required">*</span>信托功能标识:
                         </td>
                         <td>
-                            <select id="xtgn" name="xtgn" style="width: 320px;">
+                            <select id="xtgn" name="xtgn" style="width: 320px;" disabled="disabled">
                                 <option value="0">投资类</option>
                                 <option value="1">融资类</option>
                                 <option value="2">事务管理</option>
@@ -721,6 +721,7 @@
                             </td>
                             <td style="width: 30%;">
                                 <select id="tjd`+ q + `" name="tjd` + q + `" style="width: 320px;">
+									<option value=""></option>
                                     <option value="001">中国</option>
                                     <option value="002">其他</option>
                                 </select>
@@ -732,6 +733,7 @@
                             </td>
                             <td style="width: 30%;">
                                 <select id="tjd_p`+ q + `" name="tjd_p` + q + `" style="width: 320px;" onclick="chTjdP(` + q + `, `+tjd_c+`)">
+								<option value=""></option>
                                     
                                 </select>
                             </td>
@@ -740,6 +742,7 @@
                             </td>
                             <td style="width: 30%;">
                                 <select id="tjd_c`+ q + `" name="tjd_c` + q + `" style="width: 320px;">
+								<option value=""></option>
 
                                 </select>
                             </td>
@@ -854,7 +857,9 @@
                 success: function (data) {
                     if (data != "") {
                         $.each(data, function (index, item) {
-                            if (item.ITEM_CODE == tjd_c_val)
+                            if (tjd_p == "")
+                                $("#tjd_c" + no).append("<option value='' selected></option>");
+                            else if (item.ITEM_CODE == tjd_c_val)
                                 $("#tjd_c" + no).append("<option value='" + item.ITEM_CODE + "' selected>" + item.ITEM_NAME + "</option>");
                             else
                                 $("#tjd_c" + no).append("<option value='" + item.ITEM_CODE + "'>" + item.ITEM_NAME + "</option>");

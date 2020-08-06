@@ -20,7 +20,6 @@
 
 <body>
     <div style="height: 20px; text-align: right;">
-	    <button type="button" onclick="javascript:inputContent();">填 报 说 明</button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
     </div>
 
@@ -36,6 +35,20 @@
         <div class="tab-pane fade in active" id="productInfo">
             <div style="height:390px;overflow-y:auto">
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
+                    <tr id="trtrust">
+                        <td style="width: 20%;">
+                            <span class="required">*</span>办理日期:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="date" id="handledate" name="handledate" style="width: 320px;">
+                        </td>
+                        <td style="width: 20%;">
+                            <span class="required">*</span>事前报告反馈日期:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="date" id="overdate" name="overdate" style="width: 320px;">
+                        </td>
+                    </tr>
                     <tr>
                         <td style="width: 20%;">
                             <span class="required">*</span>信托产品名称:
@@ -126,6 +139,12 @@
             let flowid = GetQueryValue('flowid');
             let itemid = GetQueryValue('itemid');
 			let taskid = GetQueryValue('taskid');
+			let nextnode = GetQueryValue('nextnode');
+			if(nextnode=="X644307B0B24442290B4A6BAED269009"){
+				jQuery("#trtrust").show();
+			}else{
+				jQuery("#trtrust").hide();
+			}
             if (taskid == null) {
                 itemid = "1@@"+itemid;
             } else {
@@ -150,7 +169,8 @@
                         $("input[name='sfgljy'][value=0]").attr("checked", true);
                     }
                     $("#sqbgyy").val(data.sqbgyy);
-                    
+					$("#handledate").val(data.handledate);
+					$("#overdate").val(data.overdate);
                     $("#xtxmmc").val(data.xtxmmc);
                     $("#djcpbh").val(data.djcpbh);
                     $("#csxtcclx").val(data.csxtcclx);
@@ -244,25 +264,28 @@
 			else value = getFormValue(name);
 			if(flag=="required")
 			{
-				if(typeof(value)=="undefined" || value.length==0  || value.length==''){
+				if(typeof(value)=="undefined" || value==null || value.length==0  || value.length==''){
 					alert("字段["+content+"]为必填项!");
-					$("input[name="+name+"]").focus();
+					//$("input[name="+name+"]").focus();
+					document.getElementById(name).focus();
 					return false;
 				}
 			}else if(flag=="length"){
-				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='') && value.length>type){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value.length=='') && value.length>type){
 					alert("字段["+content+"]内容超过最大限制!");
-					$("input[name="+name+"]").focus();
+					//$("input[name="+name+"]").focus();
+					document.getElementById(name).focus();
 					return false;
 				}			
 			}else if(flag=="number"){
-				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='')){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value.length=='')){
 					var typeValue=type.split(",");
 					if(value.indexOf(".")<0) value=value+'.00';
 					var contentValue=value.split(".");
 					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
 						alert("字段["+content+"]内容超过最大限制!");
-						$("input[name="+name+"]").focus();
+						//$("input[name="+name+"]").focus();
+						document.getElementById(name).focus();
 						return false;
 					}					
 				}			
@@ -271,6 +294,12 @@
 		}			
 		//保存之前必输项校验
 		function logicCheck(){
+			let nextnode = GetQueryValue('nextnode');
+			if(nextnode=="X644307B0B24442290B4A6BAED269009")
+			{
+				if(!checkInfo('handledate','办理日期','required','text')) return false;
+				if(!checkInfo('overdate','事前报告反馈日期','required','text')) return false;
+			}
 			if(!checkInfo('xtxmmc','信托产品名称','required','text')) return false;
 			if(!checkInfo('djcpbh','信托登记系统产品编码','required','text')) return false;
 			if(!checkInfo('csxtcclx','信托财产性质标识','required','text')) return false;
@@ -298,7 +327,8 @@
             //产品信息要素
             ydjData.sfgljy = $("input[name='sfgljy']:checked").val();
             ydjData.sqbgyy = $("#sqbgyy").val();
-            
+			ydjData.handledate = $("#handledate").val();
+			ydjData.overdate = $("#overdate").val();
             ydjData.xtxmmc=$("#xtxmmc").val();
             ydjData.djcpbh=$("#djcpbh").val();
             ydjData.csxtcclx=$("#csxtcclx").val();

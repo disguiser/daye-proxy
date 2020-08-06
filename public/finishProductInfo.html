@@ -20,7 +20,6 @@
 
 <body>
     <div style="height: 20px; text-align: right;">
-	    <button type="button" onclick="javascript:inputContent();">填 报 说 明</button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
     </div>
 
@@ -37,6 +36,20 @@
             <div style="height:620px;overflow-y:auto">
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
 				<tr> <td colspan=3><b>下面所有数据都以信托项目清算报告披露数据为准:</b><td></tr>
+                    <tr id="trtrust">
+                        <td style="width: 20%;">
+                            <span class="required">*</span>办理日期:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="date" id="handledate" name="handledate" style="width: 320px;">
+                        </td>
+                        <td style="width: 20%;">
+                            <span class="required">*</span>终止登记反馈日期:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="date" id="overdate" name="overdate" style="width: 320px;">
+                        </td>
+                    </tr>
                     <tr>
                         <td style="width: 20%;">
                             <span class="required">*</span>信托登记系统产品编码 :
@@ -203,6 +216,12 @@
             let flowid = GetQueryValue('flowid');
             let itemid = GetQueryValue('itemid');
 			let taskid = GetQueryValue('taskid');
+			let nextnode = GetQueryValue('nextnode');
+			if(nextnode=="X644307B0B24442290B4A6BAED269009"){
+				jQuery("#trtrust").show();
+			}else{
+				jQuery("#trtrust").hide();
+			}
             if (taskid == null) {
                 itemid = "1@@"+itemid;
             } else {
@@ -221,6 +240,8 @@
                 cache: false,
                 success: function (data) {
                     ydjData = data;
+					$("#handledate").val(data.handledate);
+					$("#overdate").val(data.overdate);
                     $("#djcpbh").val(data.djcpbh);
                     $("#cpqc").val(data.cpqc);
                     if (data.sfaydrqqs == "1") {
@@ -332,25 +353,25 @@
 			else value = getFormValue(name);
 			if(flag=="required")
 			{
-				if(typeof(value)=="undefined" || value.length==0  || value.length==''){
+				if(typeof(value)=="undefined" || value==null || value.length==0  || value.length==''){
 					alert("字段["+content+"]为必填项!");
-					$("input[name="+name+"]").focus();
+					document.getElementById(name).focus();
 					return false;
 				}
 			}else if(flag=="length"){
-				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='') && value.length>type){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value.length=='') && value.length>type){
 					alert("字段["+content+"]内容超过最大限制!");
-					$("input[name="+name+"]").focus();
+					document.getElementById(name).focus();
 					return false;
 				}			
 			}else if(flag=="number"){
-				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='')){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value.length=='')){
 					var typeValue=type.split(",");
 					if(value.indexOf(".")<0) value=value+'.00';
 					var contentValue=value.split(".");
 					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
 						alert("字段["+content+"]内容超过最大限制!");
-						$("input[name="+name+"]").focus();
+						document.getElementById(name).focus();
 						return false;
 					}					
 				}			
@@ -359,6 +380,12 @@
 		}		
 		//保存之前必输项校验
 		function logicCheck(){
+			let nextnode = GetQueryValue('nextnode');
+			if(nextnode=="X644307B0B24442290B4A6BAED269009")
+			{
+				if(!checkInfo('handledate','办理日期','required','text')) return false;
+				if(!checkInfo('overdate','终止登记反馈日期','required','text')) return false;
+			}
 			if(!checkInfo('djcpbh','信托登记系统产品编码','required','text')) return false;
 			if(!checkInfo('cpqc','信托产品名称','required','text')) return false;
 			if(!checkInfo('sfaydrqqs','是否按约定日期清算','required','radio')) return false;
@@ -412,6 +439,8 @@
 				return false;	
 			}		
             //产品信息要素
+			ydjData.handledate = $("#handledate").val();
+			ydjData.overdate = $("#overdate").val();
             ydjData.sfaydrqqs = $("input[name='sfaydrqqs']:checked").val();
             ydjData.djcpbh=$("#djcpbh").val();
             ydjData.cpqc=$("#cpqc").val();

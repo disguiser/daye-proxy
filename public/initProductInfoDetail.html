@@ -795,7 +795,7 @@
 					
 					query_app_dfs_zxd_cssyq(data.uuid);
 
-					//query_app_dfs_zxd_csxtht(data.uuid); 20200728根据需求取消
+					query_app_dfs_zxd_csxtht(data.uuid); //20200728根据需求取消
 
 					query_app_dfs_zxd_yhzjzh(data.uuid);
 
@@ -861,6 +861,7 @@
                 success: function (data) {
                     if (typeof(data.length) != "undefined") {
                         $.each(data,function(index,item) {
+							if(item.syqxh==null) item.syqxh='';
                             addSyqjg(item.syqxh,item.syqdm,item.syqlx,item.fpsx,item.syqsyllx,item.syqyqsyl,item.yqsylsm,item.fhfs,item.fpfs,item.fppl);
                         });
                     }
@@ -958,6 +959,15 @@
                 success: function (data) {
                     if (typeof(data.length) != "undefined") {
                         $.each(data,function(index,item) {
+							if(item.zjjsbz==null) item.zjjsbz='';
+							if(item.wtzjje==null) item.wtzjje='';
+							if(item.wtccdyje==null) item.wtccdyje='';
+							if(item.wtcccclx==null) item.wtcccclx='';
+							if(item.syrxh==null) item.syrxh='';
+							if(item.syrlx==null) item.syrlx='';
+							if(item.lxxq_syr==null) item.lxxq_syr='';
+							if(item.syrzjlx==null) item.syrzjlx='';
+							if(item.syryxlhbs==null) item.syryxlhbs='';
                             addXtht(item.zytabs,item.xthtbh,item.htjz,item.wtrqc,item.wtrlx,item.lxxq_wtr,item.wtrzjlx,item.wtrzjhm,item.htcszje,item.htcszfe,item.xtccxz,item.zjjsbz,item.wtzjje,item.wtccdyje,item.wtcccclx,item.syrxh,item.syrmc,item.syrlx,item.lxxq_syr,item.syrzjlx,item.syrzjhm,item.syqdm,item.sfkssyqzh_syr,item.syqzhbm_syr,item.syqcsfe,item.syqcsje,item.syqqsr,item.syqjhdqr,item.syryxlhbs,item.qksm);
                         });
                     }
@@ -1262,6 +1272,8 @@
                 success: function (data) {
                     if (typeof(data.length) != "undefined") {
                         $.each(data,function(index,item) {
+							if(item.zqjyxtlx==null) item.zqjyxtlx='';
+							if(item.wgzqjyxtcs==null) item.wgzqjyxtcs='';
                             addZqlzh(item.sfklzqzh,item.zqzjzhzh,item.zqgsmc,item.zqgskhyyb,item.zqjyxtlx,item.wgzqjyxtcs,item.zqzjzhkhrq,item.sfklqhjyzjzh,item.qhjyzjzhhm,item.qhjyzjzhzh,item.gzqhjybm_tj,item.gzqhjybm_tqbz,item.gzqhjybm_tl,item.qhgsqc,item.khyyb,item.qhjyzhkhrq,item.sfklyxjjyzhzh,item.zqzhhu_sqs,item.zqzhzh_sqs,item.sfdvpjs_sqs,item.yhjzqzhkhrq_sqs,item.zqzhhu_zzd,item.zqzhzh_zzd,item.sfdvpjs_zzd,item.yhjzqzhkhrq_zzd);
                         });
                     }

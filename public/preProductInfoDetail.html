@@ -802,6 +802,11 @@
                 success: function (data) {
                     if (data != "" && data.length != 0) {
                         $.each(data,function(index,item) {
+							if(item.sfqgtj==null) item.sfqgtj='';
+							if(item.tjd==null) item.tjd='';
+							if(item.tjd_p==null) item.tjd_p='';
+							if(item.tjd_c==null) item.tjd_c='';
+							if(item.tjd_a==null) item.tjd_a='';
                             addSitePromotion(item.sfqgtj,item.tjd,item.tjd_p,item.tjd_c,item.tjd_a,item.tjjg,item.tjfl,item.tjq,item.jhtjgm,item.tjfshtjgl,item.tjfzrmc,item.tjfzrdh);
                         });
                     }

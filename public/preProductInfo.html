@@ -20,8 +20,7 @@
 
 <body>
     <div style="height: 20px; text-align: right;">
-		<button type="button" onclick="javascript:inputContent();">填 报 说 明</button>&nbsp;&nbsp;&nbsp;&nbsp;
-        <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
+		<button type="button"  onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
     </div>
 
     <ul id="myTab" class="nav nav-tabs">
@@ -56,18 +55,49 @@
         <div class="tab-pane fade in active" id="productInfo">
             <div style="height:620px;overflow-y:auto">
                 <table border="1" bordercolor="#C0C0C0" cellspacing="0" cellpadding="2" style="width: 100%;">
+                    <tr id="trtrust">
+                        <td style="width: 20%;">
+                            <span class="required">*</span>办理日期:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="date" id="handledate" name="handledate" style="width: 320px;">
+                        </td>
+                        <td style="width: 20%;">
+                            <span class="required">*</span>预登记反馈中信登编码:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="text" id="zxdcode" name="zxdcode" style="width: 320px;">
+                        </td>
+                    </tr>
+                    <tr id="trtrust1">
+                        <td style="width: 20%;">
+                            <span class="required">*</span>预登记反馈状态:
+                        </td>
+                        <td style="width: 30%;">
+                            <select id="overstate" name="overstate" style="width: 320px;">
+                                <option value="1">成功</option>
+                                <option value="0">失败</option>
+                            </select>
+                        </td>
+                        <td style="width: 20%;">
+                            <span class="required">*</span>预登记反馈日期:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="date" id="overdate" name="overdate" style="width: 320px;">
+                        </td>
+                    </tr>
                     <tr>
                         <td style="width: 20%;">
                             <span class="required">*</span>上月末净资产（万 元）:
                         </td>
                         <td style="width: 30%;">
-                            <input type="number" id="symjzc" name="symjzc" style="width: 320px;">
+                            <input type="number" id="symjzc" name="symjzc" style="width: 320px;"  disabled="disabled">
                         </td>
                         <td style="width: 20%;">
                             <span class="required">*</span>上季末净资本（万 元）:
                         </td>
                         <td style="width: 30%;">
-                            <input type="number" id="sjmjzc" name="sjmjzc" style="width: 320px;">
+                            <input type="number" id="sjmjzc" name="sjmjzc" style="width: 320px;"  disabled="disabled">
                         </td>
                     </tr>
                     <tr>
@@ -75,13 +105,13 @@
                             <span class="required">*</span>上月末信托总资产（万元）:
                         </td>
                         <td>
-                            <input type="number" id="symxtzzc" name="symxtzzc" style="width: 320px;">
+                            <input type="number" id="symxtzzc" name="symxtzzc" style="width: 320px;"  disabled="disabled">
                         </td>
                         <td>
                             <span class="required">*</span>上季末风险资本（万元）:
                         </td>
                         <td>
-                            <input type="number" id="sjmfxzb" name="sjmfxzb" style="width: 320px;">
+                            <input type="number" id="sjmfxzb" name="sjmfxzb" style="width: 320px;"  disabled="disabled">
                         </td>
                     </tr>
                     <tr>
@@ -307,7 +337,7 @@
                             <span class="required">*</span>保管标识:
                         </td>
                         <td>
-                            <select id="bgbs" name="bgbs" style="width: 320px;">
+                            <select id="bgbs" name="bgbs" style="width: 320px;"  disabled="disabled">
                                 <option value="00">保管制</option>
                                 <option value="01">非保管制</option>
                             </select>
@@ -359,7 +389,7 @@
                             <span class="required">*</span>项目来源:
                         </td>
                         <td>
-                            <select id="xmly" name="xmly" style="width: 320px;">
+                            <select id="xmly" name="xmly" style="width: 320px;"  disabled="disabled">
                                 <option value="0">自主开发</option>
                                 <option value="1">其他机构推荐</option>
                                 <option value="2">银行推荐</option>
@@ -370,7 +400,7 @@
                             <span class="required">*</span>信托财产管理方式:
                         </td>
                         <td>
-                            <select id="xmglfs" name="xmglfs" style="width: 320px;">
+                            <select id="xmglfs" name="xmglfs" style="width: 320px;"  disabled="disabled">
                                 <option value="0">主动管理</option>
                                 <option value="1">非主动管理</option>
                             </select>
@@ -885,6 +915,14 @@
             let flowid = GetQueryValue('flowid');
             let itemid = GetQueryValue('itemid');
 			let taskid = GetQueryValue('taskid');
+			let nextnode = GetQueryValue('nextnode');
+			if(nextnode=="X644307B0B24442290B4A6BAED269009"){
+				jQuery("#trtrust").show();
+				jQuery("#trtrust1").show();
+			}else{
+				jQuery("#trtrust").hide();
+				jQuery("#trtrust1").hide();
+			}
             if (taskid == null) {
                 itemid = "1@@"+itemid;
             } else {
@@ -903,7 +941,11 @@
                 cache: false,
                 success: function (data) {
                     ydjData = data;
-                    $("#symjzc").val(data.symjzc);
+					$("#handledate").val(data.handledate);
+                    $("#zxdcode").val(data.zxdcode);
+					$("#overstate").val(data.overstate);
+					$("#overdate").val(data.overdate);
+					$("#symjzc").val(data.symjzc);
                     $("#sjmjzc").val(data.sjmjzc);
                     $("#symxtzzc").val(data.symxtzzc);
                     $("#sjmfxzb").val(data.sjmfxzb);
@@ -1505,6 +1547,20 @@
 			if(!(bgywlx.indexOf('3')>=0 && sfjghxt=="1")){
 				setFormValue('yxlhbl','');
 			}
+			//是否异地推介
+			if(bgywlx.indexOf('2')<0){
+				setRadioValue('sfqgtj1','');
+				setFormValue('tjd1','No,0,1,2,3');
+				setFormValue('tjd_p1','');
+				setFormValue('tjd_c1','');
+				setFormValue('tjd_a1','');
+				setFormValue('tjfl1','');
+				setFormValue('tjq1','');
+				setFormValue('jhtjgm1','');
+				setFormValue('tjfshtjgl1','');
+				setFormValue('tjfzrmc1','');
+				setFormValue('tjfzrdh1','');
+			}	
 			
 			return true;
 		}		
@@ -1517,27 +1573,24 @@
 			else value = getFormValue(name);
 			if(flag=="required")
 			{
-				if(typeof(value)=="undefined" || value.length==0  || value.length==''){
+				if(typeof(value)=="undefined" || value==null || value.length==0  || value.length==''){
 					alert("字段["+content+"]为必填项!");
-					//$("input[name="+name+"]").focus();
 					document.getElementById(name).focus();
 					return false;
 				}
 			}else if(flag=="length"){
-				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='') && value.length>type){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value.length=='') && value.length>type){
 					alert("字段["+content+"]内容超过最大限制!");
-					//$("input[name="+name+"]").focus();
 					document.getElementById(name).focus();
 					return false;
 				}			
 			}else if(flag=="number"){
-				if(!(typeof(value)=="undefined" || value.length==0  || value.length=='')){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value.length=='')){
 					var typeValue=type.split(",");
 					if(value.indexOf(".")<0) value=value+'.00';
 					var contentValue=value.split(".");
 					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
 						alert("字段["+content+"]内容超过最大限制!");
-						//$("input[name="+name+"]").focus();
 						document.getElementById(name).focus();
 						return false;
 					}					
@@ -1548,6 +1601,14 @@
 		
 		//保存之前必输项校验
 		function requiredCheck(){
+			let nextnode = GetQueryValue('nextnode');
+			if(nextnode=="X644307B0B24442290B4A6BAED269009")
+			{
+				if(!checkInfo('handledate','办理日期','required','text')) return false;
+				if(!checkInfo('zxdcode','预登记反馈中信登编码','required','text')) return false;
+				if(!checkInfo('overstate','预登记反馈状态','required','text')) return false;
+				if(!checkInfo('overdate','预登记反馈日期','required','text')) return false;
+			}
 			if(!checkInfo('symjzc','上月末净资产（万 元）','required','text')) return false;
 			if(!checkInfo('sjmjzc','上季末净资本（万 元）','required','text')) return false;
 			if(!checkInfo('symxtzzc','上月末信托总资产（万元）','required','text')) return false;
@@ -1654,6 +1715,10 @@
 			}			
 			
             //产品信息要素
+			ydjData.handledate = $("#handledate").val();
+            ydjData.zxdcode = $("#zxdcode").val();
+			ydjData.overstate = $("#overstate").val();
+			ydjData.overdate = $("#overdate").val();
             ydjData.symjzc = $("#symjzc").val();
             ydjData.sjmjzc = $("#sjmjzc").val();
             ydjData.symxtzzc = $("#symxtzzc").val();

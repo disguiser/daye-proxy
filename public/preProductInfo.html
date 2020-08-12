@@ -141,8 +141,11 @@
                             财产权信托进行受益权拆分转让或者对外发行受益权标识:
                         </td>
                         <td>
-                            <input type="radio" name="ccqxtcfzr" value="0" />否
-                            <input type="radio" name="ccqxtcfzr" value="1" />是
+                            <select id="ccqxtcfzr" name="ccqxtcfzr" style="width: 320px;">
+								<option value=""></option>
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>							
                         </td>
                         <td>
                             <span class="required">*</span>单一集合标识:
@@ -183,8 +186,11 @@
                             是否为新发分期:
                         </td>
                         <td>
-                            <input type="radio" name="sfwxffq" value="0" />否
-                            <input type="radio" name="sfwxffq" value="1" />是
+                            <select id="sfwxffq" name="sfwxffq" style="width: 320px;">
+								<option value=""></option>
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>	
                         </td>
                         <td>
                             其他报告业务类型:
@@ -205,7 +211,7 @@
                             <span class="required">*</span>拟发行或成立总规模类型:
                         </td>
                         <td>
-                            <select id="nfxclzgmlx" name="nfxclzgmlx" style="width: 320px;">
+                            <select id="nfxclzgmlx" name="nfxclzgmlx" style="width: 320px;" onchange="javascript:changeInfo('1')">
                                 <option value="0">非固定规模</option>
                                 <option value="1">固定规模</option>
                             </select>
@@ -230,7 +236,7 @@
                             <span class="required">*</span>信托产品总期限类型:
                         </td>
                         <td>
-                            <select id="xtxmzqxlx" name="xtxmzqxlx" style="width: 320px;">
+                            <select id="xtxmzqxlx" name="xtxmzqxlx" style="width: 320px;" onchange="javascript:changeInfo('2')">>
                                 <option value="0">固定期限</option>
                                 <option value="1">非固定期限</option>
                             </select>
@@ -253,7 +259,7 @@
                             <span class="required">*</span>拟发行或成立规模类型:
                         </td>
                         <td>
-                            <select id="yjxtxmgm" name="yjxtxmgm" style="width: 320px;">
+                            <select id="yjxtxmgm" name="yjxtxmgm" style="width: 320px;" onchange="javascript:changeInfo('3')">
                                 <option value="0">非固定规模</option>
                                 <option value="1">固定规模</option>
                             </select>
@@ -278,7 +284,7 @@
                             <span class="required">*</span>信托产品期限类型:
                         </td>
                         <td>
-                            <select id="xtxmqxlx" name="xtxmqxlx" style="width: 320px;">
+                            <select id="xtxmqxlx" name="xtxmqxlx" style="width: 320px;" onchange="javascript:changeInfo('4')">
                                 <option value="0">固定期限</option>
                                 <option value="1">非固定期限</option>
                             </select>
@@ -375,13 +381,13 @@
                             信托合同约定基准收益率范围（上限）:
                         </td>
                         <td>
-                            <input type="number" id="syryqsylqj_zd" name="syryqsylqj_zd" style="width: 320px;">
+                            <input type="number" id="syryqsylqj_zd" name="syryqsylqj_zd" style="width: 280px;">(%)
                         </td>
                         <td>
                             信托合同约定基准收益率范围（下限）:
                         </td>
                         <td>
-                            <input type="number" id="syryqsylqj_zg" name="syryqsylqj_zg" style="width: 320px;">
+                            <input type="number" id="syryqsylqj_zg" name="syryqsylqj_zg" style="width: 280px;">(%)
                         </td>
                     </tr>
                     <tr>
@@ -898,6 +904,23 @@
                 }
             });
         }
+		
+        //选择发生值变化
+        function changeInfo(no) {
+            if(no=="1"){
+				setFormValue('zdgdgmzfw','');	
+				setFormValue('zggdgmzfw','');	
+			}else if(no=="2"){
+				setFormValue('zdgdqxzfw','');	
+				setFormValue('zggdqxzfw','');	
+			}else if(no=="3"){
+				setFormValue('zdxtxmgmfw','');	
+				setFormValue('zgxtxmgmfw','');
+			}else if(no=="4"){
+				setFormValue('zdxtxmqxfw','');	
+				setFormValue('zgxtxmqxfw','');
+			}
+        }
 
         //初始化数据
         let ydjData = new Object();
@@ -951,14 +974,13 @@
                     $("#sjmfxzb").val(data.sjmfxzb);
                     $("#ydjlx").val(data.ydjlx);
                     $("#csxtcclx").val(data.csxtcclx);
-                    $("input[name='ccqxtcfzr'][value="+data.ccqxtcfzr+"]").attr("checked", true);
                     $("#dyjhbz").val(data.dyjhbz);
                     $("#xtgn").val(data.xtgn);
                     let bgywlx = data.bgywlx.split(",");
                     $.each(bgywlx, function (index, value) {
                         $("#bgywlx"+value).attr("checked", "checked");
                     });
-                    $("input[name='sfwxffq'][value="+data.sfwxffq+"]").attr("checked", true);
+					$("#sfwxffq").val(data.sfwxffq);
                     $("#qtbgywlx").val(data.qtbgywlx);
                     $("#xtxmmc").val(data.xtxmmc);
                     $("#nfxclzgmlx").val(data.nfxclzgmlx);
@@ -1128,7 +1150,7 @@
 		function logicCheck(){
 			//财产权信托进行受益权拆分转让或者对外发行受益权标识
 			csxtcclx = getFormValue('csxtcclx');
-			ccqxtcfzr = getRadioValue('ccqxtcfzr');
+			ccqxtcfzr = getFormValue('ccqxtcfzr');
 			if((csxtcclx=="1" || csxtcclx=="2") && (typeof(ccqxtcfzr)=="undefined" || ccqxtcfzr.length==0  || ccqxtcfzr.length==""))
 			{
 				alert("当[信托财产性质标识]勾选【财产权】或【混合】时,字段[财产权信托进行受益权拆分转让或者对外发行受益权标识]为必填项!");
@@ -1138,7 +1160,7 @@
 			//是否为新发分期控制
 			var ydjlx=getFormValue('ydjlx');
 			var bgywlx=getBoxValue('bgywlx');
-			var sfwxffq=getRadioValue('sfwxffq');
+			var sfwxffq=getFormValue('sfwxffq');
 			if(ydjlx=="6" && bgywlx.indexOf('2')>=0 && (typeof(sfwxffq)=="undefined" || sfwxffq.length==0  || sfwxffq.length==""))
 			{
 				alert("[预登记类型]选择【补充预登记】且[报告业务类型]选择【异地推介】时,字段[是否为新发分期]为必填项!");
@@ -1146,7 +1168,7 @@
 				return false;
 			}
 			if(!(ydjlx=="6" && bgywlx.indexOf('2')>=0)){
-				setRadioValue('sfwxffq','');	
+				setFormValue('sfwxffq','');	
 			}
 			//其他报告业务类型
 			var qtbgywlx=getFormValue('qtbgywlx');
@@ -1714,6 +1736,11 @@
 				return false;	
 			}			
 			
+			//异地推介补充要素校验
+			if(!ydtjCheck(1)){
+				return false;	
+			}
+			
             //产品信息要素
 			ydjData.handledate = $("#handledate").val();
             ydjData.zxdcode = $("#zxdcode").val();
@@ -1725,7 +1752,7 @@
             ydjData.sjmfxzb = $("#sjmfxzb").val();
             ydjData.ydjlx = $("#ydjlx").val();
             ydjData.csxtcclx = $("#csxtcclx").val();
-            ydjData.ccqxtcfzr = $("input[name='ccqxtcfzr']:checked").val();
+			ydjData.ccqxtcfzr = $("#ccqxtcfzr").val();
             ydjData.dyjhbz = $("#dyjhbz").val();
             ydjData.xtgn = $("#xtgn").val();
             let bgywlxs = $("input:checkbox[name=bgywlx]:checked");
@@ -1734,7 +1761,7 @@
                 chbgywlxs.push($(this).val());
             });
             ydjData.bgywlx = chbgywlxs.join(",");
-			ydjData.sfwxffq = $("input[name='sfwxffq']:checked").val()
+			ydjData.sfwxffq = $("#sfwxffq").val();
             ydjData.qtbgywlx = $("#qtbgywlx").val();
             ydjData.xtxmmc = $("#xtxmmc").val();
             ydjData.nfxclzgmlx = $("#nfxclzgmlx").val();
@@ -1831,7 +1858,7 @@
 		//异地推介补充要素校验
 		function ydtjCheck(no) {
 			//保存之前必输项校验
-			var returnValue=checkInfo('sfqgtj'+no,'是否全国推介','required','radio');
+			if(!checkInfo('sfqgtj'+no,'是否全国推介','required','radio')) return false;;
 			if(!checkInfo('tjjg'+no,'推介机构','required','text')) return false;
 			if(!checkInfo('tjfl'+no,'推介费率','required','text')) return false;
 			if(!checkInfo('tjq'+no,'推介期','required','text')) return false;
@@ -1848,31 +1875,30 @@
 			if(!checkInfo('tjfshtjgl'+no,'推介方式和推介管理','length','256')) return false;
 			if(!checkInfo('tjfzrmc'+no,'推介负责人名称','length','64')) return false;
 			if(!checkInfo('tjfzrdh'+no,'推介负责人电话','length','64')) return false;					
-			//校验不通过
-			if(returnValue>0) return false;			
+	
 			//监管报送逻辑校验,推介地国家+省份+城市+地点控制
 			var sfqgtj=getRadioValue('sfqgtj'+no);
 			var tjd=getFormValue('tjd'+no);
 			var tjd_p=getFormValue('tjd_p'+no);
 			var tjd_c=getFormValue('tjd_c'+no);
 			var tjd_a=getFormValue('tjd_a'+no);
-			if(sfqgtj =="1" && (typeof(tjd)=="undefined" || tjd.length==0  || tjd.length=='')){
+			if(sfqgtj =="0" && (typeof(tjd)=="undefined" || tjd.length==0  || tjd.length=='')){
 				alert("[是否全国推介]选择【是】时,[推介地]为必填项!");
 				return false;
 			}
-			if(sfqgtj =="1" && (typeof(tjd_p)=="undefined" || tjd_p.length==0  || tjd_p.length=='')){
+			if(sfqgtj =="0" && (typeof(tjd_p)=="undefined" || tjd_p.length==0  || tjd_p.length=='')){
 				alert("[是否全国推介]选择【是】时,[推介地-省]为必填项!");
 				return false;
 			}
-			if(sfqgtj =="1" && (typeof(tjd_c)=="undefined" || tjd_c.length==0  || tjd_c.length=='')){
+			if(sfqgtj =="0" && (typeof(tjd_c)=="undefined" || tjd_c.length==0  || tjd_c.length=='')){
 				alert("[是否全国推介]选择【是】时,[推介地-城市]为必填项!");
 				return false;
 			}
-			if(sfqgtj =="1" && (typeof(tjd_a)=="undefined" || tjd_a.length==0  || tjd_a.length=='')){
+			if(sfqgtj =="0" && (typeof(tjd_a)=="undefined" || tjd_a.length==0  || tjd_a.length=='')){
 				alert("[是否全国推介]选择【是】时,[推介地-地址]为必填项!");
 				return false;
 			}	
-			if(sfqgtj =="0"){
+			if(sfqgtj =="1"){
 				setFormValue('tjd'+no,'');
 				setFormValue('tjd_p'+no,'');
 				setFormValue('tjd_c'+no,'');
@@ -1892,10 +1918,6 @@
             //异地推介补充要素
             $("input[name^='tjdNo']").each(function name(params) {
                 let no = $(this).val();
-				//异地推介补充要素校验
-				//if(!ydtjCheck(no)){
-				//	return false;	
-				//}
                 console.log(no);
                 let tjdNos = new Object();
                 tjdNos.uuid = ydjData.uuid;

@@ -343,7 +343,7 @@
                             <span class="required">*</span>保管标识:
                         </td>
                         <td>
-                            <select id="bgbs" name="bgbs" style="width: 320px;"  disabled="disabled">
+                            <select id="bgbs" name="bgbs" style="width: 320px;">
                                 <option value="00">保管制</option>
                                 <option value="01">非保管制</option>
                             </select>
@@ -368,7 +368,7 @@
 							<br>提示【不建议选其他，若选其他时，请在“交易结构”中描述信托合同约定的收益情况】
                         </td>
                         <td>
-                            <select id="syrsyllx" name="syrsyllx" style="width: 320px;">
+                            <select id="syrsyllx" name="syrsyllx" style="width: 320px;" onchange="javascript:changeInfo('5')">
                                 <option value="0">基准收益率</option>
                                 <option value="1">基准+浮动</option>
                                 <option value="2">浮动收益率（含净值型产品）</option>
@@ -378,16 +378,17 @@
                     </tr>
                     <tr>
                         <td>
-                            信托合同约定基准收益率范围（上限）:
+                            信托合同约定基准收益率范围（下限）:
                         </td>
                         <td>
                             <input type="number" id="syryqsylqj_zd" name="syryqsylqj_zd" style="width: 280px;">(%)
                         </td>
                         <td>
-                            信托合同约定基准收益率范围（下限）:
+                            信托合同约定基准收益率范围（上限）:
                         </td>
                         <td>
-                            <input type="number" id="syryqsylqj_zg" name="syryqsylqj_zg" style="width: 280px;">(%)
+                            
+							<input type="number" id="syryqsylqj_zg" name="syryqsylqj_zg" style="width: 280px;">(%)
                         </td>
                     </tr>
                     <tr>
@@ -585,10 +586,10 @@
                             项目类型:
                         </td>
                         <td>
-                            <input type="checkbox" id="xmlx0" name="xmlx" value="0" />住宅<br>
-                            <input type="checkbox" id="xmlx1" name="xmlx" value="1" />商用<br>
-                            <input type="checkbox" id="xmlx2" name="xmlx" value="2" />保障房<br>
-                            <input type="checkbox" id="xmlx3" name="xmlx" value="3" />其他<br>
+                            <input type="checkbox" id="xmlx0" name="xmlx" value="0" onchange="javascript:changeInfo('80')"/>住宅<br>
+                            <input type="checkbox" id="xmlx1" name="xmlx" value="1" onchange="javascript:changeInfo('81')"/>商用<br>
+                            <input type="checkbox" id="xmlx2" name="xmlx" value="2" onchange="javascript:changeInfo('82')"/>保障房<br>
+                            <input type="checkbox" id="xmlx3" name="xmlx" value="3" onchange="javascript:changeInfo('83')"/>其他<br>
                         </td>
                         <td>
                             其他项目类型:
@@ -602,7 +603,7 @@
                             业务类型:
                         </td>
                         <td>
-                            <select id="ywlx" name="ywlx" style="width: 320px;">
+                            <select id="ywlx" name="ywlx" style="width: 320px;" onchange="javascript:changeInfo('7')">
                                 <option value="0">投资类</option>
                                 <option value="1">融资类</option>
 								<option value="2">其他</option>
@@ -746,11 +747,13 @@
                         style="width: 100%;">
                         <tr>
                             <td style="width: 20%;">
-                                是否全国推介:
+                                <span class="required">*</span>是否全国推介:
                             </td>
                             <td style="width: 30%;">
-                                <input type="radio" name="sfqgtj`+ q + `" value="1" />是
-                                <input type="radio" name="sfqgtj`+ q + `" value="0" />否
+								<select id="sfqgtj`+ q + `" name="sfqgtj` + q + `" style="width: 320px;" onchange="javascript:changeInfo('6')">
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
                             </td>
                             <td style="width: 20%;">
                                 推介地
@@ -843,7 +846,7 @@
                         </tr>
                     </table></div>`;
             $("#tjd").append(str);
-            $(":radio[name='sfqgtj"+q+"'][value='" + sfqgtj + "']").prop("checked", "checked");
+			$("#sfqgtj"+q+"").val('1');
 
             //初始化推介地-省
             inittjd_p(q, tjd_p, tjd_c);
@@ -908,17 +911,76 @@
         //选择发生值变化
         function changeInfo(no) {
             if(no=="1"){
-				setFormValue('zdgdgmzfw','');	
-				setFormValue('zggdgmzfw','');	
+				var nfxclzgmlx=getFormValue('nfxclzgmlx');
+				if(nfxclzgmlx=="0")
+				{				
+					setFormValue('zdgdgmzfw','');	
+					setFormValue('zggdgmzfw','');
+				}				
 			}else if(no=="2"){
-				setFormValue('zdgdqxzfw','');	
-				setFormValue('zggdqxzfw','');	
+				var xtxmzqxlx=getFormValue('xtxmzqxlx');
+				if(xtxmzqxlx=="1")
+				{			
+					setFormValue('zdgdqxzfw','');	
+					setFormValue('zggdqxzfw','');
+				}				
 			}else if(no=="3"){
-				setFormValue('zdxtxmgmfw','');	
-				setFormValue('zgxtxmgmfw','');
+				var yjxtxmgm=getFormValue('yjxtxmgm');
+				if(yjxtxmgm=="0")
+				{
+					setFormValue('zdxtxmgmfw','');	
+					setFormValue('zgxtxmgmfw','');
+				}
 			}else if(no=="4"){
-				setFormValue('zdxtxmqxfw','');	
-				setFormValue('zgxtxmqxfw','');
+				var xtxmqxlx=getFormValue('xtxmqxlx');
+				if(xtxmqxlx=="1")
+				{
+					setFormValue('zdxtxmqxfw','');	
+					setFormValue('zgxtxmqxfw','');
+				}
+			}else if(no=="5"){
+				var syrsyllx=getFormValue('syrsyllx');
+				if(syrsyllx=="2" || syrsyllx=="9")
+				{
+					setFormValue('syryqsylqj_zd','');	
+					setFormValue('syryqsylqj_zg','');
+				}
+			}else if(no=="6"){
+				var sfqgtj=getFormValue('sfqgtj1');
+				if(sfqgtj=="1")
+				{	
+					$('#tjd1').attr("disabled",true);
+					$('#tjd_p1').attr("disabled",true);
+					$('#tjd_c1').attr("disabled",true);
+					$('#tjd_a1').attr("disabled",true);
+					setFormValue('tjd1','');	
+					setFormValue('tjd_p1','');
+					setFormValue('tjd_c1','');
+					setFormValue('tjd_a1','');
+				}else{
+					$('#tjd1').attr("disabled",false);
+					$('#tjd_p1').attr("disabled",false);
+					$('#tjd_c1').attr("disabled",false);
+					$('#tjd_a1').attr("disabled",false);
+				}
+			}else if(no=="7"){
+				var ywlx=getFormValue('ywlx');
+				if(ywlx=="0" || ywlx=="1")
+				{	
+					$('#qtywlx').attr("disabled",true);
+					setFormValue('qtywlx','');	
+				}else{
+					$('#qtywlx').attr("disabled",false);				
+				}
+			}else if(no=="80" || no=="81" || no=="82" || no=="83"){
+				var xmlx=getBoxValue('xmlx');
+				if(xmlx.indexOf('3')<0)
+				{	
+					$('#qtxmlx').attr("disabled",true);
+					setFormValue('qtxmlx','');	
+				}else{
+					$('#qtxmlx').attr("disabled",false);				
+				}
 			}
         }
 
@@ -927,11 +989,7 @@
         $(function () {
             //注册事件
             $("#bgywlx2").change(function() {
-                if ($('#bgywlx2').prop('checked')) {
-                    $(":radio[name='sfqgtj1'][value='1']").prop("checked", "checked");
-                } else {
-                    $(":radio[name='sfqgtj1'][value='0']").prop("checked", "checked");
-                }
+				//setFormValue('sfqgtj1','1');
             });
 
             //获取流程参数
@@ -1020,19 +1078,25 @@
                     $("#xtjlxm").val(data.xtjlxm);
                     $("#xtjldh").val(data.xtjldh);
                     $("#fggjglry").val(data.fggjglry);
-                    let gljylx = data.gljylx.split(",");
-                    $.each(gljylx, function (index, value) {
-                        $("#gljylx"+value).attr("checked", "checked");
-                    });
+					if(data.gljylx!=null && data.gljylx!='')
+					{
+						let gljylx = data.gljylx.split(",");
+						$.each(gljylx, function (index, value) {
+							$("#gljylx"+value).attr("checked", "checked");
+						});
+					}
                     $("#qtgljylx").val(data.qtgljylx);
                     $("#glfqkyglgx").val(data.glfqkyglgx);
                     $("#gljymd").val(data.gljymd);
                     $("#gljydj").val(data.gljydj);
                     $("#sctlywdjqk").val(data.sctlywdjqk);
-                    let xmlx = data.xmlx.split(",");
-                    $.each(xmlx, function (index, value) {
-                        $("#xmlx"+value).attr("checked", "checked");
-                    });
+					if(data.xmlx!=null && data.xmlx!='')
+					{
+						let xmlx = data.xmlx.split(",");
+						$.each(xmlx, function (index, value) {
+							$("#xmlx"+value).attr("checked", "checked");
+						});
+					}
                     $("#qtxmlx").val(data.qtxmlx);
                     $("#ywlx").val(data.ywlx);
                     $("#qtywlx").val(data.qtywlx);
@@ -1049,7 +1113,6 @@
                     $("#tzgwqk").val(data.tzgwqk);
 					$("#workdate").val(data.workdate);
                     $("input[name='tgsfglf'][value="+data.tgsfglf+"]").attr("checked", true);
-
                     find_app_dfs_zxd_ydjtjd_by_uuid(data.uuid);
                 }
             });
@@ -1151,7 +1214,7 @@
 			//财产权信托进行受益权拆分转让或者对外发行受益权标识
 			csxtcclx = getFormValue('csxtcclx');
 			ccqxtcfzr = getFormValue('ccqxtcfzr');
-			if((csxtcclx=="1" || csxtcclx=="2") && (typeof(ccqxtcfzr)=="undefined" || ccqxtcfzr.length==0  || ccqxtcfzr.length==""))
+			if((csxtcclx=="1" || csxtcclx=="2") && (typeof(ccqxtcfzr)=="undefined"  || ccqxtcfzr==null || ccqxtcfzr.length==0  || ccqxtcfzr.length==""))
 			{
 				alert("当[信托财产性质标识]勾选【财产权】或【混合】时,字段[财产权信托进行受益权拆分转让或者对外发行受益权标识]为必填项!");
 				$("input[name=ccqxtcfzr]").focus();
@@ -1161,7 +1224,7 @@
 			var ydjlx=getFormValue('ydjlx');
 			var bgywlx=getBoxValue('bgywlx');
 			var sfwxffq=getFormValue('sfwxffq');
-			if(ydjlx=="6" && bgywlx.indexOf('2')>=0 && (typeof(sfwxffq)=="undefined" || sfwxffq.length==0  || sfwxffq.length==""))
+			if(ydjlx=="6" && bgywlx.indexOf('2')>=0 && (typeof(sfwxffq)=="undefined"  || sfwxffq==null  || sfwxffq.length==0  || sfwxffq.length==""))
 			{
 				alert("[预登记类型]选择【补充预登记】且[报告业务类型]选择【异地推介】时,字段[是否为新发分期]为必填项!");
 				$("input[name=sfwxffq]").focus();
@@ -1172,7 +1235,7 @@
 			}
 			//其他报告业务类型
 			var qtbgywlx=getFormValue('qtbgywlx');
-			if(bgywlx.indexOf('4')>=0 && (typeof(qtbgywlx)=="undefined" || qtbgywlx.length==0  || qtbgywlx.length==""))
+			if(bgywlx.indexOf('4')>=0 && (typeof(qtbgywlx)=="undefined" || qtbgywlx==null || qtbgywlx.length==0  || qtbgywlx.length==""))
 			{
 				alert("[报告业务类型]选择【其他】时,字段[其他报告业务类型]为必填项!");
 				$("input[name=qtbgywlx]").focus();
@@ -1182,13 +1245,13 @@
 			var nfxclzgmlx=getFormValue('nfxclzgmlx');
 			var zdgdgmzfw=getFormValue('zdgdgmzfw');
 			var zggdgmzfw=getFormValue('zggdgmzfw');
-			if(nfxclzgmlx=="1" && (typeof(zdgdgmzfw)=="undefined" || zdgdgmzfw.length==0  || zdgdgmzfw.length=='') && (typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw.length==''))
+			if(nfxclzgmlx=="1" && (typeof(zdgdgmzfw)=="undefined" || zdgdgmzfw.length==0  || zdgdgmzfw=='') && (typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw==''))
 			{
 				alert("[拟发行或成立总规模类型]选择【固定规模】时,字段[固定规模总范围（万元）（下限）]和[固定规模总范围（万元）（上限）]中至少有一项为必填项!");
 				$("input[name=zdgdgmzfw]").focus();
 				return false;
 			}
-			if(nfxclzgmlx=="1" && parseFloat(zdgdgmzfw)>parseFloat(zggdgmzfw) && !(typeof(zdgdgmzfw)=="undefined" || zdgdgmzfw.length==0  || zdgdgmzfw.length=='') && !(typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw.length==''))
+			if(nfxclzgmlx=="1" && parseFloat(zdgdgmzfw)>parseFloat(zggdgmzfw) && !(typeof(zdgdgmzfw)=="undefined" || zdgdgmzfw.length==0  || zdgdgmzfw=='') && !(typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw==''))
 			{
 				alert("[拟发行或成立总规模类型]选择【固定规模】时,[固定规模总范围（万元）的下限]不能大于[固定规模总范围（万元）的上限]!");
 				$("input[name=zdgdgmzfw]").focus();
@@ -1202,13 +1265,13 @@
 			var xtxmzqxlx=getFormValue('xtxmzqxlx');
 			var zdgdqxzfw=getFormValue('zdgdqxzfw');
 			var zggdqxzfw=getFormValue('zggdqxzfw');
-			if(xtxmzqxlx=="0" && (typeof(zdgdqxzfw)=="undefined" || zdgdqxzfw.length==0  || zdgdqxzfw.length=='') && (typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw.length==''))
+			if(xtxmzqxlx=="0" && (typeof(zdgdqxzfw)=="undefined" || zdgdqxzfw.length==0  || zdgdqxzfw=='') && (typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw==''))
 			{
 				alert("[信托产品总期限类型]选择【固定期限】时,字段[固定期限总范围（月）（下限）]和[固定期限总范围（月）（上限）]中至少有一项为必填项!");
 				$("input[name=zdgdqxzfw]").focus();
 				return false;
 			}
-			if(xtxmzqxlx=="0" && parseFloat(zdgdqxzfw)>parseFloat(zggdqxzfw) && !(typeof(zdgdqxzfw)=="undefined" || zdgdqxzfw.length==0  || zdgdqxzfw.length=='') && !(typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw.length==''))
+			if(xtxmzqxlx=="0" && parseFloat(zdgdqxzfw)>parseFloat(zggdqxzfw) && !(typeof(zdgdqxzfw)=="undefined" || zdgdqxzfw.length==0  || zdgdqxzfw=='') && !(typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw==''))
 			{
 				alert("[信托产品总期限类型]选择【固定期限】时,[固定期限总范围（月）的下限]不能大于[固定期限总范围（月）的上限]!");
 				$("input[name=zdgdqxzfw]").focus();
@@ -1228,25 +1291,25 @@
 				$("input[name=yjxtxmgm]").focus();
 				return false;
 			}		
-			if(yjxtxmgm=="1" && (typeof(zdxtxmgmfw)=="undefined" || zdxtxmgmfw.length==0  || zdxtxmgmfw.length=='') && (typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw.length==''))
+			if(yjxtxmgm=="1" && (typeof(zdxtxmgmfw)=="undefined" || zdxtxmgmfw.length==0  || zdxtxmgmfw=='') && (typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw==''))
 			{
 				alert("[拟发行或成立规模类型]选择【固定规模】时,字段[固定规模范围（万元）（下限）]和[固定规模范围（万元）（上限）]中至少有一项为必填项!");
 				$("input[name=zgxtxmgmfw]").focus();
 				return false;
 			}
-			if(yjxtxmgm=="1" && parseFloat(zdxtxmgmfw)>parseFloat(zgxtxmgmfw) && !(typeof(zdxtxmgmfw)=="undefined" || zdxtxmgmfw.length==0  || zdxtxmgmfw.length=='') && !(typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw.length==''))
+			if(yjxtxmgm=="1" && parseFloat(zdxtxmgmfw)>parseFloat(zgxtxmgmfw) && !(typeof(zdxtxmgmfw)=="undefined" || zdxtxmgmfw.length==0  || zdxtxmgmfw=='') && !(typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw==''))
 			{
 				alert("[拟发行或成立规模类型选择【固定规模】时,[固定规模范围（万元）的下限]不能大于[固定规模范围（万元）的上限]!");
 				$("input[name=zdxtxmgmfw]").focus();
 				return false;
 			}			
-			if(nfxclzgmlx=="1" && parseFloat(zgxtxmgmfw)>parseFloat(zggdgmzfw) && !(typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw.length=='') && !(typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw.length==''))
+			if(nfxclzgmlx=="1" && parseFloat(zgxtxmgmfw)>parseFloat(zggdgmzfw) && !(typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw=='') && !(typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw==''))
 			{
 				alert("[拟发行或成立总规模类型]选择【固定规模】时,[固定规模总范围（万元）的上限]不能小于[固定规模范围（万元）的上限]!");
 				$("input[name=zggdgmzfw]").focus();
 				return false;
 			}	
-			if(nfxclzgmlx=="1" && !(typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw.length=='') && (typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw.length==''))
+			if(nfxclzgmlx=="1" && !(typeof(zggdgmzfw)=="undefined" || zggdgmzfw.length==0  || zggdgmzfw=='') && (typeof(zgxtxmgmfw)=="undefined" || zgxtxmgmfw.length==0  || zgxtxmgmfw==''))
 			{
 				alert("[拟发行或成立总规模类型]选择【固定规模】时,[固定规模总范围（万元）的上限]不为空时,[固定规模范围（万元）的上限]不能为空!");
 				$("input[name=zgxtxmgmfw]").focus();
@@ -1266,25 +1329,25 @@
 				$("input[name=xtxmqxlx]").focus();
 				return false;
 			}		
-			if(xtxmqxlx=="0" && (typeof(zdxtxmqxfw)=="undefined" || zdxtxmqxfw.length==0  || zdxtxmqxfw.length=='') && (typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw.length==''))
+			if(xtxmqxlx=="0" && (typeof(zdxtxmqxfw)=="undefined" || zdxtxmqxfw.length==0  || zdxtxmqxfw=='') && (typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw==''))
 			{
 				alert("[信托产品期限类型]选择【固定期限】时,字段[固定期限范围（月）（下限）]和[固定期限范围（月）（上限）]中至少有一项为必填项!");
 				$("input[name=zgxtxmqxfw]").focus();
 				return false;
 			}
-			if(xtxmqxlx=="0" && parseFloat(zdxtxmqxfw)>parseFloat(zgxtxmqxfw) && !(typeof(zdxtxmqxfw)=="undefined" || zdxtxmqxfw.length==0  || zdxtxmqxfw.length=='') && !(typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw.length==''))
+			if(xtxmqxlx=="0" && parseFloat(zdxtxmqxfw)>parseFloat(zgxtxmqxfw) && !(typeof(zdxtxmqxfw)=="undefined" || zdxtxmqxfw.length==0  || zdxtxmqxfw=='') && !(typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw==''))
 			{
 				alert("[信托产品期限类型]选择【固定期限】时,[固定期限范围（月）的下限]不能大于[固定期限范围（月）的上限]!");
 				$("input[name=zdxtxmqxfw]").focus();
 				return false;
 			}			
-			if(xtxmqxlx=="0" && parseFloat(zgxtxmqxfw)>parseFloat(zggdqxzfw) && !(typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw.length=='') && !(typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw.length==''))
+			if(xtxmqxlx=="0" && parseFloat(zgxtxmqxfw)>parseFloat(zggdqxzfw) && !(typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw=='') && !(typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw==''))
 			{
 				alert("[信托产品总期限类型]选择【固定期限】时,[固定期限总范围（月）的上限]不小于[固定期限范围（月）的上限]!");
 				$("input[name=zggdqxzfw]").focus();
 				return false;
 			}	
-			if(xtxmqxlx=="0" && !(typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw.length=='') && (typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw.length==''))
+			if(xtxmqxlx=="0" && !(typeof(zggdqxzfw)=="undefined" || zggdqxzfw.length==0  || zggdqxzfw=='') && (typeof(zgxtxmqxfw)=="undefined" || zgxtxmqxfw.length==0  || zgxtxmqxfw==''))
 			{
 				alert("[信托产品总期限类型]选择【固定期限】时,[固定期限总范围（月）的上限]不为空时,[固定期限范围（月）的上限]不能为空!");
 				$("input[name=zgxtxmqxfw]").focus();
@@ -1294,45 +1357,47 @@
 				setFormValue('zdxtxmqxfw','');	
 				setFormValue('zgxtxmqxfw','');	
 			}
-			//分期累计发行（成立）规模（万元）+拟发行或成立时间
+			//分期累计发行（成立）规模（万元）+拟发行或成立时间+分期产品期数
 			var fqljfxgm=getFormValue('fqljfxgm');
 			var nfxhclsj=getFormValue('nfxhclsj');
 			var fqcpqs=getFormValue('fqcpqs');
-			if(ydjlx=="6" && !(bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(fqljfxgm)=="undefined" || fqljfxgm.length==0  || fqljfxgm.length=='')){
-				alert("[预登记类型]选择【补充预登记】,除去[报告业务类型]选择【异地推介】，[是否新发分期]选择【否】,[分期累计发行（成立）规模（万元）]为必填项!");
+			if((ydjlx=="6" || sfwxffq=="1") && (typeof(fqljfxgm)=="undefined" || fqljfxgm.length==0  || fqljfxgm=='')){
+				alert("[预登记类型]选择【补充预登记】,或者[是否新发分期]选择【是】,[分期累计发行（成立）规模（万元）]为必填项!");
 				$("input[name=fqljfxgm]").focus();
 				return false;
 			}
-			if(!(ydjlx=="6" && bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj.length=='')){
-				alert("除去[预登记类型]选择【补充预登记】,[报告业务类型]选择【异地推介】，[是否新发分期]选择【否】,[拟发行或成立时间]为必填项!");
+			if(!(ydjlx=="6" && sfwxffq=="1") && (typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj=='')){
+				alert("除[预登记类型]选择【补充预登记】,且[是否新发分期]选择【否】情况下,[拟发行或成立时间]为必填项!");
 				$("input[name=nfxhclsj]").focus();
 				return false;
+			}						
+			if((ydjlx=="6" || sfwxffq=="1") && (typeof(fqcpqs)=="undefined" || fqcpqs.length==0  || fqcpqs=='')){
+				alert("[预登记类型]选择【补充预登记】,或者[是否新发分期]选择【是】,[分期产品期数]为必填项!");
+				$("input[name=fqcpqs]").focus();
+				return false;
+			}	
+			if(ydjlx=="6" && sfwxffq=="1"){
+				setFormValue('nfxhclsj','');
 			}
+			if(!(ydjlx=="6" || sfwxffq=="1")){
+				setFormValue('fqljfxgm','');
+				setFormValue('fqcpqs','');
+			}	
 			var dyjhbz=getFormValue('dyjhbz');
-			var today=getFormValue('workdate');
-			if(dyjhbz=="1" && !(typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj.length=='') && nfxhclsj <= today){
+			var today=getFormValue('workdate');			
+			if((ydjlx=="6" || sfwxffq=="1") && dyjhbz=="1" && !(typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj=='') && nfxhclsj <= today){
 				alert("[单一集合标识 ]选择【集合】,[拟发行或成立时间]需大于T+5工作日!");
 				$("input[name=nfxhclsj]").focus();
 				return false;
 			}
-			if(dyjhbz=="0" && !(typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj.length=='') && nfxhclsj <= today){
+			if((ydjlx=="6" || sfwxffq=="1") && dyjhbz=="0" && !(typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj=='') && nfxhclsj <= today){
 				alert("[单一集合标识 ]选择【单一】,[拟发行或成立时间]需大于T+2工作日!");
 				$("input[name=nfxhclsj]").focus();
 				return false;
 			}			
-			if(ydjlx=="6" && !(bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(fqcpqs)=="undefined" || fqcpqs.length==0  || fqcpqs.length=='')){
-				alert("[预登记类型]选择【补充预登记】,除去[报告业务类型]选择【异地推介】，[是否新发分期]选择【否】,[分期产品期数]为必填项!");
-				$("input[name=fqcpqs]").focus();
-				return false;
-			}		
-			if(ydjlx=="6" && bgywlx.indexOf('2')>=0 && sfwxffq=="0"){
-				setFormValue('fqljfxgm','');
-				setFormValue('nfxhclsj','');
-				setFormValue('fqcpqs','');
-			}			
 			//适宜投资人群
 			var sytzrq=getFormValue('sytzrq');
-			if(dyjhbz=="1" && (typeof(sytzrq)=="undefined" || sytzrq.length==0  || sytzrq.length=='')){
+			if(dyjhbz=="1" && (typeof(sytzrq)=="undefined" || sytzrq.length==0  || sytzrq=='')){
 				alert("[单一集合标识 ]选择【集合】,字段[适宜投资人群]为必填项!");
 				$("input[name=sytzrq]").focus();
 				return false;
@@ -1340,7 +1405,7 @@
 			//保管方信息
 			var bgbs=getFormValue('bgbs');
 			var xtzjbgyh=getFormValue('xtzjbgyh');
-			if(bgbs=="00" && (typeof(xtzjbgyh)=="undefined" || xtzjbgyh.length==0  || xtzjbgyh.length=='')){
+			if(bgbs=="00" && (typeof(xtzjbgyh)=="undefined" || xtzjbgyh.length==0  || xtzjbgyh=='')){
 				alert("[保管标识 ]选择【保管制】,字段[保管方信息]为必填项!");
 				$("input[name=xtzjbgyh]").focus();
 				return false;
@@ -1352,22 +1417,26 @@
 			var syrsyllx=getFormValue('syrsyllx');
 			var syryqsylqj_zd=getFormValue('syryqsylqj_zd');
 			var syryqsylqj_zg=getFormValue('syryqsylqj_zg');
-			if((syrsyllx=="0" || syrsyllx=="1") && (typeof(syryqsylqj_zd)=="undefined" || syryqsylqj_zd.length==0  || syryqsylqj_zd.length=='') && (typeof(syryqsylqj_zg)=="undefined" || syryqsylqj_zg.length==0  || syryqsylqj_zg.length==''))
+			if((syrsyllx=="0" || syrsyllx=="1") && (typeof(syryqsylqj_zd)=="undefined" || syryqsylqj_zd.length==0  || syryqsylqj_zd=='') && (typeof(syryqsylqj_zg)=="undefined" || syryqsylqj_zg.length==0  || syryqsylqj_zg==''))
 			{
 				alert("[信托合同收益率类型]选择【基准收益率】或者【基准+浮动】时,字段[信托合同约定基准收益率范围（上限）]和[信托合同约定基准收益率范围（下限）]中至少有一项为必填项!");
 				$("input[name=syryqsylqj_zd]").focus();
 				return false;
 			}
-			if(parseFloat(syryqsylqj_zg)>parseFloat(syryqsylqj_zd) && !(typeof(syryqsylqj_zd)=="undefined" || syryqsylqj_zd.length==0  || syryqsylqj_zd.length=='') && !(typeof(syryqsylqj_zg)=="undefined" || syryqsylqj_zg.length==0  || syryqsylqj_zg.length==''))
+			if(syrsyllx=="2" || syrsyllx=="9"){
+				setFormValue('syryqsylqj_zd','');
+				setFormValue('syryqsylqj_zg','');
+			}
+			if(parseFloat(syryqsylqj_zd)>=parseFloat(syryqsylqj_zg) && !(typeof(syryqsylqj_zd)=="undefined" || syryqsylqj_zd.length==0  || syryqsylqj_zd=='') && !(typeof(syryqsylqj_zg)=="undefined" || syryqsylqj_zg.length==0  || syryqsylqj_zg==''))
 			{
-				alert("[信托合同约定基准收益率范围（上限）]不小于[信托合同约定基准收益率范围（下限）]!");
+				alert("[信托合同约定基准收益率范围（上限）]大于[信托合同约定基准收益率范围（下限）]!");
 				$("input[name=syryqsylqj_zd]").focus();
 				return false;
 			}			
 			//项目推荐机构
 			var xmly=getFormValue('xmly');
 			var xmtjjg=getFormValue('xmtjjg');
-			if((xmly=="1" || xmly=="2" || xmly=="3") && (typeof(xmtjjg)=="undefined" || xmtjjg.length==0  || xmtjjg.length=='')){
+			if((xmly=="1" || xmly=="2" || xmly=="3") && (typeof(xmtjjg)=="undefined" || xmtjjg.length==0  || xmtjjg=='')){
 				alert("[项目来源]选择【银行推荐】、【其他机构推荐】和【其他】,字段[项目推荐机构]为必填项!");
 				$("input[name=xmtjjg]").focus();
 				return false;
@@ -1379,25 +1448,25 @@
 			var xtgn=getFormValue('xtgn');
 			var jydsmc=getFormValue('jydsmc');
 			var jydsxx=getFormValue('jydsxx');
-			if(xtgn=="1" && (typeof(jydsmc)=="undefined" || jydsmc.length==0  || jydsmc.length==''))
+			if(xtgn=="1" && (typeof(jydsmc)=="undefined" || jydsmc==null || jydsmc.length==0  || jydsmc==''))
 			{
 				alert("[信托功能标识]选择【融资类】时,字段[交易对手名称]为必填项!");
 				$("input[name=jydsmc]").focus();
 				return false;
 			}	
-			if(xtgn=="1" && (typeof(jydsxx)=="undefined" || jydsxx.length==0  || jydsxx.length==''))
+			if(xtgn=="1" && (typeof(jydsxx)=="undefined" || jydsxx==null || jydsxx.length==0  || jydsxx==''))
 			{
 				alert("[信托功能标识]选择【融资类】时,字段[交易对手信息]中为必填项!");
-				$("input[name=jydsxx]").focus();
+				document.getElementById('jydsxx').focus();
 				return false;
 			}
-			if(xtgn!="1" && (typeof(jydsmc)=="undefined" || jydsmc.length==0  || jydsmc.length=='') && !(typeof(jydsxx)=="undefined" || jydsxx.length==0  || jydsxx.length==''))
+			if(xtgn!="1" && (typeof(jydsmc)=="undefined" || jydsmc==null || jydsmc.length==0  || jydsmc=='') && !(typeof(jydsxx)=="undefined" || jydsxx.length==0  || jydsxx==''))
 			{
 				alert("[信托功能标识]选择【投资类】或【事务管理】时,字段[交易对手名称]和[交易对手信息]同时为必填项或是非必填项!");
 				$("input[name=jydsmc]").focus();
 				return false;
 			}
-			if(xtgn!="1" && !(typeof(jydsmc)=="undefined" || jydsmc.length==0  || jydsmc.length=='') && (typeof(jydsxx)=="undefined" || jydsxx.length==0  || jydsxx.length==''))
+			if(xtgn!="1" && !(typeof(jydsmc)=="undefined" || jydsmc==null || jydsmc.length==0  || jydsmc=='') && (typeof(jydsxx)=="undefined" || jydsxx.length==0  || jydsxx==''))
 			{
 				alert("[信托功能标识]选择【投资类】或【事务管理】时,字段[交易对手名称]和[交易对手信息]同时为必填项或是非必填项!");
 				$("input[name=jydsxx]").focus();
@@ -1405,10 +1474,10 @@
 			}	
 			//预计还款来源/信托退出方式控制
 			var yjhklyjtcfs=getFormValue('yjhklyjtcfs');
-			if(xtgn=="1" && (typeof(yjhklyjtcfs)=="undefined" || yjhklyjtcfs.length==0  || yjhklyjtcfs.length==''))
+			if(xtgn=="1" && (typeof(yjhklyjtcfs)=="undefined" || yjhklyjtcfs==null || yjhklyjtcfs.length==0  || yjhklyjtcfs==''))
 			{
 				alert("[信托功能标识]选择【融资类】时,字段[预计还款来源/信托退出方式]中为必填项!");
-				$("input[name=yjhklyjtcfs]").focus();
+				document.getElementById('yjhklyjtcfs').focus();
 				return false;
 			}
 			//关联交易类型
@@ -1418,32 +1487,32 @@
 			var gljymd=getFormValue('gljymd');
 			var gljydj=getFormValue('gljydj');
 			var sctlywdjqk=getFormValue('sctlywdjqk');
-			if(bgywlx.indexOf('0')>=0 && (typeof(gljylx)=="undefined" || gljylx.length==0  || gljylx.length=='')){
+			if(bgywlx.indexOf('0')>=0 && (typeof(gljylx)=="undefined"  || gljylx==null  || gljylx.length==0  || gljylx=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[关联交易类型]为必填项!");
 				$("input[name=gljylx]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('0')>=0 && gljylx.indexOf('4')>=0 && (typeof(qtgljylx)=="undefined" || qtgljylx.length==0  || qtgljylx.length=='')){
+			if(bgywlx.indexOf('0')>=0 && gljylx.indexOf('4')>=0 && (typeof(qtgljylx)=="undefined"  || qtgljylx==null  || qtgljylx.length==0  || qtgljylx=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】且[关联交易类型]选择【其他关联交易】时,[关联交易补充说明]为必填项!");
 				$("input[name=gljylx]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('0')>=0 && (typeof(glfqkyglgx)=="undefined" || glfqkyglgx.length==0  || glfqkyglgx.length=='')){
+			if(bgywlx.indexOf('0')>=0 && (typeof(glfqkyglgx)=="undefined" || glfqkyglgx==null   || glfqkyglgx.length==0  || glfqkyglgx=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[关联方情况与关联关系]为必填项!");
 				$("input[name=glfqkyglgx]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('0')>=0 && (typeof(gljymd)=="undefined" || gljymd.length==0  || gljymd.length=='')){
+			if(bgywlx.indexOf('0')>=0 && (typeof(gljymd)=="undefined"  || gljymd==null  || gljymd.length==0  || gljymd=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[关联交易目的]为必填项!");
 				$("input[name=gljymd]").focus();
 				return false;
 			}	
-			if(bgywlx.indexOf('0')>=0 && (typeof(gljydj)=="undefined" || gljydj.length==0  || gljydj.length=='')){
+			if(bgywlx.indexOf('0')>=0 && (typeof(gljydj)=="undefined"  || gljydj==null  || gljydj.length==0  || gljydj=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[关联交易定价]为必填项!");
 				$("input[name=gljydj]").focus();
 				return false;
 			}	
-			if(bgywlx.indexOf('0')>=0 && (typeof(sctlywdjqk)=="undefined" || sctlywdjqk.length==0  || sctlywdjqk.length=='')){
+			if(bgywlx.indexOf('0')>=0 && (typeof(sctlywdjqk)=="undefined"  || sctlywdjqk==null  || sctlywdjqk.length==0  || sctlywdjqk=='')){
 				alert("[报告业务类型]选择【信托业务关联交易报告】时,[市场同类业务定价情况]为必填项!");
 				$("input[name=sctlywdjqk]").focus();
 				return false;
@@ -1466,47 +1535,47 @@
 			var xyzjbh=getFormValue('xyzjbh');
 			var zbjblqk=getFormValue('zbjblqk');
 			var kfshqkggdzzqk=getFormValue('kfshqkggdzzqk');
-			if(bgywlx.indexOf('1')>=0 && (typeof(xmlx)=="undefined" || xmlx.length==0  || xmlx.length=='')){
+			if(bgywlx.indexOf('1')>=0 && (typeof(xmlx)=="undefined" || xmlx==null || xmlx.length==0  || xmlx=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[项目类型]为必填项!");
 				$("input[name=xmlx]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('1')>=0 && xmlx.indexOf('3')>=0 && (typeof(qtxmlx)=="undefined" || qtxmlx.length==0  || qtxmlx.length=='')){
+			if(bgywlx.indexOf('1')>=0 && xmlx.indexOf('3')>=0 && (typeof(qtxmlx)=="undefined" || qtxmlx==null || qtxmlx.length==0  || qtxmlx=='')){
 				alert("[报告业务类型]选择【房地产信托业务】且[项目类型]选择【其他】时,[其他项目类型]为必填项!");
 				$("input[name=qtxmlx]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('1')>=0 && (typeof(ywlx)=="undefined" || ywlx.length==0  || ywlx.length=='')){
+			if(bgywlx.indexOf('1')>=0 && (typeof(ywlx)=="undefined" || ywlx==null || ywlx.length==0  || ywlx=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[业务类型]为必填项!");
 				$("input[name=ywlx]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('1')>=0 && ywlx=='2' && (typeof(qtywlx)=="undefined" || qtywlx.length==0  || qtywlx.length=='')){
+			if(bgywlx.indexOf('1')>=0 && ywlx=='2' && (typeof(qtywlx)=="undefined" || qtywlx==null || qtywlx.length==0  || qtywlx=='')){
 				alert("[报告业务类型]选择【房地产信托业务】且[业务类型]选择【其他】时,[其他业务类型]为必填项!");
 				$("input[name=qtywlx]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('1')>=0 && (typeof(xmszd)=="undefined" || xmszd.length==0  || xmszd.length=='')){
+			if(bgywlx.indexOf('1')>=0 && (typeof(xmszd)=="undefined" || xmszd==null || xmszd.length==0  || xmszd=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[项目所在地]为必填项!");
 				$("input[name=xmszd]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('1')>=0 && (typeof(sfszqq)=="undefined" || sfszqq.length==0  || sfszqq.length=='')){
+			if(bgywlx.indexOf('1')>=0 && (typeof(sfszqq)=="undefined" || sfszqq==null || sfszqq.length==0  || sfszqq=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[是否四证齐全]为必填项!");
 				$("input[name=sfszqq]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('1')>=0 && (typeof(xyzjbh)=="undefined" || xyzjbh.length==0  || xyzjbh.length=='')){
+			if(bgywlx.indexOf('1')>=0 && (typeof(xyzjbh)=="undefined" || xyzjbh==null || xyzjbh.length==0  || xyzjbh=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[现有证照编号]为必填项!");
 				$("input[name=xyzjbh]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('1')>=0 && (typeof(zbjblqk)=="undefined" || zbjblqk.length==0  || zbjblqk.length=='')){
+			if(bgywlx.indexOf('1')>=0 && (typeof(zbjblqk)=="undefined" || zbjblqk==null || zbjblqk.length==0  || zbjblqk=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[资本金比例情况]为必填项!");
 				$("input[name=zbjblqk]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('1')>=0 && (typeof(kfshqkggdzzqk)=="undefined" || kfshqkggdzzqk.length==0  || kfshqkggdzzqk.length=='')){
+			if(bgywlx.indexOf('1')>=0 && (typeof(kfshqkggdzzqk)=="undefined" || kfshqkggdzzqk==null || kfshqkggdzzqk.length==0  || kfshqkggdzzqk=='')){
 				alert("[报告业务类型]选择【房地产信托业务】时,[开发商或其控股股东资质情况]为必填项!");
 				$("input[name=kfshqkggdzzqk]").focus();
 				return false;
@@ -1529,32 +1598,32 @@
 			var tzfw=getFormValue('tzfw');
 			var tzgwqk=getFormValue('tzgwqk');
 			var tgsfglf=getRadioValue('tgsfglf');
-			if(bgywlx.indexOf('3')>=0 && (typeof(zjly)=="undefined" || zjly.length==0  || zjly.length=='')){
+			if(bgywlx.indexOf('3')>=0 && (typeof(zjly)=="undefined" || zjly==null || zjly.length==0  || zjly=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[资金来源]为必填项!");
 				$("input[name=zjly]").focus();
 				return false;
 			}		
-			if(bgywlx.indexOf('3')>=0 && (typeof(sfjghxt)=="undefined" || sfjghxt.length==0  || sfjghxt.length=='')){
+			if(bgywlx.indexOf('3')>=0 && (typeof(sfjghxt)=="undefined" || sfjghxt==null || sfjghxt.length==0  || sfjghxt=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[是否结构化信托]为必填项!");
 				$("input[name=sfjghxt]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('3')>=0 && sfjghxt=="1" && (typeof(yxlhbl)=="undefined" || yxlhbl.length==0  || yxlhbl.length=='')){
+			if(bgywlx.indexOf('3')>=0 && sfjghxt=="1" && (typeof(yxlhbl)=="undefined" || yxlhbl==null || yxlhbl.length==0  || yxlhbl=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】且[是否结构化信托]选【是】时,[优先劣后比例]为必填项!");
 				$("input[name=yxlhbl]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('3')>=0 && (typeof(tzfw)=="undefined" || tzfw.length==0  || tzfw.length=='')){
+			if(bgywlx.indexOf('3')>=0 && (typeof(tzfw)=="undefined" || tzfw==null  || tzfw.length==0  || tzfw=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[投资范围]为必填项!");
 				$("input[name=tzfw]").focus();
 				return false;
 			}		
-			if(bgywlx.indexOf('3')>=0 && (typeof(tzgwqk)=="undefined" || tzgwqk.length==0  || tzgwqk.length=='')){
+			if(bgywlx.indexOf('3')>=0 && (typeof(tzgwqk)=="undefined" || tzgwqk==null || tzgwqk.length==0  || tzgwqk=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[投资顾问情况]为必填项!");
 				$("input[name=tzgwqk]").focus();
 				return false;
 			}
-			if(bgywlx.indexOf('3')>=0 && (typeof(tgsfglf)=="undefined" || tgsfglf.length==0  || tgsfglf.length=='')){
+			if(bgywlx.indexOf('3')>=0 && (typeof(tgsfglf)=="undefined" || tgsfglf==null  || tgsfglf.length==0  || tgsfglf=='')){
 				alert("[报告业务类型]选择【商业银行理财资金投资权益类金融产品或权益类特征的金融产品且聘请第三方投资顾问】时,[投资顾问是否信托公司关联方]为必填项!");
 				$("input[name=tgsfglf]").focus();
 				return false;
@@ -1571,7 +1640,7 @@
 			}
 			//是否异地推介
 			if(bgywlx.indexOf('2')<0){
-				setRadioValue('sfqgtj1','');
+				setFormValue('sfqgtj1','');
 				setFormValue('tjd1','No,0,1,2,3');
 				setFormValue('tjd_p1','');
 				setFormValue('tjd_c1','');
@@ -1595,19 +1664,19 @@
 			else value = getFormValue(name);
 			if(flag=="required")
 			{
-				if(typeof(value)=="undefined" || value==null || value.length==0  || value.length==''){
+				if(typeof(value)=="undefined" || value==null || value.length==0  || value==''){
 					alert("字段["+content+"]为必填项!");
 					document.getElementById(name).focus();
 					return false;
 				}
 			}else if(flag=="length"){
-				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value.length=='') && value.length>type){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value=='') && value.length>type){
 					alert("字段["+content+"]内容超过最大限制!");
 					document.getElementById(name).focus();
 					return false;
 				}			
 			}else if(flag=="number"){
-				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value.length=='')){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0  || value=='')){
 					var typeValue=type.split(",");
 					if(value.indexOf(".")<0) value=value+'.00';
 					var contentValue=value.split(".");
@@ -1737,8 +1806,12 @@
 			}			
 			
 			//异地推介补充要素校验
-			if(!ydtjCheck(1)){
-				return false;	
+			bgywlx = getBoxValue('bgywlx');
+			if(bgywlx.indexOf('2')>=0)
+			{
+				if(!ydtjCheck(1)){
+					return false;	
+				}
 			}
 			
             //产品信息要素
@@ -1858,7 +1931,7 @@
 		//异地推介补充要素校验
 		function ydtjCheck(no) {
 			//保存之前必输项校验
-			if(!checkInfo('sfqgtj'+no,'是否全国推介','required','radio')) return false;;
+			if(!checkInfo('sfqgtj'+no,'是否全国推介','required','text')) return false;;
 			if(!checkInfo('tjjg'+no,'推介机构','required','text')) return false;
 			if(!checkInfo('tjfl'+no,'推介费率','required','text')) return false;
 			if(!checkInfo('tjq'+no,'推介期','required','text')) return false;
@@ -1877,25 +1950,25 @@
 			if(!checkInfo('tjfzrdh'+no,'推介负责人电话','length','64')) return false;					
 	
 			//监管报送逻辑校验,推介地国家+省份+城市+地点控制
-			var sfqgtj=getRadioValue('sfqgtj'+no);
+			var sfqgtj=getFormValue('sfqgtj'+no);
 			var tjd=getFormValue('tjd'+no);
 			var tjd_p=getFormValue('tjd_p'+no);
 			var tjd_c=getFormValue('tjd_c'+no);
 			var tjd_a=getFormValue('tjd_a'+no);
-			if(sfqgtj =="0" && (typeof(tjd)=="undefined" || tjd.length==0  || tjd.length=='')){
-				alert("[是否全国推介]选择【是】时,[推介地]为必填项!");
+			if(sfqgtj =="0" && (typeof(tjd)=="undefined" || tjd.length==0  || tjd=='')){
+				alert("[是否全国推介]选择【否】时,[推介地]为必填项!");
 				return false;
 			}
-			if(sfqgtj =="0" && (typeof(tjd_p)=="undefined" || tjd_p.length==0  || tjd_p.length=='')){
-				alert("[是否全国推介]选择【是】时,[推介地-省]为必填项!");
+			if(sfqgtj =="0" && (typeof(tjd_p)=="undefined" || tjd_p.length==0  || tjd_p=='')){
+				alert("[是否全国推介]选择【否】时,[推介地-省]为必填项!");
 				return false;
 			}
-			if(sfqgtj =="0" && (typeof(tjd_c)=="undefined" || tjd_c.length==0  || tjd_c.length=='')){
-				alert("[是否全国推介]选择【是】时,[推介地-城市]为必填项!");
+			if(sfqgtj =="0" && (typeof(tjd_c)=="undefined" || tjd_c.length==0  || tjd_c=='')){
+				alert("[是否全国推介]选择【否】时,[推介地-城市]为必填项!");
 				return false;
 			}
-			if(sfqgtj =="0" && (typeof(tjd_a)=="undefined" || tjd_a.length==0  || tjd_a.length=='')){
-				alert("[是否全国推介]选择【是】时,[推介地-地址]为必填项!");
+			if(sfqgtj =="0" && (typeof(tjd_a)=="undefined" || tjd_a.length==0  || tjd_a=='')){
+				alert("[是否全国推介]选择【否】时,[推介地-地址]为必填项!");
 				return false;
 			}	
 			if(sfqgtj =="1"){
@@ -1925,7 +1998,7 @@
                 tjdNos.regitem_id = ydjData.regitem_id;
                 tjdNos.productid = ydjData.productid;
                 tjdNos.productcode = ydjData.productcode;
-                tjdNos.sfqgtj = $("input[name='sfqgtj" + no + "']:checked").val();
+				tjdNos.sfqgtj = $("#sfqgtj" + no).val();
                 tjdNos.tjd = $("#tjd" + no).val();
                 tjdNos.tjd_p = $("#tjd_p" + no).val();
                 tjdNos.tjd_c = $("#tjd_c" + no).val();

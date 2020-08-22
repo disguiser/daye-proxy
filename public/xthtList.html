@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base target="_self">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache,must-ridate">
+    <meta http-equiv="expires" content="0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap-table-master/dist/bootstrap-table.css" />
+    <script type="text/javascript" src="/static/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap-table-master/dist/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+</head>
+
+<style  type="text/css">
+    .required {
+        color: red;
+    }
+</style>
+
+<body>
+    <table id="xthtList"></table>
+</body>
+    
+    <script type="text/javascript">
+        //初始化数据
+        let ydjData = new Object();
+        $(function () {
+            let uuid = GetQueryValue('uuid');
+            
+            find_app_dfs_zxd_csxtht_by_uuid(uuid);
+        });
+        
+        //查询预登记-信托合同要素集合
+        function find_app_dfs_zxd_csxtht_by_uuid(uuid) {
+            $("#xthtList").bootstrapTable({
+                method: "post",
+                url:"/node/find_app_dfs_zxd_csxtht_by_uuid",   //请求地址
+                striped : true, //是否显示行间隔色
+                pageNumber : 1, //初始化加载第一页
+                pagination : true,//是否分页
+                sidePagination : 'server',//server:服务器端分页|client：前端分页
+                pageSize : 10,//单页记录数
+                pageList : [10],//可选择单页记录数
+                queryParams : function(params) {//上传服务器的参数
+                    var temp = {
+                        uuid: uuid,
+                        offset :params.offset + 0,// SQL语句起始索引
+                        pageNumber : params.limit  // 每页显示数量
+                    };
+                    return temp;
+                },columns: [{
+                    field: 'xthtbh',
+                    title: '信托合同编号'
+                }, {
+                    field: 'wtrqc',
+                    title: '委托人全称'
+                }, {
+                    field: 'htcszje',
+                    title: '合同初始金额'
+                }, {
+                    field: 'htcszfe',
+                    title: '合同初始份额'
+                }, {
+                    field: 'syrmc',
+                    title: '受益人全称'
+                }, {
+                    field: 'syqcsfe',
+                    title: '受益权初始份额'
+                }, {
+                    field: 'syqcsje',
+                    title: '受益权初始金额'
+                }, {
+                    field: 'syqqsr',
+                    title: '受益权起始日'
+                }, {
+                    field: 'syqjhdqr',
+                    title: '受益权计划到期日'
+                }, {
+                    title: '操作',
+                    align: 'center',
+                    formatter:function(value,row,index){
+                        return `<a href="javascript:updateContract('`+row.id+`', '`+uuid+`')">编辑</a> `;
+                    }
+                }]
+            });
+        }
+
+        //合同编辑
+        function updateContract(id, uuid) {
+            $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtInfo.html" + '?id=' + id + '&uuid=' + uuid);
+        }
+
+        //获取GET参数
+        function GetQueryValue(queryName) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == queryName) { return pair[1]; }
+            }
+            return null;
+        }
+    </script>
+</html>

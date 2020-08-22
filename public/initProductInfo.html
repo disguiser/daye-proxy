@@ -904,14 +904,7 @@
 		</div>
 		<div class="tab-pane fade" id="initInfo4">
             <div style="height:620px;overflow-y:auto">
-                <table id="xthtList"></table>
-                <div id="xthtInfo">
-                    
-                </div>
-                <div style="height: 10px;"></div>
-                <!-- <div
-                    style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
-                    <a href="#" onclick="addXtht('','','','','','','','',0,0,'','','','','',0,'','','','','','','','',0,0,'','','','');">点击更多信托合同</a></div> -->
+                <iframe src="" id="xthtIFrame" name="xthtIFrame" seamless="" frameborder="0" height="610px" width="100%"></iframe>
             </div>
 		</div>
 		<div class="tab-pane fade" id="initInfo5">
@@ -1110,7 +1103,8 @@
                     find_app_dfs_zxd_cssyq_by_uuid(data.uuid);
 
                     //信托合同 20200728根据需求取消
-                    find_app_dfs_zxd_csxtht_by_uuid(data.uuid);
+                    //find_app_dfs_zxd_csxtht_by_uuid(data.uuid);
+                    $('#xthtIFrame').attr('src', "/node/xthtList.html" + '?uuid=' + data.uuid);
 
                     //银行资金账户
                     find_app_dfs_zxd_yhzjzh_by_uuid(data.uuid);

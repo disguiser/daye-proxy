@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base target="_self">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache,must-ridate">
+    <meta http-equiv="expires" content="0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap-table-master/dist/bootstrap-table.css" />
+    <script type="text/javascript" src="/static/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap-table-master/dist/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+</head>
+
+<style  type="text/css">
+    .required {
+        color: red;
+    }       
+</style>
+
+<body>
+    <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2" style="width: 100%;">
+        <tr>
+            <td style="width: 12%;">
+                <span class="required">*</span>受益方式标识:
+            </td>
+            <td style="width: 21%;">
+                <select id="zytabs" name="zytabs" style="width: 180px;">
+                    <option value="0">自益</option>
+                    <option value="1">他益</option>
+                    <option value="3">其他</option>
+                </select>
+            </td>
+            <td style="width: 12%;">
+                <span class="required">*</span>信托合同编号:
+            </td>
+            <td style="width: 21%;">
+                <input type="text" id="xthtbh" name="xthtbh" value="" style="width: 180px;">
+            </td>
+            <td style="width: 12%;">
+                <span class="required">*</span>合同介质:
+            </td>
+            <td style="width: 21%;">
+                <input type="checkbox" id="htjz0" name="htjz" value="0" />电子<br>
+                <input type="checkbox" id="htjz1" name="htjz" value="1" />纸质
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>委托人全称:
+            </td>
+            <td>
+                <input type="text" id="wtrqc" name="wtrqc" value="" style="width: 180px;">
+            </td>
+            <td>
+                <span class="required">*</span>委托人类型:
+            </td>
+            <td>
+                <select id="wtrlx" name="wtrlx" style="width: 180px;">
+                    <option value="0">金融机构</option>
+                    <option value="1">金融产品</option>
+                    <option value="2">自然人</option>
+                    <option value="3">其他机构</option>
+                </select>
+            </td>
+            <td>
+                <span class="required">*</span>委托人类型详情:
+            </td>
+            <td>
+                <select id="lxxq_wtr" name="lxxq_wtr" style="width: 180px;">
+                    <option value="M00">商业银行及授权分行</option>
+                    <option value="M01">政策性银行及其授权分行</option>
+                    <option value="M02">企业集团财务公司</option>
+                    <option value="M03">金融租赁公司</option>
+                    <option value="M04">汽车金融公司</option>
+                    <option value="M05">消费金融公司</option>
+                    <option value="M06">农村信用社</option>
+                    <option value="M07">城市信用社</option>
+                    <option value="M08">信托公司及其子公司</option>
+                    <option value="M09">基金管理公司及其子公司</option>
+                    <option value="M10">证券公司及其子公司</option>
+                    <option value="M11">保险公司及保险资产管理公司</option>
+                    <option value="M12">期货公司及其子公司</option>
+                    <option value="M13">外资金融机构</option>
+                    <option value="M14">金融资产管理公司</option>
+                    <option value="M15">其他金融机构</option>
+                    <option value="N00">银行理财产品</option>
+                    <option value="N01">信托产品</option>
+                    <option value="N02">保险产品</option>
+                    <option value="N03">基金产品</option>
+                    <option value="N04">证券公司资管产品</option>
+                    <option value="N05">QDII 产品</option>
+                    <option value="N06">社保基金</option>
+                    <option value="N07">企业年金</option>
+                    <option value="N08">慈善基金</option>
+                    <option value="N09">私募投资基金</option>
+                    <option value="N10">其他金融产品</option>
+                    <option value="P00">其他法人机构</option>
+                    <option value="P01">政府部门</option>
+                    <option value="P02">合伙企业</option>
+                    <option value="P03">公益机构</option>
+                    <option value="P04">其他非法人机构</option>
+                    <option value="Q00">自然人</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>委托人证件类型:
+            </td>
+            <td>
+                <select id="wtrzjlx" name="wtrzjlx" style="width: 180px;">
+                    <option value="00">身份证</option>
+                    <option value="01">临时身份证</option>
+                    <option value="02">户口簿</option>
+                    <option value="03">护照</option>
+                    <option value="04">军官证</option>
+                    <option value="05">士兵证</option>
+                    <option value="06">警官证</option>
+                    <option value="07">港澳居民来往内地通行证</option>
+                    <option value="08">台湾居民来往大陆通行证</option>
+                    <option value="09">外国人居留证</option>
+                    <option value="10">组织机构代码</option>
+                    <option value="11">社会信用代码</option>
+                    <option value="12">营业执照</option>
+                    <option value="13">产品登记号</option>
+                    <option value="14">备案文件</option>
+                    <option value="15">许可文件</option>
+                    <option value="16">确认函</option>
+                    <option value="18">主管部门批文或证明</option>
+                    <option value="19">社团法人登记证书</option>
+                    <option value="20">事业法人登记证书</option>
+                    <option value="21">机关法人成立批文</option>
+                    <option value="22">港澳居民居住证</option>
+                    <option value="23">台湾居民居住证</option>
+                    <option value="99">其他</option>
+                </select>
+            </td>
+            <td>
+                <span class="required">*</span>委托人证件号码 (产品登记号/备案号）:
+            </td>
+            <td>
+                <input type="text" id="wtrzjhm" name="wtrzjhm" value="" style="width: 180px;">
+            </td>
+            <td>
+                <span class="required">*</span>合同初始金额:
+            </td>
+            <td>
+                <input type="number" id="htcszje" name="htcszje" value="" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>合同初始份额:
+            </td>
+            <td>
+                <input type="number" id="htcszfe" name="htcszfe" value="" style="width: 180px;">
+            </td>
+            <td>
+                <span class="required">*</span>信托财产性质（交付资产类型）:
+            </td>
+            <td>
+                <select id="xtccxz" name="xtccxz" style="width: 180px;">
+                    <option value="0">资金</option>
+                    <option value="1">财产权</option>
+                    <option value="2">混合</option>
+                </select>
+            </td>
+            <td>
+                资金结算币种:
+            </td>
+            <td>
+                <select id="zjjsbz" name="zjjsbz" style="width: 180px;">
+                    
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                初始委托资金金额:
+            </td>
+            <td>
+                <input type="number" id="wtzjje" name="wtzjje" value="" style="width: 180px;">
+            </td>
+            <td>
+                初始委托财产对应金额:
+            </td>
+            <td>
+                <input type="number" id="wtccdyje" name="wtccdyje" value="` + wtccdyje + `" style="width: 180px;">
+            </td>
+            <td>
+                初始委托财产类型:
+            </td>
+            <td>
+                <select id="wtcccclx" name="wtcccclx" style="width: 180px;">
+                    <option value="0">不动产</option>
+                    <option value="1">动产</option>
+                    <option value="2">股权</option>
+                    <option value="3">债权</option>
+                    <option value="4">有价证券</option>
+                    <option value="5">收（受）益权</option>
+                    <option value="7">专利权</option>
+                    <option value="8">其他权利</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>受益人序号:
+            </td>
+            <td>
+                <input type="number" id="syrxh" name="syrxh" value="" style="width: 180px;">
+            </td>
+            <td>
+                <span class="required">*</span>受益人全称:
+            </td>
+            <td>
+                <input type="text" id="syrmc" name="syrmc" value="" style="width: 180px;">
+            </td>
+            <td>
+                <span class="required">*</span>受益人类型:
+            </td>
+            <td>
+                <select id="syrlx" name="syrlx" style="width: 180px;">
+                    <option value="0">金融机构</option>
+                    <option value="1">金融产品</option>
+                    <option value="2">自然人</option>
+                    <option value="3">其他机构</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>受益人类型详情:
+            </td>
+            <td>
+                <select id="lxxq_syr" name="lxxq_syr" style="width: 180px;">
+                    <option value="M00">商业银行及授权分行</option>
+                    <option value="M01">政策性银行及其授权分行</option>
+                    <option value="M02">企业集团财务公司</option>
+                    <option value="M03">金融租赁公司</option>
+                    <option value="M04">汽车金融公司</option>
+                    <option value="M05">消费金融公司</option>
+                    <option value="M06">农村信用社</option>
+                    <option value="M07">城市信用社</option>
+                    <option value="M08">信托公司及其子公司</option>
+                    <option value="M09">基金管理公司及其子公司</option>
+                    <option value="M10">证券公司及其子公司</option>
+                    <option value="M11">保险公司及保险资产管理公司</option>
+                    <option value="M12">期货公司及其子公司</option>
+                    <option value="M13">外资金融机构</option>
+                    <option value="M14">金融资产管理公司</option>
+                    <option value="M15">其他金融机构</option>
+                    <option value="N00">银行理财产品</option>
+                    <option value="N01">信托产品</option>
+                    <option value="N02">保险产品</option>
+                    <option value="N03">基金产品</option>
+                    <option value="N04">证券公司资管产品</option>
+                    <option value="N05">QDII产品</option>
+                    <option value="N06">社保基金</option>
+                    <option value="N07">企业年金</option>
+                    <option value="N08">慈善基金</option>
+                    <option value="N09">私募投资基金</option>
+                    <option value="N10">其他金融产品</option>
+                    <option value="P00">其他法人机构</option>
+                    <option value="P01">政府部门</option>
+                    <option value="P02">合伙企业</option>
+                    <option value="P03">公益机构</option>
+                    <option value="P04">其他非法人机构</option>
+                    <option value="Q00">自然人</option>
+                </select>
+            </td>
+            <td>
+                <span class="required">*</span>受益人证件类型:
+            </td>
+            <td>
+                <select id="syrzjlx" name="syrzjlx" style="width: 180px;">
+                    <option value="00">身份证</option>
+                    <option value="01">临时身份证</option>
+                    <option value="02">户口簿</option>
+                    <option value="03">护照</option>
+                    <option value="04">军官证</option>
+                    <option value="05">士兵证</option>
+                    <option value="06">警官证</option>
+                    <option value="07">港澳居民来往内地通行证</option>
+                    <option value="08">台湾居民来往大陆通行证</option>
+                    <option value="09">外国人居留证</option>
+                    <option value="10">组织机构代码</option>
+                    <option value="11">社会信用代码</option>
+                    <option value="12">营业执照</option>
+                    <option value="13">产品登记号</option>
+                    <option value="14">备案文件</option>
+                    <option value="15">许可文件</option>
+                    <option value="16">确认函</option>
+                    <option value="18">主管部门批文或证明</option>
+                    <option value="19">社团法人登记证书</option>
+                    <option value="20">事业法人登记证书</option>
+                    <option value="21">机关法人成立批文</option>
+                    <option value="22">港澳居民居住证</option>
+                    <option value="23">台湾居民居住证</option>
+                    <option value="99">其他</option>
+                </select>
+            </td>
+            <td>
+                <span class="required">*</span>受益人证件号码 (产品登记号/备案号）:
+            </td>
+            <td>
+                <input type="text" id="syrzjhm" name="syrzjhm" value="" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>受益权代码 :
+            </td>
+            <td>
+                <input type="text" id="syqdm" name="syqdm" value="" style="width: 180px;">
+            </td>
+            <td>
+                是否在中国信登开设信托受益权账户标识:
+            </td>
+            <td>
+                <input type="radio" name="sfkssyqzh_syr" value="1" />是
+                <input type="radio" name="sfkssyqzh_syr" value="0" />否
+            </td>
+            <td>
+                信托受益权账户编码:
+            </td>
+            <td>
+                <input type="text" id="syqzhbm_syr" name="syqzhbm_syr" value="" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>受益权初始份额:
+            </td>
+            <td>
+                <input type="number" id="syqcsfe" name="syqcsfe" value="" style="width: 180px;">
+            </td>
+            <td>
+                <span class="required">*</span>受益权初始金额:
+            </td>
+            <td>
+                <input type="number" id="syqcsje" name="syqcsje" value="" style="width: 180px;">
+            </td>
+            <td>
+                <span class="required">*</span>受益权起始日:
+            </td>
+            <td>
+                <input type="date" id="syqqsr" name="syqqsr" value="" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>受益权计划到期日:
+            </td>
+            <td>
+                <input type="date" id="syqjhdqr" name="syqjhdqr" value="" style="width: 180px;">
+            </td>
+            <td>
+                受益人优先劣后标识:
+            </td>
+            <td colspan="3">
+                <select id="syryxlhbs" name="syryxlhbs" style="width: 180px;">
+                    <option value=""></option>
+                    <option value="1">优先</option>
+                    <option value="2">中间</option>
+                    <option value="3">劣后</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                情况说明:
+            </td>
+            <td colspan="5">
+                <textarea rows="3" id="qksm" name="qksm" style="width:990px;"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div style="height: 50px; line-height: 50px; text-align: right;">
+        <button type="button" id="btnReturn" class="btn blue">返 回</button>&nbsp;&nbsp;
+        <button type="button" id="btnSave" class="btn blue">信托合同保存</button>&nbsp;&nbsp;
+    </div>
+</body>
+    
+    <script type="text/javascript">
+        //初始化数据
+        let ydjData = new Object();
+        $(function () {
+            let id = GetQueryValue('id');
+            let uuid = GetQueryValue('uuid');
+
+            //返回合同列表
+            $("#btnReturn").click(function() {
+                $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtList.html" + '?uuid=' + uuid);
+            });
+
+            //保存信托合同信息
+            $("#btnSave").click(function() {
+                saveContractInfo(id);
+            });
+
+            //加载信托合同信息
+            loadContractInfo(id);
+        });
+
+        //加载信托合同信息
+        function loadContractInfo(id) {
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/find_app_dfs_zxd_csxtht_by_id",
+                //数据，json对象
+                data: {"id": id},
+                //请求成功
+                success: function (data) {
+                    data = data[0];
+                    $("#zytabs").val(data.zytabs);
+                    $("#xthtbh").val(data.xthtbh);
+                    let htjzs = data.htjz.split(",");
+                    $.each(htjzs, function (index, value) {
+                        if (value != "")
+                            $("#htjz"+value).attr("checked", "checked");
+                    });
+                    $("#wtrqc").val(data.wtrqc);
+                    $("#wtrlx").val(data.wtrlx);
+                    $("#lxxq_wtr").val(data.lxxq_wtr);
+                    $("#wtrzjlx").val(data.wtrzjlx);
+                    $("#wtrzjhm").val(data.wtrzjhm);
+                    $("#htcszje").val(data.htcszje);
+                    $("#htcszfe").val(data.htcszfe);
+                    $("#xtccxz").val(data.xtccxz);
+                    initSelect("zjjsbz", "Init011", data.zjjsbz);
+                    $("#wtzjje").val(data.wtzjje);
+                    $("#wtccdyje").val(data.wtccdyje);
+                    $("#wtcccclx").val(data.wtcccclx);
+                    $("#syrxh").val(data.syrxh);
+                    $("#syrmc").val(data.syrmc);
+                    $("#syrlx").val(data.syrlx);
+                    $("#lxxq_syr").val(data.lxxq_syr);
+                    $("#syrzjlx").val(data.syrzjlx);
+                    $("#syrzjhm").val(data.syrzjhm);
+                    $("#syqdm").val(data.syqdm);
+                    $(":radio[name='sfkssyqzh_syr'][value='" + data.sfkssyqzh_syr + "']").prop("checked", "checked");
+                    $("#syqzhbm_syr").val(data.syqzhbm_syr);
+                    $("#syqcsfe").val(data.syqcsfe);
+                    $("#syqcsje").val(data.syqcsje);
+                    $("#syqqsr").val(data.syqqsr);
+                    $("#syqjhdqr").val(data.syqjhdqr);
+                    $("#syryxlhbs").val(data.syryxlhbs);
+                    $("#qksm").val(data.qksm);
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    alert("信托合同信息加载失败！");
+                }
+            });
+        }
+
+        //保存信托合同信息
+        function saveContractInfo(id) {
+            let tjdNos = new Object();
+            tjdNos.id = id;
+            tjdNos.zytabs=$("#zytabs").val();
+            tjdNos.xthtbh=$("#xthtbh").val();
+            let htjzs = $("input:checkbox[name='htjz']:checked");
+            let chhtjzs = [];
+            $.each(htjzs, function () {
+                chhtjzs.push($(this).val());
+            });
+            tjdNos.htjz = chhtjzs.join(",");
+            tjdNos.wtrqc=$("#wtrqc").val();
+            tjdNos.wtrlx=$("#wtrlx").val();
+            tjdNos.lxxq_wtr=$("#lxxq_wtr").val();
+            tjdNos.wtrzjlx=$("#wtrzjlx").val();
+            tjdNos.wtrzjhm=$("#wtrzjhm").val();
+            tjdNos.htcszje=$("#htcszje").val();
+            tjdNos.htcszfe=$("#htcszfe").val();
+            tjdNos.xtccxz=$("#xtccxz").val();
+            tjdNos.zjjsbz=$("#zjjsbz").val();
+            tjdNos.wtzjje=$("#wtzjje").val();
+            tjdNos.wtccdyje=$("#wtccdyje").val();
+            tjdNos.wtcccclx=$("#wtcccclx").val();
+            tjdNos.syrxh=$("#syrxh").val();
+            tjdNos.syrmc=$("#syrmc").val();
+            tjdNos.syrlx=$("#syrlx").val();
+            tjdNos.lxxq_syr=$("#lxxq_syr").val();
+            tjdNos.syrzjlx=$("#syrzjlx").val();
+            tjdNos.syrzjhm=$("#syrzjhm").val();
+            tjdNos.syqdm=$("#syqdm").val();
+            tjdNos.sfkssyqzh_syr=$("input[name='sfkssyqzh_syr" + "']:checked").val();
+            tjdNos.syqzhbm_syr=$("#syqzhbm_syr").val();
+            tjdNos.syqcsfe=$("#syqcsfe").val();
+            tjdNos.syqcsje=$("#syqcsje").val();
+            tjdNos.syqqsr=$("#syqqsr").val();
+            tjdNos.syqjhdqr=$("#syqjhdqr").val();
+            tjdNos.syryxlhbs=$("#syryxlhbs").val();
+            tjdNos.qksm=$("#qksm").val();
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/insert_app_dfs_zxd_csxtht",
+                //数据，json对象
+                data: tjdNos,
+                //请求成功
+                success: function (data) {
+                    alert("信托合同保存成功！");
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    alert("信托合同保存失败！");
+                }
+            });
+        }
+
+        //初始化数据字典
+        function initSelect(id, region_code, val) {
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/query_app_dfs_scode_content",
+                //数据，json对象
+                data: { "region_code": region_code, "item_code": "" },
+                success: function (data) {
+                    if (data != "" && data.length != 1) {
+                        $.each(data, function (index, item) {
+                            if (item.ITEM_CODE == val) {
+                                $("#" + id).append("<option value='" + item.ITEM_CODE + "' selected>" + item.ITEM_NAME + "</option>");
+                            } else {
+                                $("#" + id).append("<option value='" + item.ITEM_CODE + "'>" + item.ITEM_NAME + "</option>");
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    
+        //获取GET参数
+        function GetQueryValue(queryName) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == queryName) { return pair[1]; }
+            }
+            return null;
+        }
+    </script>
+</html>

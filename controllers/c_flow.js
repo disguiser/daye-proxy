@@ -1314,9 +1314,16 @@ module.exports = function (router) {
     });
 
     //查询预登记-信托合同要素集合
-    router.get('/find_app_dfs_zxd_csxtht_by_uuid/:uuid', async (ctx, next) => {
-        let uuid = ctx.params.uuid;
-        let product_info = await d_flow.find_app_dfs_zxd_csxtht_by_uuid(uuid);
+    router.post('/find_app_dfs_zxd_csxtht_by_uuid', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.find_app_dfs_zxd_csxtht_by_uuid(data.uuid,data.offset,data.pageNumber);
+        ctx.response.body = product_info
+    });
+
+    //查询预登记-信托合同要素信息
+    router.post('/find_app_dfs_zxd_csxtht_by_id', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.find_app_dfs_zxd_csxtht_by_id(data.id);
         ctx.response.body = product_info
     });
 

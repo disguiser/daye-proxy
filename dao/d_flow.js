@@ -507,11 +507,30 @@ let find_app_dfs_zxd_cssyq_by_uuid = async (uuid) => {
     }
 }
 
-//查询预登记-信托合同要素集合
-let find_app_dfs_zxd_csxtht_by_uuid = async (uuid) => {
-    let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}' ORDER BY XTHTBH`, {
+//查询预登记-信托合同要素集合（分页）
+let find_app_dfs_zxd_csxtht_by_uuid = async (uuid, offset, pageNumber) => {
+    //查询总的记录数
+    let number = await dfs.query(`select count(1) NUMBER FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}'`, {
         type: pjmain.QueryTypes.SELECT
     });
+    let total = number[0]['NUMBER'];
+
+    let rows = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}' ORDER BY XTHTBH offset ${offset} row fetch next ${pageNumber} rows only`, {
+        type: pjmain.QueryTypes.SELECT
+    });
+
+    return {
+        total,
+        rows
+    };
+}
+
+//查询预登记-信托合同要素信息
+let find_app_dfs_zxd_csxtht_by_id = async (id) => {
+    let data = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm FROM APP_DFS_ZXD_CSXTHT WHERE id = ${id}`, {
+        type: pjmain.QueryTypes.SELECT
+    });
+
     if (data.length > 0) {
         return data;
     } else {
@@ -662,14 +681,46 @@ let insert_app_dfs_zxd_csxtht = async (data) => {
     if(data.syqcsfe=='') data.syqcsfe=null;
     if(data.syqcsje=='') data.syqcsje=null;
     //再保存
-    await dfs.query(`INSERT INTO APP_DFS_ZXD_CSXTHT(relation_uuid,task_code,regitem_id,product_id,product_code,zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm) values(
-            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.zytabs}','${data.xthtbh}','${data.htjz}','${data.wtrqc}','${data.wtrlx}','${data.lxxq_wtr}','${data.wtrzjlx}','${data.wtrzjhm}',${data.htcszje},${data.htcszfe},'${data.xtccxz}','${data.zjjsbz}',${data.wtzjje},${data.wtccdyje},'${data.wtcccclx}',${data.syrxh},'${data.syrmc}','${data.syrlx}','${data.lxxq_syr}','${data.syrzjlx}','${data.syrzjhm}','${data.syqdm}','${data.sfkssyqzh_syr}','${data.syqzhbm_syr}',${data.syqcsfe},${data.syqcsje},'${data.syqqsr}','${data.syqjhdqr}','${data.syryxlhbs}','${data.qksm}'
-        )`)
+    // await dfs.query(`INSERT INTO APP_DFS_ZXD_CSXTHT(relation_uuid,task_code,regitem_id,product_id,product_code,zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm) values(
+    //         '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.zytabs}','${data.xthtbh}','${data.htjz}','${data.wtrqc}','${data.wtrlx}','${data.lxxq_wtr}','${data.wtrzjlx}','${data.wtrzjhm}',${data.htcszje},${data.htcszfe},'${data.xtccxz}','${data.zjjsbz}',${data.wtzjje},${data.wtccdyje},'${data.wtcccclx}',${data.syrxh},'${data.syrmc}','${data.syrlx}','${data.lxxq_syr}','${data.syrzjlx}','${data.syrzjhm}','${data.syqdm}','${data.sfkssyqzh_syr}','${data.syqzhbm_syr}',${data.syqcsfe},${data.syqcsje},'${data.syqqsr}','${data.syqjhdqr}','${data.syryxlhbs}','${data.qksm}'
+    //     )`)
+    await dfs.query(`update APP_DFS_ZXD_CSXTHT set
+                                                zytabs           = '${data.zytabs}',
+                                                xthtbh           = '${data.xthtbh}',
+                                                htjz             = '${data.htjz}',
+                                                wtrqc            = '${data.wtrqc}',
+                                                wtrlx            = '${data.wtrlx}',
+                                                lxxq_wtr         = '${data.lxxq_wtr}',
+                                                wtrzjlx          = '${data.wtrzjlx}',
+                                                wtrzjhm          = '${data.wtrzjhm}',
+                                                htcszje          = ${data.htcszje},
+                                                htcszfe          = ${data.htcszfe},
+                                                xtccxz           = '${data.xtccxz}',
+                                                zjjsbz           = '${data.zjjsbz}',
+                                                wtzjje           = ${data.wtzjje},
+                                                wtccdyje         = ${data.wtccdyje},
+                                                wtcccclx         = '${data.wtcccclx}',
+                                                syrxh            = ${data.syrxh},
+                                                syrmc            = '${data.syrmc}',
+                                                syrlx            = '${data.syrlx}',
+                                                lxxq_syr         = '${data.lxxq_syr}',
+                                                syrzjlx          = '${data.syrzjlx}',
+                                                syrzjhm          = '${data.syrzjhm}',
+                                                syqdm            = '${data.syqdm}',
+                                                sfkssyqzh_syr    = '${data.sfkssyqzh_syr}',
+                                                syqzhbm_syr      = '${data.syqzhbm_syr}',
+                                                syqcsfe          = ${data.syqcsfe},
+                                                syqcsje          = ${data.syqcsje},
+                                                syqqsr           = '${data.syqqsr}',
+                                                syqjhdqr         = '${data.syqjhdqr}',
+                                                syryxlhbs        = '${data.syryxlhbs}',
+                                                qksm             = '${data.qksm}'
+                                                where id         = ${data.id}`)
         .then(function (result) {
-            console.log(result);
+            return "1";
         })
         .catch(function (error) {
-            console.log(error);
+            return "2";
         });
 }
 
@@ -1087,6 +1138,7 @@ module.exports = {
     find_app_dfs_zxd_csjyds_by_uuid: find_app_dfs_zxd_csjyds_by_uuid,
     find_app_dfs_zxd_cssyq_by_uuid: find_app_dfs_zxd_cssyq_by_uuid,
     find_app_dfs_zxd_csxtht_by_uuid: find_app_dfs_zxd_csxtht_by_uuid,
+    find_app_dfs_zxd_csxtht_by_id: find_app_dfs_zxd_csxtht_by_id,
     find_app_dfs_zxd_yhzjzh_by_uuid: find_app_dfs_zxd_yhzjzh_by_uuid,
     find_app_dfs_zxd_cszqzh_by_uuid: find_app_dfs_zxd_cszqzh_by_uuid,
     insert_app_dfs_zxd_cscpxx: insert_app_dfs_zxd_cscpxx,

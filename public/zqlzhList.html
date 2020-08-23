@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base target="_self">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache,must-ridate">
+    <meta http-equiv="expires" content="0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap-table/bootstrap-table.css" />
+    <script type="text/javascript" src="/static/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+</head>
+
+<style  type="text/css">
+    .required {
+        color: red;
+    }       
+</style>
+
+<body>
+    <div style="text-align: right;">
+        <button type="button" id="btnSave" class="btn btn-danger">保 存</button>&nbsp;&nbsp;
+    </div>
+    <div id="zqlzhInfo">
+                    
+    </div>
+    <div style="height: 10px;"></div>
+</body>
+    
+    <script type="text/javascript">
+        //初始化数据
+        let ydjData = new Object();
+        $(function () {
+            let uuid = GetQueryValue('uuid');
+            let bsid = GetQueryValue('bsid');
+            let regitem_id = GetQueryValue('regitem_id');
+            let productid = GetQueryValue('productid');
+            let productcode = GetQueryValue('productcode');
+
+            //保存证券类账户
+            $("#btnSave").click(function() {
+                saveZqlzh(uuid, bsid, regitem_id, productid, productcode);
+            });
+
+            //加载证券类账户
+            find_app_dfs_zxd_cszqzh_by_uuid(uuid);
+        });
+
+        //保存预登记-证券类账户要素集合
+        function saveZqlzh(uuid, bsid, regitem_id, productid, productcode) {
+            let code = "";
+            $("input[name^='zqlzhNo']").each(function name(params) {
+                let no = $(this).val();
+                let tjdNos = new Object();
+                tjdNos.id = $("#id" + no).val();
+                tjdNos.uuid = uuid;
+                tjdNos.bsid = bsid;
+                tjdNos.regitem_id = regitem_id;
+                tjdNos.productid = productid;
+                tjdNos.productcode = productcode;
+                tjdNos.sfklzqzh=$("input[name='sfklzqzh" + no + "']:checked").val();
+                tjdNos.zqzjzhzh=$("#zqzjzhzh" + no).val();
+                tjdNos.zqgsmc=$("#zqgsmc" + no).val();
+                tjdNos.zqgskhyyb=$("#zqgskhyyb" + no).val();
+                tjdNos.zqjyxtlx=$("#zqjyxtlx" + no).val();
+                tjdNos.wgzqjyxtcs=$("#wgzqjyxtcs" + no).val();
+                tjdNos.zqzjzhkhrq=$("#zqzjzhkhrq" + no).val();
+                tjdNos.sfklqhjyzjzh=$("input[name='sfklqhjyzjzh" + no + "']:checked").val();
+                tjdNos.qhjyzjzhhm=$("#qhjyzjzhhm" + no).val();
+                tjdNos.qhjyzjzhzh=$("#qhjyzjzhzh" + no).val();
+                tjdNos.gzqhjybm_tj=$("#gzqhjybm_tj" + no).val();
+                tjdNos.gzqhjybm_tqbz=$("#gzqhjybm_tqbz" + no).val();
+                tjdNos.gzqhjybm_tl=$("#gzqhjybm_tl" + no).val();
+                tjdNos.qhgsqc=$("#qhgsqc" + no).val();
+                tjdNos.khyyb=$("#khyyb" + no).val();
+                tjdNos.qhjyzhkhrq=$("#qhjyzhkhrq" + no).val();
+                tjdNos.sfklyxjjyzhzh=$("input[name='sfklyxjjyzhzh" + no + "']:checked").val();
+                tjdNos.zqzhhu_sqs=$("#zqzhhu_sqs" + no).val();
+                tjdNos.zqzhzh_sqs=$("#zqzhzh_sqs" + no).val();
+                tjdNos.sfdvpjs_sqs=$("input[name='sfdvpjs_sqs" + no + "']:checked").val();
+                tjdNos.yhjzqzhkhrq_sqs=$("#yhjzqzhkhrq_sqs" + no).val();
+                tjdNos.zqzhhu_zzd=$("#zqzhhu_zzd" + no).val();
+                tjdNos.zqzhzh_zzd=$("#zqzhzh_zzd" + no).val();
+                tjdNos.sfdvpjs_zzd=$("input[name='sfdvpjs_zzd" + no + "']:checked").val();
+                tjdNos.yhjzqzhkhrq_zzd=$("#yhjzqzhkhrq_zzd" + no).val();
+                jQuery.ajax({
+                    //请求方式
+                    type: "POST",
+                    //请求地址
+                    url: "/node/insert_app_dfs_zxd_cszqzh",
+                    //数据，json对象
+                    data: tjdNos,
+                    //请求成功
+                    success: function (data) {
+                        if (data.code != code) {
+                            if (data.code == "1") {
+                                alert("证券类账户保存成功！");
+                            } else {
+                                alert("证券类账户保存失败！");
+                            }
+                        }
+                        code = data.code;
+                    },
+                    //请求失败，包含具体的错误信息
+                    error: function (e) {
+                        alert("数据请求异常！");
+                    }
+                });
+            });
+        }
+
+        //查询预登记-证券类账户要素集合
+        function find_app_dfs_zxd_cszqzh_by_uuid(uuid) {
+            jQuery.ajax({
+                data: { "uuid": uuid },
+                url: "/node/find_app_dfs_zxd_cszqzh_by_uuid/" + uuid,
+                async: false,
+                cache: false,
+                success: function (data) {
+                    if (typeof(data.length) != "undefined") {
+                        $.each(data, function (index, item) {
+                            addZqlzh(item.id,item.sfklzqzh,item.zqzjzhzh,item.zqgsmc,item.zqgskhyyb,item.zqjyxtlx,item.wgzqjyxtcs,item.zqzjzhkhrq,item.sfklqhjyzjzh,item.qhjyzjzhhm,item.qhjyzjzhzh,item.gzqhjybm_tj,item.gzqhjybm_tqbz,item.gzqhjybm_tl,item.qhgsqc,item.khyyb,item.qhjyzhkhrq,item.sfklyxjjyzhzh,item.zqzhhu_sqs,item.zqzhzh_sqs,item.sfdvpjs_sqs,item.yhjzqzhkhrq_sqs,item.zqzhhu_zzd,item.zqzhzh_zzd,item.sfdvpjs_zzd,item.yhjzqzhkhrq_zzd);
+                        });
+                    }
+                }
+            });
+        }
+
+        //添加证券类账户要素集合
+        var t = 1;
+        function addZqlzh(id,sfklzqzh,zqzjzhzh,zqgsmc,zqgskhyyb,zqjyxtlx,wgzqjyxtcs,zqzjzhkhrq,sfklqhjyzjzh,qhjyzjzhhm,qhjyzjzhzh,gzqhjybm_tj,gzqhjybm_tqbz,gzqhjybm_tl,qhgsqc,khyyb,qhjyzhkhrq,sfklyxjjyzhzh,zqzhhu_sqs,zqzhzh_sqs,sfdvpjs_sqs,yhjzqzhkhrq_sqs,zqzhhu_zzd,zqzhzh_zzd,sfdvpjs_zzd,yhjzqzhkhrq_zzd) {
+            let str = `<div id="zqlzhDiv` + t + `"><div style="height: 10px;"></div>
+                    <!--<div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
+                    <a href="#" onclick="delZqlzh(`+ t + `);"><font color="#FF0000">点击删除下面一条证券类账户</font></a></div>-->
+                    <input type="hidden" name="zqlzhNo`+ t + `" value="` + t + `">
+                    <input type="hidden" id="id`+ t + `" name="id`+ t + `" value="` + id + `">
+                    <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
+                        style="width: 100%;">
+                        <tr>
+                            <td style="width: 12%;">
+                                <span class="required">*</span>是否开立证券资金账户:
+                            </td>
+                            <td style="width: 21%;">
+                                <input type="radio" name="sfklzqzh`+ t + `" value="0" />否
+                                <input type="radio" name="sfklzqzh`+ t + `" value="1" />是
+                            </td>
+                            <td style="width: 12%;">
+                                证券资金账户账号:
+                            </td>
+                            <td style="width: 21%;">
+                                <input type="text" id="zqzjzhzh`+ t + `" name="zqzjzhzh` + t + `" value="` + zqzjzhzh + `" style="width: 180px;">
+                            </td>
+                            <td style="width: 12%;">
+                                证券公司名称:
+                            </td>
+                            <td style="width: 21%;">
+                                <input type="text" id="zqgsmc`+ t + `" name="zqgsmc` + t + `" value="` + zqgsmc + `" style="width: 180px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                证券公司开户营业部:
+                            </td>
+                            <td>
+                                <input type="text" id="zqgskhyyb`+ t + `" name="zqgskhyyb` + t + `" value="` + zqgskhyyb + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                证券交易系统类型:
+                            </td>
+                            <td>
+                                <select id="zqjyxtlx`+ t + `" name="zqjyxtlx` + t + `" style="width: 180px;">
+                                    <option value="0">券商 PB 系统</option>
+                                    <option value="1">信托公司自主研发系统</option>
+                                    <option value="2">外购系统</option>
+                                    <option value="3">租赁系统</option>
+                                    <option value="b">其他</option>
+                                </select>
+                            </td>
+                            <td>
+                                外购证券交易系统厂商:
+                            </td>
+                            <td>
+                                <select id="wgzqjyxtcs`+ t + `" name="wgzqjyxtcs` + t + `" style="width: 180px;">
+                                    <option value="0">恒生</option>
+                                    <option value="1">金证</option>
+                                    <option value="2">赢时胜</option>
+                                    <option value="3">同花顺</option>
+                                    <option value="4">铭创</option>
+                                    <option value="5">讯投</option>
+                                    <option value="6">其他</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                开户日期:
+                            </td>
+                            <td  colspan="5">
+                                <input type="date" id="zqzjzhkhrq`+ t + `" name="zqzjzhkhrq` + t + `" value="` + zqzjzhkhrq + `" style="width: 180px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="required">*</span>是否开立期货交易资金账户:
+                            </td>
+                            <td>
+                                <input type="radio" name="sfklqhjyzjzh`+ t + `" value="0" />否
+                                <input type="radio" name="sfklqhjyzjzh`+ t + `" value="1" />是
+                            </td>
+                            <td>
+                                期货交易资金账户户名:
+                            </td>
+                            <td>
+                                <input type="text" id="qhjyzjzhhm`+ t + `" name="qhjyzjzhhm` + t + `" value="` + qhjyzjzhhm + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                期货交易资金账户账号:
+                            </td>
+                            <td>
+                                <input type="text" id="qhjyzjzhzh`+ t + `" name="qhjyzjzhzh` + t + `" value="` + qhjyzjzhzh + `" style="width: 180px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                股指期货交易编码（投机）:
+                            </td>
+                            <td>
+                                <input type="text" id="gzqhjybm_tj`+ t + `" name="gzqhjybm_tj` + t + `" value="` + gzqhjybm_tj + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                股指期货交易编码（套期保值）:
+                            </td>
+                            <td>
+                                <input type="text" id="gzqhjybm_tqbz`+ t + `" name="gzqhjybm_tqbz` + t + `" value="` + gzqhjybm_tqbz + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                股指期货交易编码（套利）:
+                            </td>
+                            <td>
+                                <input type="text" id="gzqhjybm_tl`+ t + `" name="gzqhjybm_tl` + t + `" value="` + gzqhjybm_tl + `" style="width: 180px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                期货公司全称:
+                            </td>
+                            <td>
+                                <input type="text" id="qhgsqc`+ t + `" name="qhgsqc` + t + `" value="` + qhgsqc + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                开户营业部:
+                            </td>
+                            <td>
+                                <input type="text" id="khyyb`+ t + `" name="khyyb` + t + `" value="` + khyyb + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                开户日期:
+                            </td>
+                            <td colspan="5">
+                                <input type="date" id="qhjyzhkhrq`+ t + `" name="qhjyzhkhrq` + t + `" value="` + qhjyzhkhrq + `" style="width: 180px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="required">*</span>是否开立银行间交易账户:
+                            </td>
+                            <td colspan="5">
+                                <input type="radio" name="sfklyxjjyzhzh`+ t + `" value="0" />否
+                                <input type="radio" name="sfklyxjjyzhzh`+ t + `" value="1" />是
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                银行间债券市场账户（上海清算所）户名:
+                            </td>
+                            <td>
+                                <input type="text" id="zqzhhu_sqs`+ t + `" name="zqzhhu_sqs` + t + `" value="` + zqzhhu_sqs + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                银行间债券市场账户（上海清算所）账号:
+                            </td>
+                            <td>
+                                <input type="text" id="zqzhzh_sqs`+ t + `" name="zqzhzh_sqs` + t + `" value="` + zqzhzh_sqs + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                是否开立 DVP 资金结算账户:
+                            </td>
+                            <td>
+                                <input type="radio" name="sfdvpjs_sqs`+ t + `" value="0" />否
+                                <input type="radio" name="sfdvpjs_sqs`+ t + `" value="1" />是
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                开户日期:
+                            </td>
+                            <td colspan="5">
+                                <input type="date" id="yhjzqzhkhrq_sqs`+ t + `" name="yhjzqzhkhrq_sqs` + t + `" value="` + yhjzqzhkhrq_sqs + `" style="width: 180px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                银行间债券市场账户（中债登）户名:
+                            </td>
+                            <td>
+                                <input type="text" id="zqzhhu_zzd`+ t + `" name="zqzhhu_zzd` + t + `" value="` + zqzhhu_zzd + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                银行间债券市场账户（中债登）账号:
+                            </td>
+                            <td>
+                                <input type="text" id="zqzhzh_zzd`+ t + `" name="zqzhzh_zzd` + t + `" value="` + zqzhzh_zzd + `" style="width: 180px;">
+                            </td>
+                            <td>
+                                是否开立 DVP 资金结算账户:
+                            </td>
+                            <td>
+                                <input type="radio" name="sfdvpjs_zzd`+ t + `" value="0" />否
+                                <input type="radio" name="sfdvpjs_zzd`+ t + `" value="1" />是
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                开户日期:
+                            </td>
+                            <td colspan="5">
+                                <input type="date" id="yhjzqzhkhrq_zzd`+ t + `" name="yhjzqzhkhrq_zzd` + t + `" value="` + yhjzqzhkhrq_zzd + `" style="width: 180px;">
+                            </td>
+                        </tr>
+                    </table></div>`;
+            $("#zqlzhInfo").append(str);
+            
+            $(":radio[name='sfklzqzh"+t+"'][value='" + sfklzqzh + "']").prop("checked", "checked");
+            $("#zqzjzhzh"+t).val(zqzjzhzh);
+            $("#zqgsmc"+t).val(zqgsmc);
+            $("#zqgskhyyb"+t).val(zqgskhyyb);
+            $("#zqjyxtlx"+t).val(zqjyxtlx);
+            $("#wgzqjyxtcs"+t).val(wgzqjyxtcs);
+            $("#zqzjzhkhrq"+t).val(zqzjzhkhrq);
+            $(":radio[name='sfklqhjyzjzh"+t+"'][value='" + sfklqhjyzjzh + "']").prop("checked", "checked");
+            $("#qhjyzjzhhm"+t).val(qhjyzjzhhm);
+            $("#qhjyzjzhzh"+t).val(qhjyzjzhzh);
+            $("#gzqhjybm_tj"+t).val(gzqhjybm_tj);
+            $("#gzqhjybm_tqbz"+t).val(gzqhjybm_tqbz);
+            $("#gzqhjybm_tl"+t).val(gzqhjybm_tl);
+            $("#qhgsqc"+t).val(qhgsqc);
+            $("#khyyb"+t).val(khyyb);
+            $("#qhjyzhkhrq"+t).val(qhjyzhkhrq);
+            $(":radio[name='sfklyxjjyzhzh"+t+"'][value='" + sfklyxjjyzhzh + "']").prop("checked", "checked");
+            $("#zqzhhu_sqs"+t).val(zqzhhu_sqs);
+            $("#zqzhzh_sqs"+t).val(zqzhzh_sqs);
+            $(":radio[name='sfdvpjs_sqs"+t+"'][value='" + sfdvpjs_sqs + "']").prop("checked", "checked");
+            $("#yhjzqzhkhrq_sqs"+t).val(yhjzqzhkhrq_sqs);
+            $("#zqzhhu_zzd"+t).val(zqzhhu_zzd);
+            $("#zqzhzh_zzd"+t).val(zqzhzh_zzd);
+            $(":radio[name='sfdvpjs_zzd"+t+"'][value='" + sfdvpjs_zzd + "']").prop("checked", "checked");
+            $("#yhjzqzhkhrq_zzd"+t).val(yhjzqzhkhrq_zzd);
+            
+            t++;
+        }
+
+        //删除证券类账户要素集合
+        function delZqlzh(no) {
+            $("#zqlzhDiv" + no).remove();
+        }
+
+        //初始化数据字典
+        function initSelect(id, region_code, val) {
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/query_app_dfs_scode_content",
+                //数据，json对象
+                data: { "region_code": region_code, "item_code": "" },
+                success: function (data) {
+                    if (data != "" && data.length != 1) {
+                        $.each(data, function (index, item) {
+                            if (item.ITEM_CODE == val) {
+                                $("#" + id).append("<option value='" + item.ITEM_CODE + "' selected>" + item.ITEM_NAME + "</option>");
+                            } else {
+                                $("#" + id).append("<option value='" + item.ITEM_CODE + "'>" + item.ITEM_NAME + "</option>");
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    
+        //获取GET参数
+        function GetQueryValue(queryName) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == queryName) { return pair[1]; }
+            }
+            return null;
+        }
+    </script>
+</html>

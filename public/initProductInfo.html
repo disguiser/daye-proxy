@@ -24,10 +24,6 @@
 </style>
 
 <body>
-    <div style="height: 20px; text-align: right;">
-        <button type="button" onclick="javascript:onSave();" class="btn blue">保 存</button>&nbsp;&nbsp;
-    </div>
-
     <ul id="myTab" class="nav nav-tabs">
         <li class="active">
             <a href="#initInfo1" data-toggle="tab">
@@ -878,6 +874,10 @@
                         </td>
 					</tr>
                 </table>
+                <div style="height: 10px;"></div>
+                <div style="height: 20px; text-align: right;">
+                    <button type="button" onclick="javascript:onSave();" class="btn btn-danger">保 存</button>&nbsp;&nbsp;
+                </div>
             </div>
 		</div>
 		<div class="tab-pane fade" id="initInfo2">
@@ -911,10 +911,11 @@
 		</div>
 		<div class="tab-pane fade" id="initInfo5">
             <div style="height:620px;overflow-y:auto">
-                <div id="yhzjzhInfo">
+                <iframe src="" id="yhzjzhIFrame" name="yhzjzhIFrame" seamless="" frameborder="0" height="610px" width="100%"></iframe>
+                <!-- <div id="yhzjzhInfo">
                     
                 </div>
-                <div style="height: 10px;"></div>
+                <div style="height: 10px;"></div> -->
                 <!-- <div
                     style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
                     <a href="#" onclick="addYhzjzh('','','','','','','');">点击更多银行资金账户</a></div> -->
@@ -922,10 +923,11 @@
 		</div>
 		<div class="tab-pane fade" id="initInfo6">
             <div style="height:620px;overflow-y:auto">
-                <div id="zqlzhInfo">
+                <iframe src="" id="zqlzhIFrame" name="zqlzhIFrame" seamless="" frameborder="0" height="610px" width="100%"></iframe>
+                <!-- <div id="zqlzhInfo">
                     
                 </div>
-                <div style="height: 10px;"></div>
+                <div style="height: 10px;"></div> -->
                 <!-- <div
                     style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
                     <a href="#" onclick="addZqlzh('','','','','','','','','','','','','','','','','','','','','','','','','');">点击更多证券类账户</a></div> -->
@@ -1111,10 +1113,12 @@
                     $('#xthtIFrame').attr('src', "/node/xthtList.html" + '?uuid=' + data.uuid + '&bsid=' + data.bsid + '&regitem_id=' + data.regitem_id + '&productid=' + data.productid + '&productcode=' + data.productcode);
 
                     //银行资金账户
-                    find_app_dfs_zxd_yhzjzh_by_uuid(data.uuid);
+                    //find_app_dfs_zxd_yhzjzh_by_uuid(data.uuid);
+                    $('#yhzjzhIFrame').attr('src', "/node/yhzjzhList.html" + '?uuid=' + data.uuid + '&bsid=' + data.bsid + '&regitem_id=' + data.regitem_id + '&productid=' + data.productid + '&productcode=' + data.productcode);
 
                     //证券类账户
-                    find_app_dfs_zxd_cszqzh_by_uuid(data.uuid);
+                    //find_app_dfs_zxd_cszqzh_by_uuid(data.uuid);
+                    $('#zqlzhIFrame').attr('src', "/node/zqlzhList.html" + '?uuid=' + data.uuid + '&bsid=' + data.bsid + '&regitem_id=' + data.regitem_id + '&productid=' + data.productid + '&productcode=' + data.productcode);
                 }
             });
         }

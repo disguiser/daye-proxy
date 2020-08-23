@@ -103,6 +103,7 @@
             </td>
             <td>
                 <select id="fppl" name="fppl" style="width: 180px;">
+					<option value=""></option>
                     <option value="0">到期一次付清</option>
                     <option value="1">周</option>
                     <option value="2">旬</option>
@@ -157,6 +158,158 @@
                 $(":radio[name='sfkssyqzh_syr'][value='0']").prop("checked", "checked");
             }
         });
+		//设置text,textarea和select对应值
+		function setFormValue(name,value){
+			$('#'+name).val(value);
+		}
+		
+		//设置Radio对应值
+		function setRadioValue(name,value){
+			if(value==""){
+				$("input[name="+name+"]").prop("checked",false);
+			}else{
+				$("input[name="+name+"][value="+value+"]").attr("checked", true);
+			}
+		}
+		
+		//设置Box对应值
+		function setBoxValue(name,content){	
+			if(content.indexOf('No,')>=0)
+			{
+				content=content.replace('No,','');
+				let returnValue = content.split(",");
+				$.each(returnValue, function (index, value) {
+					$("#"+name+value).attr("checked",false)
+				});
+			}else{
+				let returnValue = content.split(",");
+				$.each(returnValue, function (index, value) {
+					$("#"+name+value).attr("checked",true)
+				});			
+			}
+		}
+		
+		//获取text,textarea和select对应值
+		function getFormValue(name){
+			let value = $('#'+name).val();
+			return value;
+		}
+		
+		//获取Radio对应值
+		function getRadioValue(name){
+			let value = $("input[name="+name+"]:checked").val();
+			return value;
+		}
+		
+		//获取Box对应值
+		function getBoxValue(name){
+			let value = $("input:checkbox[name="+name+"]:checked");
+            let chvalue = [];
+            $.each(value, function () {
+                chvalue.push($(this).val());
+            });
+            value = chvalue.join(",");
+			return value;
+		}
+		
+		//日期格式化处理
+		Date.prototype.Format = function(fmt)  
+		{ 
+			var o = {  
+				"M+" : this.getMonth()+1,         //月份  
+				"d+" : this.getDate(),          //日  
+				"h+" : this.getHours(),          //小时  
+				"m+" : this.getMinutes(),         //分  
+				"s+" : this.getSeconds(),         //秒  
+				"q+" : Math.floor((this.getMonth()+3)/3), //季度  
+				"S" : this.getMilliseconds()       //毫秒  
+			};  
+			if(/(y+)/.test(fmt))  
+				fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));  
+			for(var k in o)  
+				if(new RegExp("("+ k +")").test(fmt))  
+			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));  
+			return fmt;  
+		}
+
+		//字段必输项+内容大小限制校验
+        function checkInfo(name,content,flag,type){
+			if(type=='text') value = getFormValue(name);
+			else if(type=='box') value = getBoxValue(name);
+			else if(type=='radio') value = getRadioValue(name);
+			else value = getFormValue(name);
+			if(flag=="required")
+			{
+				if(typeof(value)=="undefined" || value==null || value.length==0 || value==''){
+					alert("字段["+content+"]为必填项!");
+					document.getElementById(name).focus();
+					return false;
+				}
+			}else if(flag=="length"){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0 || value=='') && value.length>type){
+					alert("字段["+content+"]内容超过最大限制!");
+					document.getElementById(name).focus();
+					return false;
+				}			
+			}else if(flag=="number"){
+				if(!(typeof(value)=="undefined" || value==null || value.length==0 || value=='')){
+					var typeValue=type.split(",");
+					if(value.indexOf(".")<0) value=value+'.00';
+					var contentValue=value.split(".");
+					if(contentValue[0].length > (typeValue[0]-typeValue[1]) || contentValue[1].length > typeValue[1]){
+						alert("字段["+content+"]内容超过最大限制!");
+						document.getElementById(name).focus();
+						return false;
+					}					
+				}			
+			}
+			return true;
+		}	
+
+		//保存之前逻辑性校验
+		function logicCheck(){
+			//受益权收益率+收益率说明
+			var syqsyllx=getFormValue('syqsyllx');
+			var syqyqsyl=getFormValue('syqyqsyl');
+			var yqsylsm=getFormValue('yqsylsm');
+			if((syqsyllx=="0" || syqsyllx=="1") && (typeof(syqyqsyl)=="undefined" || syqyqsyl.length==0  || syqyqsyl.length==''))
+			{
+				alert("[收益率类型]选择【基准收益率】或者【基准+浮动】时,字段[受益权收益率]为必填项!");
+				return false;
+			}
+			if(syqsyllx=="3" && (typeof(yqsylsm)=="undefined" || yqsylsm.length==0  || yqsylsm.length==''))
+			{
+				alert("[受益权收益率类型]选择【其他】时,字段[收益率说明]为必填项!");
+				return false;
+			}			
+			if(syqsyllx=="2" || syqsyllx=="3") setFormValue('syqyqsyl','');
+			return true;
+		}	
+
+		//保存之前必输项校验
+		function requiredCheck(){
+			if(!checkInfo('syqxh','受益权序号','required','text')) return false;
+			if(!checkInfo('syqdm','受益权代码','required','text')) return false;
+			if(!checkInfo('syqlx','受益权类型','required','text')) return false;
+			if(!checkInfo('fpsx','分配顺序','required','text')) return false;
+			if(!checkInfo('syqsyllx','受益权收益率类型','required','text')) return false;
+			if(!checkInfo('fhfs','分红方式','required','box')) return false;
+			if(!checkInfo('fpfs','分配方式','required','text')) return false;	
+			if(!checkInfo('fppl','分配频率','required','text')) return false;
+			
+			return true;
+		}				
+		
+		//保存之前内容大小限制校验
+		function sizeCheck(){		
+			if(!checkInfo('syqxh','受益权序号','length','10')) return false;
+			if(!checkInfo('syqdm','受益权代码','length','50')) return false;
+			if(!checkInfo('fpsx','分配顺序','length','10')) return false;
+			if(!checkInfo('syqyqsyl','受益权收益率','number','8,6')) return false;
+			if(!checkInfo('yqsylsm','收益率说明','length','50')) return false;
+			
+			return true;
+		}			
 
         //加载信托合同信息
         function loadSyqjgInfo(id) {
@@ -194,6 +347,18 @@
 
         //保存受益权结构
         function saveSyqjg(id, uuid, bsid, regitem_id, productid, productcode) {
+			//保存之前必输项校验
+			if(!requiredCheck()){
+				return false;	
+			}		
+			//监管报送逻辑校验
+			if(!logicCheck()){
+				return false;	
+			}
+			//监管报送内容大小限制校验
+			if(!sizeCheck()){
+				return false;	
+			}			
             let tjdNos = new Object();
             tjdNos.id = id;
             tjdNos.uuid = uuid;

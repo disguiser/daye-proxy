@@ -111,31 +111,34 @@
 
         //删除受益权结构
         function deleteSyqjg(id, uuid) {
-            let tjdNos = new Object();
-            tjdNos.id = id;
-            jQuery.ajax({
-                //请求方式
-                type: "POST",
-                //请求地址
-                url: "/node/delete_app_dfs_zxd_cssyq",
-                //数据，json对象
-                data: tjdNos,
-                //请求成功
-                success: function (data) {
-                    if (data.code == "1") {
-                        alert("受益权结构删除成功！");
-                        $('#syqjgList').bootstrapTable('refresh');
-                    } else if (data.code == "3") {
-                        alert("受益权结构ID为空！");
-                    } else {
-                        alert("受益权结构删除失败！");
-                    }
-                },
-                //请求失败，包含具体的错误信息
-                error: function (e) {
-                    alert("数据请求异常！");
-                }
-            });
+			if (confirm("确定执行受益权结构删除操作吗？"))
+			{		
+				let tjdNos = new Object();
+				tjdNos.id = id;
+				jQuery.ajax({
+					//请求方式
+					type: "POST",
+					//请求地址
+					url: "/node/delete_app_dfs_zxd_cssyq",
+					//数据，json对象
+					data: tjdNos,
+					//请求成功
+					success: function (data) {
+						if (data.code == "1") {
+							alert("受益权结构删除成功！");
+							$('#syqjgList').bootstrapTable('refresh');
+						} else if (data.code == "3") {
+							alert("受益权结构ID为空！");
+						} else {
+							alert("受益权结构删除失败！");
+						}
+					},
+					//请求失败，包含具体的错误信息
+					error: function (e) {
+						alert("数据请求异常！");
+					}
+				});
+			}
         }
 
         //获取GET参数

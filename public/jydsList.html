@@ -51,7 +51,11 @@
 
             //保存信托合同信息
             $("#btnSave").click(function() {
-                saveJydsys(uuid, bsid, regitem_id, productid, productcode);
+				//保存之前必输项校验
+				let value=requiredCheck();
+				if(value=="0"){		
+					saveJydsys(uuid, bsid, regitem_id, productid, productcode);
+				}
             });
         });
 
@@ -149,10 +153,25 @@
                 $("#jydsysDiv" + no).remove();
             }
         }
-
+		//保存之前必输项校验
+		function requiredCheck(){
+			let value = "0";	
+            $("input[name^='jydsysNo']").each(function name(params) {
+                let no = $(this).val();
+				let tjdNos = new Object();
+				tjdNos.jydsjgzzjgdm = $("#jydsjgzzjgdm" + no).val();		
+				if(typeof(tjdNos.jydsjgzzjgdm)=="undefined" || tjdNos.jydsjgzzjgdm.length==0  || tjdNos.jydsjgzzjgdm.length=='')
+				{
+					alert("字段[交易对手机构统一社会信用代码]为必填项!");
+					value="1";
+				}
+			});
+			
+			return value;
+		}	
         //保存预登记-交易对手要素
         function saveJydsys(uuid, bsid, regitem_id, productid, productcode) {
-            let code = "";
+            let code = "";		
             $("input[name^='jydsysNo']").each(function name(params) {
                 let no = $(this).val();
                 let tjdNos = new Object();
@@ -162,7 +181,7 @@
                 tjdNos.regitem_id = regitem_id;
                 tjdNos.productid = productid;
                 tjdNos.productcode = productcode;
-                tjdNos.jydsjgzzjgdm = $("#jydsjgzzjgdm" + no).val();
+                tjdNos.jydsjgzzjgdm = $("#jydsjgzzjgdm" + no).val();				
                 tjdNos.jydsjglx = $("#jydsjglx" + no).val();
                 tjdNos.jydsjgzclb = $("#jydsjgzclb" + no).val();
                 jQuery.ajax({

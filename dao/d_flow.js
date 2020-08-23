@@ -485,7 +485,7 @@ let find_app_dfs_zxd_cscpxx_by_regitem_id = async (regitem_id) => {
 
 //查询预登记-交易对手要素
 let find_app_dfs_zxd_csjyds_by_uuid = async (uuid) => {
-    let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, jydsjgzzjgdm, jydsjglx, jydsjgzclb FROM APP_DFS_ZXD_CSJYDS WHERE relation_uuid = '${uuid}' `, {
+    let data = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, jydsjgzzjgdm, jydsjglx, jydsjgzclb FROM APP_DFS_ZXD_CSJYDS WHERE relation_uuid = '${uuid}' `, {
         type: pjmain.QueryTypes.SELECT
     });
     if (data.length > 0) {
@@ -495,11 +495,30 @@ let find_app_dfs_zxd_csjyds_by_uuid = async (uuid) => {
     }
 }
 
-//查询预登记-受益权结构要素集合
-let find_app_dfs_zxd_cssyq_by_uuid = async (uuid) => {
-    let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, syqxh, syqdm, syqlx, fpsx, syqsyllx, syqyqsyl, yqsylsm, fhfs, fpfs, fppl FROM APP_DFS_ZXD_CSSYQ WHERE relation_uuid = '${uuid}' `, {
+//查询预登记-受益权结构要素集合（分页）
+let find_app_dfs_zxd_cssyq_by_uuid = async (uuid, offset, pageNumber) => {
+    //查询总的记录数
+    let number = await dfs.query(`select count(1) NUMBER FROM APP_DFS_ZXD_CSSYQ WHERE relation_uuid = '${uuid}'`, {
         type: pjmain.QueryTypes.SELECT
     });
+    let total = number[0]['NUMBER'];
+
+    let rows = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, syqxh, syqdm, dbo.getMCodeName('Init033',syqlx) syqlx, fpsx, dbo.getMCodeName('Init017',syqsyllx) syqsyllx, syqyqsyl, yqsylsm, dbo.getMCodeName('Init034',fhfs) fhfs, dbo.getMCodeName('Init035',fpfs) fpfs, dbo.getMCodeName('Init036',fppl) fppl FROM APP_DFS_ZXD_CSSYQ WHERE relation_uuid = '${uuid}' ORDER BY SYQXH offset ${offset} row fetch next ${pageNumber} rows only `, {
+        type: pjmain.QueryTypes.SELECT
+    });
+    
+    return {
+        total,
+        rows
+    };
+}
+
+//查询预登记-受益权结构要素集合
+let find_app_dfs_zxd_cssyq_by_id = async (id) => {
+    let data = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, syqxh, syqdm, syqlx, fpsx, syqsyllx, syqyqsyl, yqsylsm, fhfs, fpfs, fppl FROM APP_DFS_ZXD_CSSYQ WHERE ID = '${id}'`, {
+        type: pjmain.QueryTypes.SELECT
+    });
+
     if (data.length > 0) {
         return data;
     } else {
@@ -643,32 +662,108 @@ let insert_app_dfs_zxd_cscpxx = async (data) => {
 
 //保存预登记-交易对手要素
 let insert_app_dfs_zxd_csjyds = async (data) => {
-    //再保存
-    await dfs.query(`INSERT INTO APP_DFS_ZXD_CSJYDS(relation_uuid,task_code,regitem_id,product_id,product_code,jydsjgzzjgdm,jydsjglx,jydsjgzclb) values(
+    let code = "";
+
+    if (data.id == "0") {
+        await dfs.query(`INSERT INTO APP_DFS_ZXD_CSJYDS(relation_uuid,task_code,regitem_id,product_id,product_code,jydsjgzzjgdm,jydsjglx,jydsjgzclb) values(
             '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.jydsjgzzjgdm}','${data.jydsjglx}','${data.jydsjgzclb}'
         )`)
-        .then(function (result) {
-            console.log(result);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    } else {
+        await dfs.query(`UPDATE APP_DFS_ZXD_CSJYDS SET jydsjgzzjgdm='${data.jydsjgzzjgdm}',jydsjglx='${data.jydsjglx}',jydsjgzclb='${data.jydsjgzclb}' WHERE ID=${data.id}`)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    }
+
+    return {code};
+}
+
+//删除预登记-交易对手要素
+let delete_app_dfs_zxd_csjyds = async (data) => {
+    let code = "";
+
+    if (data.id != "0") {
+        await dfs.query(`DELETE FROM APP_DFS_ZXD_CSJYDS WHERE ID=${data.id}`)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    } else {
+        code = "3";
+    }
+
+    return {code};
 }
 
 //保存预登记-受益权结构要素集合
 let insert_app_dfs_zxd_cssyq = async (data) => {
     if(data.syqxh=='') data.syqxh=null;
     if(data.fpsx=='') data.fpsx=null;
-    //再保存
-    await dfs.query(`INSERT INTO APP_DFS_ZXD_CSSYQ(relation_uuid,task_code,regitem_id,product_id,product_code,syqxh, syqdm, syqlx, fpsx, syqsyllx, syqyqsyl, yqsylsm, fhfs, fpfs, fppl) values(
+    let code = "";
+
+    if (data.id == "0") {
+        await dfs.query(`INSERT INTO APP_DFS_ZXD_CSSYQ(relation_uuid,task_code,regitem_id,product_id,product_code,syqxh, syqdm, syqlx, fpsx, syqsyllx, syqyqsyl, yqsylsm, fhfs, fpfs, fppl) values(
             '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}',${data.syqxh}, '${data.syqdm}', '${data.syqlx}', ${data.fpsx}, '${data.syqsyllx}', ${data.syqyqsyl}, '${data.yqsylsm}', '${data.fhfs}', '${data.fpfs}', '${data.fppl}'
         )`)
-        .then(function (result) {
-            console.log(result);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    } else {
+        await dfs.query(`update APP_DFS_ZXD_CSSYQ set
+                                                    syqxh = ${data.syqxh},
+                                                    syqdm = '${data.syqdm}',
+                                                    syqlx = '${data.syqlx}',
+                                                    fpsx = ${data.fpsx},
+                                                    syqsyllx = '${data.syqsyllx}',
+                                                    syqyqsyl = ${data.syqyqsyl},
+                                                    yqsylsm = '${data.yqsylsm}',
+                                                    fhfs = '${data.fhfs}',
+                                                    fpfs = '${data.fpfs}',
+                                                    fppl = '${data.fppl}'
+                                                    where id = ${data.id}`)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    }
+    
+    return {code};
+}
+
+//删除预登记-受益权结构要素集合
+let delete_app_dfs_zxd_cssyq = async (data) => {
+    let code = "";
+
+    if (data.id != "0") {
+        await dfs.query(`DELETE FROM APP_DFS_ZXD_CSSYQ WHERE ID = ${data.id}
+            `)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    } else {
+        code = "3";
+    }
+    
+    return {code};
 }
 
 //保存预登记-信托合同要素集合
@@ -1170,13 +1265,16 @@ module.exports = {
     find_app_dfs_zxd_cscpxx_by_regitem_id: find_app_dfs_zxd_cscpxx_by_regitem_id,
     find_app_dfs_zxd_csjyds_by_uuid: find_app_dfs_zxd_csjyds_by_uuid,
     find_app_dfs_zxd_cssyq_by_uuid: find_app_dfs_zxd_cssyq_by_uuid,
+    find_app_dfs_zxd_cssyq_by_id: find_app_dfs_zxd_cssyq_by_id,
     find_app_dfs_zxd_csxtht_by_uuid: find_app_dfs_zxd_csxtht_by_uuid,
     find_app_dfs_zxd_csxtht_by_id: find_app_dfs_zxd_csxtht_by_id,
     find_app_dfs_zxd_yhzjzh_by_uuid: find_app_dfs_zxd_yhzjzh_by_uuid,
     find_app_dfs_zxd_cszqzh_by_uuid: find_app_dfs_zxd_cszqzh_by_uuid,
     insert_app_dfs_zxd_cscpxx: insert_app_dfs_zxd_cscpxx,
     insert_app_dfs_zxd_csjyds: insert_app_dfs_zxd_csjyds,
+    delete_app_dfs_zxd_csjyds: delete_app_dfs_zxd_csjyds,
     insert_app_dfs_zxd_cssyq: insert_app_dfs_zxd_cssyq,
+    delete_app_dfs_zxd_cssyq: delete_app_dfs_zxd_cssyq,
     insert_app_dfs_zxd_csxtht: insert_app_dfs_zxd_csxtht,
     delete_app_dfs_zxd_csxtht: delete_app_dfs_zxd_csxtht,
     insert_app_dfs_zxd_yhzjzh: insert_app_dfs_zxd_yhzjzh,

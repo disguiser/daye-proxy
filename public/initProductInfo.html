@@ -882,10 +882,11 @@
 		</div>
 		<div class="tab-pane fade" id="initInfo2">
             <div style="height:620px;overflow-y:auto">
-                <div id="jydsysInfo">
+                <iframe src="" id="jydsIFrame" name="jydsIFrame" seamless="" frameborder="0" height="610px" width="100%"></iframe>
+                <!-- <div id="jydsysInfo">
                     
                 </div>
-                <div style="height: 10px;"></div>
+                <div style="height: 10px;"></div> -->
                 <!-- <div
                     style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
                     <a href="#" onclick="addJydsys('','','');">点击更多交易对手</a></div> -->
@@ -893,10 +894,11 @@
 		</div>
 		<div class="tab-pane fade" id="initInfo3">
             <div style="height:620px;overflow-y:auto">
-                <div id="syqjgInfo">
+                <iframe src="" id="syqjgIFrame" name="syqjgIFrame" seamless="" frameborder="0" height="610px" width="100%"></iframe>
+                <!-- <div id="syqjgInfo">
                     
                 </div>
-                <div style="height: 10px;"></div>
+                <div style="height: 10px;"></div> -->
                 <!-- <div
                     style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
                     <a href="#" onclick="addSyqjg(0,'','',0,'',0,'','','','');">点击更多受益权结构</a></div> -->
@@ -1097,10 +1099,12 @@
                     $("#lxdh").val(data.lxdh);
 
                     //交易对手要素
-                    find_app_dfs_zxd_csjyds_by_uuid(data.uuid);
+                    //find_app_dfs_zxd_csjyds_by_uuid(data.uuid);
+                    $('#jydsIFrame').attr('src', "/node/jydsList.html" + '?uuid=' + data.uuid + '&bsid=' + data.bsid + '&regitem_id=' + data.regitem_id + '&productid=' + data.productid + '&productcode=' + data.productcode);
 
                     //受益权结构
-                    find_app_dfs_zxd_cssyq_by_uuid(data.uuid);
+                    //find_app_dfs_zxd_cssyq_by_uuid(data.uuid);
+                    $('#syqjgIFrame').attr('src', "/node/syqjgList.html" + '?uuid=' + data.uuid + '&bsid=' + data.bsid + '&regitem_id=' + data.regitem_id + '&productid=' + data.productid + '&productcode=' + data.productcode);
 
                     //信托合同 20200728根据需求取消
                     //find_app_dfs_zxd_csxtht_by_uuid(data.uuid);

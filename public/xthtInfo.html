@@ -191,7 +191,7 @@
                 初始委托财产对应金额:
             </td>
             <td>
-                <input type="number" id="wtccdyje" name="wtccdyje" value="` + wtccdyje + `" style="width: 180px;">
+                <input type="number" id="wtccdyje" name="wtccdyje" value="" style="width: 180px;">
             </td>
             <td>
                 初始委托财产类型:
@@ -414,6 +414,7 @@
                 loadContractInfo(id);
             } else {
                 $(":radio[name='sfkssyqzh_syr'][value='0']").prop("checked", "checked");
+                initSelect("zjjsbz", "Init011", "CNY");
             }
         });
 

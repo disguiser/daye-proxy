@@ -1307,9 +1307,16 @@ module.exports = function (router) {
     });
 
     //查询预登记-受益权结构要素集合
-    router.get('/find_app_dfs_zxd_cssyq_by_uuid/:uuid', async (ctx, next) => {
-        let uuid = ctx.params.uuid;
-        let product_info = await d_flow.find_app_dfs_zxd_cssyq_by_uuid(uuid);
+    router.post('/find_app_dfs_zxd_cssyq_by_uuid', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.find_app_dfs_zxd_cssyq_by_uuid(data.uuid,data.offset,data.pageNumber);
+        ctx.response.body = product_info
+    });
+
+    //查询预登记-受益权结构要素集合
+    router.post('/find_app_dfs_zxd_cssyq_by_id', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.find_app_dfs_zxd_cssyq_by_id(data.id);
         ctx.response.body = product_info
     });
 
@@ -1355,10 +1362,24 @@ module.exports = function (router) {
         ctx.response.body = product_info
     });
 
+    //删除预登记-交易对手要素
+    router.post('/delete_app_dfs_zxd_csjyds', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.delete_app_dfs_zxd_csjyds(data);
+        ctx.response.body = product_info
+    });
+
     //保存预登记-受益权结构要素集合
     router.post('/insert_app_dfs_zxd_cssyq', async (ctx, next) => {
         let data = ctx.request.body;
         let product_info = await d_flow.insert_app_dfs_zxd_cssyq(data);
+        ctx.response.body = product_info
+    });
+
+    //删除预登记-受益权结构要素集合
+    router.post('/delete_app_dfs_zxd_cssyq', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.delete_app_dfs_zxd_cssyq(data);
         ctx.response.body = product_info
     });
 

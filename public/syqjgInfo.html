@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base target="_self">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache,must-ridate">
+    <meta http-equiv="expires" content="0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap-table/bootstrap-table.css" />
+    <script type="text/javascript" src="/static/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+</head>
+
+<style  type="text/css">
+    .required {
+        color: red;
+    }       
+</style>
+
+<body>
+    <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
+        style="width: 100%;">
+        <tr>
+            <td style="width: 12%;">
+                <span class="required">*</span>受益权序号:
+            </td>
+            <td style="width: 21%;">
+                <input type="number" id="syqxh" name="syqxh" value="" style="width: 180px;">
+            </td>
+            <td style="width: 12%;">
+                <span class="required">*</span>受益权代码:
+            </td>
+            <td style="width: 21%;">
+                <input type="text" id="syqdm" name="syqdm" value="" style="width: 180px;">
+            </td>
+            <td style="width: 12%;">
+                <span class="required">*</span>受益权类型:
+            </td>
+            <td style="width: 21%;">
+                <select id="syqlx" name="syqlx" style="width: 180px;">
+                    <option value="0">普通</option>
+                    <option value="1">优先</option>
+                    <option value="2">中间</option>
+                    <option value="3">劣后</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>分配顺序:
+            </td>
+            <td>
+                <input type="number" id="fpsx" name="fpsx" value="" style="width: 180px;">
+            </td>
+            <td>
+                <span class="required">*</span>受益权收益率类型:
+            </td>
+            <td>
+                <select id="syqsyllx" name="syqsyllx" style="width: 180px;">
+                    <option value="0">基准收益率</option>
+                    <option value="1">基准+浮动</option>
+                    <option value="2">浮动收益率（含净值型产品）</option>
+                    <option value="9">其他</option>
+                </select>
+            </td>
+            <td>
+                受益权收益率:
+            </td>
+            <td>
+                <input type="number" id="syqyqsyl" name="syqyqsyl" value="" style="width: 180px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="required">*</span>分红方式:
+            </td>
+            <td>
+                <input type="checkbox" id="fhfs0" name="fhfs" value="0" />现金分红<br>
+                <input type="checkbox" id="fhfs1" name="fhfs" value="1" />红利再投（过户交易指令）<br>
+                <input type="checkbox" id="fhfs2" name="fhfs" value="2" />直接转增份额（无过户交易指令)<br>
+                <input type="checkbox" id="fhfs3" name="fhfs" value="3" />无分红
+                <input type="checkbox" id="fhfs4" name="fhfs" value="4" />按投资者意愿
+                <input type="checkbox" id="fhfs5" name="fhfs" value="5" />其他
+            </td>
+            <td>
+                <span class="required">*</span>分配方式:
+            </td>
+            <td>
+                <select id="fpfs" name="fpfs" style="width: 180px;">
+                    <option value="0">现金分配</option>
+                    <option value="1">原状分配</option>
+                    <option value="2">现金分配+原状分配</option>
+                </select>
+            </td>
+            <td>
+                分配频率:
+            </td>
+            <td>
+                <select id="fppl" name="fppl" style="width: 180px;">
+                    <option value="0">到期一次付清</option>
+                    <option value="1">周</option>
+                    <option value="2">旬</option>
+                    <option value="3">月度</option>
+                    <option value="4">季度</option>
+                    <option value="b">半年</option>
+                    <option value="5">年度</option>
+                    <option value="6">其他</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                收益率说明:
+            </td>
+            <td colspan="5">
+                <textarea rows="3" id="yqsylsm" name="yqsylsm" style="width:990px;"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div style="height: 50px; line-height: 50px; text-align: right;">
+        <button type="button" id="btnSave" class="btn btn-danger">保 存</button>&nbsp;&nbsp;
+        <button type="button" id="btnReturn" class="btn btn-success">返 回</button>&nbsp;&nbsp;
+    </div>
+</body>
+    
+    <script type="text/javascript">
+        //初始化数据
+        let ydjData = new Object();
+        $(function () {
+            let id = GetQueryValue('id');
+            let uuid = GetQueryValue('uuid');
+            let bsid = GetQueryValue('bsid');
+            let regitem_id = GetQueryValue('regitem_id');
+            let productid = GetQueryValue('productid');
+            let productcode = GetQueryValue('productcode');
+
+            //返回受益权结构列表
+            $("#btnReturn").click(function() {
+                returnSyqjgList(uuid);
+            });
+
+            //保存受益权结构
+            $("#btnSave").click(function() {
+                saveSyqjg(id, uuid, bsid, regitem_id, productid, productcode);
+            });
+
+            //加载受益权结构
+            if (id != 0) {
+                loadSyqjgInfo(id);
+            } else {
+                $(":radio[name='sfkssyqzh_syr'][value='0']").prop("checked", "checked");
+            }
+        });
+
+        //加载信托合同信息
+        function loadSyqjgInfo(id) {
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/find_app_dfs_zxd_cssyq_by_id",
+                //数据，json对象
+                data: {"id": id},
+                //请求成功
+                success: function (data) {
+                    data = data[0];
+                    $("#syqxh").val(data.syqxh);
+                    $("#syqdm").val(data.syqdm);
+                    $("#syqlx").val(data.syqlx);
+                    $("#fpsx").val(data.fpsx);
+                    $("#syqsyllx").val(data.syqsyllx);
+                    $("#syqyqsyl").val(data.syqyqsyl);
+                    $("#yqsylsm").val(data.yqsylsm);
+                    let fhfss = data.fhfs.split(",");
+                    $.each(fhfss, function (index, value) {
+                        if (value != "")
+                            $("#fhfs"+value).attr("checked", "checked");
+                    });
+                    $("#fpfs").val(data.fpfs);
+                    $("#fppl").val(data.fppl);
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    alert("信托合同信息加载失败！");
+                }
+            });
+        }
+
+        //保存受益权结构
+        function saveSyqjg(id, uuid, bsid, regitem_id, productid, productcode) {
+            let tjdNos = new Object();
+            tjdNos.id = id;
+            tjdNos.uuid = uuid;
+            tjdNos.bsid = bsid;
+            tjdNos.regitem_id = regitem_id;
+            tjdNos.productid = productid;
+            tjdNos.productcode = productcode;
+            tjdNos.syqxh = $("#syqxh").val();
+            tjdNos.syqdm = $("#syqdm").val();
+            tjdNos.syqlx = $("#syqlx").val();
+            tjdNos.fpsx = $("#fpsx").val();
+            tjdNos.syqsyllx = $("#syqsyllx").val();
+            tjdNos.syqyqsyl = $("#syqyqsyl").val();
+            tjdNos.yqsylsm = $("#yqsylsm").val();
+            let fhfss = $("input:checkbox[name='fhfs']:checked");
+            let chfhfss = [];
+            $.each(fhfss, function () {
+                chfhfss.push($(this).val());
+            });
+            tjdNos.fhfs = chfhfss.join(",");
+            tjdNos.fpfs = $("#fpfs").val();
+            tjdNos.fppl = $("#fppl").val();
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/insert_app_dfs_zxd_cssyq",
+                //数据，json对象
+                data: tjdNos,
+                //请求成功
+                success: function (data) {
+                    if (data.code == "1") {
+                        returnSyqjgList(uuid);
+                        alert("受益权结构保存成功！");
+                    } else {
+                        alert("受益权结构保存失败！");
+                    }
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    alert("数据请求异常！");
+                }
+            });
+        }
+
+        //返回受益权结构列表
+        function returnSyqjgList(uuid) {
+            $(window.parent.$('#syqjgIFrame')).attr('src', "/node/syqjgList.html" + '?uuid=' + uuid);
+        }
+
+        //初始化数据字典
+        function initSelect(id, region_code, val) {
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/query_app_dfs_scode_content",
+                //数据，json对象
+                data: { "region_code": region_code, "item_code": "" },
+                success: function (data) {
+                    if (data != "" && data.length != 1) {
+                        $.each(data, function (index, item) {
+                            if (item.ITEM_CODE == val) {
+                                $("#" + id).append("<option value='" + item.ITEM_CODE + "' selected>" + item.ITEM_NAME + "</option>");
+                            } else {
+                                $("#" + id).append("<option value='" + item.ITEM_CODE + "'>" + item.ITEM_NAME + "</option>");
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    
+        //获取GET参数
+        function GetQueryValue(queryName) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == queryName) { return pair[1]; }
+            }
+            return null;
+        }
+    </script>
+</html>

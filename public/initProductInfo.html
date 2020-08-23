@@ -1104,7 +1104,7 @@
 
                     //信托合同 20200728根据需求取消
                     //find_app_dfs_zxd_csxtht_by_uuid(data.uuid);
-                    $('#xthtIFrame').attr('src', "/node/xthtList.html" + '?uuid=' + data.uuid);
+                    $('#xthtIFrame').attr('src', "/node/xthtList.html" + '?uuid=' + data.uuid + '&bsid=' + data.bsid + '&regitem_id=' + data.regitem_id + '&productid=' + data.productid + '&productcode=' + data.productcode);
 
                     //银行资金账户
                     find_app_dfs_zxd_yhzjzh_by_uuid(data.uuid);

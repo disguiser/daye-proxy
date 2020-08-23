@@ -383,8 +383,8 @@
         </tr>
     </table>
     <div style="height: 50px; line-height: 50px; text-align: right;">
-        <button type="button" id="btnReturn" class="btn blue">返 回</button>&nbsp;&nbsp;
-        <button type="button" id="btnSave" class="btn blue">信托合同保存</button>&nbsp;&nbsp;
+        <button type="button" id="btnSave" class="btn btn-danger">保 存</button>&nbsp;&nbsp;
+        <button type="button" id="btnReturn" class="btn btn-success">返 回</button>&nbsp;&nbsp;
     </div>
 </body>
     
@@ -394,19 +394,27 @@
         $(function () {
             let id = GetQueryValue('id');
             let uuid = GetQueryValue('uuid');
+            let bsid = GetQueryValue('bsid');
+            let regitem_id = GetQueryValue('regitem_id');
+            let productid = GetQueryValue('productid');
+            let productcode = GetQueryValue('productcode');
 
             //返回合同列表
             $("#btnReturn").click(function() {
-                $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtList.html" + '?uuid=' + uuid);
+                returnContractList(uuid);
             });
 
             //保存信托合同信息
             $("#btnSave").click(function() {
-                saveContractInfo(id);
+                saveContractInfo(id, uuid, bsid, regitem_id, productid, productcode);
             });
 
             //加载信托合同信息
-            loadContractInfo(id);
+            if (id != 0) {
+                loadContractInfo(id);
+            } else {
+                $(":radio[name='sfkssyqzh_syr'][value='0']").prop("checked", "checked");
+            }
         });
 
         //加载信托合同信息
@@ -464,9 +472,14 @@
         }
 
         //保存信托合同信息
-        function saveContractInfo(id) {
+        function saveContractInfo(id, uuid, bsid, regitem_id, productid, productcode) {
             let tjdNos = new Object();
             tjdNos.id = id;
+            tjdNos.uuid = uuid;
+            tjdNos.bsid = bsid;
+            tjdNos.regitem_id = regitem_id;
+            tjdNos.productid = productid;
+            tjdNos.productcode = productcode;
             tjdNos.zytabs=$("#zytabs").val();
             tjdNos.xthtbh=$("#xthtbh").val();
             let htjzs = $("input:checkbox[name='htjz']:checked");
@@ -511,13 +524,23 @@
                 data: tjdNos,
                 //请求成功
                 success: function (data) {
-                    alert("信托合同保存成功！");
+                    if (data.code == "1") {
+                        returnContractList(uuid);
+                        alert("信托合同保存成功！");
+                    } else {
+                        alert("信托合同保存失败！");
+                    }
                 },
                 //请求失败，包含具体的错误信息
                 error: function (e) {
-                    alert("信托合同保存失败！");
+                    alert("数据请求异常！");
                 }
             });
+        }
+
+        //返回合同列表
+        function returnContractList(uuid) {
+            $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtList.html" + '?uuid=' + uuid);
         }
 
         //初始化数据字典

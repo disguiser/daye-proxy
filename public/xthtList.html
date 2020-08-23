@@ -24,6 +24,9 @@
 </style>
 
 <body>
+    <div style="text-align: left;">
+        &nbsp;&nbsp;<button type="button" id="btnAdd" class="btn btn-danger">创 建</button>
+    </div>
     <table id="xthtList"></table>
 </body>
     
@@ -32,8 +35,16 @@
         let ydjData = new Object();
         $(function () {
             let uuid = GetQueryValue('uuid');
+            let bsid = GetQueryValue('bsid');
+            let regitem_id = GetQueryValue('regitem_id');
+            let productid = GetQueryValue('productid');
+            let productcode = GetQueryValue('productcode');
             
             find_app_dfs_zxd_csxtht_by_uuid(uuid);
+
+            $("#btnAdd").click(function(){
+                $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtInfo.html" + '?id=0' + '&uuid=' + uuid + '&bsid=' + bsid + '&regitem_id=' + regitem_id + '&productid=' + productid + '&productcode=' + productcode);
+            });
         });
         
         //查询预登记-信托合同要素集合
@@ -64,9 +75,6 @@
                     field: 'htcszje',
                     title: '合同初始金额'
                 }, {
-                    field: 'htcszfe',
-                    title: '合同初始份额'
-                }, {
                     field: 'syrmc',
                     title: '受益人全称'
                 }, {
@@ -84,16 +92,47 @@
                 }, {
                     title: '操作',
                     align: 'center',
+                    width: 80,
                     formatter:function(value,row,index){
-                        return `<a href="javascript:updateContract('`+row.id+`', '`+uuid+`')">编辑</a> `;
+                        return `<a href="javascript:updateContract('`+row.id+`', '`+uuid+`','`+row.bsid+`','`+row.regitem_id+`','`+row.productid+`','`+row.productcode+`')">编辑</a> `
+                              +`<a href="javascript:deleteContract('`+row.id+`', '`+uuid+`')">删除</a> `;
                     }
                 }]
             });
         }
 
         //合同编辑
-        function updateContract(id, uuid) {
-            $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtInfo.html" + '?id=' + id + '&uuid=' + uuid);
+        function updateContract(id, uuid, bsid, regitem_id, productid, productcode) {
+            $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtInfo.html" + '?id=' + id + '&uuid=' + uuid + '&bsid=' + bsid + '&regitem_id=' + regitem_id + '&productid=' + productid + '&productcode=' + productcode);
+        }
+
+        //合同删除
+        function deleteContract(id, uuid) {
+            let tjdNos = new Object();
+            tjdNos.id = id;
+            jQuery.ajax({
+                //请求方式
+                type: "POST",
+                //请求地址
+                url: "/node/delete_app_dfs_zxd_csxtht",
+                //数据，json对象
+                data: tjdNos,
+                //请求成功
+                success: function (data) {
+                    if (data.code == "1") {
+                        alert("信托合同删除成功！");
+                        $('#xthtList').bootstrapTable('refresh');
+                    } else if (data.code == "3") {
+                        alert("信托合同ID为空！");
+                    } else {
+                        alert("信托合同删除失败！");
+                    }
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    alert("数据请求异常！");
+                }
+            });
         }
 
         //获取GET参数

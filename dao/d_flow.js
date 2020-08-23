@@ -680,48 +680,81 @@ let insert_app_dfs_zxd_csxtht = async (data) => {
     if(data.syrxh=='') data.syrxh=null;
     if(data.syqcsfe=='') data.syqcsfe=null;
     if(data.syqcsje=='') data.syqcsje=null;
-    //再保存
-    // await dfs.query(`INSERT INTO APP_DFS_ZXD_CSXTHT(relation_uuid,task_code,regitem_id,product_id,product_code,zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm) values(
-    //         '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.zytabs}','${data.xthtbh}','${data.htjz}','${data.wtrqc}','${data.wtrlx}','${data.lxxq_wtr}','${data.wtrzjlx}','${data.wtrzjhm}',${data.htcszje},${data.htcszfe},'${data.xtccxz}','${data.zjjsbz}',${data.wtzjje},${data.wtccdyje},'${data.wtcccclx}',${data.syrxh},'${data.syrmc}','${data.syrlx}','${data.lxxq_syr}','${data.syrzjlx}','${data.syrzjhm}','${data.syqdm}','${data.sfkssyqzh_syr}','${data.syqzhbm_syr}',${data.syqcsfe},${data.syqcsje},'${data.syqqsr}','${data.syqjhdqr}','${data.syryxlhbs}','${data.qksm}'
-    //     )`)
-    await dfs.query(`update APP_DFS_ZXD_CSXTHT set
-                                                zytabs           = '${data.zytabs}',
-                                                xthtbh           = '${data.xthtbh}',
-                                                htjz             = '${data.htjz}',
-                                                wtrqc            = '${data.wtrqc}',
-                                                wtrlx            = '${data.wtrlx}',
-                                                lxxq_wtr         = '${data.lxxq_wtr}',
-                                                wtrzjlx          = '${data.wtrzjlx}',
-                                                wtrzjhm          = '${data.wtrzjhm}',
-                                                htcszje          = ${data.htcszje},
-                                                htcszfe          = ${data.htcszfe},
-                                                xtccxz           = '${data.xtccxz}',
-                                                zjjsbz           = '${data.zjjsbz}',
-                                                wtzjje           = ${data.wtzjje},
-                                                wtccdyje         = ${data.wtccdyje},
-                                                wtcccclx         = '${data.wtcccclx}',
-                                                syrxh            = ${data.syrxh},
-                                                syrmc            = '${data.syrmc}',
-                                                syrlx            = '${data.syrlx}',
-                                                lxxq_syr         = '${data.lxxq_syr}',
-                                                syrzjlx          = '${data.syrzjlx}',
-                                                syrzjhm          = '${data.syrzjhm}',
-                                                syqdm            = '${data.syqdm}',
-                                                sfkssyqzh_syr    = '${data.sfkssyqzh_syr}',
-                                                syqzhbm_syr      = '${data.syqzhbm_syr}',
-                                                syqcsfe          = ${data.syqcsfe},
-                                                syqcsje          = ${data.syqcsje},
-                                                syqqsr           = '${data.syqqsr}',
-                                                syqjhdqr         = '${data.syqjhdqr}',
-                                                syryxlhbs        = '${data.syryxlhbs}',
-                                                qksm             = '${data.qksm}'
-                                                where id         = ${data.id}`)
-        .then(function (result) {
-            return "1";
-        })
-        .catch(function (error) {
-            return "2";
-        });
+
+    let code = "";
+
+    if (data.id == "0") {
+        await dfs.query(`INSERT INTO APP_DFS_ZXD_CSXTHT(relation_uuid,task_code,regitem_id,product_id,product_code,zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm) values(
+                '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.zytabs}','${data.xthtbh}','${data.htjz}','${data.wtrqc}','${data.wtrlx}','${data.lxxq_wtr}','${data.wtrzjlx}','${data.wtrzjhm}',${data.htcszje},${data.htcszfe},'${data.xtccxz}','${data.zjjsbz}',${data.wtzjje},${data.wtccdyje},'${data.wtcccclx}',${data.syrxh},'${data.syrmc}','${data.syrlx}','${data.lxxq_syr}','${data.syrzjlx}','${data.syrzjhm}','${data.syqdm}','${data.sfkssyqzh_syr}','${data.syqzhbm_syr}',${data.syqcsfe},${data.syqcsje},'${data.syqqsr}','${data.syqjhdqr}','${data.syryxlhbs}','${data.qksm}'
+            )`)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    } else {
+        await dfs.query(`update APP_DFS_ZXD_CSXTHT set
+                                                    zytabs           = '${data.zytabs}',
+                                                    xthtbh           = '${data.xthtbh}',
+                                                    htjz             = '${data.htjz}',
+                                                    wtrqc            = '${data.wtrqc}',
+                                                    wtrlx            = '${data.wtrlx}',
+                                                    lxxq_wtr         = '${data.lxxq_wtr}',
+                                                    wtrzjlx          = '${data.wtrzjlx}',
+                                                    wtrzjhm          = '${data.wtrzjhm}',
+                                                    htcszje          = ${data.htcszje},
+                                                    htcszfe          = ${data.htcszfe},
+                                                    xtccxz           = '${data.xtccxz}',
+                                                    zjjsbz           = '${data.zjjsbz}',
+                                                    wtzjje           = ${data.wtzjje},
+                                                    wtccdyje         = ${data.wtccdyje},
+                                                    wtcccclx         = '${data.wtcccclx}',
+                                                    syrxh            = ${data.syrxh},
+                                                    syrmc            = '${data.syrmc}',
+                                                    syrlx            = '${data.syrlx}',
+                                                    lxxq_syr         = '${data.lxxq_syr}',
+                                                    syrzjlx          = '${data.syrzjlx}',
+                                                    syrzjhm          = '${data.syrzjhm}',
+                                                    syqdm            = '${data.syqdm}',
+                                                    sfkssyqzh_syr    = '${data.sfkssyqzh_syr}',
+                                                    syqzhbm_syr      = '${data.syqzhbm_syr}',
+                                                    syqcsfe          = ${data.syqcsfe},
+                                                    syqcsje          = ${data.syqcsje},
+                                                    syqqsr           = '${data.syqqsr}',
+                                                    syqjhdqr         = '${data.syqjhdqr}',
+                                                    syryxlhbs        = '${data.syryxlhbs}',
+                                                    qksm             = '${data.qksm}'
+                                                    where id         = ${data.id}`)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    }
+    
+    return {code};
+}
+
+//删除预登记-信托合同要素集合
+let delete_app_dfs_zxd_csxtht = async (data) => {
+    let code = "";
+
+    if (data.id != "0") {
+        await dfs.query(`DELETE FROM APP_DFS_ZXD_CSXTHT WHERE ID = ${data.id}
+            `)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    } else {
+        code = "3";
+    }
+    
+    return {code};
 }
 
 //保存预登记-银行资金账户要素集合
@@ -1145,6 +1178,7 @@ module.exports = {
     insert_app_dfs_zxd_csjyds: insert_app_dfs_zxd_csjyds,
     insert_app_dfs_zxd_cssyq: insert_app_dfs_zxd_cssyq,
     insert_app_dfs_zxd_csxtht: insert_app_dfs_zxd_csxtht,
+    delete_app_dfs_zxd_csxtht: delete_app_dfs_zxd_csxtht,
     insert_app_dfs_zxd_yhzjzh: insert_app_dfs_zxd_yhzjzh,
     insert_app_dfs_zxd_cszqzh: insert_app_dfs_zxd_cszqzh,
     find_app_dfs_zxd_zzcpxx_by_regitem_id: find_app_dfs_zxd_zzcpxx_by_regitem_id,

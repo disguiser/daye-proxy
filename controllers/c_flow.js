@@ -1369,6 +1369,13 @@ module.exports = function (router) {
         ctx.response.body = product_info
     });
 
+    //删除预登记-信托合同要素集合
+    router.post('/delete_app_dfs_zxd_csxtht', async (ctx, next) => {
+        let data = ctx.request.body;
+        let product_info = await d_flow.delete_app_dfs_zxd_csxtht(data);
+        ctx.response.body = product_info
+    });
+
     //保存预登记-银行资金账户要素集合
     router.post('/insert_app_dfs_zxd_yhzjzh', async (ctx, next) => {
         let data = ctx.request.body;

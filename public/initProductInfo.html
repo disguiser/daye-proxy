@@ -91,7 +91,7 @@
                             <span class="required">*</span>信托产品名称:
                         </td>
                         <td style="width: 30%;">
-                            <input type="text" id="cpqc" name="cpqc" style="width: 320px;" disabled="disabled">
+                            <input type="text" id="cpqc" name="cpqc" style="width: 320px;">
                         </td>
                     </tr>
                     <tr>
@@ -113,15 +113,18 @@
                             <span class="required">*</span>分期发行标识:
                         </td>
                         <td>
-                            <input type="radio" name="sfxtzcp" value="0" />否
-                            <input type="radio" name="sfxtzcp" value="1" />是
+                            <input type="radio" name="sfxtzcp" value="0" onchange="javascript:changeInfo('10')"/>否
+                            <input type="radio" name="sfxtzcp" value="1" onchange="javascript:changeInfo('11')"/>是
                         </td>
                         <td>
                             三单标识:
                         </td>
                         <td>
-                            <input type="radio" name="sdbs" value="0" />否
-                            <input type="radio" name="sdbs" value="1" />是
+							<select id="sdbs" name="sdbs" style="width: 320px;">
+								<option value=""></option>
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -156,8 +159,11 @@
                             财产权信托进行受益权拆分转让或者对外发行受益权标识:
                         </td>
                         <td>
-                            <input type="radio" name="ccqxtcfzr" value="0" />否
-                            <input type="radio" name="ccqxtcfzr" value="1" />是
+							<select id="ccqxtcfzr" name="ccqxtcfzr" style="width: 320px;">
+								<option value=""></option>
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -313,6 +319,7 @@
                         </td>
                         <td>
                             <select id="yqmjzebz" name="yqmjzebz" style="width: 320px;">
+								<option value=""></option>
 
                             </select>
                         </td>
@@ -347,6 +354,7 @@
                         </td>
                         <td>
                             <select id="ccglyyfs" name="ccglyyfs" style="width: 320px;">
+								<option value=""></option>
                                 <option value="a">信托贷款</option>
                                 <option value="b">资产及其收（受）益权（附回购）</option>
                                 <option value="c">资产及其收（受）益权（不附回购）</option>
@@ -365,6 +373,7 @@
                         </td>
                         <td>
                             <select id="ccglyyfs_ccq" name="ccglyyfs_ccq" style="width: 320px;">
+								<option value=""></option>
                                 <option value="a">出售</option>
                                 <option value="b">出租</option>
                                 <option value="c">资产证券化</option>
@@ -426,7 +435,7 @@
                             <span class="required">*</span>收益率类型:
                         </td>
                         <td>
-                            <select id="syllx" name="syllx" style="width: 320px;">
+                            <select id="syllx" name="syllx" style="width: 320px;" onchange="javascript:changeInfo('5')">
                                 <option value="0">基准收益率</option>
                                 <option value="1">基准+浮动</option>
                                 <option value="2">浮动收益率（含净值型产品）</option>
@@ -437,7 +446,7 @@
                             基准收益率(下限):
                         </td>
                         <td>
-                            <input type="number" id="zdyqsyl" name="zdyqsyl" style="width: 320px;">
+                            <input type="number" id="zdyqsyl" name="zdyqsyl" style="width: 280px;">(%)
                         </td>
                     </tr>
                     <tr>
@@ -451,7 +460,7 @@
                             <span class="required">*</span>信托报酬类型:
                         </td>
                         <td>
-                            <select id="xtbclx" name="xtbclx" style="width: 320px;">
+                            <select id="xtbclx" name="xtbclx" style="width: 320px;" onchange="javascript:changeInfo('6')">
                                 <option value="0">固定</option>
                                 <option value="1">固定+浮动</option>
                                 <option value="2">浮动</option>
@@ -483,8 +492,8 @@
                             <span class="required">*</span>风险项目标识:
                         </td>
                         <td>
-                            <input type="radio" name="fxxmbs" value="0" />否
-                            <input type="radio" name="fxxmbs" value="1" />是
+                            <input type="radio" name="fxxmbs" value="0" onchange="javascript:changeInfo('3')"/>否
+                            <input type="radio" name="fxxmbs" value="1" onchange="javascript:changeInfo('3')"/>是
                         </td>
                     </tr>
                     <tr>
@@ -493,6 +502,7 @@
                         </td>
                         <td>
                             <select id="fxtzbs" name="fxtzbs" style="width: 320px;">
+							    <option value=""></option>
                                 <option value="0">未入台帐</option>
                                 <option value="1">调入台帐</option>
                                 <option value="2">调出台帐</option>
@@ -504,6 +514,7 @@
                         </td>
                         <td>
                             <select id="fxczjz" name="fxczjz" style="width: 320px;">
+								<option value=""></option>
                                 <option value="0">兑付风险未化解</option>
                                 <option value="1">已无兑付风险但实质风险未化解</option>
                                 <option value="2">实质风险已化解</option>
@@ -563,6 +574,7 @@
                         </td>
                         <td>
                             <select id="kfpd" name="kfpd" style="width: 320px;">
+								<option value=""></option>
                                 <option value="0">日</option>
                                 <option value="1">周</option>
                                 <option value="2">双周</option>
@@ -637,8 +649,11 @@
                             是否估值:
                         </td>
                         <td>
-                            <input type="radio" name="sfgz" value="0" />否
-                            <input type="radio" name="sfgz" value="1" />是
+							<select id="sfgz" name="sfgz" style="width: 320px;" onchange="javascript:changeInfo('7')">
+								<option value=""></option>
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -657,6 +672,7 @@
                         </td>
                         <td>
                             <select id="gzcj" name="gzcj" style="width: 320px;">
+								<option value=""></option>
                                 <option value="0">信托产品本层</option>
                                 <option value="1">信托产品下层</option>
                                 <option value="2">信托产品上层</option>
@@ -668,18 +684,17 @@
                             估值机构:
                         </td>
                         <td>
-                            <select id="gzjg" name="gzjg" style="width: 320px;">
-                                <option value="0">信托公司</option>
-                                <option value="1">托管人</option>
-                                <option value="2">投资顾问</option>
-                                <option value="3">其他</option>
-                            </select>
+                            <input type="checkbox" id="gzjg0" name="gzjg" value="0">信托公司<br>
+                            <input type="checkbox" id="gzjg1" name="gzjg" value="1"/>托管人<br>
+                            <input type="checkbox" id="gzjg2" name="gzjg" value="2"/>投资顾问<br>
+                            <input type="checkbox" id="gzjg3" name="gzjg" value="3"/>其他<br>
                         </td>
                         <td>
                             净值评估频度:
                         </td>
                         <td>
                             <select id="jzpgpd" name="jzpgpd" style="width: 320px;">
+								<option value=""></option>
                                 <option value="0">工作日</option>
                                 <option value="1">自然日</option>
                                 <option value="2">周</option>
@@ -746,8 +761,8 @@
                             <span class="required">*</span>关联交易标识:
                         </td>
                         <td>
-                            <input type="radio" name="gljybs" value="0" />否
-                            <input type="radio" name="gljybs" value="1" />是
+                            <input type="radio" name="gljybs" value="0" onchange="javascript:changeInfo('4')"/>否
+                            <input type="radio" name="gljybs" value="1" onchange="javascript:changeInfo('4')"/>是
                         </td>
                         <td>
                             关联交易类型:
@@ -801,6 +816,7 @@
                         </td>
                         <td>
                             <select id="jzplpd" name="jzplpd" style="width: 320px;">
+								<option value=""></option>
                                 <option value="0">工作日</option>
                                 <option value="1">自然日</option>
                                 <option value="2">周</option>
@@ -1000,11 +1016,12 @@
                     $("#djcpbh").val(data.djcpbh);
                     $("#gscpbh").val(data.gscpbh);
                     $("input[name='sfxtzcp'][value="+data.sfxtzcp+"]").attr("checked", true);
-                    $("input[name='sdbs'][value="+data.sdbs+"]").attr("checked", true);
+					$("#sdbs").val(data.sdbs);
                     $("#fqzcpnbbh").val(data.fqzcpnbbh);
                     $("#xtccxz").val(data.xtccxz);
+					if(data.xtccxz=="0") changeInfo(1);
                     $("#dyjhbz").val(data.dyjhbz);
-                    $("input[name='ccqxtcfzr'][value="+data.ccqxtcfzr+"]").attr("checked", true);
+					$("#ccqxtcfzr").val(data.ccqxtcfzr);
                     $("#stzz").val(data.stzz);
                     $("#xtgn").val(data.xtgn);
                     $("#yxfs").val(data.yxfs);
@@ -1023,6 +1040,7 @@
                     $("#yqmjzje").val(data.yqmjzje);
                     $("#yqmjzfe").val(data.yqmjzfe);
                     initSelect("yqmjzebz", "Init011", data.yqmjzebz);
+					if(data.sfxtzcp=="0") changeInfo(10);
                     $("#zyyyly_ctq").val(data.zyyyly_ctq);
                     initSelect("zytxhy_ctq", "Init013", data.zytxhy_ctq);
                     $("#ccglyyfs").val(data.ccglyyfs);
@@ -1050,6 +1068,7 @@
                         $("#fxhscs"+value).attr("checked", "checked");
                     });
                     $("#fxczcsbhbcsm").val(data.fxczcsbhbcsm);
+					if(data.fxxmbs=='0') changeInfo('3');
                     $("input[name='sfgdqxcp'][value="+data.sfgdqxcp+"]").attr("checked", true);
                     $("#xtcpsjclrq").val(data.xtcpsjclrq);
                     $("#cpjhdqr").val(data.cpjhdqr);
@@ -1066,11 +1085,15 @@
                     });
                     $("input[name='ydtjbs'][value="+data.ydtjbs+"]").attr("checked", true);
                     $("#xmtjf").val(data.xmtjf);
-                    $("input[name='sfgz'][value="+data.sfgz+"]").attr("checked", true);
+					$("#sfgz").val(data.sfgz);
                     $("#gzms").val(data.gzms);
                     $("#gzcj").val(data.gzcj);
-                    $("#gzjg").val(data.gzjg);
+                    let gzjg = data.gzjg.split(",");
+                    $.each(gzjg, function (index, value) {
+                        $("#gzjg"+value).attr("checked", "checked");
+                    });					
                     $("#jzpgpd").val(data.jzpgpd);
+					if(data.sfgz=="0" || data.sfgz=="") changeInfo(7);
                     $("#jntgjg").val(data.jntgjg);
                     $("#jwtgdljg").val(data.jwtgdljg);
                     $("#jwtgdljggb").val(data.jwtgdljggb);
@@ -1092,6 +1115,7 @@
                     });
                     $("#gljymd").val(data.gljymd);
                     $("#gljydj").val(data.gljydj);
+					if(data.grjgbs=='0') changeInfo('4');
                     $("#jzplpd").val(data.jzplpd);
                     $("#zcglbgpd").val(data.zcglbgpd);
                     $("input[name='qsbgplbs'][value="+data.qsbgplbs+"]").attr("checked", true);
@@ -1238,7 +1262,7 @@
 			if(djlx=="8") setFormValue('djcpbh','');
 			//三单标识+第一期产品信托登记系统产品编码控制
 			var sfxtzcp=getRadioValue('sfxtzcp');
-			var sdbs=getRadioValue('sdbs');
+			var sdbs=getFormValue('sdbs');
 			var fqzcpnbbh=getFormValue('fqzcpnbbh');
 			if(sfxtzcp =="1" && (typeof(sdbs)=="undefined" || sdbs==null  || sdbs=='')){
 				alert("[分期发行标识]选择【是】时,[三单标识]为必填项!");
@@ -1251,19 +1275,19 @@
 				return false;
 			}
 			if(sfxtzcp =="0"){
-				setRadioValue('sdbs','');
+				setFormValue('sdbs','');
 				setFormValue('fqzcpnbbh','');
 			}
 			//财产权信托进行受益权拆分转让或者对外发行受益权标识控制
 			var xtccxz=getFormValue('xtccxz');
-			var ccqxtcfzr=getRadioValue('ccqxtcfzr');
+			var ccqxtcfzr=getFormValue('ccqxtcfzr');
 			if((xtccxz=="1" || xtccxz=="2") && (typeof(ccqxtcfzr)=="undefined" || ccqxtcfzr==null  || ccqxtcfzr==''))
 			{
 				alert("当[信托财产性质标识]勾选【财产权】或【混合】时,字段[财产权信托进行受益权拆分转让或者对外发行受益权标识]为必填项!");
 				$("input[name=ccqxtcfzr]").focus();
 				return false;
 			}
-			if(xtccxz=="0") setRadioValue('ccqxtcfzr','');
+			if(xtccxz=="0") getFormValue('ccqxtcfzr','');
 			//受益方式说明控制
 			var xtsyfs=getFormValue('xtsyfs');
 			var syfssm=getFormValue('syfssm');
@@ -1408,10 +1432,10 @@
 			if(kffbbs=="0") getFormValue('kfpd','');	
 			//是否估值
 			var yxfs=getFormValue('yxfs');
-			var sfgz=getRadioValue('sfgz');
+			var sfgz=getFormValue('sfgz');
 			var gzms=getFormValue('gzms');
 			var gzcj=getFormValue('gzcj');
-			var gzjg=getFormValue('gzjg');
+			var gzjg=getBoxValue('gzjg');
 			var jzpgpd=getFormValue('jzpgpd');
 			if(yxfs=="0" && (typeof(sfgz)=="undefined" || sfgz==null  || sfgz==''))
 			{
@@ -1610,11 +1634,11 @@
             ydjData.djcpbh = $("#djcpbh").val();
             ydjData.gscpbh = $("#gscpbh").val();
             ydjData.sfxtzcp = $("input[name='sfxtzcp']:checked").val();
-            ydjData.sdbs = $("input[name='sdbs']:checked").val();
+			ydjData.sdbs = $("#sdbs").val();
             ydjData.fqzcpnbbh = $("#fqzcpnbbh").val();
             ydjData.xtccxz = $("#xtccxz").val();
             ydjData.dyjhbz = $("#dyjhbz").val();
-            ydjData.ccqxtcfzr = $("input[name='ccqxtcfzr']:checked").val();
+			ydjData.ccqxtcfzr = $("#ccqxtcfzr").val();
             ydjData.stzz = $("#stzz").val();
             ydjData.xtgn = $("#xtgn").val();
             ydjData.yxfs = $("#yxfs").val();
@@ -1684,10 +1708,14 @@
             ydjData.tjmj = chtjmjs.join(",");
             ydjData.ydtjbs = $("input[name='ydtjbs']:checked").val();
             ydjData.xmtjf = $("#xmtjf").val();
-            ydjData.sfgz = $("input[name='sfgz']:checked").val();
+            ydjData.sfgz = $("#sfgz").val();
             ydjData.gzms = $("#gzms").val();
             ydjData.gzcj = $("#gzcj").val();
-            ydjData.gzjg = $("#gzjg").val();
+			let gzjgs = $("input:checkbox[name='gzjg']:checked");
+            let chgzjg = [];
+            $.each(gzjgs, function () {
+                chgzjg.push($(this).val());
+            });			
             ydjData.jzpgpd = $("#jzpgpd").val();
             ydjData.jntgjg = $("#jntgjg").val();
             ydjData.jwtgdljg = $("#jwtgdljg").val();
@@ -1755,7 +1783,115 @@
 		//初始登记填报说明
         function inputContent(){
 			window.open('/node/tianbao.html?type=2','_blank','');
-		}	
+		}
+        //选择发生值变化
+        function changeInfo(no) {
+            if(no=="1"){
+				var xtccxz=getFormValue('xtccxz');
+				if(xtccxz=="0")
+				{			
+					$('#ccqxtcfzr').attr("disabled",true);
+				}				
+			}else if(no=="2"){
+				var xtxmzqxlx=getFormValue('xtxmzqxlx');
+				if(xtxmzqxlx=="1")
+				{			
+					setFormValue('zdgdqxzfw','');	
+					setFormValue('zggdqxzfw','');
+				}				
+			}else if(no=="3"){
+				var fxxmbs=getRadioValue('fxxmbs');
+				if(fxxmbs=="0")
+				{
+					$('#fxtzbs').attr("disabled",true);
+					$('#fxczjz').attr("disabled",true);
+					$('#fxhscsnew').attr("disabled",true);				
+					setFormValue('fxtzbs','');		
+					setFormValue('fxczjz','');	
+					setFormValue('fxhscsnew','');	
+				}else{
+					$('#fxtzbs').attr("disabled",false);
+					$('#fxczjz').attr("disabled",false);
+					$('#fxhscsnew').attr("disabled",false);				
+				}
+			}else if(no=="4"){
+				var gljybs=getRadioValue('gljybs');
+				if(gljybs=="0")
+				{
+					for(var i=0;i<=4;i++) $('#gljylx'+i).attr("disabled",true);
+					for(var i=0;i<=7;i++) $('#gllx'+i).attr("disabled",true);
+					$('#gljymd').attr("disabled",true);
+					$('#gljydj').attr("disabled",true);				
+					setBoxValue('gljylx','');
+					setBoxValue('gllx','');
+					setFormValue('gljymd','');
+					setFormValue('gljydj','');
+				}else{
+					for(var i=0;i<=4;i++) $('#gljylx'+i).attr("disabled",false);
+					for(var i=0;i<=7;i++) $('#gllx'+i).attr("disabled",false);
+					$('#gljymd').attr("disabled",false);
+					$('#gljydj').attr("disabled",false);
+				}
+			}else if(no=="5"){
+				var syllx=getFormValue('syllx');
+				if(syllx=="2" || syllx=="9")
+				{
+					setFormValue('zdyqsyl','');	
+					setFormValue('zgyqsyl','');
+				}
+			}else if(no=="6"){
+				var xtbclx=getFormValue('xtbclx');
+				if(xtbclx=="2")
+				{	
+					$('#xtbcl').attr("disabled",true);
+					$('#xtbc').attr("disabled",true);
+					setFormValue('xtbcl','');	
+					setFormValue('xtbc','');
+				}else{
+					$('#xtbcl').attr("disabled",false);
+					$('#xtbc').attr("disabled",false);
+				}
+			}else if(no=="7"){
+				var sfgz=getFormValue('sfgz');
+				if(sfgz=="0" || sfgz=="")
+				{	
+					$('#gzms').attr("disabled",true);
+					$('#gzcj').attr("disabled",true);
+					for(var i=0;i<=3;i++) $('#gzjg'+i).attr("disabled",true);
+					$('#jzpgpd').attr("disabled",true);
+					setFormValue('gzms','');
+					setFormValue('gzcj','');	
+					setBoxValue('gzjg','');	
+					setFormValue('jzpgpd','');
+				}else{
+					$('#gzms').attr("disabled",false);
+					$('#gzcj').attr("disabled",false);
+					for(var i=0;i<=3;i++) $('#gzjg'+i).attr("disabled",false);
+					$('#jzpgpd').attr("disabled",false);					
+				}
+			}else if(no=="10" || no=="11"){
+				var sfxtzcp=getRadioValue('sfxtzcp');
+				if(sfxtzcp=="0")
+				{	
+					$('#fqzcpnbbh').attr("disabled",true);
+					$('#sdbs').attr("disabled",true);
+					setFormValue('fqzcpnbbh','');
+					setFormValue('sdbs','');
+					$('#yqmjzje').attr("disabled",true);
+					$('#yqmjzfe').attr("disabled",true);
+					$('#yqmjzebz').attr("disabled",true);
+					setFormValue('yqmjzje','');
+					setFormValue('yqmjzfe','');
+					setFormValue('yqmjzebz','');					
+				}else{
+					$('#fqzcpnbbh').attr("disabled",false);
+					$('#sdbs').attr("disabled",false);	
+					$('#yqmjzje').attr("disabled",false);
+					$('#yqmjzfe').attr("disabled",false);
+					$('#yqmjzebz').attr("disabled",false);					
+				}
+			}
+        }		
     </script>
 
 

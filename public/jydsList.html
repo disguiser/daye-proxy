@@ -122,36 +122,39 @@
 
         //删除交易对手要素
         function delJydsys(no) {
-            let id = $("#id" + no).val();
-            if (id != 0) {
-                let tjdNos = new Object();
-                tjdNos.id = id;
-                jQuery.ajax({
-                    //请求方式
-                    type: "POST",
-                    //请求地址
-                    url: "/node/delete_app_dfs_zxd_csjyds",
-                    //数据，json对象
-                    data: tjdNos,
-                    //请求成功
-                    success: function (data) {
-                        if (data.code == "1") {
-                            $("#jydsysDiv" + no).remove();
-                            alert("交易对手删除成功！");
-                        } else if (data.code == "3") {
-                            alert("交易对手ID为空！");
-                        } else {
-                            alert("交易对手删除失败！");
-                        }
-                    },
-                    //请求失败，包含具体的错误信息
-                    error: function (e) {
-                        alert("数据请求异常！");
-                    }
-                });
-            } else {
-                $("#jydsysDiv" + no).remove();
-            }
+			if (confirm("确定执行交易对手删除操作吗？"))
+			{		
+				let id = $("#id" + no).val();
+				if (id != 0) {
+					let tjdNos = new Object();
+					tjdNos.id = id;
+					jQuery.ajax({
+						//请求方式
+						type: "POST",
+						//请求地址
+						url: "/node/delete_app_dfs_zxd_csjyds",
+						//数据，json对象
+						data: tjdNos,
+						//请求成功
+						success: function (data) {
+							if (data.code == "1") {
+								$("#jydsysDiv" + no).remove();
+								alert("交易对手删除成功！");
+							} else if (data.code == "3") {
+								alert("交易对手ID为空！");
+							} else {
+								alert("交易对手删除失败！");
+							}
+						},
+						//请求失败，包含具体的错误信息
+						error: function (e) {
+							alert("数据请求异常！");
+						}
+					});
+				} else {
+					$("#jydsysDiv" + no).remove();
+				}
+			}
         }
 		//保存之前必输项校验
 		function requiredCheck(){

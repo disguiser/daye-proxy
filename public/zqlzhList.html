@@ -45,12 +45,153 @@
 
             //保存证券类账户
             $("#btnSave").click(function() {
-                saveZqlzh(uuid, bsid, regitem_id, productid, productcode);
+				//保存之前必输项校验
+				let value=requiredCheck();
+				if(value=="0"){				
+					saveZqlzh(uuid, bsid, regitem_id, productid, productcode);
+				}
             });
 
             //加载证券类账户
             find_app_dfs_zxd_cszqzh_by_uuid(uuid);
+			changeInfo(1);
+			changeInfo(2);
+			changeInfo(3);
         });
+		//日期格式化处理
+		Date.prototype.Format = function(fmt)  
+		{ 
+			var o = {  
+				"M+" : this.getMonth()+1,         //月份  
+				"d+" : this.getDate(),          //日  
+				"h+" : this.getHours(),          //小时  
+				"m+" : this.getMinutes(),         //分  
+				"s+" : this.getSeconds(),         //秒  
+				"q+" : Math.floor((this.getMonth()+3)/3), //季度  
+				"S" : this.getMilliseconds()       //毫秒  
+			};  
+			if(/(y+)/.test(fmt))  
+				fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));  
+			for(var k in o)  
+				if(new RegExp("("+ k +")").test(fmt))  
+			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));  
+			return fmt;  
+		}		
+		
+		//保存之前必输项校验
+		function requiredCheck(){
+			let value = "0";	
+			//是否开立证券资金账户控制
+			no=1;
+			var sfqgtj=$("input[name='sfklzqzh" + no + "']:checked").val();
+			var zqzjzhzh=$("#zqzjzhzh" + no).val();
+			var zqgsmc=$("#zqgsmc" + no).val();
+			var zqgskhyyb=$("#zqgskhyyb" + no).val();
+			var zqjyxtlx=$("#zqjyxtlx" + no).val();
+			var wgzqjyxtcs=$("#wgzqjyxtcs" + no).val();
+			var zqzjzhkhrq=$("#zqzjzhkhrq" + no).val();
+			if(sfqgtj =="1" && (typeof(zqzjzhzh)=="undefined" || zqzjzhzh.length==0  || zqzjzhzh.length=='')){
+				alert("[是否开立证券资金账户]选择【是】时,[证券资金账户账号]为必填项!");
+				value="1";
+			}
+			else if(sfqgtj =="1" && (typeof(zqgsmc)=="undefined" || zqgsmc.length==0  || zqgsmc.length=='')){
+				alert("[是否开立证券资金账户]选择【是】时,[证券公司名称]为必填项!");
+				value="1";
+			}
+			else if(sfqgtj =="1" && (typeof(zqgskhyyb)=="undefined" || zqgskhyyb.length==0  || zqgskhyyb.length=='')){
+				alert("[是否开立证券资金账户]选择【是】时,[证券公司开户营业部]为必填项!");
+				value="1";
+			}
+			else if(sfqgtj =="1" && (typeof(zqjyxtlx)=="undefined" || zqjyxtlx==null || zqjyxtlx.length==0  || zqjyxtlx.length=='')){
+				alert("[是否开立证券资金账户]选择【是】时,[证券交易系统类型]为必填项!");
+				value="1";
+			}
+			else if(sfqgtj =="1" && (typeof(wgzqjyxtcs)=="undefined" || wgzqjyxtcs==null || wgzqjyxtcs.length==0  || wgzqjyxtcs.length=='')){
+				alert("[是否开立证券资金账户]选择【是】时,[外购证券交易系统厂商]为必填项!");
+				value="1";
+			}
+			else if(sfqgtj =="1" && (typeof(zqzjzhkhrq)=="undefined" || zqzjzhkhrq.length==0  || zqzjzhkhrq.length=='')){
+				alert("[是否开立证券资金账户]选择【是】时,[开户日期]为必填项!");
+				value="1";
+			}		
+			//是否开立期货交易资金账户控制
+			var sfklqhjyzjzh=$("input[name='sfklqhjyzjzh" + no + "']:checked").val();
+			var qhjyzjzhhm=$("#qhjyzjzhhm" + no).val();
+			var qhjyzjzhzh=$("#qhjyzjzhzh" + no).val();
+			var qhgsqc=$("#qhgsqc" + no).val();
+			var khyyb=$("#khyyb" + no).val();
+			var qhjyzhkhrq=$("#qhjyzhkhrq" + no).val();
+			if(sfklqhjyzjzh =="1" && (typeof(qhjyzjzhhm)=="undefined" || qhjyzjzhhm.length==0  || qhjyzjzhhm.length=='')){
+				alert("[是否开立期货交易资金账户]选择【是】时,[期货交易资金账户户名]为必填项!");
+				value="1";
+			}
+			else if(sfklqhjyzjzh =="1" && (typeof(qhjyzjzhzh)=="undefined" || qhjyzjzhzh.length==0  || qhjyzjzhzh.length=='')){
+				alert("[是否开立期货交易资金账户]选择【是】时,[期货交易资金账户账号]为必填项!");
+				value="1";
+			}
+			else if(sfklqhjyzjzh =="1" && (typeof(qhgsqc)=="undefined" || qhgsqc.length==0  || qhgsqc.length=='')){
+				alert("[是否开立期货交易资金账户]选择【是】时,[期货公司全称]为必填项!");
+				value="1";
+			}
+			else if(sfklqhjyzjzh =="1" && (typeof(khyyb)=="undefined" || khyyb.length==0  || khyyb.length=='')){
+				alert("[是否开立期货交易资金账户]选择【是】时,[开户营业部]为必填项!");
+				value="1";
+			}
+			else if(sfklqhjyzjzh =="1" && (typeof(qhjyzhkhrq)=="undefined" || qhjyzhkhrq.length==0  || qhjyzhkhrq.length=='')){
+				alert("[是否开立期货交易资金账户]选择【是】时,[开户日期]为必填项!");
+				value="1";
+			}	
+			var gzqhjybm_tj=$("#gzqhjybm_tj" + no).val();
+			var gzqhjybm_tqbz=$("#gzqhjybm_tqbz" + no).val();
+			var gzqhjybm_tl=$("#gzqhjybm_tl" + no).val();
+			if(sfklqhjyzjzh =="1" && (typeof(gzqhjybm_tj)=="undefined" || gzqhjybm_tj.length==0  || gzqhjybm_tj.length=='')
+					&& (typeof(gzqhjybm_tqbz)=="undefined" || gzqhjybm_tqbz.length==0  || gzqhjybm_tqbz.length=='')
+					&& (typeof(gzqhjybm_tl)=="undefined" || gzqhjybm_tl.length==0  || gzqhjybm_tl.length=='')){
+				alert("[是否开立期货交易资金账户]选择【是】时,[股指期货交易编码（投机）],[股指期货交易编码（套期保值）],[股指期货交易编码（套利）]至少有一个字段为必填项!");
+				value="1";
+			}
+			//是否开立银行间交易账户
+			var sfklyxjjyzhzh=$("input[name='sfklzqzh" + no + "']:checked").val();
+			var zqzhhu_sqs=$("#zqzhhu_sqs" + no).val();
+			var zqzhzh_sqs=$("#zqzhzh_sqs" + no).val();	
+			var sfdvpjs_sqs=$("#sfdvpjs_sqs" + no).val();	
+			var yhjzqzhkhrq_sqs=$("#yhjzqzhkhrq_sqs" + no).val();
+			var zqzhhu_zzd=$("#zqzhhu_zzd" + no).val();
+			var zqzhzh_zzd=$("#zqzhzh_zzd" + no).val();
+			var sfdvpjs_zzd=$("#sfdvpjs_zzd" + no).val();
+			var yhjzqzhkhrq_zzd=$("#yhjzqzhkhrq_zzd" + no).val();
+			if(sfklqhjyzjzh =="1" && ((typeof(zqzhhu_sqs)=="undefined" || zqzhhu_sqs.length==0 || zqzhhu_sqs.length==''
+					|| typeof(zqzhzh_sqs)=="undefined" || zqzhzh_sqs.length==0 || zqzhzh_sqs.length==''
+					|| typeof(sfdvpjs_sqs)=="undefined" || sfdvpjs_sqs.length==0 || sfdvpjs_sqs.length==''
+					|| typeof(yhjzqzhkhrq_sqs)=="undefined" || yhjzqzhkhrq_sqs.length==0 || yhjzqzhkhrq_sqs.length=='')
+				&& (typeof(zqzhhu_zzd)=="undefined" || zqzhhu_zzd.length ==0  || zqzhhu_zzd.length ==''
+					|| typeof(zqzhzh_zzd)=="undefined" || zqzhzh_zzd.length ==0 || zqzhzh_zzd.length ==''
+					|| typeof(sfdvpjs_zzd)=="undefined" || sfdvpjs_zzd.length ==0 || sfdvpjs_zzd.length ==''
+					|| typeof(yhjzqzhkhrq_zzd)=="undefined" || yhjzqzhkhrq_zzd.length ==0 || yhjzqzhkhrq_zzd.length==''))){
+				alert("[是否开立期货交易资金账户]选择【是】时,[银行间债券市场（上海清算所）四项信息]、[银行间债券市场（中债登）四项信息]至少填写一类，[同一类四项信息]均必填!");
+				value="1";
+			}		
+			//四个开户日期控制
+			var today = new Date().Format("yyyy-MM-dd");
+			if(zqzjzhkhrq > today && typeof(zqzjzhkhrq)!="undefined" && zqzjzhkhrq.length !=0  && zqzjzhkhrq.length !=''){
+				alert("[证券资金账户开户日期]必须小于今天!");
+				value="1";
+			}
+			else if(qhjyzhkhrq > today && typeof(qhjyzhkhrq)!="undefined" && qhjyzhkhrq.length !=0  && qhjyzhkhrq.length !=''){
+				alert("[期货交易账户开户日期]必须小于今天!");
+				value="1";
+			}
+			else if(yhjzqzhkhrq_sqs > today && typeof(yhjzqzhkhrq_sqs)!="undefined" && yhjzqzhkhrq_sqs.length !=0  && yhjzqzhkhrq_sqs.length !=''){
+				alert("[银行间债券市场账户（上海清算所）开户日期]必须小于今天!");
+				value="1";
+			}
+			else if(yhjzqzhkhrq_zzd > today && typeof(yhjzqzhkhrq_zzd)!="undefined" && yhjzqzhkhrq_zzd.length !=0  && yhjzqzhkhrq_zzd.length !=''){
+				alert("[银行间债券市场（中债登）开户日期]必须小于今天!");
+				value="1";
+			}				
+			
+			return value;
+		}		
 
         //保存预登记-证券类账户要素集合
         function saveZqlzh(uuid, bsid, regitem_id, productid, productcode) {
@@ -83,11 +224,11 @@
                 tjdNos.sfklyxjjyzhzh=$("input[name='sfklyxjjyzhzh" + no + "']:checked").val();
                 tjdNos.zqzhhu_sqs=$("#zqzhhu_sqs" + no).val();
                 tjdNos.zqzhzh_sqs=$("#zqzhzh_sqs" + no).val();
-                tjdNos.sfdvpjs_sqs=$("input[name='sfdvpjs_sqs" + no + "']:checked").val();
+				tjdNos.sfdvpjs_sqs=$("#sfdvpjs_sqs" + no).val();
                 tjdNos.yhjzqzhkhrq_sqs=$("#yhjzqzhkhrq_sqs" + no).val();
                 tjdNos.zqzhhu_zzd=$("#zqzhhu_zzd" + no).val();
                 tjdNos.zqzhzh_zzd=$("#zqzhzh_zzd" + no).val();
-                tjdNos.sfdvpjs_zzd=$("input[name='sfdvpjs_zzd" + no + "']:checked").val();
+				tjdNos.sfdvpjs_zzd=$("#sfdvpjs_zzd" + no).val();
                 tjdNos.yhjzqzhkhrq_zzd=$("#yhjzqzhkhrq_zzd" + no).val();
                 jQuery.ajax({
                     //请求方式
@@ -147,8 +288,8 @@
                                 <span class="required">*</span>是否开立证券资金账户:
                             </td>
                             <td style="width: 21%;">
-                                <input type="radio" name="sfklzqzh`+ t + `" value="0" />否
-                                <input type="radio" name="sfklzqzh`+ t + `" value="1" />是
+                                <input type="radio" id="sfklzqzh`+ t + `" name="sfklzqzh`+ t + `" value="0" onchange="javascript:changeInfo('1')"/>否
+                                <input type="radio" id="sfklzqzh`+ t + `" name="sfklzqzh`+ t + `" value="1" onchange="javascript:changeInfo('1')"/>是
                             </td>
                             <td style="width: 12%;">
                                 证券资金账户账号:
@@ -210,8 +351,8 @@
                                 <span class="required">*</span>是否开立期货交易资金账户:
                             </td>
                             <td>
-                                <input type="radio" name="sfklqhjyzjzh`+ t + `" value="0" />否
-                                <input type="radio" name="sfklqhjyzjzh`+ t + `" value="1" />是
+                                <input type="radio" name="sfklqhjyzjzh`+ t + `" value="0" onchange="javascript:changeInfo('2')"/>否
+                                <input type="radio" name="sfklqhjyzjzh`+ t + `" value="1" onchange="javascript:changeInfo('2')"/>是
                             </td>
                             <td>
                                 期货交易资金账户户名:
@@ -271,8 +412,8 @@
                                 <span class="required">*</span>是否开立银行间交易账户:
                             </td>
                             <td colspan="5">
-                                <input type="radio" name="sfklyxjjyzhzh`+ t + `" value="0" />否
-                                <input type="radio" name="sfklyxjjyzhzh`+ t + `" value="1" />是
+                                <input type="radio" name="sfklyxjjyzhzh`+ t + `" value="0" onchange="javascript:changeInfo('3')"/>否
+                                <input type="radio" name="sfklyxjjyzhzh`+ t + `" value="1" onchange="javascript:changeInfo('3')"/>是
                             </td>
                         </tr>
                         <tr>
@@ -291,9 +432,12 @@
                             <td>
                                 是否开立 DVP 资金结算账户:
                             </td>
-                            <td>
-                                <input type="radio" name="sfdvpjs_sqs`+ t + `" value="0" />否
-                                <input type="radio" name="sfdvpjs_sqs`+ t + `" value="1" />是
+                            <td>								
+								<select id="sfdvpjs_sqs`+ t + `" name="sfdvpjs_sqs` + t + `" style="width: 180px;">
+									<option value=""></option>
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -321,8 +465,11 @@
                                 是否开立 DVP 资金结算账户:
                             </td>
                             <td>
-                                <input type="radio" name="sfdvpjs_zzd`+ t + `" value="0" />否
-                                <input type="radio" name="sfdvpjs_zzd`+ t + `" value="1" />是
+                                <select id="sfdvpjs_zzd`+ t + `" name="sfdvpjs_zzd` + t + `" style="width: 180px;">
+									<option value=""></option>
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>								
                             </td>
                         </tr>
                         <tr>
@@ -355,11 +502,11 @@
             $(":radio[name='sfklyxjjyzhzh"+t+"'][value='" + sfklyxjjyzhzh + "']").prop("checked", "checked");
             $("#zqzhhu_sqs"+t).val(zqzhhu_sqs);
             $("#zqzhzh_sqs"+t).val(zqzhzh_sqs);
-            $(":radio[name='sfdvpjs_sqs"+t+"'][value='" + sfdvpjs_sqs + "']").prop("checked", "checked");
+			$("#sfdvpjs_sqs"+t).val(sfdvpjs_sqs);
             $("#yhjzqzhkhrq_sqs"+t).val(yhjzqzhkhrq_sqs);
             $("#zqzhhu_zzd"+t).val(zqzhhu_zzd);
             $("#zqzhzh_zzd"+t).val(zqzhzh_zzd);
-            $(":radio[name='sfdvpjs_zzd"+t+"'][value='" + sfdvpjs_zzd + "']").prop("checked", "checked");
+			$("#sfdvpjs_zzd"+t).val(sfdvpjs_zzd);
             $("#yhjzqzhkhrq_zzd"+t).val(yhjzqzhkhrq_zzd);
             
             t++;
@@ -403,5 +550,148 @@
             }
             return null;
         }
+		
+		//设置text,textarea和select对应值
+		function setFormValue(name,value){
+			$('#'+name).val(value);
+		}
+		
+		//设置Radio对应值
+		function setRadioValue(name,value){
+			if(value==""){
+				$("input[name="+name+"]").prop("checked",false);
+			}else{
+				$("input[name="+name+"][value="+value+"]").attr("checked", true);
+			}
+		}
+		
+		//设置Box对应值
+		function setBoxValue(name,content){	
+			if(content.indexOf('No,')>=0)
+			{
+				content=content.replace('No,','');
+				let returnValue = content.split(",");
+				$.each(returnValue, function (index, value) {
+					$("#"+name+value).attr("checked",false)
+				});
+			}else{
+				let returnValue = content.split(",");
+				$.each(returnValue, function (index, value) {
+					$("#"+name+value).attr("checked",true)
+				});			
+			}
+		}
+		
+		//获取text,textarea和select对应值
+		function getFormValue(name){
+			let value = $('#'+name).val();
+			return value;
+		}
+		
+		//获取Radio对应值
+		function getRadioValue(name){
+			let value = $("input[name="+name+"]:checked").val();
+			return value;
+		}
+		
+		//获取Box对应值
+		function getBoxValue(name){
+			let value = $("input:checkbox[name="+name+"]:checked");
+            let chvalue = [];
+            $.each(value, function () {
+                chvalue.push($(this).val());
+            });
+            value = chvalue.join(",");
+			return value;
+		}
+		
+       //选择发生值变化
+        function changeInfo(no) {
+            if(no=="1"){
+				var sfklzqzh=getRadioValue('sfklzqzh1');
+				if(sfklzqzh=="0")
+				{	
+					$('#zqzjzhzh1').attr("disabled",true);
+					$('#zqgsmc1').attr("disabled",true);
+					$('#zqgskhyyb1').attr("disabled",true);
+					$('#zqjyxtlx1').attr("disabled",true);
+					$('#wgzqjyxtcs1').attr("disabled",true);
+					$('#zqzjzhkhrq1').attr("disabled",true);
+					setFormValue('zqzjzhzh1','');
+					setFormValue('zqgsmc1','');	
+					setFormValue('zqgskhyyb1','');	
+					setFormValue('zqjyxtlx1','');	
+					setFormValue('wgzqjyxtcs1','');	
+					setFormValue('zqzjzhkhrq1','');	
+				}else{
+					$('#zqzjzhzh1').attr("disabled",false);
+					$('#zqgsmc1').attr("disabled",false);
+					$('#zqgskhyyb1').attr("disabled",false);
+					$('#zqjyxtlx1').attr("disabled",false);
+					$('#wgzqjyxtcs1').attr("disabled",false);
+					$('#zqzjzhkhrq1').attr("disabled",false);			
+				}
+			}else if(no=="2"){
+				var sfklqhjyzjzh=getRadioValue('sfklqhjyzjzh1');
+				if(sfklqhjyzjzh=="0")
+				{	
+					$('#qhjyzjzhhm1').attr("disabled",true);
+					$('#qhjyzjzhzh1').attr("disabled",true);
+					$('#gzqhjybm_tj1').attr("disabled",true);
+					$('#gzqhjybm_tqbz1').attr("disabled",true);
+					$('#gzqhjybm_tl1').attr("disabled",true);
+					$('#qhgsqc1').attr("disabled",true);
+					$('#khyyb1').attr("disabled",true);
+					$('#qhjyzhkhrq1').attr("disabled",true);						
+					setFormValue('qhjyzjzhhm1','');
+					setFormValue('qhjyzjzhzh1','');
+					setFormValue('gzqhjybm_tj1','');
+					setFormValue('gzqhjybm_tqbz1','');
+					setFormValue('gzqhjybm_tl1','');
+					setFormValue('qhgsqc1','');
+					setFormValue('khyyb1','');
+					setFormValue('qhjyzhkhrq1','');					
+				}else{
+					$('#qhjyzjzhhm1').attr("disabled",false);
+					$('#qhjyzjzhzh1').attr("disabled",false);
+					$('#gzqhjybm_tj1').attr("disabled",false);
+					$('#gzqhjybm_tqbz1').attr("disabled",false);
+					$('#gzqhjybm_tl1').attr("disabled",false);
+					$('#qhgsqc1').attr("disabled",false);
+					$('#khyyb1').attr("disabled",false);
+					$('#qhjyzhkhrq1').attr("disabled",false);				
+				}
+			}else if(no=="3"){
+				var sfklyxjjyzhzh=getRadioValue('sfklyxjjyzhzh1');
+				if(sfklyxjjyzhzh=="0")
+				{	
+					$('#zqzhhu_sqs1').attr("disabled",true);
+					$('#zqzhzh_sqs1').attr("disabled",true);
+					$('#sfdvpjs_sqs1').attr("disabled",true);
+					$('#yhjzqzhkhrq_sqs1').attr("disabled",true);
+					$('#zqzhhu_zzd1').attr("disabled",true);
+					$('#zqzhzh_zzd1').attr("disabled",true);
+					$('#sfdvpjs_zzd1').attr("disabled",true);
+					$('#yhjzqzhkhrq_zzd1').attr("disabled",true);						
+					setFormValue('zqzhhu_sqs1','');
+					setFormValue('zqzhzh_sqs1','');
+					setFormValue('sfdvpjs_sqs1','');
+					setFormValue('yhjzqzhkhrq_sqs1','');
+					setFormValue('zqzhhu_zzd1','');
+					setFormValue('zqzhzh_zzd1','');
+					setFormValue('sfdvpjs_zzd1','');
+					setFormValue('yhjzqzhkhrq_zzd1','');					
+				}else{
+					$('#zqzhhu_sqs1').attr("disabled",false);
+					$('#zqzhzh_sqs1').attr("disabled",false);
+					$('#sfdvpjs_sqs1').attr("disabled",false);
+					$('#yhjzqzhkhrq_sqs1').attr("disabled",false);
+					$('#zqzhhu_zzd1').attr("disabled",false);
+					$('#zqzhzh_zzd1').attr("disabled",false);
+					$('#sfdvpjs_zzd1').attr("disabled",false);
+					$('#yhjzqzhkhrq_zzd1').attr("disabled",false);			
+				}
+			}
+        }		
     </script>
 </html>

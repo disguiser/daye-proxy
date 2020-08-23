@@ -559,7 +559,7 @@ let find_app_dfs_zxd_csxtht_by_id = async (id) => {
 
 //查询预登记-银行资金账户要素集合
 let find_app_dfs_zxd_yhzjzh_by_uuid = async (uuid) => {
-    let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,yxzhlx,yxzhhm,yxzhkhyxzxqc,yxzhkhxqc,yxzhzh,bz,khrq FROM APP_DFS_ZXD_YHZJZH WHERE relation_uuid = '${uuid}' `, {
+    let data = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,yxzhlx,yxzhhm,yxzhkhyxzxqc,yxzhkhxqc,yxzhzh,bz,khrq FROM APP_DFS_ZXD_YHZJZH WHERE relation_uuid = '${uuid}' `, {
         type: pjmain.QueryTypes.SELECT
     });
     if (data.length > 0) {
@@ -571,7 +571,7 @@ let find_app_dfs_zxd_yhzjzh_by_uuid = async (uuid) => {
 
 //查询预登记-证券类账户要素集合
 let find_app_dfs_zxd_cszqzh_by_uuid = async (uuid) => {
-    let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,sfklzqzh,zqzjzhzh,zqgsmc,zqgskhyyb,zqjyxtlx,wgzqjyxtcs,zqzjzhkhrq,sfklqhjyzjzh,qhjyzjzhhm,qhjyzjzhzh,gzqhjybm_tj,gzqhjybm_tqbz,gzqhjybm_tl,qhgsqc,khyyb,qhjyzhkhrq,sfklyxjjyzhzh,zqzhhu_sqs,zqzhzh_sqs,sfdvpjs_sqs,yhjzqzhkhrq_sqs,zqzhhu_zzd,zqzhzh_zzd,sfdvpjs_zzd,yhjzqzhkhrq_zzd FROM APP_DFS_ZXD_CSZQZH WHERE relation_uuid = '${uuid}' `, {
+    let data = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,sfklzqzh,zqzjzhzh,zqgsmc,zqgskhyyb,zqjyxtlx,wgzqjyxtcs,zqzjzhkhrq,sfklqhjyzjzh,qhjyzjzhhm,qhjyzjzhzh,gzqhjybm_tj,gzqhjybm_tqbz,gzqhjybm_tl,qhgsqc,khyyb,qhjyzhkhrq,sfklyxjjyzhzh,zqzhhu_sqs,zqzhzh_sqs,sfdvpjs_sqs,yhjzqzhkhrq_sqs,zqzhhu_zzd,zqzhzh_zzd,sfdvpjs_zzd,yhjzqzhkhrq_zzd FROM APP_DFS_ZXD_CSZQZH WHERE relation_uuid = '${uuid}' `, {
         type: pjmain.QueryTypes.SELECT
     });
     if (data.length > 0) {
@@ -624,11 +624,6 @@ let insert_app_dfs_zxd_cscpxx = async (data) => {
             .catch(function (error) {
                 console.log(error);
             });
-		await dfs.query(`DELETE FROM APP_DFS_ZXD_CSJYDS WHERE relation_uuid = '${data.uuid}'`);
-		await dfs.query(`DELETE FROM APP_DFS_ZXD_CSSYQ WHERE relation_uuid = '${data.uuid}'`);
-		await dfs.query(`DELETE FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${data.uuid}'`);
-		await dfs.query(`DELETE FROM APP_DFS_ZXD_YHZJZH WHERE relation_uuid = '${data.uuid}'`);
-		await dfs.query(`DELETE FROM APP_DFS_ZXD_CSZQZH WHERE relation_uuid = '${data.uuid}'`);
 	}else{
 		//再保存
 		await dfs.query(`INSERT INTO APP_DFS_ZXD_CSCPXX(relation_uuid,task_code,regitem_id,product_id,product_code,problem_id,djlx,xtjgmc,cpqc,djcpbh,gscpbh,sfxtzcp,sdbs,fqzcpnbbh,xtccxz,
@@ -854,30 +849,62 @@ let delete_app_dfs_zxd_csxtht = async (data) => {
 
 //保存预登记-银行资金账户要素集合
 let insert_app_dfs_zxd_yhzjzh = async (data) => {
-    //再保存
-    await dfs.query(`INSERT INTO APP_DFS_ZXD_YHZJZH(relation_uuid,task_code,regitem_id,product_id,product_code,yxzhlx,yxzhhm,yxzhkhyxzxqc,yxzhkhxqc,yxzhzh,bz,khrq) values(
-            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.yxzhlx}','${data.yxzhhm}','${data.yxzhkhyxzxqc}','${data.yxzhkhxqc}','${data.yxzhzh}','${data.bz}','${data.khrq}'
-        )`)
+    let code = "";
+    await dfs.query(`UPDATE APP_DFS_ZXD_YHZJZH SET yxzhlx='${data.yxzhlx}',
+                                                    yxzhhm='${data.yxzhhm}',
+                                                    yxzhkhyxzxqc='${data.yxzhkhyxzxqc}',
+                                                    yxzhkhxqc='${data.yxzhkhxqc}',
+                                                    yxzhzh='${data.yxzhzh}',
+                                                    bz='${data.bz}',
+                                                    khrq='${data.khrq}'
+                                                    WHERE ID=${data.id}`)
         .then(function (result) {
-            console.log(result);
+            code = "1";
         })
         .catch(function (error) {
-            console.log(error);
+            code = "2";
         });
+    
+    return {code};
 }
 
 //保存预登记-证券类账户要素集合
 let insert_app_dfs_zxd_cszqzh = async (data) => {
-    //再保存
-    await dfs.query(`INSERT INTO APP_DFS_ZXD_CSZQZH(relation_uuid,task_code,regitem_id,product_id,product_code,sfklzqzh,zqzjzhzh,zqgsmc,zqgskhyyb,zqjyxtlx,wgzqjyxtcs,zqzjzhkhrq,sfklqhjyzjzh,qhjyzjzhhm,qhjyzjzhzh,gzqhjybm_tj,gzqhjybm_tqbz,gzqhjybm_tl,qhgsqc,khyyb,qhjyzhkhrq,sfklyxjjyzhzh,zqzhhu_sqs,zqzhzh_sqs,sfdvpjs_sqs,yhjzqzhkhrq_sqs,zqzhhu_zzd,zqzhzh_zzd,sfdvpjs_zzd,yhjzqzhkhrq_zzd) values(
-            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.sfklzqzh}','${data.zqzjzhzh}','${data.zqgsmc}','${data.zqgskhyyb}','${data.zqjyxtlx}','${data.wgzqjyxtcs}','${data.zqzjzhkhrq}','${data.sfklqhjyzjzh}','${data.qhjyzjzhhm}','${data.qhjyzjzhzh}','${data.gzqhjybm_tj}','${data.gzqhjybm_tqbz}','${data.gzqhjybm_tl}','${data.qhgsqc}','${data.khyyb}','${data.qhjyzhkhrq}','${data.sfklyxjjyzhzh}','${data.zqzhhu_sqs}','${data.zqzhzh_sqs}','${data.sfdvpjs_sqs}','${data.yhjzqzhkhrq_sqs}','${data.zqzhhu_zzd}','${data.zqzhzh_zzd}','${data.sfdvpjs_zzd}','${data.yhjzqzhkhrq_zzd}'
-        )`)
+    let code = "";
+    await dfs.query(`UPDATE APP_DFS_ZXD_CSZQZH SET sfklzqzh='${data.sfklzqzh}',
+                                                    zqzjzhzh='${data.zqzjzhzh}',
+                                                    zqgsmc='${data.zqgsmc}',
+                                                    zqgskhyyb='${data.zqgskhyyb}',
+                                                    zqjyxtlx='${data.zqjyxtlx}',
+                                                    wgzqjyxtcs='${data.wgzqjyxtcs}',
+                                                    zqzjzhkhrq='${data.zqzjzhkhrq}',
+                                                    sfklqhjyzjzh='${data.sfklqhjyzjzh}',
+                                                    qhjyzjzhhm='${data.qhjyzjzhhm}',
+                                                    qhjyzjzhzh='${data.qhjyzjzhzh}',
+                                                    gzqhjybm_tj='${data.gzqhjybm_tj}',
+                                                    gzqhjybm_tqbz='${data.gzqhjybm_tqbz}',
+                                                    gzqhjybm_tl='${data.gzqhjybm_tl}',
+                                                    qhgsqc='${data.qhgsqc}',
+                                                    khyyb='${data.khyyb}',
+                                                    qhjyzhkhrq='${data.qhjyzhkhrq}',
+                                                    sfklyxjjyzhzh='${data.sfklyxjjyzhzh}',
+                                                    zqzhhu_sqs='${data.zqzhhu_sqs}',
+                                                    zqzhzh_sqs='${data.zqzhzh_sqs}',
+                                                    sfdvpjs_sqs='${data.sfdvpjs_sqs}',
+                                                    yhjzqzhkhrq_sqs='${data.yhjzqzhkhrq_sqs}',
+                                                    zqzhhu_zzd='${data.zqzhhu_zzd}',
+                                                    zqzhzh_zzd='${data.zqzhzh_zzd}',
+                                                    sfdvpjs_zzd='${data.sfdvpjs_zzd}',
+                                                    yhjzqzhkhrq_zzd='${data.yhjzqzhkhrq_zzd}'
+                                                    WHERE ID=${data.id}`)
         .then(function (result) {
-            console.log(result);
+            code = "1";
         })
         .catch(function (error) {
-            console.log(error);
+            code = "2";
         });
+    
+    return {code};
 }
 
 //查询终止登记-产品信息要素

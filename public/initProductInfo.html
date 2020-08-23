@@ -956,6 +956,12 @@
                 itemid = "2@@"+taskid;
             }
             find_app_dfs_zxd_cscpxx_by_regitem_id(flowid, itemid);
+
+
+            $('#myTab a').click(function (e) {
+                var activeTab = $(e.target).text();
+                alert("1"+activeTab);
+            })
         });
 
         //初始化数据字典
@@ -3054,7 +3060,7 @@
 		//初始登记填报说明
         function inputContent(){
 			window.open('/node/tianbao.html?type=2','_blank','');
-		}		
+		}	
     </script>
 
 

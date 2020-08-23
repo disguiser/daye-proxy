@@ -425,7 +425,7 @@
 					
 			var qsrq=getFormValue('qsrq');
 			var today = new Date().Format("yyyy-MM-dd");
-			if(qsrq > '<%=ConfigUtil.getToday("","Today")%>'){
+			if(qsrq > today){
 				alert("[清算日期]必须小于今天!");
 				return false;
 			}

@@ -192,7 +192,7 @@
                             <span class="required">*</span>运行方式标识:
                         </td>
                         <td>
-                            <select id="yxfs" name="yxfs" style="width: 320px;" disabled="disabled">
+                            <select id="yxfs" name="yxfs" style="width: 320px;">
                                 <option value="0">净值型</option>
                                 <option value="1">非净值型</option>
                             </select>
@@ -427,7 +427,7 @@
                             业务信息说明:
                         </td>
                         <td>
-                            <input type="text" id="ywxism" name="ywxism" style="width: 320px;">
+							<textarea cols="100" rows="16" id="ywxism" name="ywxism" style="width:320px;"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -472,7 +472,7 @@
                             合同约定的信托报酬率（固定费率）:
                         </td>
                         <td>
-                            <input type="number" id="xtbcl" name="xtbcl" style="width: 320px;">
+                            <input type="number" id="xtbcl" name="xtbcl" style="width: 280px;">(%)
                         </td>
                         <td>
                             合同约定的信托报酬率（固定金额）:
@@ -486,7 +486,7 @@
                             <span class="required">*</span>信托报酬说明:
                         </td>
                         <td>
-                            <input type="text" id="htydbcsm" name="htydbcsm" style="width: 320px;">
+							<textarea cols="100" rows="5" id="htydbcsm" name="htydbcsm" style="width:320px;"></textarea>
                         </td>
                         <td>
                             <span class="required">*</span>风险项目标识:
@@ -1019,7 +1019,7 @@
 					$("#sdbs").val(data.sdbs);
                     $("#fqzcpnbbh").val(data.fqzcpnbbh);
                     $("#xtccxz").val(data.xtccxz);
-					if(data.xtccxz=="0") changeInfo(1);
+					
                     $("#dyjhbz").val(data.dyjhbz);
 					$("#ccqxtcfzr").val(data.ccqxtcfzr);
                     $("#stzz").val(data.stzz);
@@ -1040,7 +1040,6 @@
                     $("#yqmjzje").val(data.yqmjzje);
                     $("#yqmjzfe").val(data.yqmjzfe);
                     initSelect("yqmjzebz", "Init011", data.yqmjzebz);
-					if(data.sfxtzcp=="0") changeInfo(10);
                     $("#zyyyly_ctq").val(data.zyyyly_ctq);
                     initSelect("zytxhy_ctq", "Init013", data.zytxhy_ctq);
                     $("#ccglyyfs").val(data.ccglyyfs);
@@ -1068,7 +1067,6 @@
                         $("#fxhscs"+value).attr("checked", "checked");
                     });
                     $("#fxczcsbhbcsm").val(data.fxczcsbhbcsm);
-					if(data.fxxmbs=='0') changeInfo('3');
                     $("input[name='sfgdqxcp'][value="+data.sfgdqxcp+"]").attr("checked", true);
                     $("#xtcpsjclrq").val(data.xtcpsjclrq);
                     $("#cpjhdqr").val(data.cpjhdqr);
@@ -1093,7 +1091,6 @@
                         $("#gzjg"+value).attr("checked", "checked");
                     });					
                     $("#jzpgpd").val(data.jzpgpd);
-					if(data.sfgz=="0" || data.sfgz=="") changeInfo(7);
                     $("#jntgjg").val(data.jntgjg);
                     $("#jwtgdljg").val(data.jwtgdljg);
                     $("#jwtgdljggb").val(data.jwtgdljggb);
@@ -1115,7 +1112,6 @@
                     });
                     $("#gljymd").val(data.gljymd);
                     $("#gljydj").val(data.gljydj);
-					if(data.grjgbs=='0') changeInfo('4');
                     $("#jzplpd").val(data.jzplpd);
                     $("#zcglbgpd").val(data.zcglbgpd);
                     $("input[name='qsbgplbs'][value="+data.qsbgplbs+"]").attr("checked", true);
@@ -1123,6 +1119,12 @@
                     $("#xtjlxm").val(data.xtjlxm);
                     $("#fggjglry").val(data.fggjglry);
                     $("#lxdh").val(data.lxdh);
+					changeInfo(1);
+					changeInfo(3);
+					changeInfo(4);
+					changeInfo(7);
+					changeInfo(8);
+					changeInfo(10);					
 
                     $('#myTab a').click(function (e) {
                         var activeTab = $(e.target).text();
@@ -1287,7 +1289,7 @@
 				$("input[name=ccqxtcfzr]").focus();
 				return false;
 			}
-			if(xtccxz=="0") getFormValue('ccqxtcfzr','');
+			if(xtccxz=="0") setFormValue('ccqxtcfzr','');
 			//受益方式说明控制
 			var xtsyfs=getFormValue('xtsyfs');
 			var syfssm=getFormValue('syfssm');
@@ -1428,8 +1430,8 @@
 				alert("当[开放/封闭标识]勾选【开放式】时,字段[开放式产品开放频度]为必填项!");
 				$("input[name=kfpd]").focus();
 				return false;
-			}	
-			if(kffbbs=="0") getFormValue('kfpd','');	
+			}
+			if(kffbbs=="0") setFormValue('kfpd','');	
 			//是否估值
 			var yxfs=getFormValue('yxfs');
 			var sfgz=getFormValue('sfgz');
@@ -1545,8 +1547,8 @@
 			let nextnode = GetQueryValue('nextnode');
 			if(nextnode=="X644307B0B24442290B4A6BAED269009")
 			{
-				if(!checkInfo('handledate','办理日期','required','text')) return false;
-				if(!checkInfo('overdate','初始登记反馈日期','required','text')) return false;
+				//if(!checkInfo('handledate','办理日期','required','text')) return false;
+				//if(!checkInfo('overdate','初始登记反馈日期','required','text')) return false;
 			}
 			if(!checkInfo('cpqc','信托产品名称','required','text')) return false;
 			if(!checkInfo('gscpbh','信托产品内部编号','required','text')) return false;
@@ -1564,7 +1566,10 @@
 			if(!checkInfo('tjmj','推介媒介','required','box')) return false;			
 			if(!checkInfo('jntgjg','境内托管机构','required','text')) return false;
 			if(!checkInfo('ktqshbs','委托人可提前赎回标识','required','radio')) return false;
+			if(!checkInfo('ydtjbs','异地推介标识','required','radio')) return false;
+			if(!checkInfo('gljybs','关联交易标识','required','radio')) return false;
 			if(!checkInfo('tzgwbs','投资顾问标识','required','radio')) return false;
+			if(!checkInfo('xtbclx','信托报酬类型','required','text')) return false;
 			if(!checkInfo('xtcpssbm','信托产品所属部门','required','text')) return false;
 			if(!checkInfo('xtjlxm','信托经理姓名','required','text')) return false;
 			if(!checkInfo('fggjglry','分管高级管理人员姓名','required','text')) return false;
@@ -1715,7 +1720,8 @@
             let chgzjg = [];
             $.each(gzjgs, function () {
                 chgzjg.push($(this).val());
-            });			
+            });
+			ydjData.gzjg = chgzjg.join(",");
             ydjData.jzpgpd = $("#jzpgpd").val();
             ydjData.jntgjg = $("#jntgjg").val();
             ydjData.jwtgdljg = $("#jwtgdljg").val();
@@ -1791,6 +1797,8 @@
 				if(xtccxz=="0")
 				{			
 					$('#ccqxtcfzr').attr("disabled",true);
+				}else{
+					$('#ccqxtcfzr').attr("disabled",false);
 				}				
 			}else if(no=="2"){
 				var xtxmzqxlx=getFormValue('xtxmzqxlx');
@@ -1868,6 +1876,15 @@
 					$('#gzcj').attr("disabled",false);
 					for(var i=0;i<=3;i++) $('#gzjg'+i).attr("disabled",false);
 					$('#jzpgpd').attr("disabled",false);					
+				}
+			}else if(no=="8"){
+				var kffbbs=getFormValue('kffbbs');
+				if(kffbbs=="0")
+				{
+					$('#kfpd').attr("disabled",true);
+					setFormValue('kfpd','');
+				}else{
+					$('#kfpd').attr("disabled",false);
 				}
 			}else if(no=="10" || no=="11"){
 				var sfxtzcp=getRadioValue('sfxtzcp');

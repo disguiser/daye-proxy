@@ -62,7 +62,7 @@
                 <span class="required">*</span>受益权收益率类型:
             </td>
             <td>
-                <select id="syqsyllx" name="syqsyllx" style="width: 180px;">
+                <select id="syqsyllx" name="syqsyllx" style="width: 180px;" onchange="javascript:changeInfo('1')">
                     <option value="0">基准收益率</option>
                     <option value="1">基准+浮动</option>
                     <option value="2">浮动收益率（含净值型产品）</option>
@@ -73,7 +73,7 @@
                 受益权收益率:
             </td>
             <td>
-                <input type="number" id="syqyqsyl" name="syqyqsyl" value="" style="width: 180px;">
+                <input type="number" id="syqyqsyl" name="syqyqsyl" value="" style="width: 150px;">(%)
             </td>
         </tr>
         <tr>
@@ -337,6 +337,7 @@
                     });
                     $("#fpfs").val(data.fpfs);
                     $("#fppl").val(data.fppl);
+					changeInfo(1);
                 },
                 //请求失败，包含具体的错误信息
                 error: function (e) {
@@ -442,5 +443,18 @@
             }
             return null;
         }
+       //选择发生值变化
+        function changeInfo(no) {
+            if(no=="1"){
+				var syqsyllx=getFormValue('syqsyllx');
+				if(syqsyllx=="2" || syqsyllx=="9")
+				{	
+					$('#syqyqsyl').attr("disabled",true);
+					setFormValue('syqyqsyl','');	
+				}else{
+					$('#syqyqsyl').attr("disabled",false);				
+				}
+			}
+        }		
     </script>
 </html>

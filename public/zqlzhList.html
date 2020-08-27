@@ -106,14 +106,15 @@
 				alert("[是否开立证券资金账户]选择【是】时,[证券交易系统类型]为必填项!");
 				value="1";
 			}
-			else if(sfqgtj =="1" && (typeof(wgzqjyxtcs)=="undefined" || wgzqjyxtcs==null || wgzqjyxtcs.length==0  || wgzqjyxtcs.length=='')){
-				alert("[是否开立证券资金账户]选择【是】时,[外购证券交易系统厂商]为必填项!");
+			else if(zqjyxtlx =="2" && (typeof(wgzqjyxtcs)=="undefined" || wgzqjyxtcs==null || wgzqjyxtcs.length==0  || wgzqjyxtcs.length=='')){
+				alert("[证券交易系统类型]选择【外购系统】时,[外购证券交易系统厂商]为必填项!");
 				value="1";
 			}
 			else if(sfqgtj =="1" && (typeof(zqzjzhkhrq)=="undefined" || zqzjzhkhrq.length==0  || zqzjzhkhrq.length=='')){
 				alert("[是否开立证券资金账户]选择【是】时,[开户日期]为必填项!");
 				value="1";
-			}		
+			}
+			if(zqjyxtlx !="2") $("#wgzqjyxtcs" + no).val('');
 			//是否开立期货交易资金账户控制
 			var sfklqhjyzjzh=$("input[name='sfklqhjyzjzh" + no + "']:checked").val();
 			var qhjyzjzhhm=$("#qhjyzjzhhm" + no).val();
@@ -328,6 +329,7 @@
                             </td>
                             <td>
                                 <select id="wgzqjyxtcs`+ t + `" name="wgzqjyxtcs` + t + `" style="width: 180px;">
+									<option value=""></option>
                                     <option value="0">恒生</option>
                                     <option value="1">金证</option>
                                     <option value="2">赢时胜</option>

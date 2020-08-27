@@ -705,6 +705,7 @@ let delete_app_dfs_zxd_csjyds = async (data) => {
 let insert_app_dfs_zxd_cssyq = async (data) => {
     if(data.syqxh=='') data.syqxh=null;
     if(data.fpsx=='') data.fpsx=null;
+	if(data.syqyqsyl=='') data.syqyqsyl=null;
     let code = "";
 
     if (data.id == "0") {

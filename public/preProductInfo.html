@@ -981,6 +981,14 @@
 				}else{
 					$('#qtxmlx').attr("disabled",false);				
 				}
+			}else if(no=="9"){
+				var csxtcclx=getFormValue('csxtcclx');
+				if(csxtcclx=="0")
+				{			
+					$('#ccqxtcfzr').attr("disabled",true);
+				}else{
+					$('#ccqxtcfzr').attr("disabled",false);
+				}
 			}
         }
 
@@ -1113,6 +1121,7 @@
                     $("#tzgwqk").val(data.tzgwqk);
 					$("#workdate").val(data.workdate);
                     $("input[name='tgsfglf'][value="+data.tgsfglf+"]").attr("checked", true);
+					changeInfo(9);
                     find_app_dfs_zxd_ydjtjd_by_uuid(data.uuid);
                 }
             });
@@ -1695,10 +1704,10 @@
 			let nextnode = GetQueryValue('nextnode');
 			if(nextnode=="X644307B0B24442290B4A6BAED269009")
 			{
-				if(!checkInfo('handledate','办理日期','required','text')) return false;
-				if(!checkInfo('zxdcode','预登记反馈中信登编码','required','text')) return false;
-				if(!checkInfo('overstate','预登记反馈状态','required','text')) return false;
-				if(!checkInfo('overdate','预登记反馈日期','required','text')) return false;
+				//if(!checkInfo('handledate','办理日期','required','text')) return false;
+				//if(!checkInfo('zxdcode','预登记反馈中信登编码','required','text')) return false;
+				//if(!checkInfo('overstate','预登记反馈状态','required','text')) return false;
+				//if(!checkInfo('overdate','预登记反馈日期','required','text')) return false;
 			}
 			if(!checkInfo('symjzc','上月末净资产（万 元）','required','text')) return false;
 			if(!checkInfo('sjmjzc','上季末净资本（万 元）','required','text')) return false;

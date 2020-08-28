@@ -25,7 +25,26 @@
 
 <body>
     <div style="text-align: left;">
-        &nbsp;&nbsp;<button type="button" id="btnAdd" class="btn btn-danger">创 建</button>
+        <table>
+            <tr>
+                <td style="text-align: right; padding-top: 0px; width: 10%;">
+                    信托合同编号:
+                </td>
+                <td style="padding-top: 10px; width: 20%;">
+                    <input type="text" class="form-control" id="xthtbh" placeholder="信托合同编号">
+                </td>
+                <td style="text-align: right; padding-top: 0px; width: 10%;">
+                    委托人全称:
+                </td>
+                <td style="padding-top: 10px; width: 20%;">
+                    <input type="text" class="form-control" id="wtrqc" placeholder="委托人全称">
+                </td>
+                <td style="text-align: right; width: 40%;">
+                    <button type="button" id="btnSearch" class="btn btn-success">查 询</button>
+                    &nbsp;<button type="button" id="btnAdd" class="btn btn-danger">创 建</button>
+                </td>
+            </tr>
+        </table>
     </div>
     <div style="height: 5px;"></div>
     <table id="xthtList"></table>
@@ -40,11 +59,19 @@
             let regitem_id = GetQueryValue('regitem_id');
             let productid = GetQueryValue('productid');
             let productcode = GetQueryValue('productcode');
+            let xthtbh = GetQueryValue('xthtbh');
+            let wtrqc = GetQueryValue('wtrqc');
+            $("#xthtbh").val(xthtbh);
+            $("#wtrqc").val(wtrqc);
             
             find_app_dfs_zxd_csxtht_by_uuid(uuid);
 
             $("#btnAdd").click(function(){
-                $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtInfo.html" + '?id=0' + '&uuid=' + uuid + '&bsid=' + bsid + '&regitem_id=' + regitem_id + '&productid=' + productid + '&productcode=' + productcode);
+                addContract();
+            });
+
+            $("#btnSearch").click(function(){
+                doSearch();
             });
         });
         
@@ -62,6 +89,8 @@
                 queryParams : function(params) {//上传服务器的参数
                     var temp = {
                         uuid: uuid,
+                        xthtbh: $("#xthtbh").val(),
+                        wtrqc: $("#wtrqc").val(),
                         offset :params.offset + 0,// SQL语句起始索引
                         pageNumber : params.limit  // 每页显示数量
                     };
@@ -104,7 +133,16 @@
 
         //合同编辑
         function updateContract(id, uuid, bsid, regitem_id, productid, productcode) {
-            $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtInfo.html" + '?id=' + id + '&uuid=' + uuid + '&bsid=' + bsid + '&regitem_id=' + regitem_id + '&productid=' + productid + '&productcode=' + productcode);
+            let xthtbh = $("#xthtbh").val();
+            let wtrqc = $("#wtrqc").val();
+            $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtInfo.html" + '?id=' + id + '&uuid=' + uuid + '&bsid=' + bsid + '&regitem_id=' + regitem_id + '&productid=' + productid + '&productcode=' + productcode + '&xthtbh=' + xthtbh + '&wtrqc=' + wtrqc);
+        }
+
+        //合同新建
+        function addContract() {
+            let xthtbh = $("#xthtbh").val();
+            let wtrqc = $("#wtrqc").val();
+            $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtInfo.html" + '?id=0' + '&uuid=' + uuid + '&bsid=' + bsid + '&regitem_id=' + regitem_id + '&productid=' + productid + '&productcode=' + productcode + '&xthtbh=' + xthtbh + '&wtrqc=' + wtrqc);
         }
 
         //合同删除
@@ -137,6 +175,11 @@
 					}
 				});
 			}
+        }
+
+        //查询
+        function doSearch() {
+            $('#xthtList').bootstrapTable('refresh', {url: '/node/find_app_dfs_zxd_csxtht_by_uuid'});
         }
 
         //获取GET参数

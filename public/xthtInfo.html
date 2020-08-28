@@ -378,6 +378,8 @@
         </tr>
     </table>
     <div style="height: 50px; line-height: 50px; text-align: right;">
+        <input type="hidden" id="q_xthtbh">
+        <input type="hidden" id="q_wtrqc">
         <button type="button" id="btnSave" class="btn btn-danger">保 存</button>&nbsp;&nbsp;
         <button type="button" id="btnReturn" class="btn btn-success">返 回</button>&nbsp;&nbsp;
     </div>
@@ -393,6 +395,10 @@
             let regitem_id = GetQueryValue('regitem_id');
             let productid = GetQueryValue('productid');
             let productcode = GetQueryValue('productcode');
+            let xthtbh = GetQueryValue('xthtbh');
+            let wtrqc = GetQueryValue('wtrqc');
+            $("#q_xthtbh").val(xthtbh);
+            $("#q_wtrqc").val(wtrqc);
 
             //返回合同列表
             $("#btnReturn").click(function() {
@@ -823,7 +829,9 @@
 
         //返回合同列表
         function returnContractList(uuid) {
-            $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtList.html" + '?uuid=' + uuid);
+            let xthtbh = $("#q_xthtbh").val();
+            let wtrqc = $("#q_wtrqc").val();
+            $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtList.html" + '?uuid=' + uuid + '&xthtbh=' + xthtbh + '&wtrqc=' + wtrqc);
         }
 
         //初始化数据字典

@@ -527,14 +527,14 @@ let find_app_dfs_zxd_cssyq_by_id = async (id) => {
 }
 
 //查询预登记-信托合同要素集合（分页）
-let find_app_dfs_zxd_csxtht_by_uuid = async (uuid, offset, pageNumber) => {
+let find_app_dfs_zxd_csxtht_by_uuid = async (uuid, xthtbh, wtrqc, offset, pageNumber) => {
     //查询总的记录数
-    let number = await dfs.query(`select count(1) NUMBER FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}'`, {
+    let number = await dfs.query(`select count(1) NUMBER FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}' and (isnull('${xthtbh}','') = '' or xthtbh like '%${xthtbh}%') and (isnull('${wtrqc}','') = '' or wtrqc like '%${wtrqc}%')`, {
         type: pjmain.QueryTypes.SELECT
     });
     let total = number[0]['NUMBER'];
 
-    let rows = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}' ORDER BY XTHTBH offset ${offset} row fetch next ${pageNumber} rows only`, {
+    let rows = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}' and (isnull('${xthtbh}','') = '' or xthtbh like '%${xthtbh}%') and (isnull('${wtrqc}','') = '' or wtrqc like '%${wtrqc}%') ORDER BY XTHTBH offset ${offset} row fetch next ${pageNumber} rows only`, {
         type: pjmain.QueryTypes.SELECT
     });
 
@@ -851,21 +851,53 @@ let delete_app_dfs_zxd_csxtht = async (data) => {
 //保存预登记-银行资金账户要素集合
 let insert_app_dfs_zxd_yhzjzh = async (data) => {
     let code = "";
-    await dfs.query(`UPDATE APP_DFS_ZXD_YHZJZH SET yxzhlx='${data.yxzhlx}',
-                                                    yxzhhm='${data.yxzhhm}',
-                                                    yxzhkhyxzxqc='${data.yxzhkhyxzxqc}',
-                                                    yxzhkhxqc='${data.yxzhkhxqc}',
-                                                    yxzhzh='${data.yxzhzh}',
-                                                    bz='${data.bz}',
-                                                    khrq='${data.khrq}'
-                                                    WHERE ID=${data.id}`)
-        .then(function (result) {
-            code = "1";
-        })
-        .catch(function (error) {
-            code = "2";
-        });
-    
+
+    if (data.id == "0") {
+        await dfs.query(`INSERT INTO APP_DFS_ZXD_YHZJZH(relation_uuid,task_code,regitem_id,product_id,product_code,yxzhlx,yxzhhm,yxzhkhyxzxqc,yxzhkhxqc,yxzhzh,bz,khrq) values(
+                '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.yxzhlx}','${data.yxzhhm}','${data.yxzhkhyxzxqc}','${data.yxzhkhxqc}','${data.yxzhzh}','${data.bz}','${data.khrq}'
+            )`)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    } else {
+        await dfs.query(`UPDATE APP_DFS_ZXD_YHZJZH SET yxzhlx='${data.yxzhlx}',
+                                                        yxzhhm='${data.yxzhhm}',
+                                                        yxzhkhyxzxqc='${data.yxzhkhyxzxqc}',
+                                                        yxzhkhxqc='${data.yxzhkhxqc}',
+                                                        yxzhzh='${data.yxzhzh}',
+                                                        bz='${data.bz}',
+                                                        khrq='${data.khrq}'
+                                                        WHERE ID=${data.id}`)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    }
+
+    return {code};
+}
+
+//删除预登记-银行资金账户要素集合
+let delete_app_dfs_zxd_yhzjzh = async (data) => {
+    let code = "";
+
+    if (data.id != "0") {
+        await dfs.query(`DELETE FROM APP_DFS_ZXD_YHZJZH WHERE ID=${data.id}`)
+            .then(function (result) {
+                code = "1";
+            })
+            .catch(function (error) {
+                code = "2";
+            });
+    } else {
+        code = "3";
+    }
+
     return {code};
 }
 
@@ -1306,6 +1338,7 @@ module.exports = {
     insert_app_dfs_zxd_csxtht: insert_app_dfs_zxd_csxtht,
     delete_app_dfs_zxd_csxtht: delete_app_dfs_zxd_csxtht,
     insert_app_dfs_zxd_yhzjzh: insert_app_dfs_zxd_yhzjzh,
+    delete_app_dfs_zxd_yhzjzh: delete_app_dfs_zxd_yhzjzh,
     insert_app_dfs_zxd_cszqzh: insert_app_dfs_zxd_cszqzh,
     find_app_dfs_zxd_zzcpxx_by_regitem_id: find_app_dfs_zxd_zzcpxx_by_regitem_id,
     insert_app_dfs_zxd_zzcpxx: insert_app_dfs_zxd_zzcpxx,

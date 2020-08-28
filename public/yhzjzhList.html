@@ -31,6 +31,10 @@
                     
     </div>
     <div style="height: 10px;"></div>
+    <div style="height: 10px;"></div>
+    <div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
+        <a href="#" onclick="addYhzjzh(0,'','','','','','CNY','');">点击添加更多银行资金账户</a>
+    </div>
 </body>
     
     <script type="text/javascript">
@@ -218,8 +222,8 @@
         var r = 1;
         function addYhzjzh(id,yxzhlx,yxzhhm,yxzhkhyxzxqc,yxzhkhxqc,yxzhzh,bz,khrq) {
             let str = `<div id="yhzjzhDiv` + r + `"><div style="height: 10px;"></div>
-                    <!--<div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
-                    <a href="#" onclick="delYhzjzh(`+ r + `);"><font color="#FF0000">点击删除下面一条银行资金账户</font></a></div>-->
+                    <div style="width: 100%; height: 30px; text-align: center; line-height: 30px; background-color: #C0C0C0;">
+                    <a href="#" onclick="delYhzjzh(`+ r + `);"><font color="#FF0000">点击删除下面一条银行资金账户</font></a></div>
                     <input type="hidden" name="yhzjzhNo`+ r + `" value="` + r + `">
                     <input type="hidden" id="id`+ r + `" name="id`+ r + `" value="` + id + `">
                     <table border="1" bordercolor="#C0C0C0" cellspacing="2" cellpadding="2"
@@ -296,7 +300,36 @@
 
         //删除银行资金账户要素集合
         function delYhzjzh(no) {
-            $("#yhzjzhDiv" + no).remove();
+            let id = $("#id" + no).val();
+            if (id != 0) {
+                let tjdNos = new Object();
+                tjdNos.id = id;
+                jQuery.ajax({
+                    //请求方式
+                    type: "POST",
+                    //请求地址
+                    url: "/node/delete_app_dfs_zxd_yhzjzh",
+                    //数据，json对象
+                    data: tjdNos,
+                    //请求成功
+                    success: function (data) {
+                        if (data.code == "1") {
+                            $("#yhzjzhDiv" + no).remove();
+                            alert("银行资金账户删除成功！");
+                        } else if (data.code == "3") {
+                            alert("银行资金账户ID为空！");
+                        } else {
+                            alert("银行资金账户删除失败！");
+                        }
+                    },
+                    //请求失败，包含具体的错误信息
+                    error: function (e) {
+                        alert("数据请求异常！");
+                    }
+                });
+            } else {
+                $("#yhzjzhDiv" + no).remove();
+            }
         }
 
         //初始化数据字典

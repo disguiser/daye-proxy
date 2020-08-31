@@ -529,12 +529,14 @@ let find_app_dfs_zxd_cssyq_by_id = async (id) => {
 //查询预登记-信托合同要素集合（分页）
 let find_app_dfs_zxd_csxtht_by_uuid = async (uuid, xthtbh, wtrqc, offset, pageNumber) => {
     //查询总的记录数
-    let number = await dfs.query(`select count(1) NUMBER FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}' and (isnull('${xthtbh}','') = '' or xthtbh like '%${xthtbh}%') and (isnull('${wtrqc}','') = '' or wtrqc like '%${wtrqc}%')`, {
+    let number = await dfs.query(`select count(1) NUMBER FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}' and (isnull('${xthtbh}','') = '' or xthtbh like '%${xthtbh}%') and (isnull('${wtrqc}','') = '' or wtrqc like '%${wtrqc}%') and (isnull('${wtrqc}','') = '' or wtrqc_all like '%${wtrqc}%')`, {
         type: pjmain.QueryTypes.SELECT
     });
     let total = number[0]['NUMBER'];
 
-    let rows = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}' and (isnull('${xthtbh}','') = '' or xthtbh like '%${xthtbh}%') and (isnull('${wtrqc}','') = '' or wtrqc like '%${wtrqc}%') ORDER BY XTHTBH offset ${offset} row fetch next ${pageNumber} rows only`, {
+    let rows = await dfs.query(`SELECT ID as id, RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode, zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm 
+                         FROM APP_DFS_ZXD_CSXTHT WHERE relation_uuid = '${uuid}' and (isnull('${xthtbh}','') = '' or xthtbh like '%${xthtbh}%') and (isnull('${wtrqc}','') = '' or wtrqc like '%${wtrqc}%') and (isnull('${wtrqc}','') = '' or wtrqc_all like '%${wtrqc}%')
+                         ORDER BY XTHTBH offset ${offset} row fetch next ${pageNumber} rows only`, {
         type: pjmain.QueryTypes.SELECT
     });
 

@@ -955,8 +955,8 @@ let find_app_dfs_zxd_zzcpxx_by_regitem_id = async (regitem_id) => {
             regitem_id = task_info[0].affa_id;
         }
 		let data = await dfs.query(`SELECT RELATION_UUID as uuid, TASK_CODE as bsid, REGITEM_ID as regitem_id,PRODUCT_ID as productid, PRODUCT_CODE as productcode,problem_id,
-					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,
-					 strljyjbc, sjxtbcl, xtfyze, xtfyl, xtbgfl, sjsy, sjsyl, sshje, shsje, pfje, ywxxsm, task_state, remark, input_time, input_user, input_dept, update_time 
+					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,dbo.GETDATEADD('',10,'MINWORKDAY') workdate,cpstartdate as startdate,cpenddate as enddate,workday,xtbgf,
+					 strljyjbc, sjxtbcl, xtfyze, xtfyl, xtbgfl, sjsy, sjsyl, sshje, shsje, pfje,jqpjxtgm, ywxxsm, task_state, remark, input_time, input_user, input_dept, update_time 
 					 FROM APP_DFS_ZXD_ZZCPXX WHERE problem_id = '${regitem_id}'`, {
 				type: pjmain.QueryTypes.SELECT
 		});
@@ -965,8 +965,8 @@ let find_app_dfs_zxd_zzcpxx_by_regitem_id = async (regitem_id) => {
 		}
     }else if (arr[0] == "1") {
 		let data = await dfs.query(`SELECT RELATION_UUID as uuid, TASK_CODE as bsid, REGITEM_ID as regitem_id,PRODUCT_ID as productid, PRODUCT_CODE as productcode,problem_id,
-					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,
-					 strljyjbc, sjxtbcl, xtfyze, xtfyl, xtbgfl, sjsy, sjsyl, sshje, shsje, pfje, ywxxsm, task_state, remark, input_time, input_user, input_dept, update_time 
+					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,dbo.GETDATEADD('',10,'MINWORKDAY') workdate,cpstartdate as startdate,cpenddate as enddate,workday,xtbgf,
+					 strljyjbc, sjxtbcl, xtfyze, xtfyl, xtbgfl, sjsy, sjsyl, sshje, shsje, pfje,jqpjxtgm, ywxxsm, task_state, remark, input_time, input_user, input_dept, update_time 
 					 FROM APP_DFS_ZXD_ZZCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'')=''`, {
 				type: pjmain.QueryTypes.SELECT
 		});
@@ -977,8 +977,8 @@ let find_app_dfs_zxd_zzcpxx_by_regitem_id = async (regitem_id) => {
 			await dfs.query(`exec SP_CHANGE_ZZDJ_CPXX_03 ${regitem_id} `);
 			//再返回
 			let data = await dfs.query(`SELECT RELATION_UUID as uuid, TASK_CODE as bsid, REGITEM_ID as regitem_id,PRODUCT_ID as productid, PRODUCT_CODE as productcode,problem_id,
-					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,
-					 strljyjbc, sjxtbcl, xtfyze, xtfyl, xtbgfl, sjsy, sjsyl, sshje, shsje, pfje, ywxxsm, task_state, remark, input_time, input_user, input_dept, update_time 
+					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,dbo.GETDATEADD('',10,'MINWORKDAY') workdate,cpstartdate as startdate,cpenddate as enddate,workday,xtbgf,
+					 strljyjbc, sjxtbcl, xtfyze, xtfyl, xtbgfl, sjsy, sjsyl, sshje, shsje, pfje,jqpjxtgm, ywxxsm, task_state, remark, input_time, input_user, input_dept, update_time 
 					 FROM APP_DFS_ZXD_ZZCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'')=''`, {
 				type: pjmain.QueryTypes.SELECT
 			});
@@ -1006,15 +1006,16 @@ let insert_app_dfs_zxd_zzcpxx = async (data) => {
 		//先更新	
 		await dfs.query(`update APP_DFS_ZXD_ZZCPXX set xtjgmc='${data.xtjgmc}',djcpbh='${data.djcpbh}',cpqc='${data.cpqc}',qsrq='${data.qsrq}',sfaydrqqs='${data.sfaydrqqs}',
 				ssxtje=${data.ssxtje},xtbjljgfe=${data.xtbjljgfe},xtsyljfpe=${data.xtsyljfpe},tgljgdbc=${data.tgljgdbc},tgljyjbc=${data.tgljyjbc},strljgdbc=${data.strljgdbc},
-				sjxtbcl=${data.sjxtbcl},xtfyze=${data.xtfyze},xtfyl=${data.xtfyl},strljyjbc=${data.strljyjbc},xtbgfl=${data.xtbgfl},sjsy=${data.sjsy},
+				sjxtbcl=${data.sjxtbcl},xtfyze=${data.xtfyze},xtfyl=${data.xtfyl},strljyjbc=${data.strljyjbc},xtbgfl=${data.xtbgfl},sjsy=${data.sjsy},jqpjxtgm=${data.jqpjxtgm},xtbgf=${data.xtbgf},
 				sjsyl=${data.sjsyl},sshje=${data.sshje},shsje=${data.shsje},pfje=${data.pfje},ywxxsm='${data.ywxxsm}',handle_date='${data.handledate}',over_date='${data.overdate}',
 				remark='save',task_code=NULL,update_time=CONVERT(varchar(20),getdate(),120)
 				WHERE id = '${record[0].id}'`);
 	}else{
     //再保存
-    await dfs.query(`INSERT INTO APP_DFS_ZXD_ZZCPXX(relation_uuid,task_code,regitem_id,product_id,product_code,problem_id,xtjgmc,djcpbh,cpqc,qsrq,sfaydrqqs,ssxtje,xtbjljgfe,xtsyljfpe,tgljgdbc,
-        tgljyjbc,strljgdbc,strljyjbc,sjxtbcl,xtfyze,xtfyl,xtbgfl,sjsy,sjsyl,sshje,shsje,pfje,ywxxsm,remark,input_time,input_user,input_dept,update_time) values(
-            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.problem_id}','${data.xtjgmc}','${data.djcpbh}','${data.cpqc}','${data.qsrq}','${data.sfaydrqqs}',${data.ssxtje},${data.xtbjljgfe},${data.xtsyljfpe},${data.tgljgdbc},${data.tgljyjbc},${data.strljgdbc},${data.strljyjbc},${data.sjxtbcl},${data.xtfyze},${data.xtfyl},${data.xtbgfl},${data.sjsy},${data.sjsyl},${data.sshje},${data.shsje},${data.pfje},'${data.ywxxsm}','${data.remark}','${data.input_time}','${data.input_user}','${data.input_dept}','${data.update_time}'
+    await dfs.query(`INSERT INTO APP_DFS_ZXD_ZZCPXX(relation_uuid,task_code,regitem_id,product_id,product_code,problem_id,xtjgmc,djcpbh,cpqc,qsrq,sfaydrqqs,ssxtje,xtbjljgfe,xtsyljfpe,tgljgdbc,xtbgf,
+			jqpjxtgm,tgljyjbc,strljgdbc,strljyjbc,sjxtbcl,xtfyze,xtfyl,xtbgfl,sjsy,sjsyl,sshje,shsje,pfje,ywxxsm,remark,input_time,input_user,input_dept,update_time) values(
+            '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.problem_id}','${data.xtjgmc}','${data.djcpbh}','${data.cpqc}','${data.qsrq}','${data.sfaydrqqs}',${data.ssxtje},${data.xtbjljgfe},${data.xtsyljfpe},${data.tgljgdbc},${data.xtbgf},
+			${data.jqpjxtgm},${data.tgljyjbc},${data.strljgdbc},${data.strljyjbc},${data.sjxtbcl},${data.xtfyze},${data.xtfyl},${data.xtbgfl},${data.sjsy},${data.sjsyl},${data.sshje},${data.shsje},${data.pfje},'${data.ywxxsm}','${data.remark}','${data.input_time}','${data.input_user}','${data.input_dept}','${data.update_time}'
         )`)
         .then(function (result) {
             console.log(result);

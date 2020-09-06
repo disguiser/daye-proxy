@@ -76,8 +76,9 @@
                             <span class="required">*</span>是否按约定日期清算:
                         </td>
                         <td>
-                            <input type="radio" name="sfaydrqqs" value="1" />是
-                            <input type="radio" name="sfaydrqqs" value="0" />否
+                            <input type="radio" name="sfaydrqqs" value="0" onchange="javascript:changeInfo('1')"/>提前
+                            <input type="radio" name="sfaydrqqs" value="1" onchange="javascript:changeInfo('1')"/>正常
+							<input type="radio" name="sfaydrqqs" value="2" onchange="javascript:changeInfo('1')"/>推迟
                         </td>
 					</tr>
                     <tr>
@@ -102,89 +103,105 @@
                             <input type="number" id="xtsyljfpe" name="xtsyljfpe" style="width: 280px;">(元)
                         </td>					
                         <td>
+                            <span class="required">*</span>加权信托规模:
+                        </td>
+                        <td>
+                            <input type="number" id="jqpjxtgm" name="jqpjxtgm" style="width: 280px;" readonly>(元)
+                        </td>					
+                    </tr>
+                    <tr>
+                        <td>
                             投资顾问等累计固定报酬:
                         </td>
                         <td>
                             <input type="number" id="tgljgdbc" name="tgljgdbc" style="width: 280px;">(元)
                         </td>
-                    </tr>
-                    <tr>
                         <td>
                             投资顾问等累计业绩报酬:
                         </td>
                         <td>
                             <input type="number" id="tgljyjbc" name="tgljyjbc" style="width: 280px;">(元)
                         </td>					
+                    </tr>
+                    <tr>
                         <td>
                             <span class="required">*</span>受托人累计固定报酬:
                         </td>
                         <td>
-                            <input type="number" id="strljgdbc" name="strljgdbc" style="width: 280px;">(元)
-                        </td>
-                    </tr>
-                    <tr>						
-                        <td>
-                            <span class="required">*</span>受托人累计业绩报酬:
-                        </td>
-                        <td>
-                            <input type="number" id="strljyjbc" name="strljyjbc" style="width: 280px;">(元)
-                        </td>
+                            <input type="number" id="strljgdbc" name="strljgdbc" style="width: 280px;" onchange="javascript:changeInfo('2')">(元)
+                        </td>						
                         <td>
                             <span class="required">*</span>实际信托报酬率:
                         </td>
                         <td>
-                            <input type="number" id="sjxtbcl" name="sjxtbcl" style="width: 280px;">
-                        </td>						
+                            <input type="number" id="sjxtbcl" name="sjxtbcl" style="width: 280px;" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="required">*</span>受托人累计业绩报酬:
+                        </td>
+                        <td>
+                            <input type="number" id="strljyjbc" name="strljyjbc" style="width: 280px;" onchange="javascript:changeInfo('2')">(元)
+                        </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="required">*</span>信托费用总额:
                         </td>
                         <td>
-                            <input type="number" id="xtfyze" name="xtfyze" style="width: 280px;">(元)
+                            <input type="number" id="xtfyze" name="xtfyze" style="width: 280px;" onchange="javascript:changeInfo('3')">(元)
                         </td>
                         <td>
                             <span class="required">*</span>信托费用率:
                         </td>
                         <td>
-                            <input type="number" id="xtfyl" name="xtfyl" style="width: 280px;">
+                            <input type="number" id="xtfyl" name="xtfyl" style="width: 280px;" readonly>
                         </td>						
                     </tr>
                     <tr>
                         <td>
+                            <span class="required">*</span>信托保管费:
+                        </td>
+                        <td>
+                            <input type="number" id="xtbgf" name="xtbgf" style="width: 280px;" onchange="javascript:changeInfo('4')">(元)
+                        </td>
+                        <td>
                             <span class="required">*</span>信托保管费率:
                         </td>
                         <td>
-                            <input type="number" id="xtbgfl" name="xtbgfl" style="width: 280px;">
+                            <input type="number" id="xtbgfl" name="xtbgfl" style="width: 280px;" readonly>
                         </td>					
+                    </tr>
+                    <tr>
                         <td>
                             <span class="required">*</span>实际收益:
                         </td>
                         <td>
-                            <input type="number" id="sjsy" name="sjsy" style="width: 280px;">(元)
+                            <input type="number" id="sjsy" name="sjsy" style="width: 280px;" onchange="javascript:changeInfo('5')">(元)
                         </td>
-                    </tr>
-                    <tr>
                         <td>
 							<span class="required">*</span>实际收益率:
                         </td>
                         <td>
-                            <input type="number" id="sjsyl" name="sjsyl" style="width: 280px;">
-                        </td>					
+                            <input type="number" id="sjsyl" name="sjsyl" style="width: 280px;" readonly>
+                        </td>
+                    </tr>
+                    <tr>						
                         <td>
                             损失金额:
                         </td>
                         <td>
                             <input type="number" id="sshje" name="sshje" style="width: 280px;">(元)
-                        </td>
-                    </tr>
-                    <tr>						
+                        </td>						
                         <td>
                             涉诉金额:
                         </td>
                         <td>
                             <input type="number" id="shsje" name="shsje" style="width: 280px;">(元)
                         </td>
+                    </tr>
+                    <tr>
                         <td>
                             赔付金额:
                         </td>
@@ -200,6 +217,10 @@
 							<textarea cols="200" rows="3" id="ywxxsm" name="ywxxsm" style="width:400px;"></textarea>
                         </td>
                     </tr>
+					<tr><input type="hidden" id="workdate" name="workdate" style="width: 320px;"></tr>
+					<tr><input type="hidden" id="startdate" name="startdate" style="width: 320px;"></tr>
+					<tr><input type="hidden" id="enddate" name="enddate" style="width: 320px;"></tr>
+					<tr><input type="hidden" id="workday" name="workday" style="width: 320px;"></tr>
                 </table>
             </div>
         </div>
@@ -244,11 +265,7 @@
 					$("#overdate").val(data.overdate);
                     $("#djcpbh").val(data.djcpbh);
                     $("#cpqc").val(data.cpqc);
-                    if (data.sfaydrqqs == "1") {
-                        $("input[name='sfaydrqqs'][value=1]").attr("checked", true);
-                    } else {
-                        $("input[name='sfaydrqqs'][value=0]").attr("checked", true);
-                    }
+					$("input[name='sfaydrqqs'][value='"+data.sfaydrqqs+"']").attr("checked", true);
 					$("#qsrq").val(data.qsrq);
 					$("#ssxtje").val(data.ssxtje);
 					$("#xtbjljgfe").val(data.xtbjljgfe);
@@ -266,6 +283,12 @@
 					$("#sshje").val(data.sshje);
 					$("#shsje").val(data.shsje);
 					$("#pfje").val(data.pfje);
+					$("#workdate").val(data.workdate);
+					$("#jqpjxtgm").val(data.jqpjxtgm);
+					$("#startdate").val(data.startdate);
+					$("#enddate").val(data.enddate);
+					$("#workday").val(data.workday);
+					$("#xtbgf").val(data.xtbgf);
 					$("#ywxxsm").val(data.ywxxsm);
                 }
             });
@@ -401,6 +424,8 @@
 			if(!checkInfo('xtbgfl','信托保管费率','required','text')) return false;
 			if(!checkInfo('sjsy','实际收益','required','text')) return false;
 			if(!checkInfo('sjsyl','实际收益率','required','text')) return false;
+			if(!checkInfo('jqpjxtgm','加权平均信托规模','required','text')) return false;
+			if(!checkInfo('xtbgf','信托保管费','required','text')) return false;
 			//监管报送内容大小限制校验
 			if(!checkInfo('djcpbh','信托登记系统产品编码','length','50')) return false;
 			if(!checkInfo('cpqc','信托产品名称','length','50')) return false;
@@ -414,6 +439,7 @@
 			if(!checkInfo('xtfyze','信托费用总额','number','16,2')) return false;
 			if(!checkInfo('xtfyl','信托费用率','number','8,6')) return false;
 			if(!checkInfo('xtbgfl','信托保管费率','number','8,6')) return false;
+			if(!checkInfo('xtbgf','信托保管费','number','16,2')) return false;
 			if(!checkInfo('sjsy','实际收益','number','16,2')) return false;
 			if(!checkInfo('sjsyl','实际收益率','number','8,6')) return false;
 			if(!checkInfo('tgljgdbc','投资顾问等累计固定报酬','number','16,2')) return false;
@@ -421,13 +447,13 @@
 			if(!checkInfo('sshje','损失金额','number','16,2')) return false;
 			if(!checkInfo('shsje','涉诉金额','number','16,2')) return false;
 			if(!checkInfo('pfje','赔付金额','number','16,2')) return false;
+			if(!checkInfo('jqpjxtgm','加权平均信托规模','number','16,2')) return false;
 			if(!checkInfo('ywxxsm','业务信息说明','length','1000')) return false;
 					
+			var workdate=getFormValue('workdate');
 			var qsrq=getFormValue('qsrq');
-			var today = new Date().Format("yyyy-MM-dd");
-			if(qsrq > today){
-				alert("[清算日期]必须小于今天!");
-				return false;
+			if(workdate > qsrq){
+				alert("[清算日期]超过当前日期有10个工作日,提示已超期办理!");
 			}
 			return true;
 		}
@@ -461,6 +487,8 @@
 			ydjData.sshje=$("#sshje").val();
 			ydjData.shsje=$("#shsje").val();
 			ydjData.pfje=$("#pfje").val();
+			ydjData.jqpjxtgm=$("#jqpjxtgm").val();
+			ydjData.xtbgf=$("#xtbgf").val();
 			ydjData.ywxxsm=$("#ywxxsm").val();
             jQuery.ajax({
                 //请求方式
@@ -495,7 +523,62 @@
 		//预登记填报说明
         function inputContent(){
 			window.open('/node/tianbao.html?type=3','_blank','');
-		}		
+		}
+        //选择发生值变化
+        function changeInfo(no) {
+            if(no=="1"){
+				var enddate=getFormValue('enddate');
+				var sfaydrqqs=getRadioValue('sfaydrqqs');
+				if(sfaydrqqs=="0" || sfaydrqqs=="1")
+				{
+					alert("提示本产品信托登记时计划到期日为["+enddate+"]，如产品展期请先办理变更登记!");
+				}
+			}else if(no=="2"){
+				var strljgdbc=getFormValue('strljgdbc');
+				var strljyjbc=getFormValue('strljyjbc');
+				var jqpjxtgm=getFormValue('jqpjxtgm');
+				var workday=getFormValue('workday');
+				
+				if(parseInt(workday)>0){
+					var value=(parseFloat(strljgdbc)+parseFloat(strljyjbc))/parseFloat(jqpjxtgm)*365/parseInt(workday);
+					setFormValue('sjxtbcl',value.toFixed(6));
+				}else {
+					setFormValue('sjxtbcl','0');
+				}
+			}else if(no=="3"){
+				var xtfyze=getFormValue('xtfyze');
+				var jqpjxtgm=getFormValue('jqpjxtgm');
+				var workday=getFormValue('workday');
+				
+				if(parseInt(workday)>0){
+					var value=(parseFloat(xtfyze))/parseFloat(jqpjxtgm)*365/parseInt(workday);
+					setFormValue('xtfyl',value.toFixed(6));
+				}else {
+					setFormValue('xtfyl','0');
+				}
+			}else if(no=="4"){
+				var xtbgf=getFormValue('xtbgf');
+				var jqpjxtgm=getFormValue('jqpjxtgm');
+				var workday=getFormValue('workday');
+				
+				if(parseInt(workday)>0){
+					var value=(parseFloat(xtbgf))/parseFloat(jqpjxtgm)*365/parseInt(workday);
+					setFormValue('xtbgfl',value.toFixed(6));
+				}else {
+					setFormValue('xtbgfl','0');
+				}
+			}else if(no=="5"){
+				var sjsy=getFormValue('sjsy');
+				var jqpjxtgm=getFormValue('jqpjxtgm');
+				var workday=getFormValue('workday');
+				if(parseInt(workday)>0){
+					var value=(parseFloat(sjsy))/parseFloat(jqpjxtgm)*365/parseInt(workday);
+					setFormValue('sjsyl',value.toFixed(6));
+				}else {
+					setFormValue('sjsyl','0');
+				}
+			}
+		}				
     </script>
 </body>
 

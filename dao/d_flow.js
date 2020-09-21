@@ -460,8 +460,9 @@ let find_app_dfs_zxd_cscpxx_by_regitem_id = async (regitem_id) => {
 		if (data.length > 0) {
 			return data[0];
 		} else {
+            let xtdjlx = arr[2];
 			//先采集
-			await dfs.query(`exec SP_CHANGE_CS_BG_GZ_02 ${regitem_id} `);
+			await dfs.query(`exec SP_CHANGE_CS_BG_GZ_02 ${regitem_id}, ${xtdjlx} `);
 			//再返回
 			let data = await dfs.query(`SELECT RELATION_UUID as uuid, REGITEM_ID as regitem_id, TASK_CODE as bsid, PRODUCT_ID as productid, PRODUCT_CODE as productcode,problem_id,
 						djlx, xtjgmc, cpqc, djcpbh, gscpbh, sfxtzcp, sdbs, fqzcpnbbh, xtccxz, dyjhbz, ccqxtcfzr, stzz, xtgn,

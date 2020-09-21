@@ -35,6 +35,7 @@ $(function(){
             <div id="div_c8659880539611e68c9bb888e335e00a" class="control-group">
                 <label class="control-label"><span class="required">*</span>信托登记要素</label>
                 <div class="controls" id="divVal_c8659880539611e68c9bb888e335e00a">
+                    <input type="hidden" id="xtdjlx"/>
                     <button type="button" id="buttonzxd1" disabled="disabled" onclick="chYdj('/node/preProductInfo.html','预登记填报说明及模板')">预登记</button> 
                     <button type="button" id="buttonzxd2" disabled="disabled" onclick="chYdj('/node/initProductInfo.html','初始变更更正登记填报说明及模板')">初始变更更正登记</button>
                     <button type="button" id="buttonzxd3" disabled="disabled" onclick="chYdj('/node/finishProductInfo.html','终止登记填报说明及模板')">终止登记</button>
@@ -56,9 +57,10 @@ $(function(){
                     </div>
                     <script type="text/javascript">
                     function chYdj(url,title) {
+                        let xtdjlx = document.getElementById('xtdjlx').value;
                         let query = location.href.substr(location.href.indexOf('?') + 1)
                         jQuery('#modal_frameContainer_title').html("<a href='/node/tianbao.html?type=1' target='_blank'>"+title+"</a>");
-                        jQuery('#modalFrameContainer').attr('src',url + '?' + query);
+                        jQuery('#modalFrameContainer').attr('src',url + '?xtdjlx=' + xtdjlx + '&' + query);
                         jQuery('#mdldiv_frame').modal('show');
                     }
                     </script>

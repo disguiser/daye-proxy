@@ -409,7 +409,7 @@ let insert_app_dfs_zxd_ydjtjd = async (data) => {
     await dfs.query(`DELETE FROM APP_DFS_ZXD_YDJTJD WHERE relation_uuid = '${data.uuid}'`);
 	//首次插入操作
 	await dfs.query(`INSERT INTO APP_DFS_ZXD_YDJTJD(relation_uuid,task_code,regitem_id,product_id,product_code,sfqgtj,tjd,tjd_p,tjd_c,tjd_a,tjjg,tjfl,tjq,jhtjgm,tjfshtjgl,tjfzrmc,tjfzrdh) values(
-		'${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.sfqgtj}','${data.tjd}','${data.tjd_p}','${data.tjd_c}','${data.tjd_a}','${data.tjjg}','${data.tjfl}','${data.tjq}',${data.jhtjgm},'${data.tjfshtjgl}','${data.tjfzrmc}','${data.tjfzrdh}'
+		'${data.uuid}','${data.bsid}',${data.regitem_id},'${data.productid}','${data.productcode}','${data.sfqgtj}','${data.tjd}','${data.tjd_p}','${data.tjd_c}','${data.tjd_a}','${data.tjjg}','${data.tjfl}','${data.tjq}',${data.jhtjgm},'${data.tjfshtjgl}','${data.tjfzrmc}','${data.tjfzrdh}'
 	)`)
 	.then(function (result) {
 		console.log(result);
@@ -780,7 +780,10 @@ let insert_app_dfs_zxd_csxtht = async (data) => {
     if (data.id == "0") {
         await dfs.query(`INSERT INTO APP_DFS_ZXD_CSXTHT(relation_uuid,task_code,regitem_id,product_id,product_code,zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm) values(
                 '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.zytabs}','${data.xthtbh}','${data.htjz}','${data.wtrqc}','${data.wtrlx}','${data.lxxq_wtr}','${data.wtrzjlx}','${data.wtrzjhm}',${data.htcszje},${data.htcszfe},'${data.xtccxz}','${data.zjjsbz}',${data.wtzjje},${data.wtccdyje},'${data.wtcccclx}',${data.syrxh},'${data.syrmc}','${data.syrlx}','${data.lxxq_syr}','${data.syrzjlx}','${data.syrzjhm}','${data.syqdm}','${data.sfkssyqzh_syr}','${data.syqzhbm_syr}',${data.syqcsfe},${data.syqcsje},'${data.syqqsr}','${data.syqjhdqr}','${data.syryxlhbs}','${data.qksm}'
-            )`)
+            )`);
+		await dfs.query(`update ENFOTA..TA_TCUSTMAININFO set KHLX=A.wtrlx,KHLXXQ=A.lxxq_wtr
+						from APP_DFS_ZXD_CSXTHT A,ENFOTA..TA_TPRODUCTCONTRACT C,ENFOTA..TA_TCUSTMAININFO B
+						WHERE A.xthtbh=C.CONTRACT_BH and C.CUST_ID=B.CUST_ID and A.xthtbh = ${data.xthtbh}`)
             .then(function (result) {
                 code = "1";
             })
@@ -819,7 +822,10 @@ let insert_app_dfs_zxd_csxtht = async (data) => {
                                                     syqjhdqr         = '${data.syqjhdqr}',
                                                     syryxlhbs        = '${data.syryxlhbs}',
                                                     qksm             = '${data.qksm}'
-                                                    where id         = ${data.id}`)
+                                                    where id         = ${data.id}`);
+			await dfs.query(`update ENFOTA..TA_TCUSTMAININFO set KHLX=A.wtrlx,KHLXXQ=A.lxxq_wtr
+							from APP_DFS_ZXD_CSXTHT A,ENFOTA..TA_TPRODUCTCONTRACT C,ENFOTA..TA_TCUSTMAININFO B
+							 WHERE A.xthtbh=C.CONTRACT_BH and C.CUST_ID=B.CUST_ID and A.ID = ${data.id}`)
             .then(function (result) {
                 code = "1";
             })

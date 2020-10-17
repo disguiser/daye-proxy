@@ -61,13 +61,15 @@
             let productcode = GetQueryValue('productcode');
             let xthtbh = GetQueryValue('xthtbh');
             let wtrqc = GetQueryValue('wtrqc');
-            $("#xthtbh").val(xthtbh);
-            $("#wtrqc").val(wtrqc);
+            if (xthtbh != "null")
+                $("#xthtbh").val(xthtbh);
+            if (wtrqc != "null")
+                $("#wtrqc").val(wtrqc);
             
             find_app_dfs_zxd_csxtht_by_uuid(uuid);
 
             $("#btnAdd").click(function(){
-                addContract();
+                addContract(uuid, bsid, regitem_id, productid, productcode, xthtbh, wtrqc);
             });
 
             $("#btnSearch").click(function(){
@@ -139,9 +141,7 @@
         }
 
         //合同新建
-        function addContract() {
-            let xthtbh = $("#xthtbh").val();
-            let wtrqc = $("#wtrqc").val();
+        function addContract(uuid, bsid, regitem_id, productid, productcode, xthtbh, wtrqc) {
             $(window.parent.$('#xthtIFrame')).attr('src', "/node/xthtInfo.html" + '?id=0' + '&uuid=' + uuid + '&bsid=' + bsid + '&regitem_id=' + regitem_id + '&productid=' + productid + '&productcode=' + productcode + '&xthtbh=' + xthtbh + '&wtrqc=' + wtrqc);
         }
 

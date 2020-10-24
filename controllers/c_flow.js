@@ -68,6 +68,14 @@ let flow_regitem = {
         APPROVALSELA: 'w240a48f41b511e79398000c294af360',
         regitem_id: 'sa87f08f59e311e6b81ff0def1c335c3'
     },
+    cba93600e8cf11eaa2e6005056a6a83a: { // 交易快捷用印审批流程
+        APPROVALSELA: 'c1b659a6e8d611ea85c5005056a6a83a',
+        regitem_id: 'c1b659a5e8d611ea9c04005056a6a83a'
+    },
+    tc539970ff0911e694b4005056a60fd8: { // 担保合同及抵质押物录入
+        regitem_id: 't7d2de5eff2c11e6b53c1c3e84e5807c',
+        DBHT: 'c38fc580db9911eaa34a5c80b64475f0' // 担保合同
+    },
     xca765cf519611e79e8d005056a687a8: { // 抵质押权利证书(证明)领用审批
         regitem_id: 'q9bd48de516f11e79ac9005056a687a8'
     },
@@ -90,6 +98,9 @@ let flow_regitem = {
     },
     oa3982e101f411e9a455005056a61cf9: { // 不良资产处置信息汇报流程
         regitem_id: 'w1a92592ff7611e89fbb005056a61cf9' 
+    },
+    b97918c0cb1e11eaad325c80b64475f0: { // 现场管理汇报流程
+        regitem_id: 'd1ec6030cb2111eaa6515c80b64475f0' 
     },
     c722681e519411e78b64005056a687a8: { // 信托合同交接记录(集合)
         regitem_id: 'f3461aee519e11e78d3b005056a687a8'
@@ -140,6 +151,11 @@ let flow_regitem = {
     },
     oc987c8f7dea11e9bcc3005056a6a83a: { // 客户集中度标准调整审批单
         regitem_id: 'q91dcbde7aa211e988c6005056a6a83a'
+    },
+    de22b6cfa3b011eaa156005056a61cf9: { // 信托项目现场管理重大事项审批
+        regitem_id: 'pbe73c5fa6d711ea8f11005056a6a83a',
+        SQSXLB: 'pbe73c63a6d711eabe4a005056a6a83a',// 申请事项类别
+        SXLJ_MONEY: 'a75d02a1b51611eab866005056a6a83a' // 单笔事项累计金额(万元)
     }
     //d30aa0dea29711e79897000c294af360: { // 房屋抵押贷款用印申请流程
         //regitem_id: 'c740c958a29811e79ab5000c294af360'
@@ -196,6 +212,9 @@ let contractApproval = async (ctx, affair) => {
     // 合同审批流程
     let res;
     let json_data = affair.jsondata;
+    let regitem_id = JSON.parse(affair.jsondata)['f35c08cf5d0a11e6a5e9184f32ca6bca'];
+    console.log("++++++++++++++++regitem_id++++++++++++++++++++++");
+    console.log(regitem_id);
     if(json_data!=''){
         json_data = JSON.parse(json_data);
         // 信托文件
@@ -207,7 +226,8 @@ let contractApproval = async (ctx, affair) => {
             success: temple.render('atta_table.html' ,{
                 intrust_attachments: intrust_attachments,
                 attachments: attach_rebuild,
-                dict_file_type: dict_file_type
+                dict_file_type: dict_file_type,
+                regitem_id:regitem_id
             })
         };
     } else {
@@ -332,6 +352,8 @@ let importantMatter = async (affair) => {
         success: temple.render('important_matter.html', {
             project_info: project_info,
             json_data: parsedJson,
+            affa_id:affair.affa_id,
+            regitem_id: regitem_id,
             sign_name: sign_name 
         })
     }
@@ -596,6 +618,80 @@ let yysplc = async (affair) => {
         })
     }
 }
+// 交易快捷用印审批流程
+let jykjyysplc = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let json_arr = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['APPROVALSELA']]);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    let apprpvalsela = await d_flow.find_apprpvalsela(affair.affa_id,regitem_id);
+    return {
+        success: temple.render('kjyysplc.html', {
+            json_data: parsedJson,
+            project_info: project_info,
+            apprpvalsela: apprpvalsela
+        })
+    }
+}
+
+// 担保合同及抵质押物录入
+let dbhtjdzywlr = async (ctx, affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+
+    let DBHT = JSON.parse(parsedJson[flow_regitem[affair.flow_id]['DBHT']]);
+    let plaedge_type_name = '';
+    if(DBHT[0].PLAEDGE_TYPE){
+        plaedge_type_name = await d_flow.find_param_name_for_dzy(DBHT[0].PLAEDGE_TYPE);
+    }
+    let cust_name = await d_flow.find_cust_name_for_dzy(DBHT[0].CUST_ID);
+    let assure_type_name = await d_flow.find_param_name_for_dzy(DBHT[0].ASSURE_TYPE);
+    console.log(plaedge_type_name);
+    let bzlx = '';
+    if (DBHT[0].BZLX == 1){
+        bzlx = '单人担保';
+    }else if(DBHT[0].BZLX == 2){
+        bzlx = '多人联保';
+    }else{
+        bzlx = '多人分保';
+    }
+    let glbz = '';
+    if (DBHT[0].SFWJKRGLF == 1){
+        glbz = '是';
+    }else if(DBHT[0].SFWJKRGLF == 2){
+        glbz = '否';
+    }
+    let dbhttype=''
+    if(DBHT[0].ASSURE_TYPE_E4 == 0){
+        dbhttype = '一般担保合同'
+    }else if(DBHT[0].ASSURE_TYPE_E4 == 1){
+        dbhttype = '最高额担保合同'
+    }
+    console.log("===========DBHT================");
+    console.log(DBHT);
+    console.log(typeof DBHT);
+
+
+    return {
+        success: temple.render('dbdzywlr.html', {
+            time: affair.create_time,
+            json_data: parsedJson,
+            project_info: project_info,
+            regitem_id: regitem_id,
+            affa_id: affair.affa_id,
+            cust_name: cust_name,
+            plaedge_type_name: plaedge_type_name,
+            assure_type_name: assure_type_name,
+            bzlx:bzlx,
+            glbz:glbz,
+            dbhttype:dbhttype,
+            DBHT: DBHT,
+            type: typeof DBHT
+        })
+    }
+}
+
 // 抵质押权利证书(证明)领用审批
 let dzyqlzs = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
@@ -706,6 +802,19 @@ let blzcczxxhb = async (affair) => {
     }
 }
 
+// 现场管理汇报流程
+let xcglhb = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    return {
+        success: temple.render('xcglhb.html', {
+            json_data: parsedJson,
+            project_info: project_info
+        })
+    }
+}
+
 //中后期管理报告流程
 let zhqglbg = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
@@ -715,6 +824,30 @@ let zhqglbg = async (affair) => {
         success: temple.render('zhqglbg.html', {
             json_data: parsedJson,
             project_info: project_info
+        })
+    }
+}
+
+//信托项目现场管理重大事项审批
+let xmxcglzdsx = async (affair) => {
+    let parsedJson = JSON.parse(affair.jsondata);
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
+    let project_info = await d_flow.find_project_info(regitem_id);
+    let globalno_info = await d_flow.find_affaiglobalno(affair.affa_id);
+    let sxlj_money = (parsedJson[flow_regitem[affair.flow_id]['SXLJ_MONEY']])/10000;
+    var sqsx_str = parsedJson[flow_regitem[affair.flow_id]['SQSXLB']];
+    let sqsx = sqsx_str.split(',')
+
+    return {
+        success: temple.render('xmxcglzdsx.html', {
+            json_data: parsedJson,
+            project_info: project_info,
+            globalno_info: globalno_info,
+            sqsx:sqsx,
+            length:sqsx.length,
+            affa_id:affair.affa_id,
+            regitem_id: regitem_id,
+            sxlj_money: sxlj_money
         })
     }
 }
@@ -848,7 +981,7 @@ let frqzdj = async (ctx, affair) => {
 // 信托合同交接记录(集合)
 let xthtjjjl = async (affair) => {
     let parsedJson = JSON.parse(affair.jsondata);
-    let regitem_id = parsedJson.rd2683e9101611e9b1c6005056a6a83a;
+    let regitem_id = parsedJson[flow_regitem[affair.flow_id]['regitem_id']];
     let project_info = await d_flow.find_project_info(regitem_id);
     return {
         success: temple.render('xthtjjjl.html', {
@@ -1112,6 +1245,14 @@ let flowRouter = async(ctx, affair) => {
         case 'b5792af0470e11e68438184f32ca6bca':
             res = await yysplc(affair);
             break;
+        // 交易快捷用印审批流程
+        case 'cba93600e8cf11eaa2e6005056a6a83a':
+            res = await jykjyysplc(affair);
+            break;
+        // 担保合同及抵质押物录入
+        case 'tc539970ff0911e694b4005056a60fd8':
+            res = await dbhtjdzywlr(ctx, affair);
+            break;
         // 抵质押权利证书(证明)领用审批
         case 'xca765cf519611e79e8d005056a687a8':
             res = await dzyqlzs(affair);
@@ -1139,6 +1280,14 @@ let flowRouter = async(ctx, affair) => {
         // 不良资产处置信息汇报流程
         case 'oa3982e101f411e9a455005056a61cf9':
             res = await blzcczxxhb(affair);
+            break;
+        // 现场管理汇报流程
+        case 'b97918c0cb1e11eaad325c80b64475f0':
+            res = await xcglhb(affair);
+            break;
+        // 信托项目现场管理重大事项审批
+        case 'de22b6cfa3b011eaa156005056a61cf9':
+            res = await xmxcglzdsx(affair);
             break;
         // 中后期管理报告流程
         case 't3075f5e657211e982fc005056a61cf9':
@@ -1522,4 +1671,5 @@ module.exports = function (router) {
         let product_info = await d_flow.query_app_dfs_scode_content(data);
         ctx.response.body = product_info
     });
+
 }

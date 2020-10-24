@@ -1,6 +1,8 @@
 $(function(){
     var urlParams = parseUrlParams();
     var flowid = urlParams.flowid;
+    console.log('1111111111111111111111');
+    console.log(flowid);
     if (flowid == 'faca20a152f311e6892e184f32ca6bca') { // 贷款融资类合同录入流程
          修改编辑按钮的点击函数
         $('#d71c3200555111e69b1eb888e3e688de').change(function(){
@@ -17,11 +19,13 @@ $(function(){
         } else if (flowid == 'f059a1eedb1d11e7be6b005056a687a8') {
             regitem_id = $('#o051e2a1679311e8aa3e000c294af360').val();
         }
+        console.log('444444444444');
+        console.log(regitem_id);
         excelImport('', flowid, regitem_id);// func.js
     } else if (flowid == 'v7608f2e3e8811e688c2184f32ca6bca') { // 收款流程
         $('#controlContainer').append('<iframe id="noticeIframe" scrolling="no" name="noticeIframe" width="100%" frameborder="0" height="1000px" src="/x/intrustqlc/views/dy/printInNotice?itemid=' + urlParams.itemid + '&itemName=' + urlParams.itemName + '&flowname=' + urlParams.flowname + '&uuid=' + urlParams.uuid + '"></iframe>');
     } else if (flowid == 'v11a7d403e8611e6b07e184f32ca6bca') { // 付款流程
-        $('#controlContainer').append('<iframe id="noticeIframe1" scrolling="no" name="noticeIframe1" width="100%" frameborder="0" height="100%" src="/x/intrustqlc/views/dy/printPayNotice?itemid=' + urlParams.itemid + '&itemName=' + urlParams.itemName + '&flowname=' + urlParams.flowname + '&uuid=' + urlParams.uuid + '"></iframe>');
+        $('#controlContainer').append('<iframe id="noticeIframe1" scrolling="no" name="noticeIframe1" width="100%" frameborder="0" height="650px" src="/x/intrustqlc/views/dy/printPayNotice?itemid=' + urlParams.itemid + '&itemName=' + urlParams.itemName + '&flowname=' + urlParams.flowname + '&uuid=' + urlParams.uuid + '"></iframe>');
     } else if (flowid == 'p688af403e6e11e6a580184f32ca6bca') { // 资金信托合同登记流程
         $('#div_b1af1ec6942a11e69526ac2b6e56399c label:eq(0)').html('<a href="/f/v/objlist?clsid=fb1e00cf227e11e68731b8ee65291727&amp;pagid=r0e2aa00228311e68dccb8ee65291727" target="_blank">' + $('#div_b1af1ec6942a11e69526ac2b6e56399c label').html() + '</a>')
     } else if (flowid == 'ta32efd13e8c11e6ae36184f32ca6bca') { // 受益权转让审批流程
@@ -40,7 +44,7 @@ $(function(){
                     <button type="button" id="buttonzxd2" disabled="disabled" onclick="chYdj('/node/initProductInfo.html','初始变更更正登记填报说明及模板')">初始变更更正登记</button>
                     <button type="button" id="buttonzxd3" disabled="disabled" onclick="chYdj('/node/finishProductInfo.html','终止登记填报说明及模板')">终止登记</button>
                     <button type="button" id="buttonzxd4" disabled="disabled" onclick="chYdj('/node/reportProductInfo.html','事前报告登记填报说明及模板')">事前报告登记</button>
-					<span>&nbsp;&nbsp;<font color=red size=2>注意:信托登记四种类型,每个审批流程只能够提交一种登记类型.</font></span>
+                    <span>&nbsp;&nbsp;<font color=red size=2>注意:信托登记四种类型,每个审批流程只能够提交一种登记类型.</font></span>
                     <div id="mdldiv_frame" class="modal container hide fade" tabindex="-1" role="dialog" aria-labelledby="myModal_frameContainer" aria-hidden="true">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -49,15 +53,15 @@ $(function(){
                         <div class="modal-body">
                             <iframe src="" id="modalFrameContainer" name="modalFrameContainer" seamless="" frameborder="0" height="700" width="100%"></iframe>
                         </div>
-						<!--
+                        <!--
                         <div class="modal-footer">
                             <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
                         </div>
-						-->
+                        -->
                     </div>
                     <script type="text/javascript">
                     function chYdj(url,title) {
-                        let xtdjlx = document.getElementById('xtdjlx').value;
+                        var xtdjlx  = fruitHelper.$("SFGL").val();
                         let query = location.href.substr(location.href.indexOf('?') + 1)
                         jQuery('#modal_frameContainer_title').html("<a href='/node/tianbao.html?type=1' target='_blank'>"+title+"</a>");
                         jQuery('#modalFrameContainer').attr('src',url + '?xtdjlx=' + xtdjlx + '&' + query);
@@ -69,12 +73,8 @@ $(function(){
         </div>
     </div>
         `)
-    }
+	}
 });
-
-//预登记
-
-
 // 代理编辑函数 贷款投资合同录入流程
 function listEdit_faca20a152f311e6892e184f32ca6bca(flow_list_id,obj){
     $.when(modi_d71c3200555111e69b1eb888e3e688de(flow_list_id)).done(function(){

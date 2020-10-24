@@ -33,7 +33,6 @@ httpProxy.on('error', function (err, req, res) {
  * 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 资产解押审批流程 + 
  * 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程 + 受益权转让审批流程 +
  * 财产信托合同登记流程
- * 信托登记审批流程
  */
 let proxy_flow_new_dict = [
   'faca20a152f311e6892e184f32ca6bca',
@@ -55,7 +54,7 @@ app.use('/x/workflow/rtnew', function (req, res, next) {
     let harmonBinary = harmon([], proxy_fileupload, true);
     harmonBinary(req, res);
   }
-  // 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 付款流程 + 资产解押审批流程 + 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程 + 信托登记审批流程
+  // 贷款投资合同录入流程 + 抵质押物录入流程 + 收款流程 + 付款流程 + 资产解押审批流程 + 放款审批流程(消费贷及房抵贷) + 资金信托合同登记流程
   if ( proxy_flow_new_dict.indexOf(parsed.flowid)>=0 ) {
     let harmonBinary = harmon([], proxy_flow_new, true);
     harmonBinary(req, res);

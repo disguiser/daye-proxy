@@ -1088,30 +1088,43 @@
 					$("#sfgz").val(data.sfgz);
                     $("#gzms").val(data.gzms);
                     $("#gzcj").val(data.gzcj);
-                    let gzjg = data.gzjg.split(",");
-                    $.each(gzjg, function (index, value) {
-                        $("#gzjg"+value).attr("checked", "checked");
-                    });					
+					if(data.gzjg!=null && data.gzjg!='')
+					{
+						let gzjg = data.gzjg.split(",");
+						$.each(gzjg, function (index, value) {
+							$("#gzjg"+value).attr("checked", "checked");
+						});
+						$("input[name='gzjg'][value="+data.gzjg+"]").attr("checked", true);
+					}
                     $("#jzpgpd").val(data.jzpgpd);
                     $("#jntgjg").val(data.jntgjg);
                     $("#jwtgdljg").val(data.jwtgdljg);
                     $("#jwtgdljggb").val(data.jwtgdljggb);
                     $("input[name='tzgwbs'][value="+data.tzgwbs+"]").attr("checked", true);
                     $("#tzgwbh").val(data.tzgwbh);
-                    let grjgbs = data.grjgbs.split(",");
-                    $.each(grjgbs, function (index, value) {
-                        $("#grjgbs"+value).attr("checked", "checked");
-                    });
-                    $("input[name='gljybs'][value="+data.gljybs+"]").attr("checked", true);
-                    let gljylx = data.gljylx.split(",");
-                    $.each(gljylx, function (index, value) {
-                        $("#gljylx"+value).attr("checked", "checked");
-                    });
+					if(data.grjgbs!=null && data.grjgbs!='')
+					{
+						let grjgbs = data.grjgbs.split(",");
+						$.each(grjgbs, function (index, value) {
+							$("#grjgbs"+value).attr("checked", "checked");
+						});
+					}
+					$("input[name='gljybs'][value="+data.gljybs+"]").attr("checked", true);
+					if(data.gljylx!=null && data.gljylx!='')
+					{
+						let gljylx = data.gljylx.split(",");
+						$.each(gljylx, function (index, value) {
+							$("#gljylx"+value).attr("checked", "checked");
+						});
+					}
                     $("#gljybcsm").val(data.gljybcsm);
-                    let gllx = data.gllx.split(",");
-                    $.each(gllx, function (index, value) {
-                        $("#gllx"+value).attr("checked", "checked");
-                    });
+					if(data.gllx!=null && data.gllx!='')
+					{
+						let gllx = data.gllx.split(",");
+						$.each(gllx, function (index, value) {
+							$("#gllx"+value).attr("checked", "checked");
+						});
+					}
                     $("#gljymd").val(data.gljymd);
                     $("#gljydj").val(data.gljydj);
                     $("#jzplpd").val(data.jzplpd);

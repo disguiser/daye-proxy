@@ -1005,6 +1005,8 @@
             let itemid = GetQueryValue('itemid');
 			let taskid = GetQueryValue('taskid');
 			let nextnode = GetQueryValue('nextnode');
+			let xtdjlx = GetQueryValue('xtdjlx');
+			
 			if(nextnode=="X644307B0B24442290B4A6BAED269009"){
 				jQuery("#trtrust").show();
 				jQuery("#trtrust1").show();
@@ -1013,7 +1015,7 @@
 				jQuery("#trtrust1").hide();
 			}
             if (taskid == null) {
-                itemid = "1@@"+itemid;
+                itemid = "1@@"+itemid+"@@"+xtdjlx;
             } else {
                 itemid = "2@@"+taskid;
             }

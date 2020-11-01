@@ -487,7 +487,8 @@ let xtdjsp = async (affair) => {
             json_data: {
                 sb: 'sbsbsb'
             }
-        })
+        }),
+        jiaqian: temple.render('jiaqian.html', {})
     }
 }
 // 外派人员行使表决权审批流程

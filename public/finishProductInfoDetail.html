@@ -54,6 +54,20 @@
                     </tr>
                     <tr>
                         <td>
+                            成立日 :
+                        </td>
+                        <td>
+                            <span id="cpstartdate"></span>
+                        </td>					
+                        <td>
+                            到期日 :
+                        </td>
+                        <td>
+                            <span id="finishdate"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             实收信托金额 :
                         </td>
                         <td>
@@ -225,6 +239,8 @@
                     $("#sshje").html(data.sshje);
                     $("#shsje").html(data.shsje);
                     $("#pfje").html(data.pfje);
+					$("#cpstartdate").html(data.cpstartdate);
+					$("#finishdate").html(data.finishdate);
                     $("#ywxxsm").html(data.ywxxsm);
                 }
             });

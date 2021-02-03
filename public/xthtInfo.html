@@ -565,7 +565,13 @@
 			//委托人全称+受益人全称
 			var zytabs=getFormValue('zytabs');
 			var wtrqc=getFormValue('wtrqc');
-			var syrmc=getFormValue('syrmc');		
+			var syrmc=getFormValue('syrmc');
+            var syrxh=getFormValue('syrxh');  
+            var syrzjlx=getFormValue('syrzjlx');
+            var syrzjhm=getFormValue('syrzjhm');
+            var syrlx=getFormValue('syrlx');
+            var lxxq_syr=getFormValue('lxxq_syr'); 
+            var syrzjlx=getFormValue('syrzjlx');            
 			if(zytabs=="0" && wtrqc!=syrmc && !(typeof(syrmc)=="undefined" || syrmc==null || syrmc.length==0  || syrmc.length==''))
 			{
 				alert("[受益方式标识]选择【自益】时,委托人全称必须等于受益人全称!");
@@ -573,42 +579,41 @@
 			}
 			if(zytabs=="1" || zytabs=="3")
 			{
-				if(!(typeof(syrxh)=="undefined" || syrxh==null || syrxh.length==0 || syrxh.length=='')){
+				if(typeof(syrxh)=="undefined" || syrxh==null || syrxh.length==0 || syrxh.length==''){
 					alert("[受益方式标识]选择【他益】或【其他】时,字段[受益人序号]为必填项!");
 					return false;
 				}
-				if(!(typeof(syrmc)=="undefined" || syrmc==null || syrmc.length==0 || syrmc.length=='')){
+				if(typeof(syrmc)=="undefined" || syrmc==null || syrmc.length==0 || syrmc.length==''){
 					alert("[受益方式标识]选择【他益】或【其他】时,字段[受益人全称]为必填项!");
 					return false;
 				}
-				if(!(typeof(syrlx)=="undefined" || syrlx==null || syrlx.length==0 || syrlx.length=='')){
+				if(typeof(syrlx)=="undefined" || syrlx==null || syrlx.length==0 || syrlx.length==''){
 					alert("[受益方式标识]选择【他益】或【其他】时,字段[受益人类型]为必填项!");
 					return false;
 				}
-				if(!(typeof(lxxq_syr)=="undefined" || lxxq_syr==null || lxxq_syr.length==0 || lxxq_syr.length=='')){
+				if(typeof(lxxq_syr)=="undefined" || lxxq_syr==null || lxxq_syr.length==0 || lxxq_syr.length==''){
 					alert("[受益方式标识]选择【他益】或【其他】时,字段[受益人类型详情]为必填项!");
 					return false;
 				}
-				if(!(typeof(syrzjlx)=="undefined" || syrzjlx==null || syrzjlx.length==0 || syrzjlx.length=='')){
+				if(typeof(syrzjlx)=="undefined" || syrzjlx==null || syrzjlx.length==0 || syrzjlx.length==''){
 					alert("[受益方式标识]选择【他益】或【其他】时,字段[受益人证件类型]为必填项!");
 					return false;
 				}
-				if(!(typeof(syrzjhm)=="undefined" || syrzjhm==null || syrzjhm.length==0 || syrzjhm.length=='')){
+				if(typeof(syrzjhm)=="undefined" || syrzjhm==null || syrzjhm.length==0 || syrzjhm.length==''){
 					alert("[受益方式标识]选择【他益】或【其他】时,字段[	受益人证件号码 (产品登记号/备案号）]为必填项!");
 					return false;
 				}				
 			}			
 			//委托人证件号码+受益人证件号码
 			var wtrzjlx=getFormValue('wtrzjlx');
-			var syrzjlx=getFormValue('syrzjlx');
 			var wtrzjhm=getFormValue('wtrzjhm');
-			var syrzjhm=getFormValue('syrzjhm');
-			var qksm=getFormValue('qksm');	
-			if(zytabs=="1" && wtrzjhm!=syrzjhm)
+			var qksm=getFormValue('qksm');		
+			if(zytabs=="1" && wtrzjhm==syrzjhm)
 			{
 				alert("[受益方式标识]选择【他益】时,[委托人证件号码]不可以与[受益人证件号码]相同！");
 				return false;
 			}
+			/*
 			if(wtrzjlx=="11" && wtrzjhm.length!=18)
 			{
 				alert("[委托人证件类型]选择【社会信用代码】时,[委托人证件号码]位数必须为18位！");
@@ -628,7 +633,8 @@
 			{
 				alert("[受益人证件号码]选择【营业执照】时,[受益人证件号码]位数必须为15位或18位！");
 				return false;
-			}	
+			}
+			*/
 			if((zytabs=="3" || wtrzjlx=='99'|| syrzjlx=='99') && (typeof(qksm)=="undefined" || qksm==null || qksm.length==0  || qksm.length==''))
 			{
 				alert("[受益方式标识]选择【其他】或[委托人证件类型]选择【其他】或[受益人证件类型]选择【其他】时,字段[情况说明]为必填项！");

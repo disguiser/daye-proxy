@@ -1084,10 +1084,13 @@
                     $("#fxtzbs").val(data.fxtzbs);
                     $("#fxczjz").val(data.fxczjz);
                     $("#fxhscsnew").val(data.fxhscsnew);
-                    let fxhscs = data.fxhscs.split(",");
-                    $.each(fxhscs, function (index, value) {
-                        $("#fxhscs"+value).attr("checked", "checked");
-                    });
+					if(data.fxhscs!=null && fxhscs.gzjg!='')
+					{
+						let fxhscs = data.fxhscs.split(",");
+						$.each(fxhscs, function (index, value) {
+							$("#fxhscs"+value).attr("checked", "checked");
+						});
+					}
                     $("#fxczcsbhbcsm").val(data.fxczcsbhbcsm);
                     $("input[name='sfgdqxcp'][value="+data.sfgdqxcp+"]").attr("checked", true);
                     $("#xtcpsjclrq").val(data.xtcpsjclrq);
@@ -1114,7 +1117,7 @@
 						$.each(gzjg, function (index, value) {
 							$("#gzjg"+value).attr("checked", "checked");
 						});
-						$("input[name='gzjg'][value="+data.gzjg+"]").attr("checked", true);
+						//$("input[name='gzjg'][value="+data.gzjg+"]").attr("checked", true);
 					}
                     $("#jzpgpd").val(data.jzpgpd);
                     $("#jntgjg").val(data.jntgjg);
@@ -1432,7 +1435,7 @@
 				$("input[name=xtbcl]").focus();
 				return false;
 			}	
-			if(syllx=="2" || syllx=="3"){
+			if(xtbclx=="2" || xtbclx=="3"){
 				setFormValue('xtbcl','');	
 				setFormValue('xtbc','');	
 			}
@@ -1514,7 +1517,7 @@
 			if(sfgz=="0"){
 				setFormValue('gzms','');
 				setFormValue('gzcj','');
-				setBoxValue('gzjg','');
+				setBoxValue('gzjg','No,0,1,2,3');
 			}
 			//投资顾问编号
 			var tzgwbs=getRadioValue('tzgwbs');
@@ -1576,8 +1579,8 @@
 				return false;
 			}				
 			if(gljybs=='0'){
-				setBoxValue('gljylx','');
-				setBoxValue('gllx','');
+				setBoxValue('gljylx','No,0,1,2,3,4');
+				setBoxValue('gllx','No,0,1,2,3,4,5,6,7');
 				setFormValue('gljymd','');
 				setFormValue('gljydj','');
 			}				
@@ -1872,8 +1875,8 @@
 					for(var i=0;i<=7;i++) $('#gllx'+i).attr("disabled",true);
 					$('#gljymd').attr("disabled",true);
 					$('#gljydj').attr("disabled",true);				
-					setBoxValue('gljylx','');
-					setBoxValue('gllx','');
+					setBoxValue('gljylx','No,0,1,2,3,4');
+					setBoxValue('gllx','No,0,1,2,3,4,5,6,7');
 					setFormValue('gljymd','');
 					setFormValue('gljydj','');
 				}else{
@@ -1911,7 +1914,7 @@
 					$('#jzpgpd').attr("disabled",true);
 					setFormValue('gzms','');
 					setFormValue('gzcj','');	
-					setBoxValue('gzjg','');	
+					setBoxValue('gzjg','No,0,1,2,3');	
 					setFormValue('jzpgpd','');
 				}else{
 					$('#gzms').attr("disabled",false);

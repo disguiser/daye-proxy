@@ -80,7 +80,20 @@
                             <input type="radio" name="sfaydrqqs" value="1" onchange="javascript:changeInfo('1')"/>正常
 							<input type="radio" name="sfaydrqqs" value="2" onchange="javascript:changeInfo('1')"/>推迟
                         </td>
-					</tr>
+                    <tr>
+                        <td>
+                            <span class="required">*</span>成立日
+                        </td>
+                        <td>
+                            <input type="text" id="startdate" name="startdate" style="width: 280px;" readonly>
+                        </td>					
+                        <td>
+                            <span class="required">*</span>到期日:
+                        </td>
+                        <td>
+                            <input type="text" id="finishdate" name="finishdate" style="width: 280px;" readonly>
+                        </td>					
+                    </tr>
                     <tr>
                         <td>
                             <span class="required">*</span>实收信托金额:
@@ -287,6 +300,7 @@
 					$("#jqpjxtgm").val(data.jqpjxtgm);
 					$("#startdate").val(data.startdate);
 					$("#enddate").val(data.enddate);
+					$("#finishdate").val(data.finishdate);
 					$("#workday").val(data.workday);
 					$("#xtbgf").val(data.xtbgf);
 					$("#ywxxsm").val(data.ywxxsm);

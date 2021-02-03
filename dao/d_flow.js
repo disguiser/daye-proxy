@@ -638,6 +638,8 @@ let insert_app_dfs_zxd_cscpxx = async (data) => {
         type: pjmain.QueryTypes.SELECT
     });
     if (record.length > 0) {
+		//防止重复记录产生
+        await dfs.query(`update APP_DFS_ZXD_CSCPXX set task_state='200',problem_id='99'+problem_id,relation_uuid='99'+relation_uuid where regitem_id=${data.regitem_id} and isnull(task_state,'')='' and isnull(remark,'')='' and ID != '${record[0].id}'`) ;
 		//先删除
 		await dfs.query(`update APP_DFS_ZXD_CSCPXX SET djlx='${data.djlx}',xtjgmc='${data.xtjgmc}',cpqc='${data.cpqc}',djcpbh='${data.djcpbh}',gscpbh='${data.gscpbh}',sfxtzcp='${data.sfxtzcp}',sdbs='${data.sdbs}',
 				fqzcpnbbh='${data.fqzcpnbbh}',xtccxz='${data.xtccxz}',dyjhbz='${data.dyjhbz}',ccqxtcfzr='${data.ccqxtcfzr}',stzz='${data.stzz}',xtgn='${data.xtgn}',yxfs='${data.yxfs}',
@@ -857,12 +859,13 @@ let insert_app_dfs_zxd_csxtht = async (data) => {
     let code = "";
 
     if (data.id == "0") {
-        await dfs.query(`INSERT INTO APP_DFS_ZXD_CSXTHT(relation_uuid,task_code,regitem_id,product_id,product_code,zytabs,xthtbh,htjz,wtrqc,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrlx,lxxq_syr,syrzjlx,syrzjhm,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm) values(
-                '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.zytabs}','${data.xthtbh}','${data.htjz}','${data.wtrqc}','${data.wtrlx}','${data.lxxq_wtr}','${data.wtrzjlx}','${data.wtrzjhm}',${data.htcszje},${data.htcszfe},'${data.xtccxz}','${data.zjjsbz}',${data.wtzjje},${data.wtccdyje},'${data.wtcccclx}',${data.syrxh},'${data.syrmc}','${data.syrlx}','${data.lxxq_syr}','${data.syrzjlx}','${data.syrzjhm}','${data.syqdm}','${data.sfkssyqzh_syr}','${data.syqzhbm_syr}',${data.syqcsfe},${data.syqcsje},'${data.syqqsr}','${data.syqjhdqr}','${data.syryxlhbs}','${data.qksm}'
+        await dfs.query(`INSERT INTO APP_DFS_ZXD_CSXTHT(relation_uuid,task_code,regitem_id,product_id,product_code,zytabs,xthtbh,htjz,wtrqc,wtrqc_all,wtrlx,lxxq_wtr,wtrzjlx,wtrzjhm,wtrzjhm_all,htcszje,htcszfe,xtccxz,zjjsbz,wtzjje,wtccdyje,wtcccclx,syrxh,syrmc,syrmc_all,syrlx,lxxq_syr,syrzjlx,syrzjhm,syrzjhm_all,syqdm,sfkssyqzh_syr,syqzhbm_syr,syqcsfe,syqcsje,syqqsr,syqjhdqr,syryxlhbs,qksm) values(
+                '${data.uuid}','${data.bsid}',${data.regitem_id},${data.productid},'${data.productcode}','${data.zytabs}','${data.xthtbh}','${data.htjz}','${data.wtrqc}','${data.wtrqc}','${data.wtrlx}','${data.lxxq_wtr}','${data.wtrzjlx}','${data.wtrzjhm}','${data.wtrzjhm}',${data.htcszje},${data.htcszfe},'${data.xtccxz}','${data.zjjsbz}',${data.wtzjje},${data.wtccdyje},'${data.wtcccclx}',
+				${data.syrxh},'${data.syrmc}','${data.syrmc}','${data.syrlx}','${data.lxxq_syr}','${data.syrzjlx}','${data.syrzjhm}','${data.syrzjhm}','${data.syqdm}','${data.sfkssyqzh_syr}','${data.syqzhbm_syr}',${data.syqcsfe},${data.syqcsje},'${data.syqqsr}','${data.syqjhdqr}','${data.syryxlhbs}','${data.qksm}'
             )`);
 		await dfs.query(`update ENFOTA..TA_TCUSTMAININFO set KHLX=A.wtrlx,KHLXXQ=A.lxxq_wtr
 						from APP_DFS_ZXD_CSXTHT A,ENFOTA..TA_TPRODUCTCONTRACT C,ENFOTA..TA_TCUSTMAININFO B
-						WHERE A.xthtbh=C.CONTRACT_BH and C.CUST_ID=B.CUST_ID and A.xthtbh = ${data.xthtbh}`)
+						WHERE A.xthtbh=C.CONTRACT_BH and C.CUST_ID=B.CUST_ID and A.xthtbh = '${data.xthtbh}'`)
             .then(function (result) {
                 code = "1";
             })
@@ -875,10 +878,12 @@ let insert_app_dfs_zxd_csxtht = async (data) => {
                                                     xthtbh           = '${data.xthtbh}',
                                                     htjz             = '${data.htjz}',
                                                     wtrqc            = '${data.wtrqc}',
+													wtrqc_all        = case when charindex('*','${data.wtrqc}')>0 then wtrqc_all else '${data.wtrqc}' end,
                                                     wtrlx            = '${data.wtrlx}',
                                                     lxxq_wtr         = '${data.lxxq_wtr}',
                                                     wtrzjlx          = '${data.wtrzjlx}',
                                                     wtrzjhm          = '${data.wtrzjhm}',
+													wtrzjhm_all      = case when charindex('*','${data.wtrzjhm}')>0 then wtrzjhm_all else '${data.wtrzjhm}' end,
                                                     htcszje          = ${data.htcszje},
                                                     htcszfe          = ${data.htcszfe},
                                                     xtccxz           = '${data.xtccxz}',
@@ -888,10 +893,12 @@ let insert_app_dfs_zxd_csxtht = async (data) => {
                                                     wtcccclx         = '${data.wtcccclx}',
                                                     syrxh            = ${data.syrxh},
                                                     syrmc            = '${data.syrmc}',
+													syrmc_all        = case when charindex('*','${data.syrmc}')>0 then syrmc_all else '${data.syrmc}' end,
                                                     syrlx            = '${data.syrlx}',
                                                     lxxq_syr         = '${data.lxxq_syr}',
                                                     syrzjlx          = '${data.syrzjlx}',
                                                     syrzjhm          = '${data.syrzjhm}',
+													syrzjhm_all      = case when charindex('*','${data.syrzjhm}')>0 then syrzjhm_all else '${data.syrzjhm}' end,
                                                     syqdm            = '${data.syqdm}',
                                                     sfkssyqzh_syr    = '${data.sfkssyqzh_syr}',
                                                     syqzhbm_syr      = '${data.syqzhbm_syr}',
@@ -1055,7 +1062,7 @@ let find_app_dfs_zxd_zzcpxx_by_regitem_id = async (regitem_id) => {
 			await dfs.query(`exec SP_CHANGE_ZZDJ_CPXX_03 ${regitem_id}, ${affa_id} `);
 			//再返回
 			let data = await dfs.query(`SELECT RELATION_UUID as uuid, TASK_CODE as bsid, REGITEM_ID as regitem_id,PRODUCT_ID as productid, PRODUCT_CODE as productcode,problem_id,
-					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,dbo.GETDATEADD('',10,'MINWORKDAY') workdate,cpstartdate as startdate,cpenddate as enddate,workday,xtbgf,
+					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,dbo.GETDATEADD('',10,'MINWORKDAY') workdate,cpstartdate as startdate,cpenddate as enddate,finishdate,workday,xtbgf,
 					 strljyjbc, sjxtbcl, xtfyze, xtfyl, xtbgfl, sjsy, sjsyl, sshje, shsje, pfje,jqpjxtgm, ywxxsm, task_state, remark, input_time, input_user, input_dept, update_time 
 					 FROM APP_DFS_ZXD_ZZCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'')=''`, {
 				type: pjmain.QueryTypes.SELECT
@@ -1068,7 +1075,7 @@ let find_app_dfs_zxd_zzcpxx_by_regitem_id = async (regitem_id) => {
 		}
     }else if (arr[0] == "1") {
 		let data = await dfs.query(`SELECT RELATION_UUID as uuid, TASK_CODE as bsid, REGITEM_ID as regitem_id,PRODUCT_ID as productid, PRODUCT_CODE as productcode,problem_id,
-					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,dbo.GETDATEADD('',10,'MINWORKDAY') workdate,cpstartdate as startdate,cpenddate as enddate,workday,xtbgf,
+					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,dbo.GETDATEADD('',10,'MINWORKDAY') workdate,cpstartdate as startdate,cpenddate as enddate,finishdate,workday,xtbgf,
 					 strljyjbc, sjxtbcl, xtfyze, xtfyl, xtbgfl, sjsy, sjsyl, sshje, shsje, pfje,jqpjxtgm, ywxxsm, task_state, remark, input_time, input_user, input_dept, update_time 
 					 FROM APP_DFS_ZXD_ZZCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'')=''`, {
 				type: pjmain.QueryTypes.SELECT
@@ -1080,7 +1087,7 @@ let find_app_dfs_zxd_zzcpxx_by_regitem_id = async (regitem_id) => {
 			await dfs.query(`exec SP_CHANGE_ZZDJ_CPXX_03 ${regitem_id},'' `);
 			//再返回
 			let data = await dfs.query(`SELECT RELATION_UUID as uuid, TASK_CODE as bsid, REGITEM_ID as regitem_id,PRODUCT_ID as productid, PRODUCT_CODE as productcode,problem_id,
-					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,dbo.GETDATEADD('',10,'MINWORKDAY') workdate,cpstartdate as startdate,cpenddate as enddate,workday,xtbgf,
+					 xtjgmc, djcpbh, cpqc, qsrq, sfaydrqqs, ssxtje, xtbjljgfe, xtsyljfpe, tgljgdbc, tgljyjbc, strljgdbc,handle_date handledate,over_date overdate,dbo.GETDATEADD('',10,'MINWORKDAY') workdate,cpstartdate as startdate,cpenddate as enddate,finishdate,workday,xtbgf,
 					 strljyjbc, sjxtbcl, xtfyze, xtfyl, xtbgfl, sjsy, sjsyl, sshje, shsje, pfje,jqpjxtgm, ywxxsm, task_state, remark, input_time, input_user, input_dept, update_time 
 					 FROM APP_DFS_ZXD_ZZCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'')=''`, {
 				type: pjmain.QueryTypes.SELECT
@@ -1106,6 +1113,8 @@ let insert_app_dfs_zxd_zzcpxx = async (data) => {
         type: pjmain.QueryTypes.SELECT
     });
     if (record.length > 0) {	
+		//防止重复记录产生
+        await dfs.query(`update APP_DFS_ZXD_ZZCPXX set task_state='200',problem_id='99'+problem_id,relation_uuid='99'+relation_uuid where regitem_id=${data.regitem_id} and isnull(task_state,'')='' and isnull(remark,'')='' and ID != '${record[0].id}'`) ;
 		//先更新	
 		await dfs.query(`update APP_DFS_ZXD_ZZCPXX set xtjgmc='${data.xtjgmc}',djcpbh='${data.djcpbh}',cpqc='${data.cpqc}',qsrq='${data.qsrq}',sfaydrqqs='${data.sfaydrqqs}',
 				ssxtje=${data.ssxtje},xtbjljgfe=${data.xtbjljgfe},xtsyljfpe=${data.xtsyljfpe},tgljgdbc=${data.tgljgdbc},tgljyjbc=${data.tgljyjbc},strljgdbc=${data.strljgdbc},

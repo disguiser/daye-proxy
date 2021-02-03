@@ -51,6 +51,11 @@ $(function(){
 							document.getElementById('buttonzxd2').disabled=false;
 						}else if($(document).attr("title").indexOf("事前报告") >=0){
 							document.getElementById('buttonzxd4').disabled=false;
+						}else if($(document).attr("title").indexOf("财产登记") >=0){
+							document.getElementById('buttonzxd1').disabled=true;
+							document.getElementById('buttonzxd2').disabled=true;
+							document.getElementById('buttonzxd3').disabled=true;
+							document.getElementById('buttonzxd4').disabled=true;
 						}else {
 							document.getElementById('buttonzxd1').disabled=false;
 							document.getElementById('buttonzxd2').disabled=false;

@@ -210,12 +210,14 @@
                     //请求成功
                     success: function (data) {
                         if (data.code != code) {
-                            if (data.code == "1") {
-                                alert("变更与更正事项保存成功！");
-								location.reload();
-                            } else {
-                                alert("变更与更正事项保存失败！");
-                            }
+							if(no==1){
+								if (data.code == "1") {
+									alert("变更与更正事项保存成功！");
+									location.reload();
+								} else {
+									alert("变更与更正事项保存失败！");
+								}
+							}
                         }
                         code = data.code;
                     },

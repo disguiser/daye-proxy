@@ -78,6 +78,14 @@
                     </tr>
                     <tr>
                         <td style="width: 20%;">
+                            预登记有效期:
+                        </td>
+                        <td style="width: 30%;">
+						<span id="expiredate"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 20%;">
                             上月末净资产（万 元）:
                         </td>
                         <td style="width: 30%;">
@@ -818,6 +826,7 @@
                     $("#tgsfglf").html(data.tgsfglf);
 					$("#overstate").html(data.overstate);
 					$("#overdate").html(data.overdate);
+					$("#expiredate").html(data.expiredate);
 
                     query_app_dfs_zxd_ydjtjd(data.uuid);
                 }

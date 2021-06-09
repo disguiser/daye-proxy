@@ -305,7 +305,7 @@ let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
 					 wtrjzjly,sytzrq,bgbs,xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,
 					 jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry, 
 					 gljylx,qtgljylx,glfqkyglgx,gljymd,gljydj,sctlywdjqk,xmlx,qtxmlx,ywlx,qtywlx,xmszd,sfszqq,case when dyjhbz='1' then dbo.GETDATEADD('',5,'WORKDAY') else dbo.GETDATEADD('',2,'WORKDAY') end as workdate, 
-					 xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf,handle_date handledate,zxd_code zxdcode,over_state overstate,over_date overdate,remark,input_time,input_user,input_dept,update_time 
+					 xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf,handle_date handledate,zxd_code zxdcode,over_state overstate,over_date overdate,expire_date expiredate,remark,input_time,input_user,input_dept,update_time 
 					 FROM APP_DFS_ZXD_YDJCPXX WHERE problem_id = '${regitem_id}'`, {
 			type: pjmain.QueryTypes.SELECT
 		});
@@ -320,7 +320,7 @@ let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
 					 wtrjzjly,sytzrq,bgbs,xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,
 					 jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry, 
 					 gljylx,qtgljylx,glfqkyglgx,gljymd,gljydj,sctlywdjqk,xmlx,qtxmlx,ywlx,qtywlx,xmszd,sfszqq,case when dyjhbz='1' then dbo.GETDATEADD('',5,'WORKDAY') else dbo.GETDATEADD('',2,'WORKDAY') end as workdate, 
-					 xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf,handle_date handledate,zxd_code zxdcode,over_state overstate,over_date overdate,remark,input_time,input_user,input_dept,update_time 
+					 xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf,handle_date handledate,zxd_code zxdcode,over_state overstate,over_date overdate,expire_date expiredate,remark,input_time,input_user,input_dept,update_time 
 					 FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'')=''`, {
 			type: pjmain.QueryTypes.SELECT
 		});
@@ -338,7 +338,7 @@ let find_app_dfs_zxd_ydjcpxx_by_regitem_id = async (regitem_id) => {
 							wtrjzjly,sytzrq,bgbs,xtzjbgyh,xtbcl,syrsyllx,syryqsylqj_zd,syryqsylqj_zg,xmly,xmglfs,xmtjjg,
 							jydsmc,jydsxx,xtcctxhyyfs,jyjg,fxkzcs,yjhklyjtcfs,fxyasm,gshfhgyj,xtjlxm,xtjldh,fggjglry, 
 							gljylx,qtgljylx,glfqkyglgx,gljymd,gljydj,sctlywdjqk,xmlx,qtxmlx,ywlx,qtywlx,xmszd,sfszqq,case when dyjhbz='1' then dbo.GETDATEADD('',5,'WORKDAY') else dbo.GETDATEADD('',2,'WORKDAY') end as workdate,  
-							xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf,handle_date handledate,zxd_code zxdcode,over_state overstate,over_date overdate,remark,input_time,input_user,input_dept,update_time 
+							xyzjbh,zbjblqk,kfshqkggdzzqk,qtsm,zjly,sfjghxt,yxlhbl,tzfw,tzgwqk,tgsfglf,handle_date handledate,zxd_code zxdcode,over_state overstate,over_date overdate,expire_date expiredate,remark,input_time,input_user,input_dept,update_time 
 							FROM APP_DFS_ZXD_YDJCPXX WHERE regitem_id = '${regitem_id}' AND ISNULL(TASK_STATE,'')=''`, {
 				type: pjmain.QueryTypes.SELECT
 			});
@@ -395,7 +395,7 @@ let insert_app_dfs_zxd_ydjcpxx = async (data) => {
 				xtjlxm='${data.xtjlxm}',xtjldh='${data.xtjldh}',fggjglry='${data.fggjglry}',gljylx='${data.gljylx}',qtgljylx='${data.qtgljylx}',glfqkyglgx='${data.glfqkyglgx}',
 				gljymd='${data.gljymd}',gljydj='${data.gljydj}',sctlywdjqk='${data.sctlywdjqk}',xmlx='${data.xmlx}',qtxmlx='${data.qtxmlx}',ywlx='${data.ywlx}',qtywlx='${data.qtywlx}',
 				xmszd='${data.xmszd}',sfszqq='${data.sfszqq}',xyzjbh='${data.xyzjbh}',zbjblqk='${data.zbjblqk}',kfshqkggdzzqk='${data.kfshqkggdzzqk}',qtsm='${data.qtsm}',zjly='${data.zjly}',
-                sfjghxt='${data.sfjghxt}',yxlhbl='${data.yxlhbl}',tzfw='${data.tzfw}',tzgwqk='${data.tzgwqk}',tgsfglf='${data.tgsfglf}',handle_date='${data.handledate}',zxd_code='${data.zxdcode}',over_state='${data.overstate}',over_date='${data.overdate}',
+                sfjghxt='${data.sfjghxt}',yxlhbl='${data.yxlhbl}',tzfw='${data.tzfw}',tzgwqk='${data.tzgwqk}',tgsfglf='${data.tgsfglf}',handle_date='${data.handledate}',zxd_code='${data.zxdcode}',over_state='${data.overstate}',over_date='${data.overdate}',expire_date='${data.expiredate}',
                 remark='save',task_code=NULL,update_time=CONVERT(varchar(20),getdate(),120)
 				where ID = '${record[0].id}'`)
             .then(function (result) {

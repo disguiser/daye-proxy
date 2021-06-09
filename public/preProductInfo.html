@@ -86,6 +86,14 @@
                             <input type="date" id="overdate" name="overdate" style="width: 320px;">
                         </td>
                     </tr>
+                    <tr id="trtrust1">
+                        <td style="width: 30%;">
+                            <span class="required">*</span>预登记有效期:
+                        </td>
+                        <td style="width: 30%;">
+                            <input type="date" id="expiredate" name="expiredate" style="width: 160px;">
+                        </td>
+                    </tr>
                     <tr>
                         <td style="width: 20%;">
                             <span class="required">*</span>上月末净资产（万 元）:
@@ -1036,6 +1044,7 @@
                     $("#zxdcode").val(data.zxdcode);
 					$("#overstate").val(data.overstate);
 					$("#overdate").val(data.overdate);
+					$("#expiredate").val(data.expiredate);
 					$("#symjzc").val(data.symjzc);
                     $("#sjmjzc").val(data.sjmjzc);
                     $("#symxtzzc").val(data.symxtzzc);
@@ -1372,28 +1381,28 @@
 			var fqljfxgm=getFormValue('fqljfxgm');
 			var nfxhclsj=getFormValue('nfxhclsj');
 			var fqcpqs=getFormValue('fqcpqs');
-			if((ydjlx=="6" || sfwxffq=="1") && (typeof(fqljfxgm)=="undefined" || fqljfxgm.length==0  || fqljfxgm=='')){
-				alert("[预登记类型]选择【补充预登记】,或者[是否新发分期]选择【是】,[分期累计发行（成立）规模（万元）]为必填项!");
+			if(ydjlx=="6" && !(bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(fqljfxgm)=="undefined" || fqljfxgm.length==0  || fqljfxgm=='')){
+				alert("[预登记类型]选择【补充预登记】,且业务类型选择【异地推介】,且[是否新发分期]选择【是】,[分期累计发行（成立）规模（万元）]为必填项!");
 				$("input[name=fqljfxgm]").focus();
 				return false;
 			}
-			if(!(ydjlx=="6" && sfwxffq=="1") && (typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj=='')){
-				alert("除[预登记类型]选择【补充预登记】,且[是否新发分期]选择【否】情况下,[拟发行或成立时间]为必填项!");
+			if(!(ydjlx=="6" && bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj=='')){
+				alert("除[预登记类型]选择【补充预登记】,且业务类型选择【异地推介】,且[是否新发分期]选择【是】情况下,[拟发行或成立时间]为必填项!");
 				$("input[name=nfxhclsj]").focus();
 				return false;
 			}						
-			if((ydjlx=="6" || sfwxffq=="1") && (typeof(fqcpqs)=="undefined" || fqcpqs.length==0  || fqcpqs=='')){
-				alert("[预登记类型]选择【补充预登记】,或者[是否新发分期]选择【是】,[分期产品期数]为必填项!");
+			if(ydjlx=="6" && !(bgywlx.indexOf('2')>=0 && sfwxffq=="0") && (typeof(fqcpqs)=="undefined" || fqcpqs.length==0  || fqcpqs=='')){
+				alert("[预登记类型]选择【补充预登记】,且业务类型选择【异地推介】,且[是否新发分期]选择【是】,[分期产品期数]为必填项!");
 				$("input[name=fqcpqs]").focus();
 				return false;
 			}	
-			if(ydjlx=="6" && sfwxffq=="1"){
+			if(ydjlx=="6" && bgywlx.indexOf('2')>=0 && sfwxffq=="0"){
 				setFormValue('nfxhclsj','');
 			}
-			if(!(ydjlx=="6" || sfwxffq=="1")){
+			if(ydjlx!="6" || (ydjlx=="6" && bgywlx.indexOf('2')>=0 && sfwxffq=="0")){
 				setFormValue('fqljfxgm','');
 				setFormValue('fqcpqs','');
-			}	
+			}
 			var dyjhbz=getFormValue('dyjhbz');
 			var today=getFormValue('workdate');			
 			if((ydjlx=="6" || sfwxffq=="1") && dyjhbz=="1" && !(typeof(nfxhclsj)=="undefined" || nfxhclsj.length==0  || nfxhclsj=='') && nfxhclsj <= today){
@@ -1830,6 +1839,7 @@
             ydjData.zxdcode = $("#zxdcode").val();
 			ydjData.overstate = $("#overstate").val();
 			ydjData.overdate = $("#overdate").val();
+			ydjData.expiredate = $("#expiredate").val();
             ydjData.symjzc = $("#symjzc").val();
             ydjData.sjmjzc = $("#sjmjzc").val();
             ydjData.symxtzzc = $("#symxtzzc").val();
